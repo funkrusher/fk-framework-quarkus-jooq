@@ -33,7 +33,7 @@ To compile and run this demo you will need:
   - Note: GraalVM is currently not supported for native-build, because some libraries have compatibility-issues
     - awssdk
     - jooq
-- Mariadb database
+- Mariadb database (best: 10.7.8, as used in testcontainers)
 - Optional: Quarkus Plugin in Intellij-IDEA
 
 The project has been set up specifically with Intellij IDEA compatibility in mind.

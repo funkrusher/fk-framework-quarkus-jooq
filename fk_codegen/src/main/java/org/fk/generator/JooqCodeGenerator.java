@@ -29,7 +29,7 @@ public class JooqCodeGenerator {
 
     public static void main(String[] args) throws Exception {
         // Start the MariaDB test container
-        MariaDBContainer container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.6.1"))
+        MariaDBContainer container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
                 .withDatabaseName("testshop")
                 .withUsername("tester")
                 .withPassword("test123");

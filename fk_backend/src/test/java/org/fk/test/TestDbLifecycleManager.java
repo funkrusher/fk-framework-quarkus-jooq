@@ -43,7 +43,7 @@ public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManag
 
     @Override
     public Map<String, String> start() {
-        container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.6.12"))
+        container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
                 .withDatabaseName("testshop")
                 .withUsername("tester")
                 .withPassword("test123");
