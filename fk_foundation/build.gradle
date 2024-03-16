@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'java-library'
     id 'idea'
-    id 'io.quarkus'
     id "org.liquibase.gradle" version "2.0.2"
     id 'org.kordamp.gradle.jandex'
 }
@@ -18,7 +17,6 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    implementation enforcedPlatform(libs.quarkusPlatform)
     api project(':fk_codegen')
     api libs.bundles.quarkus
     api libs.bundles.jooq
@@ -26,10 +24,6 @@ dependencies {
     api libs.mariadbJavaClient
     api libs.jacksonCsv
     api libs.jacksonJsr310
-}
-
-quarkusDependenciesBuild {
-    dependsOn 'jandex'
 }
 
 // cognitoLocalSetup task
