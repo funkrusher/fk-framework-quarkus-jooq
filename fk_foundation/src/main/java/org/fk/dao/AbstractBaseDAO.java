@@ -1,9 +1,10 @@
-package org.fk.daos;
+package org.fk.dao;
 
 import org.fk.jooq.JooqContext;
 import org.fk.util.request.RequestContext;
 import org.jooq.*;
 import org.jooq.Record;
+import org.jooq.impl.DSL;
 
 import java.util.Collection;
 
@@ -87,7 +88,7 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
 
             // [#2573] Composite key T types are of type Record[N]
         else
-            return row(pk).equal((Record) id);
+            return DSL.row(pk).equal((Record) id);
     }
 
     protected Condition equal(Field<?>[] pk, Collection<T> ids) {
@@ -99,7 +100,7 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
 
             // [#2573] Composite key T types are of type Record[N]
         else
-            return row(pk).in(ids.toArray(new Record[]{}));
+            return DSL.row(pk).in(ids.toArray(new Record[]{}));
     }
 
     // -------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package org.fk.daos;
+package org.fk.dao;
 
 import org.fk.generated.AbstractDTO;
 import org.jooq.Field;

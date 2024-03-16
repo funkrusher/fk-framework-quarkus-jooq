@@ -1,13 +1,13 @@
-package org.fk.daos;
+package org.fk.dao;
 
 import org.fk.generated.AbstractDTO;
 import org.fk.jooq.JooqContext;
 import org.jooq.*;
 import org.jooq.Record;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
@@ -577,7 +577,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
                 .where(
                         lowerInclusive == null
                                 ? upperInclusive == null
-                                ? noCondition()
+                                ? DSL.noCondition()
                                 : field.le(upperInclusive)
                                 : upperInclusive == null
                                 ? field.ge(lowerInclusive)

@@ -1,4 +1,4 @@
-package org.fk.daos;
+package org.fk.dao;
 
 import org.fk.generated.AbstractDTO;
 import org.fk.jooq.JooqContext;
@@ -8,10 +8,8 @@ import org.jooq.*;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
 
 import static java.util.stream.Collectors.groupingBy;
 import static org.jooq.impl.DSL.field;
@@ -121,7 +119,7 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
         Collection<SortField<?>> sortFields = new ArrayList<>();
         if (queryParameters.getSorter() != null) {
             Sorter sorter = queryParameters.getSorter();
-            Field<?> sorterField = table().field(field(name(sorter.getField())));
+            Field<?> sorterField = table().field(DSL.field(DSL.name(sorter.getField())));
             if (sorter.getOperator() == SorterOperator.ASC) {
                 sortFields.add(sorterField.sort(SortOrder.ASC));
             } else if (sorter.getOperator() == SorterOperator.ASC) {
@@ -136,24 +134,24 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
         Collection<Condition> filterFields = new ArrayList<>();
         if (queryParameters.getFilters().size() > 0) {
             for (Filter filter : queryParameters.getFilters()) {
-                Field<?> filterField = table().field(field(name(filter.getField())));
+                Field<?> filterField = table().field(DSL.field(DSL.name(filter.getField())));
                 Class<?> type = filterField.getType();
 
                 if (String.class.isAssignableFrom(type)) {
                     String value = filter.getValues().get(0);
-                    Field<String> field = table().field(field(name(filter.getField()), String.class));
+                    Field<String> field = table().field(DSL.field(DSL.name(filter.getField()), String.class));
                     filterFields.add(field.eq(value));
                 } else if (Integer.class.isAssignableFrom(type)) {
                     Integer value = Integer.parseInt(filter.getValues().get(0));
-                    Field<Integer> field = table().field(field(name(filter.getField()), Integer.class));
+                    Field<Integer> field = table().field(DSL.field(DSL.name(filter.getField()), Integer.class));
                     filterFields.add(field.eq(value));
                 } else if (Long.class.isAssignableFrom(type)) {
                     Long value = Long.parseLong(filter.getValues().get(0));
-                    Field<Long> field = table().field(field(name(filter.getField()), Long.class));
+                    Field<Long> field = table().field(DSL.field(DSL.name(filter.getField()), Long.class));
                     filterFields.add(field.eq(value));
                 } else if (BigDecimal.class.isAssignableFrom(type)) {
                     BigDecimal value = new BigDecimal(filter.getValues().get(0));
-                    Field<BigDecimal> field = table().field(field(name(filter.getField()), BigDecimal.class));
+                    Field<BigDecimal> field = table().field(DSL.field(DSL.name(filter.getField()), BigDecimal.class));
                     if (filter.getOperator() == FilterOperator.EQUALS) {
                         filterFields.add(field.eq(value));
                     } else if (filter.getOperator() == FilterOperator.GREATER_THAN_OR_EQUALS) {

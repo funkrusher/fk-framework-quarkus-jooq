@@ -1,7 +1,7 @@
-package org.fk.daos.view;
+package org.fk.daos;
 
-import org.fk.daos.AbstractViewDAO;
-import org.fk.daos.RecordToViewMapper;
+import org.fk.dao.AbstractViewDAO;
+import org.fk.dao.RecordToViewMapper;
 import org.fk.dtos.ProductDTO;
 import org.fk.dtos.ProductLangDTO;
 import org.fk.generated.jooq_testshop.tables.Product;
@@ -12,12 +12,8 @@ import org.jooq.Record;
 import org.jooq.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 

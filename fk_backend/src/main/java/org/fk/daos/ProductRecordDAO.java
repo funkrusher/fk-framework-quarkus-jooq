@@ -1,6 +1,6 @@
-package org.fk.daos.record;
+package org.fk.daos;
 
-import org.fk.daos.AbstractRecordDAO;
+import org.fk.dao.AbstractRecordDAO;
 import org.fk.generated.jooq_testshop.tables.Product;
 import org.fk.generated.jooq_testshop.tables.interfaces.IProduct;
 import org.fk.generated.jooq_testshop.tables.records.ProductRecord;

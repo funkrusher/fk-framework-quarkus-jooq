@@ -1,7 +1,5 @@
 package org.fk.daos;
 
-import org.fk.daos.record.*;
-import org.fk.daos.view.ProductViewDAO;
 import org.fk.jooq.JooqContext;
 
 import jakarta.enterprise.context.ApplicationScoped;

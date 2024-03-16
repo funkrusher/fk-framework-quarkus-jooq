@@ -76,7 +76,6 @@ dependencyResolutionManagement {
             library('testcontainersJunitJupiter', 'org.testcontainers', 'junit-jupiter').versionRef('testcontainers')
 
             // bundles
-            bundle('quarkusShared', ['quarkusResteasyReactiveJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc'])
             bundle('quarkus', ['quarkusJdbcMariadb', 'quarkusResteasyReactiveJackson', 'quarkusLiquibase', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc', 'quarkusReactiveMysqlClient'])
             bundle('testcontainers', ['testcontainers', 'testcontainersMariadb'])
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])

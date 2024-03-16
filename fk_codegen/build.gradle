@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'java-library'
     id 'idea'
     id 'org.kordamp.gradle.jandex'
 }
@@ -9,11 +10,12 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation enforcedPlatform(libs.quarkusPlaform)
-    implementation libs.bundles.quarkus
-    implementation libs.bundles.jooq
-    implementation libs.bundles.testcontainers
-    implementation libs.mariadbJavaClient
+    api enforcedPlatform(libs.quarkusPlaform)
+
+    api libs.bundles.quarkus
+    api libs.bundles.jooq
+    api libs.bundles.testcontainers
+    api libs.mariadbJavaClient
 }
 
 // configure generated/src-directories, necessary for use in intellij-idea.

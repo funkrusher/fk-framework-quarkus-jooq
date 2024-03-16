@@ -48,9 +48,9 @@ public class JooqExecuteListener extends DefaultExecuteListener {
                 Table<?> table = s.asTable();
 
                 // Do something with the table
-                Field<Integer> clientIdField = table.field(field(name("clientId"), Integer.class));
+                Field<Integer> clientIdField = table.field(DSL.field(DSL.name("clientId"), Integer.class));
                 if (clientIdField != null) {
-                    Field<Integer> field = field(name("clientId"), Integer.class);
+                    Field<Integer> field = DSL.field(DSL.name("clientId"), Integer.class);
                     select.addConditions(field.eq(requestContext.getClientId()));
                 } else {
                     select.addConditions(DSL.trueCondition());

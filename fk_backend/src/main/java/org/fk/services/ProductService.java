@@ -2,9 +2,9 @@ package org.fk.services;
 
 import jakarta.validation.*;
 import org.fk.daos.DAOFactory;
-import org.fk.daos.record.ProductLangRecordDAO;
-import org.fk.daos.record.ProductRecordDAO;
-import org.fk.daos.view.ProductViewDAO;
+import org.fk.daos.ProductLangRecordDAO;
+import org.fk.daos.ProductRecordDAO;
+import org.fk.daos.ProductViewDAO;
 import org.fk.dtos.ProductDTO;
 import org.fk.dtos.ProductLangDTO;
 import org.fk.generated.jooq_testshop.tables.Product;
