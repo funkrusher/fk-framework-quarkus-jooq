@@ -57,7 +57,7 @@ public class Databasechangeloglock extends TableImpl<DatabasechangeloglockRecord
     /**
      * The column <code>jooq_testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
-    public final TableField<DatabasechangeloglockRecord, Boolean> LOCKED = createField(DSL.name("LOCKED"), SQLDataType.BIT.nullable(false), this, "");
+    public final TableField<DatabasechangeloglockRecord, Boolean> LOCKED = createField(DSL.name("LOCKED"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>jooq_testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.

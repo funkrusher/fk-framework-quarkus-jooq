@@ -26,8 +26,9 @@ In the folder `./docs` you can find specific documentations about the different 
 
 ## Requirements
 
-To compile and run this demo you will need:
+### Installations
 
+To compile and run this demo you will need:
 - GraalVM JDK 17+
 - Mariadb database
 - Optional: Quarkus Plugin in Intellij-IDEA
@@ -45,16 +46,16 @@ been set, and that a JDK 17+ `java` command is on the path. This is also importa
 See the [Building a Native Executable guide](https://quarkus.io/guides/building-native-image)
 for help setting up your environment.
 
-### Setup Server for local development
+## Setup/run server for local development
 
-#### Create database
+### Create database
 
 Connect with your mariadb-database and create the database `testshop`
 ```
 CREATE DATABASE testshop
 ```
 
-#### Create application.properties
+### Create application.properties
 
 Within the folder `fk_backend/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
 then edit this newly created file `fk_backend/src/main/resources/application.properties` in your editor of choice 
@@ -66,7 +67,7 @@ quarkus.datasource.username=[username]
 quarkus.datasource.password=[password]
 ```
 
-#### Create Cognito-Simulator
+### Setup/run Cognito-Simulator
 
 The example wants to show how to do Authentication and Authorization with an OIDC Provider.
 To make it easy for local development, we will use an offline emulator for Amazon Cognito here.
@@ -109,7 +110,7 @@ quarkus.oidc.jwks-path=http://localhost:9229/<cognitolocal.userpoolid>/.well-kno
 quarkus.oidc.roles.role-claim-path=custom:fk_roles
 ```
 
-#### Running the server
+### Run the server
 
 Start the Server from the Console with following command:
 ```code
@@ -118,45 +119,87 @@ Start the Server from the Console with following command:
 You can then navigate your webbrowser directly to the swagger-ui:
 - http://localhost:8080/q/swagger-ui/
 
-## Running the jOOQ Code-Generator
+## Setup/run Unit-Tests for local development
 
-Start the jOOQ Code-Generator from the Console with following command:
-```code
-gradlew generateJooqCode
+### Create application.properties
+
+Within the folder `fk_backend/src/test/resources/`, copy the file `./templates/application.properties` to `./application.properties`,
+then edit this newly created file `fk_backend/src/test/resources/application.properties` in your editor of choice
+and copy the cognito and oidc settings from your `fk_backend/src/main/resources/application.properties` into your 
+`fk_backend/src/test/resources/application.properties`, which are the following:
 ```
-The generated code will reside in the folder `fk_codegen/src/main/generated`. The generator will fire up a mariadb-testcontainer automatically, apply the liquibase-migrations to it and will then generate the code from this database-schema. Afterwards the testcontainer is stopped again. 
+# cognito-local
+cognitolocal.userpoolid=[userpoolid]
+cognitolocal.userpoolclientid=[userpoolclientid]
+cognitolocal.userpoolclientsecret=[userpoolclientsecret]
 
-## Running the Unit-Tests
-
-Start the Unit-Tests from the Console with following command:
-```code
-gradlew test
+# quarkus oidc
+quarkus.oidc.auth-server-url=http://localhost:9229/[userpoolid]
+quarkus.oidc.discovery-enabled=false
+quarkus.oidc.jwks-path=http://localhost:9229/[userpoolid]/.well-known/jwks.json
 ```
-The testing-framework will fire up a mariadb-testcontainer automatically and will apply the liquibase-migrations to it. 
-This way the Unit-Tests can expect a real database to be available behind the tested code, and with the help of jOOQ the expected database-content can be validated after each test.
 
-## Rollback for Liquibase-Migrations in Local-Dev
+### Run the Unit-Tests
 
-The Liquibase-Migrations are automatically applied when the Quarkus-Application is started (as defined in `application.properties` with the `quarkus.liquibase.migrate-at-start=true` parameter)
+In Intellij you can just start the Unit-Tests as usual. 
+Alternatively you can start them via the console with following command:
+
+```code
+./gradlew test
+```
+The testing-framework will fire up a mariadb-testcontainer automatically and will apply the liquibase-migrations to it.
+This way the Unit-Tests can expect a real database to be available behind the tested code, 
+and with the help of jOOQ the expected database-content can be validated after each test.
+
+## Maintaining Database-Migrations
+
+### Apply Liquibase-Migrations
+
+You can place the liquibase-migrations in the folder `fk_backend/src/main/resources/liquibase`.
+For each new migration you can add a new file `feature-xxxx.xml` with replacing xxx with your ticket-id from your 
+version-control system (gitlab), to relate your database-migrations to your tickets.
+
+You also need to add this identifier in the file `changelog.xml` in the same folder, to make it clear to 
+liquibase in which sequence the migration-files need to be applied (latest at the bottom).
+
+The Liquibase-Migrations are automatically applied when the Quarkus-Application is started 
+(as defined in `application.properties` with the `quarkus.liquibase.migrate-at-start=true` parameter)
 
 It is often convenient in local-dev, to be able to rollback to a specific tag, if you want to switch your git-branch, that you are working on.
-For this use-case a gradle-task is provided, that helps you to rollback your database to a specific changeset. This will automatically execute all rollbacks of already applied changesets until the tag-changeset is reached.   
+For this use-case a gradle-task is provided, that helps you to rollback your database to a specific changeset. 
+This will automatically execute all rollbacks of already applied changesets until the tag-changeset is reached.
 ```code
-gradlew liquibaseRollback -ProllbackTag=feature-1122
+./gradlew liquibaseRollback -ProllbackTag=feature-1122
 ```
 This example would rollback the following tags, in this order:
 - feature-1321
 - feature-1122
 
-The typical workflow would consider of first rolling back your changesets by rolling back to the latest changeSet-tag in the dev-branch. Then you would switch branches to an other feature branch, and start the quarkus-application, so all changeSets of this branch are applied to your database.
+The typical workflow would consider of first rolling back your changesets by rolling back to the latest changeSet-tag in the dev-branch. 
+Then you would switch branches to an other feature branch, and start the quarkus-application, 
+so all changeSets of this branch are applied to your database.
 
 Note: this is only relevant/helpful for local-dev, you never! want to use this with any other environment (staging, production).
+
+### Running the jOOQ Code-Generator
+
+After all database-changes via liquibase-migrations, the codegen must be executed, to recreate the database-specific code. 
+
+Start the jOOQ Code-Generator from the Console with following command:
+```code
+./gradlew generateJooqCode
+```
+The generated code will reside in the folder `fk_codegen/src/main/generated`. 
+The generator will fire up a mariadb-testcontainer automatically, apply the liquibase-migrations to it 
+and will then generate the code from this database-schema. Afterwards the testcontainer is stopped again.
+
+You also need to commit this generated code into your version-control system, as it is used within your code.
 
 ## Dockerizing the application
 
 Start the Native Build from the Console with following command:
 ```shell script
-gradlew clean buildNative "-Dquarkus.profile=dockerized"
+./gradlew clean buildNative "-Dquarkus.profile=dockerized"
 ```
 It will use the `am-backend/src/main/resources/application-dockerized.properties` as configuration and will do a native build with it. 
 The build produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory along with other files.
@@ -177,36 +220,6 @@ All the described operations can also be started up from within the Intellij IDE
 2. Now open the project via `File`->`Open`.
 3. The project should now be build automatically.
 
-## AWS Cognito Authentication/Authorization with OIDC
-
-We will first start `cognito-local` as a docker-container running on port 9229:
-```
-docker-compose -f cognito-local-docker-compose.yml up --build -d
-```
-
-You should now start your quarkus application, and navigate to the swagger-ui endpoint:
-- http://localhost:8080/q/swagger-ui/
-
-Call the following REST-Endpoint and give it an email+password to create a new user in the pool. Also make sure to give "ADMIN" as the roleId, and the clientId=1 (which we assume as a master-tenant-id that has privileged access)
-- `/api/v1/cognitoLocal/signup`
-
-Call the following REST-Endpoint and give it the same email+password, to obtain an access_token as response (and in the cookies)
-- `/api/v1/cognitoLocal/signin`
-
-Click the `Authorize`-Button in swagger-ui and enter the field `access_token (http, Bearer)` with the content of the response of the `/api/v1/cognitoLocal/signin` call. Note that the return of the signin-call does contain the id-token. This is necessary because aws-cognito does not provide all the information we need directly in the access-token. We can/need to use the id-token instead.
-
-You have now setup swagger-ui to always provide this `access_token` as an Authorization.
-
-Now you can finally call the following REST-Endpoint:
-- `/api/v1/cognitoLocal/protected-by-quarkus`
-
-Quarkus will automatically check the Authorization HTTP-Header in the request, which contains the access_token.
-Quarkus will then validate this access_token with help of the `quarkus.oidc.jwks-path` you provided in the `application.properties` file.
-This REST-Endpoint will only return Success, if the JWT-Verify is successful. 
-
-The REST-Endpoint will also make sure that the user must have the "ADMIN" Role (RBAC), and the clientId=1 (Master-Tenant),
-for access to be allowed.
-
 ## Third-Party Versions Balancing
 
 The used versions of third-party libraries must be balanced with each other. 
@@ -220,7 +233,7 @@ Quarkus only starts to support this migration of Jakarta, beginning with 3.0.0.
 
 We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
 ```code
-gradlew -p fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
+./gradlew -p fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
 ```
 
 ## Related Guides
