@@ -29,19 +29,19 @@ In the folder `./docs` you can find specific documentations about the different 
 ### Installations
 
 To compile and run this demo you will need:
-- GraalVM JDK 17+
+- GraalVM JDK 21+
 - Mariadb database
 - Optional: Quarkus Plugin in Intellij-IDEA
 
 The project has been set up specifically with Intellij IDEA compatibility in mind.
 
-### Configuring GraalVM JDK 17+
+### Configuring GraalVM JDK 21+
 
-Download the Java17 GraalVM installer for your platform from:
+Download the Java21 GraalVM installer for your platform from:
 - https://github.com/graalvm/graalvm-ce-builds/releases
 
 Make sure that both the `GRAALVM_HOME` and `JAVA_HOME` environment variables have
-been set, and that a JDK 17+ `java` command is on the path. This is also important if you use Intellij IDEA.
+been set, and that a JDK 21+ `java` command is on the path. This is also important if you use Intellij IDEA.
 
 See the [Building a Native Executable guide](https://quarkus.io/guides/building-native-image)
 for help setting up your environment.
@@ -116,8 +116,9 @@ Start the Server from the Console with following command:
 ```code
 ./gradlew --console=plain quarkusDev
 ```
-You can then navigate your webbrowser directly to the swagger-ui:
+You can then navigate your webbrowser directly to the swagger-ui or dev-ui:
 - http://localhost:8080/q/swagger-ui/
+- http://localhost:8080/q/dev-ui/
 
 ## Setup/run Unit-Tests for local development
 

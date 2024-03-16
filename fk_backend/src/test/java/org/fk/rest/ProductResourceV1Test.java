@@ -4,7 +4,7 @@ import io.quarkus.security.credential.Credential;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import org.fk.auth.TenantCredential;

@@ -5,7 +5,7 @@ pluginManagement {
         mavenLocal()
     }
     plugins {
-        id "io.quarkus" version '3.6.4'
+        id "io.quarkus" version '3.8.2'
         id "org.kordamp.gradle.jandex" version "1.1.0"
     }
 }
@@ -14,34 +14,25 @@ dependencyResolutionManagement {
     versionCatalogs {
         libs {
             // versions
-            version('quarkus', '3.6.4')
-            version('mariadb-java-client', '3.1.2')
-            version('testcontainers', '1.17.6')
-            version('rest-assured', '4.4.0')
-            version('awaitility', '4.1.0')
-            version('jooq', '3.16.16')
-            version('slf4j-jboss-logmanager', '2.6.1.Final')
-            version('jackson', '2.14.2')
-            version('localstack', '0.2.23')
-            version('awssdk', '2.17.51')
-
-            // localstack (aws-cognito local dev)
-            library('localstack', 'cloud.localstack', 'localstack-utils').versionRef('localstack')
+            version('quarkus', '3.8.2')
+            version('mariadb-java-client', '3.3.3')
+            version('testcontainers', '1.19.7')
+            version('rest-assured', '5.4.0')
+            version('awaitility', '4.2.1')
+            version('jooq', '3.19.6')
+            version('jackson', '2.17.0')
+            version('awssdk', '2.25.11')
 
             // aws-sdk2
             library('awssdk', 'software.amazon.awssdk', 'bom').versionRef('awssdk')
             library('awssdkCognitoIdentityProvider', 'software.amazon.awssdk', 'cognitoidentityprovider').versionRef('awssdk')
-
-            // slf4j-jboss-logmanager (links quarkus jboss-logging so it can log jOOQs slf4j logging)
-            library('slf4jJbossLogmanager', 'org.jboss.slf4j', 'slf4j-jboss-logmanager').versionRef('slf4j-jboss-logmanager')
 
             // jackson (which are not already included in quarkus-jackson
             library('jacksonCsv', 'com.fasterxml.jackson.dataformat', 'jackson-dataformat-csv').versionRef('jackson')
             library('jacksonJsr310', 'com.fasterxml.jackson.datatype', 'jackson-datatype-jsr310').versionRef('jackson')
 
             // quarkus
-            plugin('quarkusPlugin', 'io.quarkus').versionRef('quarkus')
-            library('quarkusPlaform', 'io.quarkus.platform', 'quarkus-bom').versionRef('quarkus')
+            library('quarkusPlatform', 'io.quarkus.platform', 'quarkus-bom').versionRef('quarkus')
             library('quarkusLiquibase', 'io.quarkus', 'quarkus-liquibase').versionRef('quarkus')
             library('quarkusArc', 'io.quarkus', 'quarkus-arc').versionRef('quarkus')
             library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')

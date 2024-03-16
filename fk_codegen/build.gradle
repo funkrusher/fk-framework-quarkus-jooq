@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    api enforcedPlatform(libs.quarkusPlaform)
+    api enforcedPlatform(libs.quarkusPlatform)
 
     api libs.bundles.quarkus
     api libs.bundles.jooq

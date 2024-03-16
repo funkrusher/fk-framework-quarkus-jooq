@@ -19,15 +19,13 @@ repositories {
 }
 dependencies {
     api project(':fk_codegen')
-    api enforcedPlatform(libs.quarkusPlaform)
+    api enforcedPlatform(libs.quarkusPlatform)
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.aws
-    api libs.slf4jJbossLogmanager
     api libs.mariadbJavaClient
     api libs.jacksonCsv
     api libs.jacksonJsr310
-    api libs.localstack
 }
 
 // cognitoLocalSetup task
