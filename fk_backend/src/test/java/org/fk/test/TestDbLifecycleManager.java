@@ -2,6 +2,15 @@ package org.fk.test;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import liquibase.Liquibase;
+import liquibase.Scope;
+import liquibase.UpdateSummaryEnum;
+import liquibase.command.CommandScope;
+import liquibase.command.core.UpdateCommandStep;
+import liquibase.command.core.helpers.ChangeExecListenerCommandStep;
+import liquibase.command.core.helpers.DatabaseChangelogCommandStep;
+import liquibase.command.core.helpers.DbUrlConnectionArgumentsCommandStep;
+import liquibase.command.core.helpers.ShowSummaryArgument;
+import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
@@ -19,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -43,7 +53,7 @@ public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManag
         container.start();
         waitUntilContainerStarted();
 
-        Map<String, String> jdbcUrl = new HashMap<>();
+        final Map<String, String> jdbcUrl = new HashMap<>();
         jdbcUrl.put("quarkus.datasource.url", container.getJdbcUrl());
         jdbcUrl.put("mariadb.testcontainer.host", "localhost");
         jdbcUrl.put("mariadb.testcontainer.port", String.valueOf(container.getFirstMappedPort()));
@@ -74,13 +84,22 @@ public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManag
         }
     }
 
-    private void migrateDatabase(String jdbcUrl, String username, String password) throws FileNotFoundException, SQLException, LiquibaseException {
-        // Configure Liquibase
-        ResourceAccessor resourceAccessor = new DirectoryResourceAccessor(new File("src/main/resources/liquibase"));
-        Connection connection = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword());
-        Liquibase liquibase = new liquibase.Liquibase("changelog.xml", resourceAccessor,
-                DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection)));
-        liquibase.update("");
+    private void migrateDatabase(String jdbcUrl, String username, String password) throws Exception {
+        // execute liquibase update
+        final Connection connection = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword());
+        final ResourceAccessor resourceAccessor = new DirectoryResourceAccessor(new File("src/main/resources/liquibase"));
+        final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+
+        Map<String, Object> scopedSettings = new LinkedHashMap<>();
+        scopedSettings.put(Scope.Attr.resourceAccessor.name(), resourceAccessor);
+        Scope.child(scopedSettings, () -> {
+            final CommandScope updateCommand = new CommandScope(UpdateCommandStep.COMMAND_NAME);
+            updateCommand.addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database);
+            updateCommand.addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, "changelog.xml");
+            updateCommand.addArgumentValue(ShowSummaryArgument.SHOW_SUMMARY, UpdateSummaryEnum.SUMMARY);
+            updateCommand.execute();
+        });
+
         connection.close();
     }
 

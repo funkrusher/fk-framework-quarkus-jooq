@@ -19,7 +19,6 @@ repositories {
 }
 dependencies {
     api project(':fk_codegen')
-    api enforcedPlatform(libs.quarkusPlatform)
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.aws

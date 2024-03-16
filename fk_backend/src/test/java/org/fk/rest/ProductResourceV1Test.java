@@ -33,8 +33,7 @@ import static io.restassured.RestAssured.given;
 import static org.fk.auth.FkSecurityIdentity.MASTER_TENANT_ID;
 import static org.fk.util.roles.FkRoles.ADMIN;
 import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * ProductResourceV1Test
@@ -44,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ProductResourceV1Test {
 
     @InjectTestDbUtil
-    private static TestDbUtil testDbUtil;
+    static TestDbUtil testDbUtil;
     @InjectMock
     SecurityIdentity identity;
 
@@ -53,7 +52,7 @@ public class ProductResourceV1Test {
         Set<String> roles = new HashSet<>();
         String adminRole = ADMIN;
         roles.add(adminRole);
-        Set<Credential> credentials = new HashSet();
+        Set<Credential> credentials = new HashSet<>();
         TenantCredential tenantCredential = new TenantCredential(MASTER_TENANT_ID);
         credentials.add(tenantCredential);
         Mockito.when(identity.hasRole(adminRole)).thenReturn(true);
@@ -97,11 +96,12 @@ public class ProductResourceV1Test {
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOne().into(new ProductRecord());
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
+        assertNotNull(record);
         assertEquals(record.getProductId(), responseDTO.getProductId());
 
         Result<org.jooq.Record> xLangRecords = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).fetch();
-        ProductLangRecord productLangRecord1 = xLangRecords.get(0).into(new ProductLangRecord());
+        ProductLangRecord productLangRecord1 = xLangRecords.getFirst().into(new ProductLangRecord());
         assertEquals(productLangRecord1.getProductId(), responseDTO.getProductId());
         assertEquals(productLangRecord1.getName(), xLangDTO.getName());
         assertEquals(productLangRecord1.getDescription(), xLangDTO.getDescription());
@@ -152,19 +152,19 @@ public class ProductResourceV1Test {
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOne().into(new ProductRecord());
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
+        assertNotNull(record);
         assertEquals(record.getProductId(), responseDTO.getProductId());
         assertEquals(record.getPrice(), responseDTO.getPrice());
 
-        Result<org.jooq.Record> xLangRecords = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).fetch();
+        ProductLangRecord existingXLang1 = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).and(ProductLang.PRODUCT_LANG.LANGID.eq(1)).fetchOneInto(ProductLangRecord.class);
+        ProductLangRecord existingXLang2 = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).and(ProductLang.PRODUCT_LANG.LANGID.eq(2)).fetchOneInto(ProductLangRecord.class);
 
-
-        ProductLangRecord existingXLang1 = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).and(ProductLang.PRODUCT_LANG.LANGID.eq(1)).fetchOne().into(new ProductLangRecord());
-        ProductLangRecord existingXLang2 = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).and(ProductLang.PRODUCT_LANG.LANGID.eq(2)).fetchOne().into(new ProductLangRecord());
-
+        assertNotNull(existingXLang1);
         assertEquals(existingXLang1.getProductId(), responseDTO.getProductId());
         assertEquals(existingXLang1.getName(), xLangDTO.getName());
         assertEquals(existingXLang1.getDescription(), xLangDTO.getDescription());
+        assertNotNull(existingXLang2);
         assertEquals(existingXLang2.getProductId(), responseDTO.getProductId());
         assertEquals(existingXLang2.getName(), xLang2DTO.getName());
         assertEquals(existingXLang2.getDescription(), xLang2DTO.getDescription());
@@ -182,7 +182,8 @@ public class ProductResourceV1Test {
                 .body(startsWith("{\"productId\":1,\"clientId\":1,\"price\":10.20"));
 
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(1L)).fetchOne().into(new ProductRecord());
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(1L)).fetchOneInto(ProductRecord.class);
+        assertNotNull(record);
         assertEquals(record.getProductId(), 1L);
     }
 
