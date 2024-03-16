@@ -45,27 +45,73 @@ been set, and that a JDK 17+ `java` command is on the path. This is also importa
 See the [Building a Native Executable guide](https://quarkus.io/guides/building-native-image)
 for help setting up your environment.
 
-### Configuring application.properties
+### Setup Server for local development
 
-Copy the file `acme-xxx-backend/src/main/resources/application-template.properties` to `application.properties`.
+#### Create database
 
-Edit the file `acme-xxx-backend/src/main/resources/application.properties` in your editor of choice and set the following settings for a connection with your Mariadb database (replace `xxx` with either `jooq` or `panache`):
+Connect with your mariadb-database and create the database `testshop`
+```
+CREATE DATABASE testshop
+```
+
+#### Create application.properties
+
+Within the folder `fk_backend/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
+then edit this newly created file `fk_backend/src/main/resources/application.properties` in your editor of choice 
+and replace the following settings ([port], [username], [password]) for a connection with your mariadb-database with your settings.
+
 ```code
-quarkus.datasource.jdbc.url=jdbc:mariadb://localhost:3306/xxx_testshop
-quarkus.datasource.username=xxx
-quarkus.datasource.password=xxx
+quarkus.datasource.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?useCursorFetch=true&rewriteBatchedStatements=true
+quarkus.datasource.username=[username]
+quarkus.datasource.password=[password]
 ```
 
-### Creating the database
+#### Create Cognito-Simulator
 
-Connect with your mariadb-database and create the database (replace `xxx` with either `jooq` or `panache`):
+The example wants to show how to do Authentication and Authorization with an OIDC Provider.
+To make it easy for local development, we will use an offline emulator for Amazon Cognito here.
+The official offline emulator (`localstack`) can not be used, because most features would require a professional license.
+Therefor we will use the `cognito-local` offline emulator:
+- https://github.com/jagregory/cognito-local
+
+We will first start `cognito-local` as a docker-container running on port 9229. Open up a console within the root-folder
+of this project and enter following command:
 ```
-CREATE DATABASE xxx_testhop
+docker-compose -f cognito-local-docker-compose.yml up --build -d
 ```
 
-## Running the demo
+Start the cognitoLocalSetup task from the Console with following command:
+```code
+./gradlew cognitoLocalSetup
+```
+please note down the following three outputs of this task:
+- cognitolocal.userpoolid
+- cognitolocal.userpoolclientid
+- cognitolocal.userpoolclientsecret
 
-Start the Demo from the Console with following command:
+copy those three outputs directly into your `fk_backend/src/main/resources/application.properties` file.
+For example:
+```
+# cognito-local
+cognitolocal.userpoolid=local_7GsYn8Qh
+cognitolocal.userpoolclientid=67jqekw6w9193e8khcu9d5slh
+cognitolocal.userpoolclientsecret=6sjqzo1wyemkrjecj4qlqembt
+```
+
+Quarkus will take care of the JWT-Verify, for the JWT that has been created by a successful AWS-Cognito Authentication.
+We need to tell it where to get the OIDC configuration. So make sure that your `application.properties` file also contains the following configurations from the template
+(please insert the correct value for <cognitolocal.userpoolid>):
+```
+# quarkus oidc
+quarkus.oidc.auth-server-url=http://localhost:9229/<cognitolocal.userpoolid>
+quarkus.oidc.discovery-enabled=false
+quarkus.oidc.jwks-path=http://localhost:9229/<cognitolocal.userpoolid>/.well-known/jwks.json
+quarkus.oidc.roles.role-claim-path=custom:fk_roles
+```
+
+#### Running the server
+
+Start the Server from the Console with following command:
 ```code
 ./gradlew --console=plain quarkusDev
 ```
@@ -78,7 +124,7 @@ Start the jOOQ Code-Generator from the Console with following command:
 ```code
 gradlew generateJooqCode
 ```
-The generated code will reside in the folder `acme-jooq-code-generator/src/main/generated`. The generator will fire up a mariadb-testcontainer automatically, apply the liquibase-migrations to it and will then generate the code from this database-schema. Afterwards the testcontainer is stopped again. 
+The generated code will reside in the folder `fk_codegen/src/main/generated`. The generator will fire up a mariadb-testcontainer automatically, apply the liquibase-migrations to it and will then generate the code from this database-schema. Afterwards the testcontainer is stopped again. 
 
 ## Running the Unit-Tests
 
@@ -117,10 +163,10 @@ The build produces the `quarkus-run.jar` file in the `build/quarkus-app/` direct
 
 If you want to execute the app as a docker-container just start it as follows, after running the build.
 ```shell script
-cd ./acme-jooq-backend
+cd ./fk_backend
 docker-compose up --build
 ```
-This will start up a docker-container build with the `acme-jooq-backend/src/main/docker/Dockerfile.jvm` which will use the `build/quarkus-app` directory, we have created with our build and start up the `quarkus-run.jar`
+This will start up a docker-container build with the `fk_backend/src/main/docker/Dockerfile.jvm` which will use the `build/quarkus-app` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
 - http://localhost:8080/products/1
 
@@ -133,44 +179,9 @@ All the described operations can also be started up from within the Intellij IDE
 
 ## AWS Cognito Authentication/Authorization with OIDC
 
-The example wants to show how to do Authentication and Authorization with an OIDC Provider.
-To make it easy for local development, we will use an offline emulator for Amazon Cognito here.
-The official offline emulator (`localstack`) can not be used, because most features would require a professional license.
-Therefor we will use the `cognito-local` offline emulator:
-- https://github.com/jagregory/cognito-local
-
 We will first start `cognito-local` as a docker-container running on port 9229:
 ```
 docker-compose -f cognito-local-docker-compose.yml up --build -d
-```
-
-Start the cognitoLocalSetup task from the Console with following command:
-```code
-gradlew cognitoLocalSetup
-```
-please note down the following three outputs of this task:
-- cognitolocal.userpoolid
-- cognitolocal.userpoolclientid
-- cognitolocal.userpoolclientsecret
-
-copy those three outputs directly into your `acme-jooq-backend/src/main/resources/application.properties` file.
-For example:
-```
-# cognito-local
-cognitolocal.userpoolid=local_7GsYn8Qh
-cognitolocal.userpoolclientid=67jqekw6w9193e8khcu9d5slh
-cognitolocal.userpoolclientsecret=6sjqzo1wyemkrjecj4qlqembt
-```
-
-Quarkus will take care of the JWT-Verify, for the JWT that has been created by a successful AWS-Cognito Authentication.
-We need to tell it where to get the OIDC configuration. So make sure that your `application.properties` file also contains the following configurations from the template
-(please insert the correct value for <cognitolocal.userpoolid>):
-```
-# quarkus oidc
-quarkus.oidc.auth-server-url=http://localhost:9229/<cognitolocal.userpoolid>
-quarkus.oidc.discovery-enabled=false
-quarkus.oidc.jwks-path=http://localhost:9229/<cognitolocal.userpoolid>/.well-known/jwks.json
-quarkus.oidc.roles.role-claim-path=custom:acme_roles
 ```
 
 You should now start your quarkus application, and navigate to the swagger-ui endpoint:
@@ -207,9 +218,9 @@ and mariadb 10.6 is only supported by jOOQ 3.16. See:
 We need to use Quarkus 3.0.0.Beta, because the jOOQ Code Generator already creates the "jakarta.*" package imports for stuff that was in "javax.*" before.
 Quarkus only starts to support this migration of Jakarta, beginning with 3.0.0.
 
-We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `acme-jooq-backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
+We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
 ```code
-gradlew -p acme-jooq-backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
+gradlew -p fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
 ```
 
 ## Related Guides

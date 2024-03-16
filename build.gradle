@@ -10,7 +10,7 @@ repositories {
     mavenLocal()
 }
 
-group 'org.acme'
+group 'org.fk'
 version '1.0.0-SNAPSHOT'
 
 // java-settings for the whole project

@@ -89,7 +89,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name='acme-framework'
-include 'acme-shared'
-include 'acme-jooq-code-generator'
-include 'acme-jooq-backend'
+rootProject.name='fk-framework-quarkus-jooq'
+include 'fk_foundation'
+include 'fk_codegen'
+include 'fk_backend'
