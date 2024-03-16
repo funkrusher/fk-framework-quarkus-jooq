@@ -1,0 +1,28 @@
+version: "3.5"
+
+services:
+  fk-backend:
+    build:
+      context: fk_backend
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - 8080:8080
+    networks:
+      - quarkus
+
+  fk-db:
+      image: mariadb:10.6.12
+      restart: always
+      ports:
+          - 127.0.0.1:5451:3306
+      environment:
+          MYSQL_ROOT_PASSWORD: changeme
+          MYSQL_DATABASE: mydb
+          MYSQL_USER: mydbuser
+          MYSQL_PASSWORD: changeme
+      networks:
+          - quarkus
+
+networks:
+  quarkus:
+    driver: bridge

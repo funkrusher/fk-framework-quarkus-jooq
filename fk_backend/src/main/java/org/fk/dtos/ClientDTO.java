@@ -2,8 +2,8 @@ package org.fk.dtos;
 
 
 import jakarta.validation.Valid;
-import org.fk.generated.jooq_testshop.tables.interfaces.IClient;
-import org.fk.generated.jooq_testshop.tables.dtos.Client;
+import org.fk.generated.testshop.tables.interfaces.IClient;
+import org.fk.generated.testshop.tables.dtos.Client;
 
 /**
  * ClientDTO

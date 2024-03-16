@@ -9,7 +9,7 @@ import org.fk.daos.UserRecordDAO;
 import org.fk.daos.UserRoleRecordDAO;
 import org.fk.dtos.UserDTO;
 import org.fk.dtos.UserRoleDTO;
-import org.fk.generated.jooq_testshop.tables.records.UserRoleRecord;
+import org.fk.generated.testshop.tables.records.UserRoleRecord;
 import org.fk.jooq.JooqContext;
 import org.fk.jooq.JooqContextFactory;
 import org.fk.util.cognito.FkClaim;

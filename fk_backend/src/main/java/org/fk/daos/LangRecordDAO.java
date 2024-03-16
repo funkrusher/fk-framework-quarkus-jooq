@@ -1,9 +1,9 @@
 package org.fk.daos;
 
 import org.fk.dao.AbstractRecordDAO;
-import org.fk.generated.jooq_testshop.tables.Lang;
-import org.fk.generated.jooq_testshop.tables.interfaces.ILang;
-import org.fk.generated.jooq_testshop.tables.records.LangRecord;
+import org.fk.generated.testshop.tables.Lang;
+import org.fk.generated.testshop.tables.interfaces.ILang;
+import org.fk.generated.testshop.tables.records.LangRecord;
 import org.fk.jooq.JooqContext;
 
 /**

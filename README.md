@@ -29,22 +29,23 @@ In the folder `./docs` you can find specific documentations about the different 
 ### Installations
 
 To compile and run this demo you will need:
-- GraalVM JDK 21+
+- JDK 21+ (Eclipse Temurin)
+  - Note: GraalVM is currently not supported for native-build, because some libraries have compatibility-issues
+    - awssdk
+    - jooq
 - Mariadb database
 - Optional: Quarkus Plugin in Intellij-IDEA
 
 The project has been set up specifically with Intellij IDEA compatibility in mind.
 
-### Configuring GraalVM JDK 21+
+### Configuring JDK 21+
 
-Download the Java21 GraalVM installer for your platform from:
-- https://github.com/graalvm/graalvm-ce-builds/releases
+Download the Eclipse Temurin JDK 21 installer for your platform from:
+- https://adoptium.net/installation/
 
-Make sure that both the `GRAALVM_HOME` and `JAVA_HOME` environment variables have
+Make sure that the `JAVA_HOME` environment variables have
 been set, and that a JDK 21+ `java` command is on the path. This is also important if you use Intellij IDEA.
-
-See the [Building a Native Executable guide](https://quarkus.io/guides/building-native-image)
-for help setting up your environment.
+It is recommended to use a tool like sdkman for easy JDK-selection. 
 
 ## Setup/run server for local development
 
@@ -198,19 +199,25 @@ You also need to commit this generated code into your version-control system, as
 
 ## Dockerizing the application
 
-Start the Native Build from the Console with following command:
-```shell script
-./gradlew clean buildNative "-Dquarkus.profile=dockerized"
-```
-It will use the `am-backend/src/main/resources/application-dockerized.properties` as configuration and will do a native build with it. 
-The build produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory along with other files.
+The first step is, to prepare the `fk_backend/src/main/resources/application.properties` file to be ready for the deploy
+within the docker-container. Note that, normally you would prepare this file within a ci-pipeline (like in gitlab for example),
+so it is already prepared with the correct settings for the live-environment.
 
-If you want to execute the app as a docker-container just start it as follows, after running the build.
+For testing it, we can replace all `localhost` occurrences with an ip-address that would be reachable from within
+the docker-container.
+
+Next, build the JAR-files with following command. It will execute the tests and build everything.
 ```shell script
-cd ./fk_backend
+./gradlew build
+```
+The build produces the `quarkus-run.jar` file in the `fk_backend/build/quarkus-app/` directory along with other files,
+and also with our prepared `application.properties`. 
+
+Finally, we can build the docker-image and start it as docker-container by executing the docker-compose file as follows:
+```shell script
 docker-compose up --build
 ```
-This will start up a docker-container build with the `fk_backend/src/main/docker/Dockerfile.jvm` which will use the `build/quarkus-app` directory, we have created with our build and start up the `quarkus-run.jar`
+This will start up a docker-container build with the `fk_backend/src/main/docker/Dockerfile.jvm` which will use the `fk_backend/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
 - http://localhost:8080/products/1
 
@@ -238,7 +245,6 @@ We also can check conflicting dependencies, with gradlew. For example. The follo
 ```
 
 ## Related Guides
-- GraalVM ([installation-guide](https://www.graalvm.org/latest/docs/getting-started/windows/), [release-download](https://github.com/graalvm/graalvm-ce-builds/releases)): GraalVM Installation
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations
 - Gradle+Quarkus ([guide](https://quarkus.io/guides/gradle-tooling)): Building quarkus apps with gradle
 - Gradle+IDEA ([gradle-guide](https://docs.gradle.org/current/userguide/idea_plugin.html), [idea-guide](https://www.jetbrains.com/help/idea/work-with-gradle-projects.html#project_encodings)): Setting up gradle with IDEA

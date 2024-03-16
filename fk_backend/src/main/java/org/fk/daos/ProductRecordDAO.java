@@ -1,9 +1,9 @@
 package org.fk.daos;
 
 import org.fk.dao.AbstractRecordDAO;
-import org.fk.generated.jooq_testshop.tables.Product;
-import org.fk.generated.jooq_testshop.tables.interfaces.IProduct;
-import org.fk.generated.jooq_testshop.tables.records.ProductRecord;
+import org.fk.generated.testshop.tables.Product;
+import org.fk.generated.testshop.tables.interfaces.IProduct;
+import org.fk.generated.testshop.tables.records.ProductRecord;
 import org.fk.jooq.JooqContext;
 
 /**

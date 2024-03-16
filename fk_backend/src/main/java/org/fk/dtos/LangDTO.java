@@ -2,8 +2,8 @@ package org.fk.dtos;
 
 
 import jakarta.validation.Valid;
-import org.fk.generated.jooq_testshop.tables.interfaces.ILang;
-import org.fk.generated.jooq_testshop.tables.dtos.Lang;
+import org.fk.generated.testshop.tables.interfaces.ILang;
+import org.fk.generated.testshop.tables.dtos.Lang;
 
 /**
  * LangDTO

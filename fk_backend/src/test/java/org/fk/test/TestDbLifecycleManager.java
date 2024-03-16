@@ -6,8 +6,6 @@ import liquibase.Scope;
 import liquibase.UpdateSummaryEnum;
 import liquibase.command.CommandScope;
 import liquibase.command.core.UpdateCommandStep;
-import liquibase.command.core.helpers.ChangeExecListenerCommandStep;
-import liquibase.command.core.helpers.DatabaseChangelogCommandStep;
 import liquibase.command.core.helpers.DbUrlConnectionArgumentsCommandStep;
 import liquibase.command.core.helpers.ShowSummaryArgument;
 import liquibase.database.Database;
@@ -45,8 +43,8 @@ public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManag
 
     @Override
     public Map<String, String> start() {
-        container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.6.1"))
-                .withDatabaseName("jooq_testshop")
+        container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.6.12"))
+                .withDatabaseName("testshop")
                 .withUsername("tester")
                 .withPassword("test123");
 
@@ -78,7 +76,7 @@ public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManag
     private void createDatabase(String jdbcUrl, String username, String password) {
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
              Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS jooq_testshop");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS testshop");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.fk.generated.jooq_testshop.tables.interfaces.IProduct;
-import org.fk.generated.jooq_testshop.tables.dtos.Product;
+import org.fk.generated.testshop.tables.interfaces.IProduct;
+import org.fk.generated.testshop.tables.dtos.Product;
 
 import java.util.List;
 

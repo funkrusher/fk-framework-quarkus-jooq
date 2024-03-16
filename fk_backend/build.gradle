@@ -12,8 +12,8 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    implementation project(':fk_foundation')
     implementation enforcedPlatform(libs.quarkusPlatform)
+    implementation project(':fk_foundation')
 
     implementation libs.bundles.quarkus
     implementation libs.bundles.jooq
