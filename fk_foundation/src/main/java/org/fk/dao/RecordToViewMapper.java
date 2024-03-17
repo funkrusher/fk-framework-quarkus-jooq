@@ -1,6 +1,6 @@
 package org.fk.dao;
 
-import org.fk.generated.AbstractDTO;
+import org.fk.dto.AbstractDTO;
 import org.jooq.Field;
 import org.jooq.Record;
 

@@ -1,5 +1,7 @@
 package org.fk.jooq;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.util.request.RequestContext;
 import org.jboss.logging.Logger;
@@ -10,13 +12,14 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
-import org.jooq.impl.*;
-import java.util.Optional;
+import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConfiguration;
+import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.jooq.impl.DefaultRecordListenerProvider;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * JooqContextFactory to create instances of context-scoped jooq dsl-contexts.

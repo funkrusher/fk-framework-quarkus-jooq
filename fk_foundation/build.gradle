@@ -17,10 +17,10 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    api project(':fk_codegen')
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.aws
+    api libs.bundles.testcontainers
     api libs.mariadbJavaClient
     api libs.jacksonCsv
     api libs.jacksonJsr310
