@@ -7,27 +7,17 @@ package org.fk.generated.testshop.tables;
 import jakarta.validation.Valid;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.fk.generated.testshop.Keys;
 import org.fk.generated.testshop.Testshop;
-import org.fk.generated.testshop.tables.Lang.LangPath;
-import org.fk.generated.testshop.tables.Product.ProductPath;
 import org.fk.generated.testshop.tables.records.ProductLangRecord;
-import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
-import org.jooq.PlainSQL;
-import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.SQL;
+import org.jooq.Row4;
 import org.jooq.Schema;
-import org.jooq.Select;
-import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -80,11 +70,11 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
     public final TableField<ProductLangRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
 
     private ProductLang(Name alias, Table<ProductLangRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null, null);
+        this(alias, aliased, null);
     }
 
-    private ProductLang(Name alias, Table<ProductLangRecord> aliased, Field<?>[] parameters, Condition where) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
+    private ProductLang(Name alias, Table<ProductLangRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -108,37 +98,8 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
         this(DSL.name("product_lang"), null);
     }
 
-    public <O extends Record> ProductLang(Table<O> path, ForeignKey<O, ProductLangRecord> childPath, InverseForeignKey<O, ProductLangRecord> parentPath) {
-        super(path, childPath, parentPath, PRODUCT_LANG);
-    }
-
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class ProductLangPath extends ProductLang implements Path<ProductLangRecord> {
-
-        private static final long serialVersionUID = 1L;
-        public <O extends Record> ProductLangPath(Table<O> path, ForeignKey<O, ProductLangRecord> childPath, InverseForeignKey<O, ProductLangRecord> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private ProductLangPath(Name alias, Table<ProductLangRecord> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public ProductLangPath as(String alias) {
-            return new ProductLangPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public ProductLangPath as(Name alias) {
-            return new ProductLangPath(alias, this);
-        }
-
-        @Override
-        public ProductLangPath as(Table<?> alias) {
-            return new ProductLangPath(alias.getQualifiedName(), this);
-        }
+    public <O extends Record> ProductLang(Table<O> child, ForeignKey<O, ProductLangRecord> key) {
+        super(child, key, PRODUCT_LANG);
     }
 
     @Override
@@ -156,26 +117,25 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
         return Arrays.asList(Keys.FK_PRODUCT_LANG_PRODUCTID, Keys.FK_PRODUCT_LANG_LANGID);
     }
 
-    private transient ProductPath _fk_product_lang_productId;
+    private transient Product _fk_product_lang_productId;
+    private transient Lang _fk_product_lang_langId;
 
     /**
      * Get the implicit join path to the <code>testshop.product</code> table.
      */
-    public ProductPath fk_product_lang_productId() {
+    public Product fk_product_lang_productId() {
         if (_fk_product_lang_productId == null)
-            _fk_product_lang_productId = new ProductPath(this, Keys.FK_PRODUCT_LANG_PRODUCTID, null);
+            _fk_product_lang_productId = new Product(this, Keys.FK_PRODUCT_LANG_PRODUCTID);
 
         return _fk_product_lang_productId;
     }
 
-    private transient LangPath _fk_product_lang_langId;
-
     /**
      * Get the implicit join path to the <code>testshop.lang</code> table.
      */
-    public LangPath fk_product_lang_langId() {
+    public Lang fk_product_lang_langId() {
         if (_fk_product_lang_langId == null)
-            _fk_product_lang_langId = new LangPath(this, Keys.FK_PRODUCT_LANG_LANGID, null);
+            _fk_product_lang_langId = new Lang(this, Keys.FK_PRODUCT_LANG_LANGID);
 
         return _fk_product_lang_langId;
     }
@@ -188,11 +148,6 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
     @Override
     public ProductLang as(Name alias) {
         return new ProductLang(alias, this);
-    }
-
-    @Override
-    public ProductLang as(Table<?> alias) {
-        return new ProductLang(alias.getQualifiedName(), this);
     }
 
     /**
@@ -211,95 +166,12 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
         return new ProductLang(name, null);
     }
 
-    /**
-     * Rename this table
-     */
-    @Override
-    public ProductLang rename(Table<?> name) {
-        return new ProductLang(name.getQualifiedName(), null);
-    }
+    // -------------------------------------------------------------------------
+    // Row4 type methods
+    // -------------------------------------------------------------------------
 
-    /**
-     * Create an inline derived table from this table
-     */
     @Override
-    public ProductLang where(Condition condition) {
-        return new ProductLang(getQualifiedName(), aliased() ? this : null, null, condition);
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public ProductLang where(Collection<? extends Condition> conditions) {
-        return where(DSL.and(conditions));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public ProductLang where(Condition... conditions) {
-        return where(DSL.and(conditions));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public ProductLang where(Field<Boolean> condition) {
-        return where(DSL.condition(condition));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public ProductLang where(SQL condition) {
-        return where(DSL.condition(condition));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public ProductLang where(@Stringly.SQL String condition) {
-        return where(DSL.condition(condition));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public ProductLang where(@Stringly.SQL String condition, Object... binds) {
-        return where(DSL.condition(condition, binds));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public ProductLang where(@Stringly.SQL String condition, QueryPart... parts) {
-        return where(DSL.condition(condition, parts));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public ProductLang whereExists(Select<?> select) {
-        return where(DSL.exists(select));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public ProductLang whereNotExists(Select<?> select) {
-        return where(DSL.notExists(select));
+    public Row4<Long, Integer, String, String> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }

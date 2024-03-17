@@ -23,9 +23,9 @@ public class User extends AbstractDTO implements IUser {
 
     private Integer userId;
     private Integer clientId;
-    private String email;
-    private String firstname;
-    private String lastname;
+    private String  email;
+    private String  firstname;
+    private String  lastname;
 
     public User() {}
 
@@ -40,9 +40,9 @@ public class User extends AbstractDTO implements IUser {
     public User(
         Integer userId,
         Integer clientId,
-        String email,
-        String firstname,
-        String lastname
+        String  email,
+        String  firstname,
+        String  lastname
     ) {
         this.userId = userId;
         this.clientId = clientId;

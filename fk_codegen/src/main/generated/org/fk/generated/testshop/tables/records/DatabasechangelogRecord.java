@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 
 import org.fk.generated.testshop.tables.Databasechangelog;
 import org.fk.generated.testshop.tables.interfaces.IDatabasechangelog;
+import org.jooq.Field;
+import org.jooq.Record14;
+import org.jooq.Row14;
 import org.jooq.impl.TableRecordImpl;
 
 
@@ -20,7 +23,7 @@ import org.jooq.impl.TableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRecord> implements IDatabasechangelog {
+public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRecord> implements Record14<String, String, String, LocalDateTime, Integer, String, String, String, String, String, String, String, String, String>, IDatabasechangelog {
 
     private static final long serialVersionUID = 1L;
 
@@ -267,6 +270,333 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     }
 
     // -------------------------------------------------------------------------
+    // Record14 type implementation
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Row14<String, String, String, LocalDateTime, Integer, String, String, String, String, String, String, String, String, String> fieldsRow() {
+        return (Row14) super.fieldsRow();
+    }
+
+    @Override
+    public Row14<String, String, String, LocalDateTime, Integer, String, String, String, String, String, String, String, String, String> valuesRow() {
+        return (Row14) super.valuesRow();
+    }
+
+    @Override
+    public Field<String> field1() {
+        return Databasechangelog.DATABASECHANGELOG.ID;
+    }
+
+    @Override
+    public Field<String> field2() {
+        return Databasechangelog.DATABASECHANGELOG.AUTHOR;
+    }
+
+    @Override
+    public Field<String> field3() {
+        return Databasechangelog.DATABASECHANGELOG.FILENAME;
+    }
+
+    @Override
+    public Field<LocalDateTime> field4() {
+        return Databasechangelog.DATABASECHANGELOG.DATEEXECUTED;
+    }
+
+    @Override
+    public Field<Integer> field5() {
+        return Databasechangelog.DATABASECHANGELOG.ORDEREXECUTED;
+    }
+
+    @Override
+    public Field<String> field6() {
+        return Databasechangelog.DATABASECHANGELOG.EXECTYPE;
+    }
+
+    @Override
+    public Field<String> field7() {
+        return Databasechangelog.DATABASECHANGELOG.MD5SUM;
+    }
+
+    @Override
+    public Field<String> field8() {
+        return Databasechangelog.DATABASECHANGELOG.DESCRIPTION;
+    }
+
+    @Override
+    public Field<String> field9() {
+        return Databasechangelog.DATABASECHANGELOG.COMMENTS;
+    }
+
+    @Override
+    public Field<String> field10() {
+        return Databasechangelog.DATABASECHANGELOG.TAG;
+    }
+
+    @Override
+    public Field<String> field11() {
+        return Databasechangelog.DATABASECHANGELOG.LIQUIBASE;
+    }
+
+    @Override
+    public Field<String> field12() {
+        return Databasechangelog.DATABASECHANGELOG.CONTEXTS;
+    }
+
+    @Override
+    public Field<String> field13() {
+        return Databasechangelog.DATABASECHANGELOG.LABELS;
+    }
+
+    @Override
+    public Field<String> field14() {
+        return Databasechangelog.DATABASECHANGELOG.DEPLOYMENT_ID;
+    }
+
+    @Override
+    public String component1() {
+        return getID();
+    }
+
+    @Override
+    public String component2() {
+        return getAUTHOR();
+    }
+
+    @Override
+    public String component3() {
+        return getFILENAME();
+    }
+
+    @Override
+    public LocalDateTime component4() {
+        return getDATEEXECUTED();
+    }
+
+    @Override
+    public Integer component5() {
+        return getORDEREXECUTED();
+    }
+
+    @Override
+    public String component6() {
+        return getEXECTYPE();
+    }
+
+    @Override
+    public String component7() {
+        return getMD5SUM();
+    }
+
+    @Override
+    public String component8() {
+        return getDESCRIPTION();
+    }
+
+    @Override
+    public String component9() {
+        return getCOMMENTS();
+    }
+
+    @Override
+    public String component10() {
+        return getTAG();
+    }
+
+    @Override
+    public String component11() {
+        return getLIQUIBASE();
+    }
+
+    @Override
+    public String component12() {
+        return getCONTEXTS();
+    }
+
+    @Override
+    public String component13() {
+        return getLABELS();
+    }
+
+    @Override
+    public String component14() {
+        return getDEPLOYMENT_ID();
+    }
+
+    @Override
+    public String value1() {
+        return getID();
+    }
+
+    @Override
+    public String value2() {
+        return getAUTHOR();
+    }
+
+    @Override
+    public String value3() {
+        return getFILENAME();
+    }
+
+    @Override
+    public LocalDateTime value4() {
+        return getDATEEXECUTED();
+    }
+
+    @Override
+    public Integer value5() {
+        return getORDEREXECUTED();
+    }
+
+    @Override
+    public String value6() {
+        return getEXECTYPE();
+    }
+
+    @Override
+    public String value7() {
+        return getMD5SUM();
+    }
+
+    @Override
+    public String value8() {
+        return getDESCRIPTION();
+    }
+
+    @Override
+    public String value9() {
+        return getCOMMENTS();
+    }
+
+    @Override
+    public String value10() {
+        return getTAG();
+    }
+
+    @Override
+    public String value11() {
+        return getLIQUIBASE();
+    }
+
+    @Override
+    public String value12() {
+        return getCONTEXTS();
+    }
+
+    @Override
+    public String value13() {
+        return getLABELS();
+    }
+
+    @Override
+    public String value14() {
+        return getDEPLOYMENT_ID();
+    }
+
+    @Override
+    public DatabasechangelogRecord value1(String value) {
+        setID(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value2(String value) {
+        setAUTHOR(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value3(String value) {
+        setFILENAME(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value4(LocalDateTime value) {
+        setDATEEXECUTED(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value5(Integer value) {
+        setORDEREXECUTED(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value6(String value) {
+        setEXECTYPE(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value7(String value) {
+        setMD5SUM(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value8(String value) {
+        setDESCRIPTION(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value9(String value) {
+        setCOMMENTS(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value10(String value) {
+        setTAG(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value11(String value) {
+        setLIQUIBASE(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value12(String value) {
+        setCONTEXTS(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value13(String value) {
+        setLABELS(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord value14(String value) {
+        setDEPLOYMENT_ID(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangelogRecord values(String value1, String value2, String value3, LocalDateTime value4, Integer value5, String value6, String value7, String value8, String value9, String value10, String value11, String value12, String value13, String value14) {
+        value1(value1);
+        value2(value2);
+        value3(value3);
+        value4(value4);
+        value5(value5);
+        value6(value6);
+        value7(value7);
+        value8(value8);
+        value9(value9);
+        value10(value10);
+        value11(value11);
+        value12(value12);
+        value13(value13);
+        value14(value14);
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -286,7 +616,6 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
         setCONTEXTS(from.getCONTEXTS());
         setLABELS(from.getLABELS());
         setDEPLOYMENT_ID(from.getDEPLOYMENT_ID());
-        resetChangedOnNotNull();
     }
 
     @Override
@@ -326,7 +655,6 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
         setCONTEXTS(CONTEXTS);
         setLABELS(LABELS);
         setDEPLOYMENT_ID(DEPLOYMENT_ID);
-        resetChangedOnNotNull();
     }
 
     /**
@@ -350,7 +678,6 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
             setCONTEXTS(value.getCONTEXTS());
             setLABELS(value.getLABELS());
             setDEPLOYMENT_ID(value.getDEPLOYMENT_ID());
-            resetChangedOnNotNull();
         }
     }
 }

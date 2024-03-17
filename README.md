@@ -33,7 +33,7 @@ To compile and run this demo you will need:
   - Note: GraalVM is currently not supported for native-build, because some libraries have compatibility-issues
     - awssdk
     - jooq
-- Mariadb database (best: 10.7.8, as used in testcontainers)
+- Mariadb database (best: 10.6.*, because of default Mariadb-Version of Linux-Mint)
 - Optional: Quarkus Plugin in Intellij-IDEA
 
 The project has been set up specifically with Intellij IDEA compatibility in mind.
@@ -232,12 +232,9 @@ All the described operations can also be started up from within the Intellij IDE
 
 The used versions of third-party libraries must be balanced with each other. 
 
-we need to use jOOQ 3.16 instead of the latest jOOQ, because testcontainers only provides a mariadb 10.6 in its latest version,
-and mariadb 10.6 is only supported by jOOQ 3.16. See:
+i use jOOQ 3.16 instead of the latest jOOQ, because it was the most convenient for me, because Linux Mint (my development-os),
+only installs Mariadb 10.6 by default and it was too much hassle to install a newer version. I will upgrade eventually, see:
 - https://www.jooq.org/download/support-matrix
-
-We need to use Quarkus 3.0.0.Beta, because the jOOQ Code Generator already creates the "jakarta.*" package imports for stuff that was in "javax.*" before.
-Quarkus only starts to support this migration of Jakarta, beginning with 3.0.0.
 
 We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
 ```code

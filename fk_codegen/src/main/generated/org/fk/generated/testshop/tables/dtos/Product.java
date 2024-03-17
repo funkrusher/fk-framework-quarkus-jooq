@@ -23,12 +23,12 @@ public class Product extends AbstractDTO implements IProduct {
 
     private static final long serialVersionUID = 1L;
 
-    private Long productId;
-    private Integer clientId;
-    private BigDecimal price;
+    private Long          productId;
+    private Integer       clientId;
+    private BigDecimal    price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Boolean deleted;
+    private Boolean       deleted;
 
     public Product() {}
 
@@ -42,12 +42,12 @@ public class Product extends AbstractDTO implements IProduct {
     }
 
     public Product(
-        Long productId,
-        Integer clientId,
-        BigDecimal price,
+        Long          productId,
+        Integer       clientId,
+        BigDecimal    price,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        Boolean deleted
+        Boolean       deleted
     ) {
         this.productId = productId;
         this.clientId = clientId;

@@ -21,10 +21,10 @@ public class ProductLang extends AbstractDTO implements IProductLang {
 
     private static final long serialVersionUID = 1L;
 
-    private Long productId;
+    private Long    productId;
     private Integer langId;
-    private String name;
-    private String description;
+    private String  name;
+    private String  description;
 
     public ProductLang() {}
 
@@ -36,10 +36,10 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     }
 
     public ProductLang(
-        Long productId,
+        Long    productId,
         Integer langId,
-        String name,
-        String description
+        String  name,
+        String  description
     ) {
         this.productId = productId;
         this.langId = langId;

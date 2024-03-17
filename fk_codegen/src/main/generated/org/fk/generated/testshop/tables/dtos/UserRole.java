@@ -22,7 +22,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
     private static final long serialVersionUID = 1L;
 
     private Integer userId;
-    private String roleId;
+    private String  roleId;
 
     public UserRole() {}
 
@@ -33,7 +33,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
 
     public UserRole(
         Integer userId,
-        String roleId
+        String  roleId
     ) {
         this.userId = userId;
         this.roleId = roleId;

@@ -23,20 +23,20 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
 
     private static final long serialVersionUID = 1L;
 
-    private String ID;
-    private String AUTHOR;
-    private String FILENAME;
+    private String        ID;
+    private String        AUTHOR;
+    private String        FILENAME;
     private LocalDateTime DATEEXECUTED;
-    private Integer ORDEREXECUTED;
-    private String EXECTYPE;
-    private String MD5SUM;
-    private String DESCRIPTION;
-    private String COMMENTS;
-    private String TAG;
-    private String LIQUIBASE;
-    private String CONTEXTS;
-    private String LABELS;
-    private String DEPLOYMENT_ID;
+    private Integer       ORDEREXECUTED;
+    private String        EXECTYPE;
+    private String        MD5SUM;
+    private String        DESCRIPTION;
+    private String        COMMENTS;
+    private String        TAG;
+    private String        LIQUIBASE;
+    private String        CONTEXTS;
+    private String        LABELS;
+    private String        DEPLOYMENT_ID;
 
     public Databasechangelog() {}
 
@@ -58,20 +58,20 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     }
 
     public Databasechangelog(
-        String ID,
-        String AUTHOR,
-        String FILENAME,
+        String        ID,
+        String        AUTHOR,
+        String        FILENAME,
         LocalDateTime DATEEXECUTED,
-        Integer ORDEREXECUTED,
-        String EXECTYPE,
-        String MD5SUM,
-        String DESCRIPTION,
-        String COMMENTS,
-        String TAG,
-        String LIQUIBASE,
-        String CONTEXTS,
-        String LABELS,
-        String DEPLOYMENT_ID
+        Integer       ORDEREXECUTED,
+        String        EXECTYPE,
+        String        MD5SUM,
+        String        DESCRIPTION,
+        String        COMMENTS,
+        String        TAG,
+        String        LIQUIBASE,
+        String        CONTEXTS,
+        String        LABELS,
+        String        DEPLOYMENT_ID
     ) {
         this.ID = ID;
         this.AUTHOR = AUTHOR;

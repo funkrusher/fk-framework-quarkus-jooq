@@ -12,7 +12,10 @@ import java.time.LocalDateTime;
 
 import org.fk.generated.testshop.tables.Databasechangeloglock;
 import org.fk.generated.testshop.tables.interfaces.IDatabasechangeloglock;
+import org.jooq.Field;
 import org.jooq.Record1;
+import org.jooq.Record4;
+import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -21,7 +24,7 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class DatabasechangeloglockRecord extends UpdatableRecordImpl<DatabasechangeloglockRecord> implements IDatabasechangeloglock {
+public class DatabasechangeloglockRecord extends UpdatableRecordImpl<DatabasechangeloglockRecord> implements Record4<Integer, Byte, LocalDateTime, String>, IDatabasechangeloglock {
 
     private static final long serialVersionUID = 1L;
 
@@ -102,6 +105,113 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
     }
 
     // -------------------------------------------------------------------------
+    // Record4 type implementation
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Row4<Integer, Byte, LocalDateTime, String> fieldsRow() {
+        return (Row4) super.fieldsRow();
+    }
+
+    @Override
+    public Row4<Integer, Byte, LocalDateTime, String> valuesRow() {
+        return (Row4) super.valuesRow();
+    }
+
+    @Override
+    public Field<Integer> field1() {
+        return Databasechangeloglock.DATABASECHANGELOGLOCK.ID;
+    }
+
+    @Override
+    public Field<Byte> field2() {
+        return Databasechangeloglock.DATABASECHANGELOGLOCK.LOCKED;
+    }
+
+    @Override
+    public Field<LocalDateTime> field3() {
+        return Databasechangeloglock.DATABASECHANGELOGLOCK.LOCKGRANTED;
+    }
+
+    @Override
+    public Field<String> field4() {
+        return Databasechangeloglock.DATABASECHANGELOGLOCK.LOCKEDBY;
+    }
+
+    @Override
+    public Integer component1() {
+        return getID();
+    }
+
+    @Override
+    public Byte component2() {
+        return getLOCKED();
+    }
+
+    @Override
+    public LocalDateTime component3() {
+        return getLOCKGRANTED();
+    }
+
+    @Override
+    public String component4() {
+        return getLOCKEDBY();
+    }
+
+    @Override
+    public Integer value1() {
+        return getID();
+    }
+
+    @Override
+    public Byte value2() {
+        return getLOCKED();
+    }
+
+    @Override
+    public LocalDateTime value3() {
+        return getLOCKGRANTED();
+    }
+
+    @Override
+    public String value4() {
+        return getLOCKEDBY();
+    }
+
+    @Override
+    public DatabasechangeloglockRecord value1(Integer value) {
+        setID(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangeloglockRecord value2(Byte value) {
+        setLOCKED(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangeloglockRecord value3(LocalDateTime value) {
+        setLOCKGRANTED(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangeloglockRecord value4(String value) {
+        setLOCKEDBY(value);
+        return this;
+    }
+
+    @Override
+    public DatabasechangeloglockRecord values(Integer value1, Byte value2, LocalDateTime value3, String value4) {
+        value1(value1);
+        value2(value2);
+        value3(value3);
+        value4(value4);
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -111,7 +221,6 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
         setLOCKED(from.getLOCKED());
         setLOCKGRANTED(from.getLOCKGRANTED());
         setLOCKEDBY(from.getLOCKEDBY());
-        resetChangedOnNotNull();
     }
 
     @Override
@@ -141,7 +250,6 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
         setLOCKED(LOCKED);
         setLOCKGRANTED(LOCKGRANTED);
         setLOCKEDBY(LOCKEDBY);
-        resetChangedOnNotNull();
     }
 
     /**
@@ -155,7 +263,6 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
             setLOCKED(value.getLOCKED());
             setLOCKGRANTED(value.getLOCKGRANTED());
             setLOCKEDBY(value.getLOCKEDBY());
-            resetChangedOnNotNull();
         }
     }
 }

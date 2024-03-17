@@ -23,10 +23,10 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
 
     private static final long serialVersionUID = 1L;
 
-    private Integer ID;
-    private Byte LOCKED;
+    private Integer       ID;
+    private Byte          LOCKED;
     private LocalDateTime LOCKGRANTED;
-    private String LOCKEDBY;
+    private String        LOCKEDBY;
 
     public Databasechangeloglock() {}
 
@@ -38,10 +38,10 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     }
 
     public Databasechangeloglock(
-        Integer ID,
-        Byte LOCKED,
+        Integer       ID,
+        Byte          LOCKED,
         LocalDateTime LOCKGRANTED,
-        String LOCKEDBY
+        String        LOCKEDBY
     ) {
         this.ID = ID;
         this.LOCKED = LOCKED;

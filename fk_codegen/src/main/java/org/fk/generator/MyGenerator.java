@@ -157,14 +157,10 @@ public class MyGenerator extends JavaGenerator {
             out.println("@%s", out.ref(generatedNonnullAnnotationType()));
     }
 
-    private static final <T> List<T> list(T... objects) {
-        List<T> result = new ArrayList<>();
-
-        if (objects != null)
-            for (T object : objects)
-                if (object != null && !"".equals(object))
-                    result.add(object);
-
+    private static <String> List<String> list(String object) {
+        List<String> result = new ArrayList<>();
+        if (object != null && !"".equals(object))
+            result.add(object);
         return result;
     }
 

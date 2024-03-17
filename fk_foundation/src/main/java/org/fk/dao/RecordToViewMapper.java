@@ -5,6 +5,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.Map;
 
 public class RecordToViewMapper<E extends AbstractDTO, K extends Serializable> {
 
-    private Class<E> clazz;
-    private Field<K> groupField;
-    private List<Field<?>> uniqueFields;
+    private final Class<E> clazz;
+    private final Field<K> groupField;
+    private final List<Field<?>> uniqueFields;
 
         public RecordToViewMapper(
             Class<E> clazz,
@@ -35,12 +36,12 @@ public class RecordToViewMapper<E extends AbstractDTO, K extends Serializable> {
     private Map<K, List<Record>> filterRecordsByUniqueFieldsAndGroupByIdField(List<Record> records) {
         final Map<String, Record> uniqueRecordMap = new LinkedHashMap<>();
         for (Record record : records) {
-            String key = "";
+            StringBuilder key = new StringBuilder();
             for (Field<?> uniqueField : uniqueFields) {
                 String test = record.getValue(uniqueField).toString();
-                key += test;
+                key.append(test);
             }
-            uniqueRecordMap.put(key, record);
+            uniqueRecordMap.put(key.toString(), record);
         }
         final List<Record> uniqueRecords = uniqueRecordMap.values().stream().toList();
         final Map<K, List<Record>> result = new LinkedHashMap<>();
@@ -67,10 +68,8 @@ public class RecordToViewMapper<E extends AbstractDTO, K extends Serializable> {
         List<E> viewDTOs = new ArrayList<>();
         for (Record record : records) {
             try {
-                viewDTOs.add(record.into(clazz.newInstance()));
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
+                viewDTOs.add(record.into(clazz.getDeclaredConstructor().newInstance()));
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -82,7 +81,7 @@ public class RecordToViewMapper<E extends AbstractDTO, K extends Serializable> {
         List<Record> filteredRecords = new ArrayList<>();
         for (List<Record> v : map.values()) {
             // we expect that we always have exactly 1 record in this case per key.
-            filteredRecords.add(v.get(0));
+            filteredRecords.add(v.getFirst());
         }
         return convertRecordsToView(filteredRecords);
     }

@@ -10,7 +10,10 @@ import jakarta.validation.constraints.Size;
 
 import org.fk.generated.testshop.tables.Lang;
 import org.fk.generated.testshop.tables.interfaces.ILang;
+import org.jooq.Field;
 import org.jooq.Record1;
+import org.jooq.Record3;
+import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -19,7 +22,7 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang {
+public class LangRecord extends UpdatableRecordImpl<LangRecord> implements Record3<Integer, String, String>, ILang {
 
     private static final long serialVersionUID = 1L;
 
@@ -84,6 +87,91 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
     }
 
     // -------------------------------------------------------------------------
+    // Record3 type implementation
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Row3<Integer, String, String> fieldsRow() {
+        return (Row3) super.fieldsRow();
+    }
+
+    @Override
+    public Row3<Integer, String, String> valuesRow() {
+        return (Row3) super.valuesRow();
+    }
+
+    @Override
+    public Field<Integer> field1() {
+        return Lang.LANG.LANGID;
+    }
+
+    @Override
+    public Field<String> field2() {
+        return Lang.LANG.CODE;
+    }
+
+    @Override
+    public Field<String> field3() {
+        return Lang.LANG.DESCRIPTION;
+    }
+
+    @Override
+    public Integer component1() {
+        return getLangId();
+    }
+
+    @Override
+    public String component2() {
+        return getCode();
+    }
+
+    @Override
+    public String component3() {
+        return getDescription();
+    }
+
+    @Override
+    public Integer value1() {
+        return getLangId();
+    }
+
+    @Override
+    public String value2() {
+        return getCode();
+    }
+
+    @Override
+    public String value3() {
+        return getDescription();
+    }
+
+    @Override
+    public LangRecord value1(Integer value) {
+        setLangId(value);
+        return this;
+    }
+
+    @Override
+    public LangRecord value2(String value) {
+        setCode(value);
+        return this;
+    }
+
+    @Override
+    public LangRecord value3(String value) {
+        setDescription(value);
+        return this;
+    }
+
+    @Override
+    public LangRecord values(Integer value1, String value2, String value3) {
+        value1(value1);
+        value2(value2);
+        value3(value3);
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -92,7 +180,6 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
         setLangId(from.getLangId());
         setCode(from.getCode());
         setDescription(from.getDescription());
-        resetChangedOnNotNull();
     }
 
     @Override
@@ -121,7 +208,6 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
         setLangId(langId);
         setCode(code);
         setDescription(description);
-        resetChangedOnNotNull();
     }
 
     /**
@@ -134,7 +220,6 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
             setLangId(value.getLangId());
             setCode(value.getCode());
             setDescription(value.getDescription());
-            resetChangedOnNotNull();
         }
     }
 }

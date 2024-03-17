@@ -22,8 +22,8 @@ public class Lang extends AbstractDTO implements ILang {
     private static final long serialVersionUID = 1L;
 
     private Integer langId;
-    private String code;
-    private String description;
+    private String  code;
+    private String  description;
 
     public Lang() {}
 
@@ -35,8 +35,8 @@ public class Lang extends AbstractDTO implements ILang {
 
     public Lang(
         Integer langId,
-        String code,
-        String description
+        String  code,
+        String  description
     ) {
         this.langId = langId;
         this.code = code;

@@ -7,6 +7,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+import jakarta.ws.rs.ext.RuntimeDelegate;
 import org.fk.auth.MasterTenantOnly;
 import org.fk.auth.FkSecurityIdentity;
 import org.fk.services.CognitoLocalService;
@@ -86,9 +87,9 @@ public class CognitoLocalResourceV1 {
         try {
             Map<String, String> jwtTokens = cognitoLocalService.signin(email, password);
             return Response.ok(jwtTokens.get("id_token")).cookie(
-                    NewCookie.valueOf("access_token=" + jwtTokens.get("access_token")),
-                    NewCookie.valueOf("refresh_token=" + jwtTokens.get("refresh_token")),
-                    NewCookie.valueOf("id_token=" + jwtTokens.get("id_token"))
+                    RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString("access_token=" + jwtTokens.get("access_token")),
+                    RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString("refresh_token=" + jwtTokens.get("refresh_token")),
+                    RuntimeDelegate.getInstance().createHeaderDelegate(NewCookie.class).fromString("id_token=" + jwtTokens.get("id_token"))
             ).build();
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -138,9 +139,7 @@ public class CognitoLocalResourceV1 {
             try {
                 FkClaim fkClaim = objectMapper.readValue(fkClaimStr, FkClaim.class);
                 LOGGER.info("fkClaim: " + fkClaim);
-
             } catch (Exception e) {
-                //
                 e.printStackTrace();
             }
         }

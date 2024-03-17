@@ -10,7 +10,9 @@ import jakarta.validation.constraints.Size;
 
 import org.fk.generated.testshop.tables.UserRole;
 import org.fk.generated.testshop.tables.interfaces.IUserRole;
+import org.jooq.Field;
 import org.jooq.Record2;
+import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -19,7 +21,7 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implements IUserRole {
+public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implements Record2<Integer, String>, IUserRole {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,6 +70,69 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     }
 
     // -------------------------------------------------------------------------
+    // Record2 type implementation
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Row2<Integer, String> fieldsRow() {
+        return (Row2) super.fieldsRow();
+    }
+
+    @Override
+    public Row2<Integer, String> valuesRow() {
+        return (Row2) super.valuesRow();
+    }
+
+    @Override
+    public Field<Integer> field1() {
+        return UserRole.USER_ROLE.USERID;
+    }
+
+    @Override
+    public Field<String> field2() {
+        return UserRole.USER_ROLE.ROLEID;
+    }
+
+    @Override
+    public Integer component1() {
+        return getUserId();
+    }
+
+    @Override
+    public String component2() {
+        return getRoleId();
+    }
+
+    @Override
+    public Integer value1() {
+        return getUserId();
+    }
+
+    @Override
+    public String value2() {
+        return getRoleId();
+    }
+
+    @Override
+    public UserRoleRecord value1(Integer value) {
+        setUserId(value);
+        return this;
+    }
+
+    @Override
+    public UserRoleRecord value2(String value) {
+        setRoleId(value);
+        return this;
+    }
+
+    @Override
+    public UserRoleRecord values(Integer value1, String value2) {
+        value1(value1);
+        value2(value2);
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -75,7 +140,6 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     public void from(IUserRole from) {
         setUserId(from.getUserId());
         setRoleId(from.getRoleId());
-        resetChangedOnNotNull();
     }
 
     @Override
@@ -103,7 +167,6 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
 
         setUserId(userId);
         setRoleId(roleId);
-        resetChangedOnNotNull();
     }
 
     /**
@@ -115,7 +178,6 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
         if (value != null) {
             setUserId(value.getUserId());
             setRoleId(value.getRoleId());
-            resetChangedOnNotNull();
         }
     }
 }

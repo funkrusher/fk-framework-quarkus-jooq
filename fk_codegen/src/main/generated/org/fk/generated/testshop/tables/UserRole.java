@@ -7,27 +7,17 @@ package org.fk.generated.testshop.tables;
 import jakarta.validation.Valid;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.fk.generated.testshop.Keys;
 import org.fk.generated.testshop.Testshop;
-import org.fk.generated.testshop.tables.Role.RolePath;
-import org.fk.generated.testshop.tables.User.UserPath;
 import org.fk.generated.testshop.tables.records.UserRoleRecord;
-import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
-import org.jooq.PlainSQL;
-import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.SQL;
+import org.jooq.Row2;
 import org.jooq.Schema;
-import org.jooq.Select;
-import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -70,11 +60,11 @@ public class UserRole extends TableImpl<UserRoleRecord> {
     public final TableField<UserRoleRecord, String> ROLEID = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private UserRole(Name alias, Table<UserRoleRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null, null);
+        this(alias, aliased, null);
     }
 
-    private UserRole(Name alias, Table<UserRoleRecord> aliased, Field<?>[] parameters, Condition where) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
+    private UserRole(Name alias, Table<UserRoleRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -98,37 +88,8 @@ public class UserRole extends TableImpl<UserRoleRecord> {
         this(DSL.name("user_role"), null);
     }
 
-    public <O extends Record> UserRole(Table<O> path, ForeignKey<O, UserRoleRecord> childPath, InverseForeignKey<O, UserRoleRecord> parentPath) {
-        super(path, childPath, parentPath, USER_ROLE);
-    }
-
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class UserRolePath extends UserRole implements Path<UserRoleRecord> {
-
-        private static final long serialVersionUID = 1L;
-        public <O extends Record> UserRolePath(Table<O> path, ForeignKey<O, UserRoleRecord> childPath, InverseForeignKey<O, UserRoleRecord> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private UserRolePath(Name alias, Table<UserRoleRecord> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public UserRolePath as(String alias) {
-            return new UserRolePath(DSL.name(alias), this);
-        }
-
-        @Override
-        public UserRolePath as(Name alias) {
-            return new UserRolePath(alias, this);
-        }
-
-        @Override
-        public UserRolePath as(Table<?> alias) {
-            return new UserRolePath(alias.getQualifiedName(), this);
-        }
+    public <O extends Record> UserRole(Table<O> child, ForeignKey<O, UserRoleRecord> key) {
+        super(child, key, USER_ROLE);
     }
 
     @Override
@@ -146,26 +107,25 @@ public class UserRole extends TableImpl<UserRoleRecord> {
         return Arrays.asList(Keys.FK_USER_ROLE_USERID, Keys.FK_USER_ROLE_ROLEID);
     }
 
-    private transient UserPath _fk_user_role_userId;
+    private transient User _fk_user_role_userId;
+    private transient Role _fk_user_role_roleId;
 
     /**
      * Get the implicit join path to the <code>testshop.user</code> table.
      */
-    public UserPath fk_user_role_userId() {
+    public User fk_user_role_userId() {
         if (_fk_user_role_userId == null)
-            _fk_user_role_userId = new UserPath(this, Keys.FK_USER_ROLE_USERID, null);
+            _fk_user_role_userId = new User(this, Keys.FK_USER_ROLE_USERID);
 
         return _fk_user_role_userId;
     }
 
-    private transient RolePath _fk_user_role_roleId;
-
     /**
      * Get the implicit join path to the <code>testshop.role</code> table.
      */
-    public RolePath fk_user_role_roleId() {
+    public Role fk_user_role_roleId() {
         if (_fk_user_role_roleId == null)
-            _fk_user_role_roleId = new RolePath(this, Keys.FK_USER_ROLE_ROLEID, null);
+            _fk_user_role_roleId = new Role(this, Keys.FK_USER_ROLE_ROLEID);
 
         return _fk_user_role_roleId;
     }
@@ -178,11 +138,6 @@ public class UserRole extends TableImpl<UserRoleRecord> {
     @Override
     public UserRole as(Name alias) {
         return new UserRole(alias, this);
-    }
-
-    @Override
-    public UserRole as(Table<?> alias) {
-        return new UserRole(alias.getQualifiedName(), this);
     }
 
     /**
@@ -201,95 +156,12 @@ public class UserRole extends TableImpl<UserRoleRecord> {
         return new UserRole(name, null);
     }
 
-    /**
-     * Rename this table
-     */
-    @Override
-    public UserRole rename(Table<?> name) {
-        return new UserRole(name.getQualifiedName(), null);
-    }
+    // -------------------------------------------------------------------------
+    // Row2 type methods
+    // -------------------------------------------------------------------------
 
-    /**
-     * Create an inline derived table from this table
-     */
     @Override
-    public UserRole where(Condition condition) {
-        return new UserRole(getQualifiedName(), aliased() ? this : null, null, condition);
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public UserRole where(Collection<? extends Condition> conditions) {
-        return where(DSL.and(conditions));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public UserRole where(Condition... conditions) {
-        return where(DSL.and(conditions));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public UserRole where(Field<Boolean> condition) {
-        return where(DSL.condition(condition));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public UserRole where(SQL condition) {
-        return where(DSL.condition(condition));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public UserRole where(@Stringly.SQL String condition) {
-        return where(DSL.condition(condition));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public UserRole where(@Stringly.SQL String condition, Object... binds) {
-        return where(DSL.condition(condition, binds));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    @PlainSQL
-    public UserRole where(@Stringly.SQL String condition, QueryPart... parts) {
-        return where(DSL.condition(condition, parts));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public UserRole whereExists(Select<?> select) {
-        return where(DSL.exists(select));
-    }
-
-    /**
-     * Create an inline derived table from this table
-     */
-    @Override
-    public UserRole whereNotExists(Select<?> select) {
-        return where(DSL.notExists(select));
+    public Row2<Integer, String> fieldsRow() {
+        return (Row2) super.fieldsRow();
     }
 }
