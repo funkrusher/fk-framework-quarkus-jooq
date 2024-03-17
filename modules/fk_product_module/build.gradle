@@ -11,7 +11,6 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    implementation enforcedPlatform(libs.quarkusPlatform)
     implementation project(':fk_foundation')
     implementation project(':fk_testshop_codegen')
 
