@@ -1,7 +1,5 @@
 package org.fk.jooq;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.util.request.RequestContext;
 import org.jboss.logging.Logger;
@@ -12,14 +10,19 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
+import org.jooq.impl.*;
+
+import java.sql.Connection;
+import java.util.Optional;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.DefaultRecordListenerProvider;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * JooqContextFactory to create instances of context-scoped jooq dsl-contexts.
@@ -34,6 +37,8 @@ public class JooqContextFactory {
     @Inject
     DataSource dataSource;
 
+    SQLDialect sqlDialect = null;
+
     public JooqContext createJooqContext(RequestContext requestContext) {
         try {
             DSLContext ctx = DSL.using(getConfiguration(requestContext));
@@ -44,13 +49,15 @@ public class JooqContextFactory {
     }
 
     private Configuration getConfiguration(RequestContext requestContext) {
-        final Optional<@NotNull SQLDialect> maybeSqlDialect =
-                Arrays.stream(SQLDialect.families()).filter(x -> x.name().equalsIgnoreCase(jooqDialect)).findFirst();
-        if (maybeSqlDialect.isEmpty()) {
-            throw new RuntimeException("sql-dialect not found! " + jooqDialect);
+        if (sqlDialect == null) {
+            try {
+                final Connection connection = dataSource.getConnection();
+                sqlDialect = DSL.using(connection).configuration().dialect();
+            } catch (Exception e) {
+                LOGGER.error("unable to resolve SQLDialect from database!", e);
+                throw new RuntimeException(e);
+            }
         }
-        final SQLDialect sqlDialect = maybeSqlDialect.get();
-
         Configuration configuration = new DefaultConfiguration()
                 .set(dataSource)
                 .set(sqlDialect)
