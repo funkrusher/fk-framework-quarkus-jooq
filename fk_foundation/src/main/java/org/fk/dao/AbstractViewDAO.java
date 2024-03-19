@@ -1,6 +1,6 @@
 package org.fk.dao;
 
-import org.fk.generated.AbstractDTO;
+import org.fk.dto.AbstractDTO;
 import org.fk.jooq.JooqContext;
 import org.fk.util.query.*;
 import org.jooq.Record;
