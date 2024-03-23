@@ -19,7 +19,7 @@ dependencyResolutionManagement {
             version('testcontainers', '1.19.7')
             version('rest-assured', '5.4.0')
             version('awaitility', '4.2.1')
-            version('jooq', '3.16.23')
+            version('jooq', '3.19.6')
             version('jackson', '2.17.0')
             version('awssdk', '2.25.11')
 
@@ -79,7 +79,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name='fk-framework-quarkus-jooq'
-include 'fk_foundation'
-include 'fk_testshop_codegen'
-include ':modules:fk_product_module'
-include ':services:fk_backend'
+include 'fk_codegen'
+include 'fk_core'
+include 'fk_backend'
