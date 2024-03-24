@@ -8,6 +8,5 @@ import org.fk.codegen.testshop.tables.interfaces.IUserRole;
 /**
  * UserRoleDTO
  */
-@Valid
 public class UserRoleDTO extends UserRole implements IUserRole {
 }

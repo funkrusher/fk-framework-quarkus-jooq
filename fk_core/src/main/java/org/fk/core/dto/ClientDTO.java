@@ -8,6 +8,5 @@ import org.fk.codegen.testshop.tables.interfaces.IClient;
 /**
  * ClientDTO
  */
-@Valid
 public class ClientDTO extends Client implements IClient {
 }

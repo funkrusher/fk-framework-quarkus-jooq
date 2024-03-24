@@ -140,11 +140,11 @@ public class ProductManager extends AbstractBaseManager {
 
         // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
         // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
-        this.validateDTO(product);
+        this.validateInsert(product);
         productRecordDAO.insertAndReturnDTO(product);
         for (ProductLangDTO xLang : product.getLangs()) {
             xLang.setProductId(product.getProductId());
-            this.validateDTO(xLang);
+            this.validateInsert(xLang);
         }
         productLangRecordDAO.insertDTOs(product.getLangs());
         return product;
@@ -154,11 +154,12 @@ public class ProductManager extends AbstractBaseManager {
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public ProductDTO update(final RequestContext requestContext, final ProductDTO product) {
+    public ProductDTO update(final RequestContext requestContext, final ProductDTO product) throws ValidationException {
         JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
         ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(jooqContext);
         ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(jooqContext);
 
+        this.validateUpdate(product);
         productRecordDAO.updateDTO(product);
 
         List<ProductLangDTO> insertXLangs = new ArrayList<>();
@@ -173,6 +174,7 @@ public class ProductManager extends AbstractBaseManager {
             } else {
                 updateXLangs.add(xLang);
             }
+            this.validateUpdate(xLang);
         }
         productLangRecordDAO.deleteDTOs(deleteXLangs);
         productLangRecordDAO.insertDTOs(insertXLangs);

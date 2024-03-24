@@ -8,6 +8,5 @@ import org.fk.codegen.testshop.tables.interfaces.IUser;
 /**
  * UserDTO
  */
-@Valid
 public class UserDTO extends User implements IUser {
 }

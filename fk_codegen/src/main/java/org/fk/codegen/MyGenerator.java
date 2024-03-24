@@ -22,6 +22,7 @@ public class MyGenerator extends JavaGenerator {
     @Override
     protected void printClassAnnotations(JavaWriter out, Definition definition, GeneratorStrategy.Mode mode) {
         super.printClassAnnotations(out, definition, mode);
+        // we may need this sometimes, if we need to validate the whole dto in one validate call.
         // out.println("@%s", out.ref(Valid.class));
     }
 

@@ -8,6 +8,5 @@ import org.fk.codegen.testshop.tables.interfaces.ILang;
 /**
  * LangDTO
  */
-@Valid
 public class LangDTO extends Lang implements ILang {
 }

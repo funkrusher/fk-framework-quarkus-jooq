@@ -37,6 +37,16 @@ public class ProductExamplesControllerV1 {
         return Response.ok(created).status(201).build();
     }
 
+    @PUT
+    @Operation(summary = "updates an existing product unauthenticated")
+    @APIResponse(responseCode = "200", description = "product update successful")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @Path("/{productId}")
+    public ProductDTO update(ProductDTO product) throws ValidationException {
+        RequestContext requestContext = new RequestContext(1, 1);
+        return productService.update(requestContext, product);
+    }
+
     @GET
     @Operation(summary = "executes multiple transactions and make sure commit/rollback is correctly done and in parallel")
     @APIResponse(responseCode = "200", description = "Multi-Transaction Test executed")

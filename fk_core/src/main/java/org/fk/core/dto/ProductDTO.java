@@ -32,14 +32,13 @@ public class ProductDTO extends Product implements IProduct {
         super(value);
     }
 
-
-    @JsonProperty
+    @JsonIgnore
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         setAt("deleteFlag", deleteFlag);
     }
 
-    @JsonIgnore
+    @JsonProperty
     public boolean getDeleteFlag() {
         return deleteFlag;
     }

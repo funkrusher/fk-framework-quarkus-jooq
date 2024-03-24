@@ -72,7 +72,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "product update successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO update(ProductDTO product) {
+    public ProductDTO update(ProductDTO product) throws ValidationException {
         RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
         return productService.update(requestContext, product);
     }
