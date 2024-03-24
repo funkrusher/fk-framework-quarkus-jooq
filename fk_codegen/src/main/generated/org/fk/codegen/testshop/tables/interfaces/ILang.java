@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +22,11 @@ import java.io.Serializable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "lang",
+    schema = "testshop"
+)
 public interface ILang extends Serializable {
 
     /**
@@ -26,6 +37,9 @@ public interface ILang extends Serializable {
     /**
      * Getter for <code>testshop.lang.langId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "langId")
     public Integer getLangId();
 
     /**
@@ -36,6 +50,7 @@ public interface ILang extends Serializable {
     /**
      * Getter for <code>testshop.lang.code</code>.
      */
+    @Column(name = "code", nullable = false, length = 2)
     @NotNull
     @Size(max = 2)
     public String getCode();
@@ -48,6 +63,7 @@ public interface ILang extends Serializable {
     /**
      * Getter for <code>testshop.lang.description</code>.
      */
+    @Column(name = "description", length = 50)
     @Size(max = 50)
     public String getDescription();
 

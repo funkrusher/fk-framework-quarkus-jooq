@@ -97,4 +97,15 @@ public class ProductControllerV1 {
         productService.delete(requestContext, product);
         return Response.status(204).build();
     }
+
+    @GET
+    @Operation(summary = "executes multiple transactions and make sure commit/rollback is correctly done and in parallel")
+    @APIResponse(responseCode = "200", description = "Multi-Transaction Test executed")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @Path("/testMultiTransaction")
+    public Response testMultiTransaction() {
+        RequestContext requestContext = new RequestContext(1, 1);
+        productService.testMultiTransaction(requestContext);
+        return Response.status(200).build();
+    }
 }

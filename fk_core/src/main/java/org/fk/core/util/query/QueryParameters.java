@@ -7,6 +7,8 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,8 +40,16 @@ public class QueryParameters {
     protected UriInfo uriInfo;
 
     private Sorter sorter;
-    private List<Filter> filters;
+    private List<Filter> filters = new ArrayList<>();
 
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     @PostConstruct
     void init() {

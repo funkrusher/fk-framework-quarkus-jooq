@@ -4,6 +4,10 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,14 +23,19 @@ import org.fk.codegen.testshop.tables.interfaces.IDatabasechangeloglock;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "DATABASECHANGELOGLOCK",
+    schema = "testshop"
+)
 public class Databasechangeloglock extends AbstractDTO implements IDatabasechangeloglock {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer       ID;
-    private Byte          LOCKED;
+    private Integer ID;
+    private Byte LOCKED;
     private LocalDateTime LOCKGRANTED;
-    private String        LOCKEDBY;
+    private String LOCKEDBY;
 
     public Databasechangeloglock() {}
 
@@ -38,10 +47,10 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     }
 
     public Databasechangeloglock(
-        Integer       ID,
-        Byte          LOCKED,
+        Integer ID,
+        Byte LOCKED,
         LocalDateTime LOCKGRANTED,
-        String        LOCKEDBY
+        String LOCKEDBY
     ) {
         this.ID = ID;
         this.LOCKED = LOCKED;
@@ -52,6 +61,8 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
+    @Id
+    @Column(name = "ID", nullable = false)
     @NotNull
     @Override
     public Integer getID() {
@@ -70,6 +81,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
+    @Column(name = "LOCKED", nullable = false)
     @NotNull
     @Override
     public Byte getLOCKED() {
@@ -88,6 +100,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
+    @Column(name = "LOCKGRANTED")
     @Override
     public LocalDateTime getLOCKGRANTED() {
         return this.LOCKGRANTED;
@@ -105,6 +118,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
+    @Column(name = "LOCKEDBY", length = 255)
     @Size(max = 255)
     @Override
     public String getLOCKEDBY() {

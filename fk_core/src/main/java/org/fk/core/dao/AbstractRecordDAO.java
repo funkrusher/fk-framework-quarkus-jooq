@@ -42,8 +42,8 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
     private List<R> transformToRecords(List<? extends Y> objects) {
         List<R> records = new ArrayList<>();
         boolean isDTO = false;
-        if (objects.size() > 0) {
-            if (objects.get(0) instanceof AbstractDTO) {
+        if (!objects.isEmpty()) {
+            if (objects.getFirst() instanceof AbstractDTO) {
                 isDTO = true;
             }
         }
@@ -90,7 +90,8 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
         for (Field<?> field : autoIncrementFields) {
             try {
                 Field<T> recordField = (Field<T>) field;
-                record.set(recordField, null);
+                // TODO: when do we need to do this???
+                //record.set(recordField, null);
 
                 // note: setting changed=true, will also mark all fields as NULL that are NOT NULL in database,
                 // and jooq would in that case not use the DEFAULT of the database, but will say that they

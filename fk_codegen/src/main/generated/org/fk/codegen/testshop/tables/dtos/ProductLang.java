@@ -4,6 +4,9 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,14 +20,19 @@ import org.fk.codegen.testshop.tables.interfaces.IProductLang;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "product_lang",
+    schema = "testshop"
+)
 public class ProductLang extends AbstractDTO implements IProductLang {
 
     private static final long serialVersionUID = 1L;
 
-    private Long    productId;
+    private Long productId;
     private Integer langId;
-    private String  name;
-    private String  description;
+    private String name;
+    private String description;
 
     public ProductLang() {}
 
@@ -36,10 +44,10 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     }
 
     public ProductLang(
-        Long    productId,
+        Long productId,
         Integer langId,
-        String  name,
-        String  description
+        String name,
+        String description
     ) {
         this.productId = productId;
         this.langId = langId;
@@ -50,6 +58,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     /**
      * Getter for <code>testshop.product_lang.productId</code>.
      */
+    @Column(name = "productId", nullable = false)
     @NotNull
     @Override
     public Long getProductId() {
@@ -68,6 +77,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     /**
      * Getter for <code>testshop.product_lang.langId</code>.
      */
+    @Column(name = "langId", nullable = false)
     @NotNull
     @Override
     public Integer getLangId() {
@@ -86,6 +96,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     /**
      * Getter for <code>testshop.product_lang.name</code>.
      */
+    @Column(name = "name", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -105,6 +116,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     /**
      * Getter for <code>testshop.product_lang.description</code>.
      */
+    @Column(name = "description", nullable = false)
     @NotNull
     @Size(max = 65535)
     @Override

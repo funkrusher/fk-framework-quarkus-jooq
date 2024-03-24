@@ -6,16 +6,27 @@ package org.fk.codegen.testshop.tables;
 
 import jakarta.validation.Valid;
 
+import java.util.Collection;
+
 import org.fk.codegen.testshop.Keys;
 import org.fk.codegen.testshop.Testshop;
+import org.fk.codegen.testshop.tables.Product.ProductPath;
+import org.fk.codegen.testshop.tables.User.UserPath;
 import org.fk.codegen.testshop.tables.records.ClientRecord;
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Row1;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -53,11 +64,11 @@ public class Client extends TableImpl<ClientRecord> {
     public final TableField<ClientRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     private Client(Name alias, Table<ClientRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Client(Name alias, Table<ClientRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Client(Name alias, Table<ClientRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -81,8 +92,37 @@ public class Client extends TableImpl<ClientRecord> {
         this(DSL.name("client"), null);
     }
 
-    public <O extends Record> Client(Table<O> child, ForeignKey<O, ClientRecord> key) {
-        super(child, key, CLIENT);
+    public <O extends Record> Client(Table<O> path, ForeignKey<O, ClientRecord> childPath, InverseForeignKey<O, ClientRecord> parentPath) {
+        super(path, childPath, parentPath, CLIENT);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class ClientPath extends Client implements Path<ClientRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> ClientPath(Table<O> path, ForeignKey<O, ClientRecord> childPath, InverseForeignKey<O, ClientRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private ClientPath(Name alias, Table<ClientRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public ClientPath as(String alias) {
+            return new ClientPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public ClientPath as(Name alias) {
+            return new ClientPath(alias, this);
+        }
+
+        @Override
+        public ClientPath as(Table<?> alias) {
+            return new ClientPath(alias.getQualifiedName(), this);
+        }
     }
 
     @Override
@@ -100,6 +140,32 @@ public class Client extends TableImpl<ClientRecord> {
         return Keys.KEY_CLIENT_PRIMARY;
     }
 
+    private transient ProductPath _fk_product_clientId;
+
+    /**
+     * Get the implicit to-many join path to the <code>testshop.product</code>
+     * table
+     */
+    public ProductPath fk_product_clientId() {
+        if (_fk_product_clientId == null)
+            _fk_product_clientId = new ProductPath(this, null, Keys.FK_PRODUCT_CLIENTID.getInverseKey());
+
+        return _fk_product_clientId;
+    }
+
+    private transient UserPath _fk_user_clientId;
+
+    /**
+     * Get the implicit to-many join path to the <code>testshop.user</code>
+     * table
+     */
+    public UserPath fk_user_clientId() {
+        if (_fk_user_clientId == null)
+            _fk_user_clientId = new UserPath(this, null, Keys.FK_USER_CLIENTID.getInverseKey());
+
+        return _fk_user_clientId;
+    }
+
     @Override
     public Client as(String alias) {
         return new Client(DSL.name(alias), this);
@@ -108,6 +174,11 @@ public class Client extends TableImpl<ClientRecord> {
     @Override
     public Client as(Name alias) {
         return new Client(alias, this);
+    }
+
+    @Override
+    public Client as(Table<?> alias) {
+        return new Client(alias.getQualifiedName(), this);
     }
 
     /**
@@ -126,12 +197,95 @@ public class Client extends TableImpl<ClientRecord> {
         return new Client(name, null);
     }
 
-    // -------------------------------------------------------------------------
-    // Row1 type methods
-    // -------------------------------------------------------------------------
-
+    /**
+     * Rename this table
+     */
     @Override
-    public Row1<Integer> fieldsRow() {
-        return (Row1) super.fieldsRow();
+    public Client rename(Table<?> name) {
+        return new Client(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Client where(Condition condition) {
+        return new Client(getQualifiedName(), aliased() ? this : null, null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Client where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Client where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Client where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Client where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Client where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Client where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Client where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Client whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Client whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 }

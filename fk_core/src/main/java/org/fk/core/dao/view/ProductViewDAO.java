@@ -1,5 +1,6 @@
 package org.fk.core.dao.view;
 
+import org.fk.codegen.testshop.tables.records.ProductLangRecord;
 import org.fk.core.dao.AbstractViewDAO;
 import org.fk.core.dao.RecordToViewMapper;
 import org.fk.codegen.testshop.tables.Product;
@@ -65,13 +66,15 @@ public class ProductViewDAO extends AbstractViewDAO<ProductRecord, ProductDTO, L
         return ctx().select(fields).from(Product.PRODUCT).limit(10).fetchInto(ProductDTO.class);
     }
 
-    private final RecordToViewMapper<ProductDTO, Long> productViewMapper = new RecordToViewMapper<>(
+    private final RecordToViewMapper<ProductDTO, ProductRecord, Long> productViewMapper = new RecordToViewMapper<>(
             ProductDTO.class,
+            ProductRecord.class,
             Product.PRODUCT.PRODUCTID,
             List.of(Product.PRODUCT.PRODUCTID));
 
-    private final RecordToViewMapper<ProductLangDTO, Long> productLangViewMapper = new RecordToViewMapper<>(
+    private final RecordToViewMapper<ProductLangDTO, ProductLangRecord, Long> productLangViewMapper = new RecordToViewMapper<>(
             ProductLangDTO.class,
+            ProductLangRecord.class,
             Product.PRODUCT.PRODUCTID,
             List.of(ProductLang.PRODUCT_LANG.PRODUCTID, ProductLang.PRODUCT_LANG.LANGID));
 
@@ -80,7 +83,7 @@ public class ProductViewDAO extends AbstractViewDAO<ProductRecord, ProductDTO, L
         final List<ProductDTO> products = productViewMapper.extractRecords(records);
         final Map<Long, List<ProductLangDTO>> langs = productLangViewMapper.extractRecordsGroupedBy(records);
         for (ProductDTO product : products) {
-            final List<ProductLangDTO> productLangs = langs.get(product.getProductId());
+            final List<ProductLangDTO> productLangs = langs.getOrDefault(product.getProductId(), new ArrayList<>());
             product.setLangs(productLangs);
             for (ProductLangDTO productLang : productLangs) {
                 if (productLang.getLangId().equals(requestContext().getLangId())) {

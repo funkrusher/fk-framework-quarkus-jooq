@@ -4,16 +4,16 @@
 package org.fk.codegen.testshop.tables.records;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import org.fk.codegen.testshop.tables.ProductLang;
 import org.fk.codegen.testshop.tables.interfaces.IProductLang;
-import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Record4;
-import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -22,7 +22,12 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> implements Record4<Long, Integer, String, String>, IProductLang {
+@Entity
+@Table(
+    name = "product_lang",
+    schema = "testshop"
+)
+public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> implements IProductLang {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +42,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     /**
      * Getter for <code>testshop.product_lang.productId</code>.
      */
+    @Column(name = "productId", nullable = false)
     @NotNull
     @Override
     public Long getProductId() {
@@ -54,6 +60,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     /**
      * Getter for <code>testshop.product_lang.langId</code>.
      */
+    @Column(name = "langId", nullable = false)
     @NotNull
     @Override
     public Integer getLangId() {
@@ -71,6 +78,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     /**
      * Getter for <code>testshop.product_lang.name</code>.
      */
+    @Column(name = "name", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -89,6 +97,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     /**
      * Getter for <code>testshop.product_lang.description</code>.
      */
+    @Column(name = "description", nullable = false)
     @NotNull
     @Size(max = 65535)
     @Override
@@ -106,113 +115,6 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     }
 
     // -------------------------------------------------------------------------
-    // Record4 type implementation
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row4<Long, Integer, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
-    }
-
-    @Override
-    public Row4<Long, Integer, String, String> valuesRow() {
-        return (Row4) super.valuesRow();
-    }
-
-    @Override
-    public Field<Long> field1() {
-        return ProductLang.PRODUCT_LANG.PRODUCTID;
-    }
-
-    @Override
-    public Field<Integer> field2() {
-        return ProductLang.PRODUCT_LANG.LANGID;
-    }
-
-    @Override
-    public Field<String> field3() {
-        return ProductLang.PRODUCT_LANG.NAME;
-    }
-
-    @Override
-    public Field<String> field4() {
-        return ProductLang.PRODUCT_LANG.DESCRIPTION;
-    }
-
-    @Override
-    public Long component1() {
-        return getProductId();
-    }
-
-    @Override
-    public Integer component2() {
-        return getLangId();
-    }
-
-    @Override
-    public String component3() {
-        return getName();
-    }
-
-    @Override
-    public String component4() {
-        return getDescription();
-    }
-
-    @Override
-    public Long value1() {
-        return getProductId();
-    }
-
-    @Override
-    public Integer value2() {
-        return getLangId();
-    }
-
-    @Override
-    public String value3() {
-        return getName();
-    }
-
-    @Override
-    public String value4() {
-        return getDescription();
-    }
-
-    @Override
-    public ProductLangRecord value1(Long value) {
-        setProductId(value);
-        return this;
-    }
-
-    @Override
-    public ProductLangRecord value2(Integer value) {
-        setLangId(value);
-        return this;
-    }
-
-    @Override
-    public ProductLangRecord value3(String value) {
-        setName(value);
-        return this;
-    }
-
-    @Override
-    public ProductLangRecord value4(String value) {
-        setDescription(value);
-        return this;
-    }
-
-    @Override
-    public ProductLangRecord values(Long value1, Integer value2, String value3, String value4) {
-        value1(value1);
-        value2(value2);
-        value3(value3);
-        value4(value4);
-        return this;
-    }
-
-    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -222,6 +124,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
         setLangId(from.getLangId());
         setName(from.getName());
         setDescription(from.getDescription());
+        resetChangedOnNotNull();
     }
 
     @Override
@@ -251,6 +154,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
         setLangId(langId);
         setName(name);
         setDescription(description);
+        resetChangedOnNotNull();
     }
 
     /**
@@ -264,6 +168,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
             setLangId(value.getLangId());
             setName(value.getName());
             setDescription(value.getDescription());
+            resetChangedOnNotNull();
         }
     }
 }

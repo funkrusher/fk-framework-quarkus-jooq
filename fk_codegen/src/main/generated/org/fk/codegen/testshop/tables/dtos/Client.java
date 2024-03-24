@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 
 import org.fk.codegen.dto.AbstractDTO;
@@ -15,6 +21,11 @@ import org.fk.codegen.testshop.tables.interfaces.IClient;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "client",
+    schema = "testshop"
+)
 public class Client extends AbstractDTO implements IClient {
 
     private static final long serialVersionUID = 1L;
@@ -36,6 +47,9 @@ public class Client extends AbstractDTO implements IClient {
     /**
      * Getter for <code>testshop.client.clientId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "clientId")
     @Override
     public Integer getClientId() {
         return this.clientId;

@@ -4,13 +4,17 @@
 package org.fk.codegen.testshop.tables.records;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.interfaces.IClient;
-import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -19,7 +23,12 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements Record1<Integer>, IClient {
+@Entity
+@Table(
+    name = "client",
+    schema = "testshop"
+)
+public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements IClient {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +43,9 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements R
     /**
      * Getter for <code>testshop.client.clientId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "clientId")
     @Override
     public Integer getClientId() {
         return (Integer) get(0);
@@ -49,53 +61,13 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements R
     }
 
     // -------------------------------------------------------------------------
-    // Record1 type implementation
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row1<Integer> fieldsRow() {
-        return (Row1) super.fieldsRow();
-    }
-
-    @Override
-    public Row1<Integer> valuesRow() {
-        return (Row1) super.valuesRow();
-    }
-
-    @Override
-    public Field<Integer> field1() {
-        return Client.CLIENT.CLIENTID;
-    }
-
-    @Override
-    public Integer component1() {
-        return getClientId();
-    }
-
-    @Override
-    public Integer value1() {
-        return getClientId();
-    }
-
-    @Override
-    public ClientRecord value1(Integer value) {
-        setClientId(value);
-        return this;
-    }
-
-    @Override
-    public ClientRecord values(Integer value1) {
-        value1(value1);
-        return this;
-    }
-
-    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
     @Override
     public void from(IClient from) {
         setClientId(from.getClientId());
+        resetChangedOnNotNull();
     }
 
     @Override
@@ -122,6 +94,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements R
         super(Client.CLIENT);
 
         setClientId(clientId);
+        resetChangedOnNotNull();
     }
 
     /**
@@ -132,6 +105,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements R
 
         if (value != null) {
             setClientId(value.getClientId());
+            resetChangedOnNotNull();
         }
     }
 }

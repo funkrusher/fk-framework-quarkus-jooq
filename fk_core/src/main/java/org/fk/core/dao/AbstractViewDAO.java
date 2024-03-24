@@ -13,10 +13,6 @@ import org.jooq.impl.DSL;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static java.util.stream.Collectors.groupingBy;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.name;
-
 /**
  * A common base-class for read-only ViewDAOs
  * <p>
@@ -118,8 +114,8 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
             Result<Record> result = getViewQuery()
                     .where(equal(pk, id))
                     .fetch();
-            if (result != null && result.size() > 0) {
-                return recordsToView(result).get(0);
+            if (!result.isEmpty()) {
+                return recordsToView(result).getFirst();
             }
         }
         return null;
@@ -144,8 +140,6 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
      * @throws DataAccessException if something went wrong executing the query
      */
     public List<P> query(final QueryParameters queryParameters) throws InvalidDataException, DataAccessException {
-        final List<Field<?>> viewFields = getViewFields();
-
         Collection<SortField<?>> sortFields = new ArrayList<>();
         if (queryParameters.getSorter() != null) {
             Sorter sorter = queryParameters.getSorter();
@@ -183,7 +177,13 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
                 } else if (Long.class.isAssignableFrom(type)) {
                     Long value = Long.parseLong(filter.getValues().getFirst());
                     Field<Long> field0 = (Field<Long>) field;
-                    filterFields.add(field0.eq(value));
+                    if (filter.getOperator() == FilterOperator.EQUALS) {
+                        filterFields.add(field0.eq(value));
+                    } else if (filter.getOperator() == FilterOperator.GREATER_THAN_OR_EQUALS) {
+                        filterFields.add(field0.ge(value));
+                    } else if (filter.getOperator() == FilterOperator.LESS_THAN_OR_EQUALS) {
+                        filterFields.add(field0.le(value));
+                    }
                 } else if (BigDecimal.class.isAssignableFrom(type)) {
                     BigDecimal value = new BigDecimal(filter.getValues().getFirst());
                     Field<BigDecimal> field0 = (Field<BigDecimal>) field;

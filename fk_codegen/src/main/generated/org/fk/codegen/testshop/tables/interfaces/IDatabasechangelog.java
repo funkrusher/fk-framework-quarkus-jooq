@@ -4,6 +4,9 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +20,11 @@ import java.time.LocalDateTime;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "DATABASECHANGELOG",
+    schema = "testshop"
+)
 public interface IDatabasechangelog extends Serializable {
 
     /**
@@ -27,6 +35,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
+    @Column(name = "ID", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     public String getID();
@@ -39,6 +48,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
+    @Column(name = "AUTHOR", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     public String getAUTHOR();
@@ -51,6 +61,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
+    @Column(name = "FILENAME", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     public String getFILENAME();
@@ -63,6 +74,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
+    @Column(name = "DATEEXECUTED", nullable = false)
     @NotNull
     public LocalDateTime getDATEEXECUTED();
 
@@ -74,6 +86,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
+    @Column(name = "ORDEREXECUTED", nullable = false)
     @NotNull
     public Integer getORDEREXECUTED();
 
@@ -85,6 +98,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
+    @Column(name = "EXECTYPE", nullable = false, length = 10)
     @NotNull
     @Size(max = 10)
     public String getEXECTYPE();
@@ -97,6 +111,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
+    @Column(name = "MD5SUM", length = 35)
     @Size(max = 35)
     public String getMD5SUM();
 
@@ -108,6 +123,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
+    @Column(name = "DESCRIPTION", length = 255)
     @Size(max = 255)
     public String getDESCRIPTION();
 
@@ -119,6 +135,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
+    @Column(name = "COMMENTS", length = 255)
     @Size(max = 255)
     public String getCOMMENTS();
 
@@ -130,6 +147,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
+    @Column(name = "TAG", length = 255)
     @Size(max = 255)
     public String getTAG();
 
@@ -141,6 +159,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
+    @Column(name = "LIQUIBASE", length = 20)
     @Size(max = 20)
     public String getLIQUIBASE();
 
@@ -152,6 +171,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
+    @Column(name = "CONTEXTS", length = 255)
     @Size(max = 255)
     public String getCONTEXTS();
 
@@ -163,6 +183,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
+    @Column(name = "LABELS", length = 255)
     @Size(max = 255)
     public String getLABELS();
 
@@ -174,6 +195,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
+    @Column(name = "DEPLOYMENT_ID", length = 10)
     @Size(max = 10)
     public String getDEPLOYMENT_ID();
 

@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,13 +23,18 @@ import org.fk.codegen.testshop.tables.interfaces.ILang;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "lang",
+    schema = "testshop"
+)
 public class Lang extends AbstractDTO implements ILang {
 
     private static final long serialVersionUID = 1L;
 
     private Integer langId;
-    private String  code;
-    private String  description;
+    private String code;
+    private String description;
 
     public Lang() {}
 
@@ -35,8 +46,8 @@ public class Lang extends AbstractDTO implements ILang {
 
     public Lang(
         Integer langId,
-        String  code,
-        String  description
+        String code,
+        String description
     ) {
         this.langId = langId;
         this.code = code;
@@ -46,6 +57,9 @@ public class Lang extends AbstractDTO implements ILang {
     /**
      * Getter for <code>testshop.lang.langId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "langId")
     @Override
     public Integer getLangId() {
         return this.langId;
@@ -63,6 +77,7 @@ public class Lang extends AbstractDTO implements ILang {
     /**
      * Getter for <code>testshop.lang.code</code>.
      */
+    @Column(name = "code", nullable = false, length = 2)
     @NotNull
     @Size(max = 2)
     @Override
@@ -82,6 +97,7 @@ public class Lang extends AbstractDTO implements ILang {
     /**
      * Getter for <code>testshop.lang.description</code>.
      */
+    @Column(name = "description", length = 50)
     @Size(max = 50)
     @Override
     public String getDescription() {

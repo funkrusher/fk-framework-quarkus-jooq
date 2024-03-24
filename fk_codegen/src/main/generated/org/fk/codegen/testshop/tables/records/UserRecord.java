@@ -4,16 +4,19 @@
 package org.fk.codegen.testshop.tables.records;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import org.fk.codegen.testshop.tables.User;
 import org.fk.codegen.testshop.tables.interfaces.IUser;
-import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record5;
-import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -22,7 +25,12 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Record5<Integer, Integer, String, String, String>, IUser {
+@Entity
+@Table(
+    name = "user",
+    schema = "testshop"
+)
+public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +45,9 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
     /**
      * Getter for <code>testshop.user.userId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     @Override
     public Integer getUserId() {
         return (Integer) get(0);
@@ -53,6 +64,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
     /**
      * Getter for <code>testshop.user.clientId</code>.
      */
+    @Column(name = "clientId", nullable = false)
     @NotNull
     @Override
     public Integer getClientId() {
@@ -70,6 +82,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
     /**
      * Getter for <code>testshop.user.email</code>.
      */
+    @Column(name = "email", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -88,6 +101,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
     /**
      * Getter for <code>testshop.user.firstname</code>.
      */
+    @Column(name = "firstname", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -106,6 +120,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
     /**
      * Getter for <code>testshop.user.lastname</code>.
      */
+    @Column(name = "lastname", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -123,135 +138,6 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
     }
 
     // -------------------------------------------------------------------------
-    // Record5 type implementation
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row5<Integer, Integer, String, String, String> fieldsRow() {
-        return (Row5) super.fieldsRow();
-    }
-
-    @Override
-    public Row5<Integer, Integer, String, String, String> valuesRow() {
-        return (Row5) super.valuesRow();
-    }
-
-    @Override
-    public Field<Integer> field1() {
-        return User.USER.USERID;
-    }
-
-    @Override
-    public Field<Integer> field2() {
-        return User.USER.CLIENTID;
-    }
-
-    @Override
-    public Field<String> field3() {
-        return User.USER.EMAIL;
-    }
-
-    @Override
-    public Field<String> field4() {
-        return User.USER.FIRSTNAME;
-    }
-
-    @Override
-    public Field<String> field5() {
-        return User.USER.LASTNAME;
-    }
-
-    @Override
-    public Integer component1() {
-        return getUserId();
-    }
-
-    @Override
-    public Integer component2() {
-        return getClientId();
-    }
-
-    @Override
-    public String component3() {
-        return getEmail();
-    }
-
-    @Override
-    public String component4() {
-        return getFirstname();
-    }
-
-    @Override
-    public String component5() {
-        return getLastname();
-    }
-
-    @Override
-    public Integer value1() {
-        return getUserId();
-    }
-
-    @Override
-    public Integer value2() {
-        return getClientId();
-    }
-
-    @Override
-    public String value3() {
-        return getEmail();
-    }
-
-    @Override
-    public String value4() {
-        return getFirstname();
-    }
-
-    @Override
-    public String value5() {
-        return getLastname();
-    }
-
-    @Override
-    public UserRecord value1(Integer value) {
-        setUserId(value);
-        return this;
-    }
-
-    @Override
-    public UserRecord value2(Integer value) {
-        setClientId(value);
-        return this;
-    }
-
-    @Override
-    public UserRecord value3(String value) {
-        setEmail(value);
-        return this;
-    }
-
-    @Override
-    public UserRecord value4(String value) {
-        setFirstname(value);
-        return this;
-    }
-
-    @Override
-    public UserRecord value5(String value) {
-        setLastname(value);
-        return this;
-    }
-
-    @Override
-    public UserRecord values(Integer value1, Integer value2, String value3, String value4, String value5) {
-        value1(value1);
-        value2(value2);
-        value3(value3);
-        value4(value4);
-        value5(value5);
-        return this;
-    }
-
-    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -262,6 +148,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
         setEmail(from.getEmail());
         setFirstname(from.getFirstname());
         setLastname(from.getLastname());
+        resetChangedOnNotNull();
     }
 
     @Override
@@ -292,6 +179,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
         setEmail(email);
         setFirstname(firstname);
         setLastname(lastname);
+        resetChangedOnNotNull();
     }
 
     /**
@@ -306,6 +194,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Recor
             setEmail(value.getEmail());
             setFirstname(value.getFirstname());
             setLastname(value.getLastname());
+            resetChangedOnNotNull();
         }
     }
 }

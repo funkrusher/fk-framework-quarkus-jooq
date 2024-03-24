@@ -38,8 +38,7 @@ public class JooqContextFactory {
 
     public JooqContext createJooqContext(RequestContext requestContext) {
         try {
-            DSLContext ctx = DSL.using(getConfiguration(requestContext));
-            return new JooqContext(requestContext, ctx);
+            return new JooqContext(requestContext, getConfiguration(requestContext));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

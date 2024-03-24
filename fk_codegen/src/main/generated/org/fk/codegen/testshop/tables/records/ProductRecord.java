@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.records;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,10 +18,7 @@ import java.time.LocalDateTime;
 
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.interfaces.IProduct;
-import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record6;
-import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -24,7 +27,12 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements Record6<Long, Integer, BigDecimal, LocalDateTime, LocalDateTime, Boolean>, IProduct {
+@Entity
+@Table(
+    name = "product",
+    schema = "testshop"
+)
+public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements IProduct {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,6 +47,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Getter for <code>testshop.product.productId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "productId")
     @Override
     public Long getProductId() {
         return (Long) get(0);
@@ -55,6 +66,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Getter for <code>testshop.product.clientId</code>.
      */
+    @Column(name = "clientId", nullable = false)
     @NotNull
     @Override
     public Integer getClientId() {
@@ -72,6 +84,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Getter for <code>testshop.product.price</code>.
      */
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
     @NotNull
     @Override
     public BigDecimal getPrice() {
@@ -89,6 +102,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Getter for <code>testshop.product.createdAt</code>.
      */
+    @Column(name = "createdAt")
     @Override
     public LocalDateTime getCreatedAt() {
         return (LocalDateTime) get(3);
@@ -105,6 +119,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Getter for <code>testshop.product.updatedAt</code>.
      */
+    @Column(name = "updatedAt")
     @Override
     public LocalDateTime getUpdatedAt() {
         return (LocalDateTime) get(4);
@@ -121,6 +136,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Getter for <code>testshop.product.deleted</code>.
      */
+    @Column(name = "deleted")
     @Override
     public Boolean getDeleted() {
         return (Boolean) get(5);
@@ -136,157 +152,6 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     }
 
     // -------------------------------------------------------------------------
-    // Record6 type implementation
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row6<Long, Integer, BigDecimal, LocalDateTime, LocalDateTime, Boolean> fieldsRow() {
-        return (Row6) super.fieldsRow();
-    }
-
-    @Override
-    public Row6<Long, Integer, BigDecimal, LocalDateTime, LocalDateTime, Boolean> valuesRow() {
-        return (Row6) super.valuesRow();
-    }
-
-    @Override
-    public Field<Long> field1() {
-        return Product.PRODUCT.PRODUCTID;
-    }
-
-    @Override
-    public Field<Integer> field2() {
-        return Product.PRODUCT.CLIENTID;
-    }
-
-    @Override
-    public Field<BigDecimal> field3() {
-        return Product.PRODUCT.PRICE;
-    }
-
-    @Override
-    public Field<LocalDateTime> field4() {
-        return Product.PRODUCT.CREATEDAT;
-    }
-
-    @Override
-    public Field<LocalDateTime> field5() {
-        return Product.PRODUCT.UPDATEDAT;
-    }
-
-    @Override
-    public Field<Boolean> field6() {
-        return Product.PRODUCT.DELETED;
-    }
-
-    @Override
-    public Long component1() {
-        return getProductId();
-    }
-
-    @Override
-    public Integer component2() {
-        return getClientId();
-    }
-
-    @Override
-    public BigDecimal component3() {
-        return getPrice();
-    }
-
-    @Override
-    public LocalDateTime component4() {
-        return getCreatedAt();
-    }
-
-    @Override
-    public LocalDateTime component5() {
-        return getUpdatedAt();
-    }
-
-    @Override
-    public Boolean component6() {
-        return getDeleted();
-    }
-
-    @Override
-    public Long value1() {
-        return getProductId();
-    }
-
-    @Override
-    public Integer value2() {
-        return getClientId();
-    }
-
-    @Override
-    public BigDecimal value3() {
-        return getPrice();
-    }
-
-    @Override
-    public LocalDateTime value4() {
-        return getCreatedAt();
-    }
-
-    @Override
-    public LocalDateTime value5() {
-        return getUpdatedAt();
-    }
-
-    @Override
-    public Boolean value6() {
-        return getDeleted();
-    }
-
-    @Override
-    public ProductRecord value1(Long value) {
-        setProductId(value);
-        return this;
-    }
-
-    @Override
-    public ProductRecord value2(Integer value) {
-        setClientId(value);
-        return this;
-    }
-
-    @Override
-    public ProductRecord value3(BigDecimal value) {
-        setPrice(value);
-        return this;
-    }
-
-    @Override
-    public ProductRecord value4(LocalDateTime value) {
-        setCreatedAt(value);
-        return this;
-    }
-
-    @Override
-    public ProductRecord value5(LocalDateTime value) {
-        setUpdatedAt(value);
-        return this;
-    }
-
-    @Override
-    public ProductRecord value6(Boolean value) {
-        setDeleted(value);
-        return this;
-    }
-
-    @Override
-    public ProductRecord values(Long value1, Integer value2, BigDecimal value3, LocalDateTime value4, LocalDateTime value5, Boolean value6) {
-        value1(value1);
-        value2(value2);
-        value3(value3);
-        value4(value4);
-        value5(value5);
-        value6(value6);
-        return this;
-    }
-
-    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
@@ -298,6 +163,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
+        resetChangedOnNotNull();
     }
 
     @Override
@@ -329,6 +195,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         setCreatedAt(createdAt);
         setUpdatedAt(updatedAt);
         setDeleted(deleted);
+        resetChangedOnNotNull();
     }
 
     /**
@@ -344,6 +211,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
             setCreatedAt(value.getCreatedAt());
             setUpdatedAt(value.getUpdatedAt());
             setDeleted(value.getDeleted());
+            resetChangedOnNotNull();
         }
     }
 }

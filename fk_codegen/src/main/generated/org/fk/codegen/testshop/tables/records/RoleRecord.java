@@ -4,15 +4,17 @@
 package org.fk.codegen.testshop.tables.records;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import org.fk.codegen.testshop.tables.Role;
 import org.fk.codegen.testshop.tables.interfaces.IRole;
-import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 
 
@@ -21,7 +23,12 @@ import org.jooq.impl.UpdatableRecordImpl;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
-public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements Record1<String>, IRole {
+@Entity
+@Table(
+    name = "role",
+    schema = "testshop"
+)
+public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +43,8 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements Recor
     /**
      * Getter for <code>testshop.role.roleId</code>.
      */
+    @Id
+    @Column(name = "roleId", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
     @Override
@@ -53,53 +62,13 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements Recor
     }
 
     // -------------------------------------------------------------------------
-    // Record1 type implementation
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row1<String> fieldsRow() {
-        return (Row1) super.fieldsRow();
-    }
-
-    @Override
-    public Row1<String> valuesRow() {
-        return (Row1) super.valuesRow();
-    }
-
-    @Override
-    public Field<String> field1() {
-        return Role.ROLE.ROLEID;
-    }
-
-    @Override
-    public String component1() {
-        return getRoleId();
-    }
-
-    @Override
-    public String value1() {
-        return getRoleId();
-    }
-
-    @Override
-    public RoleRecord value1(String value) {
-        setRoleId(value);
-        return this;
-    }
-
-    @Override
-    public RoleRecord values(String value1) {
-        value1(value1);
-        return this;
-    }
-
-    // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
 
     @Override
     public void from(IRole from) {
         setRoleId(from.getRoleId());
+        resetChangedOnNotNull();
     }
 
     @Override
@@ -126,6 +95,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements Recor
         super(Role.ROLE);
 
         setRoleId(roleId);
+        resetChangedOnNotNull();
     }
 
     /**
@@ -136,6 +106,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements Recor
 
         if (value != null) {
             setRoleId(value.getRoleId());
+            resetChangedOnNotNull();
         }
     }
 }

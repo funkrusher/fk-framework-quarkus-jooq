@@ -4,6 +4,10 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +21,11 @@ import org.fk.codegen.testshop.tables.interfaces.IRole;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "role",
+    schema = "testshop"
+)
 public class Role extends AbstractDTO implements IRole {
 
     private static final long serialVersionUID = 1L;
@@ -38,6 +47,8 @@ public class Role extends AbstractDTO implements IRole {
     /**
      * Getter for <code>testshop.role.roleId</code>.
      */
+    @Id
+    @Column(name = "roleId", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
     @Override

@@ -4,6 +4,9 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,12 +20,17 @@ import org.fk.codegen.testshop.tables.interfaces.IUserRole;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "user_role",
+    schema = "testshop"
+)
 public class UserRole extends AbstractDTO implements IUserRole {
 
     private static final long serialVersionUID = 1L;
 
     private Integer userId;
-    private String  roleId;
+    private String roleId;
 
     public UserRole() {}
 
@@ -33,7 +41,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
 
     public UserRole(
         Integer userId,
-        String  roleId
+        String roleId
     ) {
         this.userId = userId;
         this.roleId = roleId;
@@ -42,6 +50,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
     /**
      * Getter for <code>testshop.user_role.userId</code>.
      */
+    @Column(name = "userId", nullable = false)
     @NotNull
     @Override
     public Integer getUserId() {
@@ -60,6 +69,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
     /**
      * Getter for <code>testshop.user_role.roleId</code>.
      */
+    @Column(name = "roleId", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
     @Override

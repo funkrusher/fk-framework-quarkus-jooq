@@ -4,6 +4,10 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +20,11 @@ import java.io.Serializable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "role",
+    schema = "testshop"
+)
 public interface IRole extends Serializable {
 
     /**
@@ -26,6 +35,8 @@ public interface IRole extends Serializable {
     /**
      * Getter for <code>testshop.role.roleId</code>.
      */
+    @Id
+    @Column(name = "roleId", nullable = false, length = 50)
     @NotNull
     @Size(max = 50)
     public String getRoleId();

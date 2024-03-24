@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +23,11 @@ import java.time.LocalDateTime;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "product",
+    schema = "testshop"
+)
 public interface IProduct extends Serializable {
 
     /**
@@ -27,6 +38,9 @@ public interface IProduct extends Serializable {
     /**
      * Getter for <code>testshop.product.productId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "productId")
     public Long getProductId();
 
     /**
@@ -37,6 +51,7 @@ public interface IProduct extends Serializable {
     /**
      * Getter for <code>testshop.product.clientId</code>.
      */
+    @Column(name = "clientId", nullable = false)
     @NotNull
     public Integer getClientId();
 
@@ -48,6 +63,7 @@ public interface IProduct extends Serializable {
     /**
      * Getter for <code>testshop.product.price</code>.
      */
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
     @NotNull
     public BigDecimal getPrice();
 
@@ -59,6 +75,7 @@ public interface IProduct extends Serializable {
     /**
      * Getter for <code>testshop.product.createdAt</code>.
      */
+    @Column(name = "createdAt")
     public LocalDateTime getCreatedAt();
 
     /**
@@ -69,6 +86,7 @@ public interface IProduct extends Serializable {
     /**
      * Getter for <code>testshop.product.updatedAt</code>.
      */
+    @Column(name = "updatedAt")
     public LocalDateTime getUpdatedAt();
 
     /**
@@ -79,6 +97,7 @@ public interface IProduct extends Serializable {
     /**
      * Getter for <code>testshop.product.deleted</code>.
      */
+    @Column(name = "deleted")
     public Boolean getDeleted();
 
     // -------------------------------------------------------------------------

@@ -9,18 +9,29 @@ import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.fk.codegen.testshop.Keys;
 import org.fk.codegen.testshop.Testshop;
+import org.fk.codegen.testshop.tables.Client.ClientPath;
+import org.fk.codegen.testshop.tables.Lang.LangPath;
+import org.fk.codegen.testshop.tables.ProductLang.ProductLangPath;
 import org.fk.codegen.testshop.tables.records.ProductRecord;
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -70,24 +81,24 @@ public class Product extends TableImpl<ProductRecord> {
     /**
      * The column <code>testshop.product.createdAt</code>.
      */
-    public final TableField<ProductRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field("current_timestamp()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ProductRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>testshop.product.updatedAt</code>.
      */
-    public final TableField<ProductRecord, LocalDateTime> UPDATEDAT = createField(DSL.name("updatedAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field("current_timestamp()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ProductRecord, LocalDateTime> UPDATEDAT = createField(DSL.name("updatedAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>testshop.product.deleted</code>.
      */
-    public final TableField<ProductRecord, Boolean> DELETED = createField(DSL.name("deleted"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("0", SQLDataType.BOOLEAN)), this, "");
+    public final TableField<ProductRecord, Boolean> DELETED = createField(DSL.name("deleted"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("0"), SQLDataType.BOOLEAN)), this, "");
 
     private Product(Name alias, Table<ProductRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Product(Name alias, Table<ProductRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Product(Name alias, Table<ProductRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -111,8 +122,37 @@ public class Product extends TableImpl<ProductRecord> {
         this(DSL.name("product"), null);
     }
 
-    public <O extends Record> Product(Table<O> child, ForeignKey<O, ProductRecord> key) {
-        super(child, key, PRODUCT);
+    public <O extends Record> Product(Table<O> path, ForeignKey<O, ProductRecord> childPath, InverseForeignKey<O, ProductRecord> parentPath) {
+        super(path, childPath, parentPath, PRODUCT);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class ProductPath extends Product implements Path<ProductRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> ProductPath(Table<O> path, ForeignKey<O, ProductRecord> childPath, InverseForeignKey<O, ProductRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private ProductPath(Name alias, Table<ProductRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public ProductPath as(String alias) {
+            return new ProductPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public ProductPath as(Name alias) {
+            return new ProductPath(alias, this);
+        }
+
+        @Override
+        public ProductPath as(Table<?> alias) {
+            return new ProductPath(alias.getQualifiedName(), this);
+        }
     }
 
     @Override
@@ -135,16 +175,37 @@ public class Product extends TableImpl<ProductRecord> {
         return Arrays.asList(Keys.FK_PRODUCT_CLIENTID);
     }
 
-    private transient Client _fk_product_clientId;
+    private transient ClientPath _fk_product_clientId;
 
     /**
      * Get the implicit join path to the <code>testshop.client</code> table.
      */
-    public Client fk_product_clientId() {
+    public ClientPath fk_product_clientId() {
         if (_fk_product_clientId == null)
-            _fk_product_clientId = new Client(this, Keys.FK_PRODUCT_CLIENTID);
+            _fk_product_clientId = new ClientPath(this, Keys.FK_PRODUCT_CLIENTID, null);
 
         return _fk_product_clientId;
+    }
+
+    private transient ProductLangPath _fk_product_lang_productId;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>testshop.product_lang</code> table
+     */
+    public ProductLangPath fk_product_lang_productId() {
+        if (_fk_product_lang_productId == null)
+            _fk_product_lang_productId = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
+
+        return _fk_product_lang_productId;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>testshop.lang</code>
+     * table
+     */
+    public LangPath fk_product_lang_langId() {
+        return fk_product_lang_productId().fk_product_lang_langId();
     }
 
     @Override
@@ -155,6 +216,11 @@ public class Product extends TableImpl<ProductRecord> {
     @Override
     public Product as(Name alias) {
         return new Product(alias, this);
+    }
+
+    @Override
+    public Product as(Table<?> alias) {
+        return new Product(alias.getQualifiedName(), this);
     }
 
     /**
@@ -173,12 +239,95 @@ public class Product extends TableImpl<ProductRecord> {
         return new Product(name, null);
     }
 
-    // -------------------------------------------------------------------------
-    // Row6 type methods
-    // -------------------------------------------------------------------------
-
+    /**
+     * Rename this table
+     */
     @Override
-    public Row6<Long, Integer, BigDecimal, LocalDateTime, LocalDateTime, Boolean> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Product rename(Table<?> name) {
+        return new Product(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Product where(Condition condition) {
+        return new Product(getQualifiedName(), aliased() ? this : null, null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Product where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Product where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Product where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Product where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Product where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Product where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Product where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Product whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Product whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 }

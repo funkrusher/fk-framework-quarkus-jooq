@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +22,11 @@ import java.io.Serializable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "user",
+    schema = "testshop"
+)
 public interface IUser extends Serializable {
 
     /**
@@ -26,6 +37,9 @@ public interface IUser extends Serializable {
     /**
      * Getter for <code>testshop.user.userId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     public Integer getUserId();
 
     /**
@@ -36,6 +50,7 @@ public interface IUser extends Serializable {
     /**
      * Getter for <code>testshop.user.clientId</code>.
      */
+    @Column(name = "clientId", nullable = false)
     @NotNull
     public Integer getClientId();
 
@@ -47,6 +62,7 @@ public interface IUser extends Serializable {
     /**
      * Getter for <code>testshop.user.email</code>.
      */
+    @Column(name = "email", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     public String getEmail();
@@ -59,6 +75,7 @@ public interface IUser extends Serializable {
     /**
      * Getter for <code>testshop.user.firstname</code>.
      */
+    @Column(name = "firstname", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     public String getFirstname();
@@ -71,6 +88,7 @@ public interface IUser extends Serializable {
     /**
      * Getter for <code>testshop.user.lastname</code>.
      */
+    @Column(name = "lastname", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     public String getLastname();

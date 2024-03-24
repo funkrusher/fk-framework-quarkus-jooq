@@ -7,6 +7,8 @@ import jakarta.validation.Validator;
 import org.fk.core.jooq.JooqContext;
 import org.fk.core.jooq.JooqContextFactory;
 import org.fk.core.util.exception.InvalidDataException;
+import org.fk.core.util.query.Filter;
+import org.fk.core.util.query.FilterOperator;
 import org.fk.core.util.query.QueryParameters;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;
@@ -22,6 +24,7 @@ import org.fk.core.util.request.RequestContext;
 import org.jboss.logging.Logger;
 import org.jooq.exception.DataAccessException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -64,6 +67,54 @@ public class ProductManager {
         JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
         ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(jooqContext);
         return productViewDAO.findOptionalById(productId);
+    }
+
+    public void testMultiTransaction(final RequestContext requestContext) {
+
+        // we use jooq transactions, because they are more fine-tuneable.
+        // see: https://blog.jooq.org/nested-transactions-in-jooq/
+
+        List<ProductDTO> inserts = new ArrayList<>();
+        for (int i= 0; i < 1000; i++) {
+            ProductDTO insert1 = new ProductDTO();
+            insert1.setProductId(90000000L + i);
+            insert1.setClientId(1);
+            insert1.setPrice(new BigDecimal("12.21"));
+            inserts.add(insert1);
+        }
+        try (JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext)) {
+
+            Filter filter1 = new Filter("productId", FilterOperator.GREATER_THAN_OR_EQUALS, List.of("90000000"));
+            Filter filter2 = new Filter("productId", FilterOperator.LESS_THAN_OR_EQUALS, List.of("90050000"));
+
+            QueryParameters queryParameters = new QueryParameters();
+            queryParameters.setPage(0);
+            queryParameters.setPageSize(1000);
+            queryParameters.getFilters().add(filter1);
+            queryParameters.getFilters().add(filter2);
+
+            ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(jooqContext);
+            List<ProductDTO> queryResult = productViewDAO.query(queryParameters);
+
+            try (JooqContext subContextA = jooqContextFactory.createJooqContext(requestContext)) {
+                ProductRecordDAO aProductRecordDAO = daoFactory.createProductRecordDAO(subContextA);
+                aProductRecordDAO.deleteDTOs(queryResult);
+                subContextA.commit();
+            }
+
+
+            try {
+                try (JooqContext subContextB = jooqContextFactory.createJooqContext(requestContext)) {
+                    ProductRecordDAO bProductRecordDAO = daoFactory.createProductRecordDAO(subContextB);
+                    bProductRecordDAO.insertDTOs(inserts);
+                    subContextB.commit();
+                }
+            } catch (Exception e) {
+                LOGGER.info(e);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Transactional
@@ -148,7 +199,7 @@ public class ProductManager {
         Stream<List<ProductRecord>> chunkStream = chunk(stream1, 250);
 
         // the "parallel" is important here, as it really pushes performance.
-        Stream<ProductDTO> resultStream = chunkStream.parallel().map(records -> {
+        return chunkStream.parallel().map(records -> {
             List<Long> ids = new ArrayList<>();
             for (ProductRecord record : records) {
                 ids.add(record.getProductId());
@@ -174,8 +225,6 @@ public class ProductManager {
             }
             return products;
         }).flatMap(List::stream);
-
-        return resultStream;
     }
 
     /**

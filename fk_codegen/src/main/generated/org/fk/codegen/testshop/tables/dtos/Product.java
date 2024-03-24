@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,16 +25,21 @@ import org.fk.codegen.testshop.tables.interfaces.IProduct;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "product",
+    schema = "testshop"
+)
 public class Product extends AbstractDTO implements IProduct {
 
     private static final long serialVersionUID = 1L;
 
-    private Long          productId;
-    private Integer       clientId;
-    private BigDecimal    price;
+    private Long productId;
+    private Integer clientId;
+    private BigDecimal price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Boolean       deleted;
+    private Boolean deleted;
 
     public Product() {}
 
@@ -42,12 +53,12 @@ public class Product extends AbstractDTO implements IProduct {
     }
 
     public Product(
-        Long          productId,
-        Integer       clientId,
-        BigDecimal    price,
+        Long productId,
+        Integer clientId,
+        BigDecimal price,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        Boolean       deleted
+        Boolean deleted
     ) {
         this.productId = productId;
         this.clientId = clientId;
@@ -60,6 +71,9 @@ public class Product extends AbstractDTO implements IProduct {
     /**
      * Getter for <code>testshop.product.productId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "productId")
     @Override
     public Long getProductId() {
         return this.productId;
@@ -77,6 +91,7 @@ public class Product extends AbstractDTO implements IProduct {
     /**
      * Getter for <code>testshop.product.clientId</code>.
      */
+    @Column(name = "clientId", nullable = false)
     @NotNull
     @Override
     public Integer getClientId() {
@@ -95,6 +110,7 @@ public class Product extends AbstractDTO implements IProduct {
     /**
      * Getter for <code>testshop.product.price</code>.
      */
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
     @NotNull
     @Override
     public BigDecimal getPrice() {
@@ -113,6 +129,7 @@ public class Product extends AbstractDTO implements IProduct {
     /**
      * Getter for <code>testshop.product.createdAt</code>.
      */
+    @Column(name = "createdAt")
     @Override
     public LocalDateTime getCreatedAt() {
         return this.createdAt;
@@ -130,6 +147,7 @@ public class Product extends AbstractDTO implements IProduct {
     /**
      * Getter for <code>testshop.product.updatedAt</code>.
      */
+    @Column(name = "updatedAt")
     @Override
     public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
@@ -147,6 +165,7 @@ public class Product extends AbstractDTO implements IProduct {
     /**
      * Getter for <code>testshop.product.deleted</code>.
      */
+    @Column(name = "deleted")
     @Override
     public Boolean getDeleted() {
         return this.deleted;

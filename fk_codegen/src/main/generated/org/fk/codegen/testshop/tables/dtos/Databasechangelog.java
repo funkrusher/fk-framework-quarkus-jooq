@@ -4,6 +4,9 @@
 package org.fk.codegen.testshop.tables.dtos;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,24 +22,29 @@ import org.fk.codegen.testshop.tables.interfaces.IDatabasechangelog;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "DATABASECHANGELOG",
+    schema = "testshop"
+)
 public class Databasechangelog extends AbstractDTO implements IDatabasechangelog {
 
     private static final long serialVersionUID = 1L;
 
-    private String        ID;
-    private String        AUTHOR;
-    private String        FILENAME;
+    private String ID;
+    private String AUTHOR;
+    private String FILENAME;
     private LocalDateTime DATEEXECUTED;
-    private Integer       ORDEREXECUTED;
-    private String        EXECTYPE;
-    private String        MD5SUM;
-    private String        DESCRIPTION;
-    private String        COMMENTS;
-    private String        TAG;
-    private String        LIQUIBASE;
-    private String        CONTEXTS;
-    private String        LABELS;
-    private String        DEPLOYMENT_ID;
+    private Integer ORDEREXECUTED;
+    private String EXECTYPE;
+    private String MD5SUM;
+    private String DESCRIPTION;
+    private String COMMENTS;
+    private String TAG;
+    private String LIQUIBASE;
+    private String CONTEXTS;
+    private String LABELS;
+    private String DEPLOYMENT_ID;
 
     public Databasechangelog() {}
 
@@ -58,20 +66,20 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     }
 
     public Databasechangelog(
-        String        ID,
-        String        AUTHOR,
-        String        FILENAME,
+        String ID,
+        String AUTHOR,
+        String FILENAME,
         LocalDateTime DATEEXECUTED,
-        Integer       ORDEREXECUTED,
-        String        EXECTYPE,
-        String        MD5SUM,
-        String        DESCRIPTION,
-        String        COMMENTS,
-        String        TAG,
-        String        LIQUIBASE,
-        String        CONTEXTS,
-        String        LABELS,
-        String        DEPLOYMENT_ID
+        Integer ORDEREXECUTED,
+        String EXECTYPE,
+        String MD5SUM,
+        String DESCRIPTION,
+        String COMMENTS,
+        String TAG,
+        String LIQUIBASE,
+        String CONTEXTS,
+        String LABELS,
+        String DEPLOYMENT_ID
     ) {
         this.ID = ID;
         this.AUTHOR = AUTHOR;
@@ -92,6 +100,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
+    @Column(name = "ID", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -111,6 +120,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
+    @Column(name = "AUTHOR", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -130,6 +140,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
+    @Column(name = "FILENAME", nullable = false, length = 255)
     @NotNull
     @Size(max = 255)
     @Override
@@ -149,6 +160,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
+    @Column(name = "DATEEXECUTED", nullable = false)
     @NotNull
     @Override
     public LocalDateTime getDATEEXECUTED() {
@@ -167,6 +179,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
+    @Column(name = "ORDEREXECUTED", nullable = false)
     @NotNull
     @Override
     public Integer getORDEREXECUTED() {
@@ -185,6 +198,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
+    @Column(name = "EXECTYPE", nullable = false, length = 10)
     @NotNull
     @Size(max = 10)
     @Override
@@ -204,6 +218,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
+    @Column(name = "MD5SUM", length = 35)
     @Size(max = 35)
     @Override
     public String getMD5SUM() {
@@ -222,6 +237,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
+    @Column(name = "DESCRIPTION", length = 255)
     @Size(max = 255)
     @Override
     public String getDESCRIPTION() {
@@ -240,6 +256,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
+    @Column(name = "COMMENTS", length = 255)
     @Size(max = 255)
     @Override
     public String getCOMMENTS() {
@@ -258,6 +275,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
+    @Column(name = "TAG", length = 255)
     @Size(max = 255)
     @Override
     public String getTAG() {
@@ -276,6 +294,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
+    @Column(name = "LIQUIBASE", length = 20)
     @Size(max = 20)
     @Override
     public String getLIQUIBASE() {
@@ -294,6 +313,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
+    @Column(name = "CONTEXTS", length = 255)
     @Size(max = 255)
     @Override
     public String getCONTEXTS() {
@@ -312,6 +332,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
+    @Column(name = "LABELS", length = 255)
     @Size(max = 255)
     @Override
     public String getLABELS() {
@@ -330,6 +351,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
+    @Column(name = "DEPLOYMENT_ID", length = 10)
     @Size(max = 10)
     @Override
     public String getDEPLOYMENT_ID() {

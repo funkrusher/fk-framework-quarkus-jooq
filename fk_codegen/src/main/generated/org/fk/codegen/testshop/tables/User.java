@@ -7,18 +7,29 @@ package org.fk.codegen.testshop.tables;
 import jakarta.validation.Valid;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.fk.codegen.testshop.Keys;
 import org.fk.codegen.testshop.Testshop;
+import org.fk.codegen.testshop.tables.Client.ClientPath;
+import org.fk.codegen.testshop.tables.Role.RolePath;
+import org.fk.codegen.testshop.tables.UserRole.UserRolePath;
 import org.fk.codegen.testshop.tables.records.UserRecord;
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -76,11 +87,11 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, String> LASTNAME = createField(DSL.name("lastname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     private User(Name alias, Table<UserRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private User(Name alias, Table<UserRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private User(Name alias, Table<UserRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -104,8 +115,37 @@ public class User extends TableImpl<UserRecord> {
         this(DSL.name("user"), null);
     }
 
-    public <O extends Record> User(Table<O> child, ForeignKey<O, UserRecord> key) {
-        super(child, key, USER);
+    public <O extends Record> User(Table<O> path, ForeignKey<O, UserRecord> childPath, InverseForeignKey<O, UserRecord> parentPath) {
+        super(path, childPath, parentPath, USER);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class UserPath extends User implements Path<UserRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> UserPath(Table<O> path, ForeignKey<O, UserRecord> childPath, InverseForeignKey<O, UserRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private UserPath(Name alias, Table<UserRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public UserPath as(String alias) {
+            return new UserPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public UserPath as(Name alias) {
+            return new UserPath(alias, this);
+        }
+
+        @Override
+        public UserPath as(Table<?> alias) {
+            return new UserPath(alias.getQualifiedName(), this);
+        }
     }
 
     @Override
@@ -128,16 +168,37 @@ public class User extends TableImpl<UserRecord> {
         return Arrays.asList(Keys.FK_USER_CLIENTID);
     }
 
-    private transient Client _fk_user_clientId;
+    private transient ClientPath _fk_user_clientId;
 
     /**
      * Get the implicit join path to the <code>testshop.client</code> table.
      */
-    public Client fk_user_clientId() {
+    public ClientPath fk_user_clientId() {
         if (_fk_user_clientId == null)
-            _fk_user_clientId = new Client(this, Keys.FK_USER_CLIENTID);
+            _fk_user_clientId = new ClientPath(this, Keys.FK_USER_CLIENTID, null);
 
         return _fk_user_clientId;
+    }
+
+    private transient UserRolePath _fk_user_role_userId;
+
+    /**
+     * Get the implicit to-many join path to the <code>testshop.user_role</code>
+     * table
+     */
+    public UserRolePath fk_user_role_userId() {
+        if (_fk_user_role_userId == null)
+            _fk_user_role_userId = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
+
+        return _fk_user_role_userId;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>testshop.role</code>
+     * table
+     */
+    public RolePath fk_user_role_roleId() {
+        return fk_user_role_userId().fk_user_role_roleId();
     }
 
     @Override
@@ -148,6 +209,11 @@ public class User extends TableImpl<UserRecord> {
     @Override
     public User as(Name alias) {
         return new User(alias, this);
+    }
+
+    @Override
+    public User as(Table<?> alias) {
+        return new User(alias.getQualifiedName(), this);
     }
 
     /**
@@ -166,12 +232,95 @@ public class User extends TableImpl<UserRecord> {
         return new User(name, null);
     }
 
-    // -------------------------------------------------------------------------
-    // Row5 type methods
-    // -------------------------------------------------------------------------
-
+    /**
+     * Rename this table
+     */
     @Override
-    public Row5<Integer, Integer, String, String, String> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public User rename(Table<?> name) {
+        return new User(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public User where(Condition condition) {
+        return new User(getQualifiedName(), aliased() ? this : null, null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public User where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public User where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public User where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public User where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public User where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public User where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public User where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public User whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public User whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 }

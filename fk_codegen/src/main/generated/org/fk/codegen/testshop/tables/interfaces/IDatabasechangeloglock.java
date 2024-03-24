@@ -4,6 +4,10 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +21,11 @@ import java.time.LocalDateTime;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "DATABASECHANGELOGLOCK",
+    schema = "testshop"
+)
 public interface IDatabasechangeloglock extends Serializable {
 
     /**
@@ -27,6 +36,8 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
+    @Id
+    @Column(name = "ID", nullable = false)
     @NotNull
     public Integer getID();
 
@@ -38,6 +49,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
+    @Column(name = "LOCKED", nullable = false)
     @NotNull
     public Byte getLOCKED();
 
@@ -49,6 +61,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
+    @Column(name = "LOCKGRANTED")
     public LocalDateTime getLOCKGRANTED();
 
     /**
@@ -59,6 +72,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
+    @Column(name = "LOCKEDBY", length = 255)
     @Size(max = 255)
     public String getLOCKEDBY();
 

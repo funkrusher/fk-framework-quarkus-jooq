@@ -4,6 +4,12 @@
 package org.fk.codegen.testshop.tables.interfaces;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 
 import java.io.Serializable;
@@ -14,6 +20,11 @@ import java.io.Serializable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 @Valid
+@Entity
+@Table(
+    name = "client",
+    schema = "testshop"
+)
 public interface IClient extends Serializable {
 
     /**
@@ -24,6 +35,9 @@ public interface IClient extends Serializable {
     /**
      * Getter for <code>testshop.client.clientId</code>.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "clientId")
     public Integer getClientId();
 
     // -------------------------------------------------------------------------
