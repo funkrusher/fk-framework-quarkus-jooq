@@ -11,7 +11,7 @@ import org.jboss.logging.Logger;
  * GreetingManager
  */
 @ApplicationScoped
-public class GreetingManager {
+public class GreetingManager extends AbstractBaseManager {
 
     private static final Logger LOGGER = Logger.getLogger(GreetingManager.class);
 
@@ -20,9 +20,6 @@ public class GreetingManager {
 
     @Inject
     DAOFactory daoFactory;
-
-    @Inject
-    Validator validator;
 
 
     public String test() {

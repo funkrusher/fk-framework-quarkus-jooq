@@ -4,8 +4,6 @@
 package org.fk.codegen.testshop;
 
 
-import jakarta.validation.Valid;
-
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.Databasechangeloglock;
 import org.fk.codegen.testshop.tables.Lang;
@@ -34,7 +32,6 @@ import org.jooq.impl.Internal;
  * testshop.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-@Valid
 public class Keys {
 
     // -------------------------------------------------------------------------

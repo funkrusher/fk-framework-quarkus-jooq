@@ -32,23 +32,13 @@ public class ProductControllerV1 {
     FkSecurityIdentity fkSecurityIdentity;
 
     @GET
-    @Operation(summary = "test multiset")
-    @APIResponse(responseCode = "200", description = "List of all products successful")
-    @APIResponse(responseCode = "500", description = "Server unavailable")
-    @Path("/multiset")
-    public List<ProductDTO> testMultiset() {
-        RequestContext requestContext = new RequestContext(1, 1);
-        return productService.testMultiset(requestContext);
-    }
-
-
-    @GET
+    @Authenticated
     @Operation(summary = "returns a list of all products")
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public List<ProductDTO> query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
-        RequestContext requestContext = new RequestContext(1, 1);
+        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
         return productService.query(requestContext, queryParameters);
     }
 
@@ -96,16 +86,5 @@ public class ProductControllerV1 {
         RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
         productService.delete(requestContext, product);
         return Response.status(204).build();
-    }
-
-    @GET
-    @Operation(summary = "executes multiple transactions and make sure commit/rollback is correctly done and in parallel")
-    @APIResponse(responseCode = "200", description = "Multi-Transaction Test executed")
-    @APIResponse(responseCode = "500", description = "Server unavailable")
-    @Path("/testMultiTransaction")
-    public Response testMultiTransaction() {
-        RequestContext requestContext = new RequestContext(1, 1);
-        productService.testMultiTransaction(requestContext);
-        return Response.status(200).build();
     }
 }

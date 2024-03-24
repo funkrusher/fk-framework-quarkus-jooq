@@ -11,6 +11,7 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 
 import java.sql.Connection;
+import java.util.function.Consumer;
 
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
@@ -38,7 +39,20 @@ public class JooqContextFactory {
 
     public JooqContext createJooqContext(RequestContext requestContext) {
         try {
-            return new JooqContext(requestContext, getConfiguration(requestContext));
+            DSLContext ctx = DSL.using(getConfiguration(requestContext));
+            return new JooqContext(requestContext, ctx);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void withinTransaction(RequestContext requestContext, JooqContextFunction fn) throws RuntimeException {
+        try {
+            DSLContext ctx = DSL.using(getConfiguration(requestContext));
+            ctx.transaction(trx -> {
+                JooqContext tjc = new JooqContext(requestContext, DSL.using(trx));
+                fn.run(tjc);
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

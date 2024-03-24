@@ -4,8 +4,6 @@
 package org.fk.codegen.testshop;
 
 
-import jakarta.validation.Valid;
-
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.Databasechangelog;
 import org.fk.codegen.testshop.tables.Databasechangeloglock;
@@ -21,7 +19,6 @@ import org.fk.codegen.testshop.tables.UserRole;
  * Convenience access to all tables in testshop.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-@Valid
 public class Tables {
 
     /**

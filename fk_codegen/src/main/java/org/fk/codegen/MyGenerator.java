@@ -20,26 +20,9 @@ public class MyGenerator extends JavaGenerator {
 
 
     @Override
-    public void setGenerateValidationAnnotations(boolean generateValidationAnnotations) {
-        super.setGenerateValidationAnnotations(generateValidationAnnotations);
-    }
-
-
-    @Override
     protected void printClassAnnotations(JavaWriter out, Definition definition, GeneratorStrategy.Mode mode) {
         super.printClassAnnotations(out, definition, mode);
-
-        out.println("@%s", out.ref(Valid.class));
-    }
-
-    @Override
-    protected void generatePojo(TableDefinition table) {
-        super.generatePojo(table);
-    }
-
-    @Override
-    protected String getJavaType(DataTypeDefinition type, JavaWriter out) {
-        return super.getJavaType(type, out);
+        // out.println("@%s", out.ref(Valid.class));
     }
 
     @Override
@@ -138,13 +121,6 @@ public class MyGenerator extends JavaGenerator {
 
     private String nonnullAnnotation(JavaWriter out) {
         return generateNonnullAnnotation() ? out.ref(generatedNonnullAnnotationType()) : null;
-    }
-
-    private void printNullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        if (column instanceof TypedElementDefinition && ((TypedElementDefinition<?>) column).getType().isNullable())
-            printNullableAnnotation(out);
-        else
-            printNonnullAnnotation(out);
     }
 
     protected void printNullableAnnotation(JavaWriter out) {

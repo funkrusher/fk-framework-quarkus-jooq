@@ -10,7 +10,6 @@ import org.fk.codegen.testshop.tables.interfaces.IProductLang;
 /**
  * ProductLangDTO
  */
-@Valid
 public class ProductLangDTO extends ProductLang implements IProductLang {
 
     private boolean insertFlag;

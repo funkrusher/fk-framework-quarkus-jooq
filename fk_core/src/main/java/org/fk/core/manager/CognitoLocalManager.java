@@ -28,7 +28,7 @@ import java.util.Map;
  * CognitoLocalManager
  */
 @ApplicationScoped
-public class CognitoLocalManager {
+public class CognitoLocalManager extends AbstractBaseManager {
     private static final Logger LOGGER = Logger.getLogger(CognitoLocalManager.class);
 
     @ConfigProperty(name = "cognitolocal.userpoolid")

@@ -13,18 +13,15 @@ import java.util.List;
 /**
  * ProductDTO
  */
-@Valid
 @Schema(name = "Product", description = "Represents a product")
 public class ProductDTO extends Product implements IProduct {
 
     @Schema(writeOnly = true)
     private boolean deleteFlag;
 
-    @Valid
     @Schema(readOnly = true)
     private ProductLangDTO lang;
 
-    @Valid
     private List<ProductLangDTO> langs;
 
     public ProductDTO() {

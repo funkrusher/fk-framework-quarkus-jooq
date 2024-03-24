@@ -52,20 +52,6 @@ public class ProductViewDAO extends AbstractViewDAO<ProductRecord, ProductDTO, L
                         .eq(Product.PRODUCT.PRODUCTID));
     }
 
-    public List<ProductDTO> testMultiset() {
-        List<Field<?>> fields = new ArrayList<>();
-        fields.addAll(List.of(table().fields()));
-        fields.add(multiset(
-                selectDistinct(asterisk())
-                        .from(ProductLang.PRODUCT_LANG)
-                        .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
-        ).as("langs"));
-
-
-
-        return ctx().select(fields).from(Product.PRODUCT).limit(10).fetchInto(ProductDTO.class);
-    }
-
     private final RecordToViewMapper<ProductDTO, ProductRecord, Long> productViewMapper = new RecordToViewMapper<>(
             ProductDTO.class,
             ProductRecord.class,
