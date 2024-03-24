@@ -86,9 +86,9 @@ public class ProductManager extends AbstractBaseManager {
         // we use jooq transactions, because they are more fine-tuneable.
         // see: https://blog.jooq.org/nested-transactions-in-jooq/
 
-        List<ProductDTO> inserts = new ArrayList<>();
+        List<ProductRecord> inserts = new ArrayList<>();
         for (int i= 0; i < 1000; i++) {
-            ProductDTO insert1 = new ProductDTO();
+            ProductRecord insert1 = new ProductRecord();
             insert1.setProductId(90000000L + i);
             insert1.setClientId(1);
             insert1.setPrice(new BigDecimal("12.21"));
@@ -117,7 +117,7 @@ public class ProductManager extends AbstractBaseManager {
                 try {
                     jooqContextFactory.withinTransaction(requestContext, subContextB -> {
                         ProductRecordDAO bProductRecordDAO = daoFactory.createProductRecordDAO(subContextB);
-                        bProductRecordDAO.insertDTOs(inserts);
+                        bProductRecordDAO.insert(inserts);
                         // Integer x = Integer.valueOf("test");
                     });
                 } catch (Exception e) {

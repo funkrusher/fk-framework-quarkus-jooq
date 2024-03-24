@@ -8,8 +8,6 @@ import org.jooq.impl.DSL;
 
 import java.util.Collection;
 
-import static org.jooq.impl.DSL.row;
-
 /**
  * A common base-class for DAOs
  * <p>
@@ -23,7 +21,7 @@ import static org.jooq.impl.DSL.row;
  */
 public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
 
-    private JooqContext jooqContext;
+    private final JooqContext jooqContext;
     private final Table<R> table;
 
     // -------------------------------------------------------------------------

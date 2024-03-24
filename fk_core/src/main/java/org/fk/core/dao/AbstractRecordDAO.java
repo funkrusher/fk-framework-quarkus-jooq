@@ -56,7 +56,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
                 record.changed(false);
 
                 for (Field<?> field : record.fields()) {
-                    boolean isModified = pojo.getModifiedFields().keySet().contains(field.getName());
+                    boolean isModified = pojo.getModifiedFields().containsKey(field.getName());
                     if (isModified) {
                         record.changed(field.getName(), true);
                     }
@@ -148,7 +148,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      * @throws DataAccessException if something went wrong executing the query
      */
     public <A extends Y> A insertAndReturnDTO(A dto) {
-        return insertAndReturnDTOs(singletonList(dto)).get(0);
+        return insertAndReturnDTOs(singletonList(dto)).getFirst();
     }
 
     /**
@@ -195,7 +195,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      * @throws DataAccessException if something went wrong executing the query
      */
     public R insertAndReturn(R record) {
-        return insertAndReturn(singletonList(record)).get(0);
+        return insertAndReturn(singletonList(record)).getFirst();
     }
 
     /**
@@ -220,8 +220,8 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
         List<R> inserts = prepareInserts(records);
 
         int k = 1;
-        InsertSetMoreStep step = ctx().insertInto(inserts.get(0).getTable())
-                .set(inserts.get(0));
+        InsertSetMoreStep step = ctx().insertInto(inserts.getFirst().getTable())
+                .set(inserts.getFirst());
         if (inserts.size() > 1) {
             step.set(inserts.get(k));
             k++;
@@ -292,8 +292,8 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
     public int[] insert(List<R> records) throws DataAccessException {
         List<R> inserts = prepareInserts(records);
         if (inserts.size() == 1) {
-            return new int[]{inserts.get(0).insert()};
-        } else if (inserts.size() > 0) {
+            return new int[]{inserts.getFirst().insert()};
+        } else if (!inserts.isEmpty()) {
             // Execute a batch INSERT
             return ctx().batchInsert(inserts).execute();
         }
@@ -370,7 +370,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
             ctx().batch(conditions).execute();
         } else if (updates.size() == 1) {
             // Execute a regular UPDATE
-            ctx().update(table()).set(updates.get(0)).where(equal(pk(), getId(updates.get(0)))).execute();
+            ctx().update(table()).set(updates.getFirst()).where(equal(pk(), getId(updates.getFirst()))).execute();
         }
     }
 
@@ -437,7 +437,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
             ctx().batchDelete(records).execute();
         } else if (records.size() == 1) {
             // Execute a regular DELETE
-            records.get(0).delete();
+            records.getFirst().delete();
         }
     }
 
