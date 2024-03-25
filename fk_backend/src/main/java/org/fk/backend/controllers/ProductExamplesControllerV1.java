@@ -26,6 +26,16 @@ public class ProductExamplesControllerV1 {
     @Inject
     ProductManager productService;
 
+    @GET
+    @Operation(summary = "returns a list of all products unauthenticated")
+    @APIResponse(responseCode = "200", description = "List of all products successful")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @Path("/")
+    public List<ProductDTO> query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
+        RequestContext requestContext = new RequestContext(1, 1);
+        return productService.query(requestContext, queryParameters);
+    }
+
     @POST
     @Operation(summary = "creates a new product unauthenticatd")
     @APIResponse(responseCode = "201", description = "product creation successful")

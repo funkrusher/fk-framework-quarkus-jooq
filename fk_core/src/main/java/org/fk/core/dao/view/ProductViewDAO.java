@@ -58,7 +58,7 @@ public class ProductViewDAO extends AbstractViewDAO<ProductRecord, ProductDTO, L
     private final RecordToViewMapper<ProductLangDTO, ProductLangRecord, Long> productLangViewMapper = new RecordToViewMapper<>(
             ProductLangDTO.class,
             ProductLangRecord.class,
-            Product.PRODUCT.PRODUCTID,
+            ProductLang.PRODUCT_LANG.PRODUCTID,
             List.of(ProductLang.PRODUCT_LANG.PRODUCTID, ProductLang.PRODUCT_LANG.LANGID));
 
     @Override
