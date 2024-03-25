@@ -37,8 +37,8 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public List<ProductDTO> query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        return productService.query(requestContext, queryParameters);
+        RequestContext request = new RequestContext(fkSecurityIdentity, 1);
+        return productService.query(request, queryParameters);
     }
 
     @GET
@@ -48,8 +48,8 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
     public ProductDTO getOne(Long productId) throws NotFoundException {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        return productService.getOne(requestContext, productId).orElseThrow(NotFoundException::new);
+        RequestContext request = new RequestContext(fkSecurityIdentity, 1);
+        return productService.getOne(request, productId).orElseThrow(NotFoundException::new);
     }
 
 
@@ -60,8 +60,8 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public Response create(ProductDTO product) throws ValidationException {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        ProductDTO created = productService.create(requestContext, product);
+        RequestContext request = new RequestContext(fkSecurityIdentity, 1);
+        ProductDTO created = productService.create(request, product);
         return Response.ok(created).status(201).build();
     }
 
@@ -72,8 +72,8 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
     public ProductDTO update(ProductDTO product) throws ValidationException {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        return productService.update(requestContext, product);
+        RequestContext request = new RequestContext(fkSecurityIdentity, 1);
+        return productService.update(request, product);
     }
 
     @DELETE
@@ -82,8 +82,8 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "204", description = "product delete successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     public Response delete(ProductDTO product) {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        productService.delete(requestContext, product);
+        RequestContext request = new RequestContext(fkSecurityIdentity, 1);
+        productService.delete(request, product);
         return Response.status(204).build();
     }
 }

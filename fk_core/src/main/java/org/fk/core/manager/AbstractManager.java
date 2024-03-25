@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.fk.codegen.dto.AbstractDTO;
+import org.fk.core.jooq.DSLFactory;
 import org.fk.core.util.exception.ValidationException;
 
 import java.util.HashSet;
@@ -18,7 +19,7 @@ import java.util.Set;
  * and other helpful utils all managers may need.
  * </p>
  */
-public abstract class AbstractBaseManager {
+public abstract class AbstractManager {
 
     @Inject
     Validator validator;

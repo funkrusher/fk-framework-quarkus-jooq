@@ -28,9 +28,6 @@ import java.util.*;
 public class ProductCsvExportControllerV1 {
 
     @Inject
-    FkSecurityIdentity fkSecurityIdentity;
-
-    @Inject
     ProductManager productService;
 
     @Inject
@@ -38,12 +35,11 @@ public class ProductCsvExportControllerV1 {
     CsvMapper csvMapper;
 
     @GET
-    @Authenticated
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/")
     public Response streamRootCsvFile() {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        var productStream = productService.streamAll(requestContext);
+        RequestContext request = new RequestContext(1, 1);
+        var productStream = productService.streamAll(request);
 
         StreamingOutput streamingOutput = outputStream -> {
             ProductRecord pc = new ProductRecord();
@@ -82,12 +78,11 @@ public class ProductCsvExportControllerV1 {
 
 
     @GET
-    @Authenticated
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/lang")
     public Response streamLangCsvFile() {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        var productStream = productService.streamAll(requestContext);
+        RequestContext request = new RequestContext(1, 1);
+        var productStream = productService.streamAll(request);
 
         StreamingOutput streamingOutput = outputStream -> {
             ProductLangRecord pc = new ProductLangRecord();

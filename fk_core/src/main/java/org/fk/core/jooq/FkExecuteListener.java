@@ -16,10 +16,10 @@ import static org.jooq.impl.DSL.name;
  */
 public class FkExecuteListener extends DefaultExecuteListener {
 
-    private RequestContext requestContext;
+    private RequestContext request;
 
-    public FkExecuteListener(RequestContext requestContext) {
-        this.requestContext = requestContext;
+    public FkExecuteListener(RequestContext request) {
+        this.request = request;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FkExecuteListener extends DefaultExecuteListener {
                 Field<Integer> clientIdField = table.field(DSL.field(DSL.name("clientId"), Integer.class));
                 if (clientIdField != null) {
                     Field<Integer> field = DSL.field(DSL.name("clientId"), Integer.class);
-                    select.addConditions(field.eq(requestContext.getClientId()));
+                    select.addConditions(field.eq(request.getClientId()));
                 } else {
                     select.addConditions(DSL.trueCondition());
                 }

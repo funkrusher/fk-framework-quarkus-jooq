@@ -22,7 +22,7 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
 
     private final DSLContext dsl;
 
-    private final RequestContext requestContext;
+    private final RequestContext request;
     private final Table<R> table;
 
     // -------------------------------------------------------------------------
@@ -32,7 +32,7 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
     protected AbstractBaseDAO(DSLContext dsl, Table<R> table) {
         this.dsl = dsl;
         this.table = table;
-        this.requestContext = (RequestContext) dsl.data("request");
+        this.request = (RequestContext) dsl.data("request");
     }
 
     // ------------------------------------------------------------------------
@@ -117,12 +117,12 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
     }
 
     /**
-     * Expose the requestContext this <code>DAO</code> is operating.
+     * Expose the request this <code>DAO</code> is operating.
      *
-     * @return the <code>DAO</code>'s underlying <code>requestContext</code>
+     * @return the <code>DAO</code>'s underlying <code>request</code>
      */
-    public RequestContext requestContext() {
-        return this.requestContext;
+    public RequestContext request() {
+        return this.request;
     }
 
     /**

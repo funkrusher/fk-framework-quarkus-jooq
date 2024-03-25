@@ -31,15 +31,15 @@ public class DSLFactory {
 
     SQLDialect sqlDialect = null;
 
-    public DSLContext create(RequestContext requestContext) {
+    public DSLContext create(RequestContext request) {
         try {
-            return DSL.using(getConfiguration(requestContext));
+            return DSL.using(getConfiguration(request));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Configuration getConfiguration(RequestContext requestContext) {
+    private Configuration getConfiguration(RequestContext request) {
         if (sqlDialect == null) {
             try {
                 final Connection connection = dataSource.getConnection();
@@ -62,8 +62,8 @@ public class DSLFactory {
                         .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
                 );
         configuration.set(new DefaultRecordListenerProvider(new FkInsertListener()));
-        configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener(requestContext)));
-        configuration.data("request", requestContext);
+        configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener(request)));
+        configuration.data("request", request);
         return configuration;
     }
 }

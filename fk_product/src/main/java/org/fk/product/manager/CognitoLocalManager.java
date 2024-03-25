@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 import org.fk.core.jooq.DSLFactory;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.codegen.testshop.tables.records.UserRoleRecord;
-import org.fk.core.manager.AbstractBaseManager;
+import org.fk.core.manager.AbstractManager;
 import org.fk.product.dao.DAOFactory;
 import org.fk.product.dao.UserRecordDAO;
 import org.fk.product.dao.UserRoleRecordDAO;
@@ -29,7 +29,7 @@ import java.util.Map;
  * CognitoLocalManager
  */
 @ApplicationScoped
-public class CognitoLocalManager extends AbstractBaseManager {
+public class CognitoLocalManager extends AbstractManager {
     private static final Logger LOGGER = Logger.getLogger(CognitoLocalManager.class);
 
     @ConfigProperty(name = "cognitolocal.userpoolid")
@@ -70,8 +70,8 @@ public class CognitoLocalManager extends AbstractBaseManager {
             String lastname,
             String roleId) {
 
-        RequestContext requestContext = new RequestContext(clientId, 1);
-        DSLContext dsl = dslFactory.create(requestContext);
+        RequestContext request = new RequestContext(clientId, 1);
+        DSLContext dsl = dslFactory.create(request);
         UserRecordDAO userRecordDAO = daoFactory.createUserRecordDAO(dsl);
         UserRoleRecordDAO userRoleRecordDAO = daoFactory.createUserRoleRecordDAO(dsl);
 
@@ -98,7 +98,7 @@ public class CognitoLocalManager extends AbstractBaseManager {
             FkClaim fkClaim = new FkClaim(clientId, createdUser.getUserId(), roles);
             String fkClaimStr = objectMapper.writeValueAsString(fkClaim);
 
-            SignUpRequest request = SignUpRequest.builder()
+            SignUpRequest signUpRequest = SignUpRequest.builder()
                     .clientId(userPoolClientId)
                     .username(email)
                     .password(password)
@@ -107,7 +107,7 @@ public class CognitoLocalManager extends AbstractBaseManager {
                             AttributeType.builder().name("custom:fk").value(fkClaimStr).build()
                     )
                     .build();
-            SignUpResponse response = cognitoIpc.signUp(request);
+            SignUpResponse response = cognitoIpc.signUp(signUpRequest);
             userSub = response.userSub();
 
             AdminConfirmSignUpRequest confirmRequest = AdminConfirmSignUpRequest.builder()

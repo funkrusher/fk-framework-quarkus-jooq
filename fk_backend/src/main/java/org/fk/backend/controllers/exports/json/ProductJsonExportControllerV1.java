@@ -26,9 +26,6 @@ import java.util.*;
 public class ProductJsonExportControllerV1 {
 
     @Inject
-    FkSecurityIdentity fkSecurityIdentity;
-
-    @Inject
     ProductManager productService;
 
     @Inject
@@ -36,12 +33,11 @@ public class ProductJsonExportControllerV1 {
     ObjectMapper objectMapper;
 
     @GET
-    @Authenticated
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/")
     public Response streamRootJsonFile() {
-        RequestContext requestContext = new RequestContext(fkSecurityIdentity, 1);
-        var productStream = productService.streamAll(requestContext);
+        RequestContext request = new RequestContext(1, 1);
+        var productStream = productService.streamAll(request);
 
         StreamingOutput streamingOutput = outputStream -> {
             Iterator<ProductDTO> it = productStream.iterator();

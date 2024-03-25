@@ -30,8 +30,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public List<ProductDTO> query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
-        RequestContext requestContext = new RequestContext(1, 1);
-        return productService.query(requestContext, queryParameters);
+        RequestContext request = new RequestContext(1, 1);
+        return productService.query(request, queryParameters);
     }
 
     @POST
@@ -40,8 +40,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public Response create(ProductDTO product) throws ValidationException {
-        RequestContext requestContext = new RequestContext(1, 1);
-        ProductDTO created = productService.create(requestContext, product);
+        RequestContext request = new RequestContext(1, 1);
+        ProductDTO created = productService.create(request, product);
         return Response.ok(created).status(201).build();
     }
 
@@ -51,8 +51,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
     public ProductDTO update(ProductDTO product) throws ValidationException {
-        RequestContext requestContext = new RequestContext(1, 1);
-        return productService.update(requestContext, product);
+        RequestContext request = new RequestContext(1, 1);
+        return productService.update(request, product);
     }
 
     @GET
@@ -61,8 +61,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/testMultiTransaction")
     public Response testMultiTransaction() {
-        RequestContext requestContext = new RequestContext(1, 1);
-        productService.testMultiTransaction(requestContext);
+        RequestContext request = new RequestContext(1, 1);
+        productService.testMultiTransaction(request);
         return Response.status(200).build();
     }
 
@@ -73,8 +73,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/multiset")
     public List<ProductDTO> testMultiset() {
-        RequestContext requestContext = new RequestContext(1, 1);
-        return productService.testMultiset(requestContext);
+        RequestContext request = new RequestContext(1, 1);
+        return productService.testMultiset(request);
     }
 
 

@@ -1,4 +1,4 @@
-package org.fk.core.dao;
+package org.fk.core.mapper;
 
 import org.fk.codegen.dto.AbstractDTO;
 import org.jooq.Field;
@@ -38,9 +38,9 @@ public class RecordToViewMapper<E extends AbstractDTO, I extends UpdatableRecord
      * @param records records
      * @return filtered records.
      */
-    private Map<K, List<Record>> filterRecordsByUniqueFieldsAndGroupByIdField(List<Record> records) {
-        final Map<String, Record> uniqueRecordMap = new LinkedHashMap<>();
-        for (Record record : records) {
+    private Map<K, List<I>> filterRecordsByUniqueFieldsAndGroupByIdField(List<I> records) {
+        final Map<String, I> uniqueRecordMap = new LinkedHashMap<>();
+        for (I record : records) {
             boolean searchNotFound = false;
             StringBuilder key = new StringBuilder();
             for (Field<?> uniqueField : uniqueFields) {
@@ -57,15 +57,15 @@ public class RecordToViewMapper<E extends AbstractDTO, I extends UpdatableRecord
                 uniqueRecordMap.put(key.toString(), record);
             }
         }
-        final List<Record> uniqueRecords = uniqueRecordMap.values().stream().toList();
-        final Map<K, List<Record>> result = new LinkedHashMap<>();
-        for (Record record : uniqueRecords) {
+        final List<I> uniqueRecords = uniqueRecordMap.values().stream().toList();
+        final Map<K, List<I>> result = new LinkedHashMap<>();
+        for (I record : uniqueRecords) {
             K key = record.getValue(groupField);
             if(result.containsKey(key)){
-                List<Record> list = result.get(key);
+                List<I> list = result.get(key);
                 list.add(record);
             } else {
-                List<Record> list = new ArrayList<Record>();
+                List<I> list = new ArrayList<I>();
                 list.add(record);
                 result.put(key, list);
             }
@@ -78,15 +78,11 @@ public class RecordToViewMapper<E extends AbstractDTO, I extends UpdatableRecord
      * @param records records
      * @return dtos
      */
-    private List<E> convertRecordsToView(List<Record> records) {
+    private List<E> convertRecordsToView(List<I> records) {
         List<E> viewDTOs = new ArrayList<>();
-        for (Record record : records) {
+        for (I record : records) {
             try {
-                // warning: we must always do "into" tableRecord first, before we do "into" dtoRecord.
-                // otherwise we will get the problems of field-overrides in joined tables for fields that
-                // have the same name. See: https://stackoverflow.com/questions/52185092/jooq-record-intopojo-class-with-same-fields-name-problem
-                I tableRecord = record.into(recordClazz.getDeclaredConstructor().newInstance());
-                E dto = tableRecord.into(clazz.getDeclaredConstructor().newInstance());
+                E dto = record.into(clazz.getDeclaredConstructor().newInstance());
                 viewDTOs.add(dto);
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 throw new RuntimeException(e);
@@ -95,25 +91,25 @@ public class RecordToViewMapper<E extends AbstractDTO, I extends UpdatableRecord
         return viewDTOs;
     }
 
-    public List<E> extractRecords(List<Record> records) throws RuntimeException {
+    public List<E> extractRecords(List<I> records) throws RuntimeException {
         if (records.isEmpty()) {
             return new ArrayList<>();
         }
-        Map<K, List<Record>> map = filterRecordsByUniqueFieldsAndGroupByIdField(records);
-        List<Record> filteredRecords = new ArrayList<>();
-        for (List<Record> v : map.values()) {
+        Map<K, List<I>> map = filterRecordsByUniqueFieldsAndGroupByIdField(records);
+        List<I> filteredRecords = new ArrayList<>();
+        for (List<I> v : map.values()) {
             // we expect that we always have exactly 1 record in this case per key.
             filteredRecords.add(v.getFirst());
         }
         return convertRecordsToView(filteredRecords);
     }
-    public Map<K, List<E>> extractRecordsGroupedBy(List<Record> records) throws RuntimeException {
+    public Map<K, List<E>> extractRecordsGroupedBy(List<I> records) throws RuntimeException {
         if (records.isEmpty()) {
             return new LinkedHashMap<>();
         }
-        Map<K, List<Record>> map = filterRecordsByUniqueFieldsAndGroupByIdField(records);
+        Map<K, List<I>> map = filterRecordsByUniqueFieldsAndGroupByIdField(records);
         Map<K, List<E>> convertedMap = new LinkedHashMap<>();
-        for (Map.Entry<K, List<Record>> entry : map.entrySet() ) {
+        for (Map.Entry<K, List<I>> entry : map.entrySet() ) {
             List<E> viewDTOs = convertRecordsToView(entry.getValue());
             convertedMap.put(entry.getKey(), viewDTOs);
         }
