@@ -29,8 +29,6 @@ import javax.sql.DataSource;
 public class JooqContextFactory {
 
     public static final Logger LOGGER = Logger.getLogger(JooqContextFactory.class);
-    @ConfigProperty(name = "jooq.dialect")
-    String jooqDialect;
 
     @Inject
     DataSource dataSource;
@@ -49,6 +47,7 @@ public class JooqContextFactory {
     public void withinTransaction(RequestContext requestContext, JooqContextFunction fn) throws RuntimeException {
         try {
             DSLContext ctx = DSL.using(getConfiguration(requestContext));
+
             ctx.transaction(trx -> {
                 JooqContext tjc = new JooqContext(requestContext, DSL.using(trx));
                 fn.run(tjc);
@@ -82,6 +81,7 @@ public class JooqContextFactory {
                 );
         configuration.set(new DefaultRecordListenerProvider(new JooqInsertListener()));
         configuration.set(new DefaultExecuteListenerProvider(new JooqExecuteListener(requestContext)));
+
         return configuration;
     }
 }
