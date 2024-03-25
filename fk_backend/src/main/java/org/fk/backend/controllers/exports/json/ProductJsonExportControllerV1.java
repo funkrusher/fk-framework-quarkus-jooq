@@ -12,9 +12,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.fk.core.auth.FkSecurityIdentity;
-import org.fk.core.dto.ProductDTO;
+import org.fk.product.dto.ProductDTO;
 import org.fk.core.transfer.TransferJsonMapper;
-import org.fk.core.manager.ProductManager;
+import org.fk.product.manager.ProductManager;
 import org.fk.core.util.request.RequestContext;
 
 import java.util.*;

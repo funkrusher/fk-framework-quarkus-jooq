@@ -1,4 +1,4 @@
-package org.fk.core.dao.record;
+package org.fk.product.dao;
 
 import org.fk.core.dao.AbstractRecordDAO;
 import org.fk.codegen.testshop.tables.Client;

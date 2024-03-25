@@ -5,7 +5,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.fk.core.manager.GreetingManager;
+import org.fk.product.manager.GreetingManager;
 
 @Path("/hello")
 public class GreetingController {

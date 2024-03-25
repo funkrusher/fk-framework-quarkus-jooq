@@ -1,8 +1,6 @@
-package org.fk.core.dao;
+package org.fk.product.dao;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.fk.core.dao.record.*;
-import org.fk.core.dao.view.ProductViewDAO;
 import org.jooq.DSLContext;
 
 /**

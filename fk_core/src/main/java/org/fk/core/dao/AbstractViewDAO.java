@@ -87,13 +87,6 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
      */
     abstract protected TableOnConditionStep<Record> getViewJoins();
 
-    /**
-     * Define the mapping of the resulting records to the DTOs that this view is returning.
-     *
-     * @param records resulting records containing joined table data.
-     * @return DTOs
-     */
-    abstract protected List<P> recordsToView(List<Record> records);
 
     // -------------------------------------------------------------------------
     // DAO API
@@ -107,14 +100,14 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
      * <code>null</code> if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
-    public P findById(T id) throws DataAccessException {
+    public Result<Record> findById(T id) throws DataAccessException {
         Field<?>[] pk = pk();
         if (pk != null) {
             Result<Record> result = getViewQuery()
                     .where(equal(pk, id))
                     .fetch();
             if (!result.isEmpty()) {
-                return recordsToView(result).getFirst();
+                return result;
             }
         }
         return null;
@@ -127,7 +120,7 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
      * @return A view-resolved DTO for the record of the underlying table given its ID
      * @throws DataAccessException if something went wrong executing the query
      */
-    public Optional<P> findOptionalById(T id) throws DataAccessException {
+    public Optional<Result<Record>> findOptionalById(T id) throws DataAccessException {
         return Optional.ofNullable(findById(id));
     }
 
@@ -138,7 +131,7 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
      * @return list of view-resolved DTOs
      * @throws DataAccessException if something went wrong executing the query
      */
-    public List<P> query(final QueryParameters queryParameters) throws InvalidDataException, DataAccessException {
+    public Result<Record> query(final QueryParameters queryParameters) throws InvalidDataException, DataAccessException {
         Collection<SortField<?>> sortFields = new ArrayList<>();
         if (queryParameters.getSorter() != null) {
             Sorter sorter = queryParameters.getSorter();
@@ -220,7 +213,6 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
         }
         Field<?>[] pk = pk();
         var result = getViewQuery().where(equal(pk, ids)).fetch();
-
-        return recordsToView(result);
+        return result;
     }
 }

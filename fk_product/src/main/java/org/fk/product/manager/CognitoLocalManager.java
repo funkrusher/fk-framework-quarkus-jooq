@@ -1,4 +1,4 @@
-package org.fk.core.manager;
+package org.fk.product.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -7,11 +7,12 @@ import jakarta.inject.Inject;
 import org.fk.core.jooq.DSLFactory;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.codegen.testshop.tables.records.UserRoleRecord;
-import org.fk.core.dao.DAOFactory;
-import org.fk.core.dao.record.UserRecordDAO;
-import org.fk.core.dao.record.UserRoleRecordDAO;
-import org.fk.core.dto.UserDTO;
-import org.fk.core.dto.UserRoleDTO;
+import org.fk.core.manager.AbstractBaseManager;
+import org.fk.product.dao.DAOFactory;
+import org.fk.product.dao.UserRecordDAO;
+import org.fk.product.dao.UserRoleRecordDAO;
+import org.fk.product.dto.UserDTO;
+import org.fk.product.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
 import org.fk.core.util.request.RequestContext;
 import org.jboss.logging.Logger;

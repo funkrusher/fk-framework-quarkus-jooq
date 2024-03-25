@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea'
+    id "org.liquibase.gradle" version "2.0.2"
+    id 'org.kordamp.gradle.jandex'
+}
+
+// needed, so jandex does not throw an error for enums. See: https://github.com/helidon-io/helidon/issues/7659
+jandex {
+    version = '3.1.5'
+}
+
+// dependencies-resolvement
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+dependencies {
+    api project(':fk_core')
+    api libs.bundles.quarkus
+    api libs.bundles.jooq
+    api libs.bundles.aws
+    api libs.bundles.testcontainers
+    api libs.mariadbJavaClient
+    api libs.jacksonCsv
+    api libs.jacksonJsr310
+}
+
+// cognitoLocalSetup task
+task cognitoLocalSetup(type: JavaExec) {
+    group = 'application'
+    description = 'Runs cognitoLocalInit Java Application'
+    mainClass = 'org.fk.cognito.CognitoLocalSetup'
+    classpath = sourceSets.main.runtimeClasspath
+    dependsOn("jandex")
+}

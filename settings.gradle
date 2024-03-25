@@ -82,4 +82,5 @@ dependencyResolutionManagement {
 rootProject.name='fk-framework-quarkus-jooq'
 include 'fk_codegen'
 include 'fk_core'
+include 'fk_product'
 include 'fk_backend'

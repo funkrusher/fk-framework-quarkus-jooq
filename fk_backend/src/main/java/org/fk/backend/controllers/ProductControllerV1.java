@@ -3,12 +3,11 @@ package org.fk.backend.controllers;
 import io.quarkus.security.Authenticated;
 import org.fk.core.auth.FkSecurityIdentity;
 import org.fk.core.util.exception.InvalidDataException;
-import org.fk.core.util.exception.MappingException;
 import org.fk.core.util.exception.ValidationException;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.fk.core.dto.ProductDTO;
-import org.fk.core.manager.ProductManager;
+import org.fk.product.dto.ProductDTO;
+import org.fk.product.manager.ProductManager;
 import org.fk.core.util.query.QueryParameters;
 import org.fk.core.util.request.RequestContext;
 

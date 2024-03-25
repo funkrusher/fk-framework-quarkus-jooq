@@ -1,4 +1,4 @@
-package org.fk.core.dao.record;
+package org.fk.product.dao;
 
 import org.fk.codegen.testshop.tables.interfaces.IProductLang;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;

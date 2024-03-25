@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.ext.RuntimeDelegate;
 import org.fk.core.auth.MasterTenantOnly;
 import org.fk.core.auth.FkSecurityIdentity;
-import org.fk.core.manager.CognitoLocalManager;
+import org.fk.product.manager.CognitoLocalManager;
 import org.fk.core.auth.FkClaim;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;

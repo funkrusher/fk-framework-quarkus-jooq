@@ -13,8 +13,7 @@ repositories {
 }
 dependencies {
     implementation enforcedPlatform(libs.quarkusPlatform)
-    implementation project(':fk_codegen')
-    implementation project(':fk_core')
+    implementation project(':fk_product')
 
     implementation libs.bundles.quarkus
     implementation libs.bundles.jooq

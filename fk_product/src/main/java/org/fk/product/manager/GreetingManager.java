@@ -1,9 +1,10 @@
-package org.fk.core.manager;
+package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.fk.core.jooq.DSLFactory;
-import org.fk.core.dao.DAOFactory;
+import org.fk.core.manager.AbstractBaseManager;
+import org.fk.product.dao.DAOFactory;
 import org.jboss.logging.Logger;
 
 /**

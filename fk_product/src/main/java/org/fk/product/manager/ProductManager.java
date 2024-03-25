@@ -1,9 +1,10 @@
-package org.fk.core.manager;
+package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.fk.codegen.testshop.tables.ProductLang;
+import org.fk.core.dao.RecordToViewMapper;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.Filter;
@@ -12,18 +13,21 @@ import org.fk.core.util.query.QueryParameters;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;
 import org.fk.codegen.testshop.tables.records.ProductRecord;
-import org.fk.core.dao.DAOFactory;
-import org.fk.core.dao.record.ProductLangRecordDAO;
-import org.fk.core.dao.record.ProductRecordDAO;
-import org.fk.core.dao.view.ProductViewDAO;
-import org.fk.core.dto.ProductDTO;
-import org.fk.core.dto.ProductLangDTO;
+import org.fk.product.dao.DAOFactory;
+import org.fk.product.dao.ProductLangRecordDAO;
+import org.fk.product.dao.ProductRecordDAO;
+import org.fk.product.dao.ProductViewDAO;
+import org.fk.product.dto.ProductDTO;
+import org.fk.product.dto.ProductLangDTO;
 import org.fk.core.util.exception.ValidationException;
 import org.fk.core.util.request.RequestContext;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
+import org.fk.core.manager.AbstractBaseManager;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -72,13 +76,20 @@ public class ProductManager extends AbstractBaseManager {
         // we use the request-scoped dsl-context as source for the configuration of the dao.
         DSLContext dsl = dslFactory.create(requestContext);
         ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
-        return productViewDAO.query(queryParameters);
+        Result<Record> result = productViewDAO.query(queryParameters);
+        return recordsToView(requestContext, result);
     }
 
     public Optional<ProductDTO> getOne(final RequestContext requestContext, final Long productId) throws DataAccessException {
         DSLContext dsl = dslFactory.create(requestContext);
         ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
-        return productViewDAO.findOptionalById(productId);
+
+        Result<Record> result = productViewDAO.findById(productId);
+        if (result == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(recordsToView(requestContext, result).getFirst());
+        }
     }
 
     public void testMultiTransaction(final RequestContext requestContext) {
@@ -109,12 +120,13 @@ public class ProductManager extends AbstractBaseManager {
                 queryParameters.getFilters().add(filter2);
 
                 ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(tx1.dsl());
-                List<ProductDTO> queryResult = productViewDAO.query(queryParameters);
+                Result<Record> queryResult = productViewDAO.query(queryParameters);
+                List<ProductDTO> existingProducts = recordsToView(requestContext, queryResult);
 
                 tx1.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductRecordDAO aProductRecordDAO = daoFactory.createProductRecordDAO(tx2.dsl());
-                    aProductRecordDAO.deleteDTOs(queryResult);
+                    aProductRecordDAO.deleteDTOs(existingProducts);
                 });
 
                 try {
@@ -270,4 +282,42 @@ public class ProductManager extends AbstractBaseManager {
         };
         return StreamSupport.stream(((Iterable<List<ProductRecord>>) () -> listIterator).spliterator(), false);
     }
+
+
+
+
+    private final RecordToViewMapper<ProductDTO, ProductRecord, Long> productViewMapper = new RecordToViewMapper<>(
+            ProductDTO.class,
+            ProductRecord.class,
+            Product.PRODUCT.PRODUCTID,
+            List.of(Product.PRODUCT.PRODUCTID));
+
+    private final RecordToViewMapper<ProductLangDTO, ProductLangRecord, Long> productLangViewMapper = new RecordToViewMapper<>(
+            ProductLangDTO.class,
+            ProductLangRecord.class,
+            ProductLang.PRODUCT_LANG.PRODUCTID,
+            List.of(ProductLang.PRODUCT_LANG.PRODUCTID, ProductLang.PRODUCT_LANG.LANGID));
+
+    /**
+     * Define the mapping of the resulting records to the DTOs that this view is returning.
+     *
+     * @param records resulting records containing joined table data.
+     * @return DTOs
+     */
+    protected List<ProductDTO> recordsToView(RequestContext requestContext, List<Record> records) {
+        final List<ProductDTO> products = productViewMapper.extractRecords(records);
+        final Map<Long, List<ProductLangDTO>> langs = productLangViewMapper.extractRecordsGroupedBy(records);
+        for (ProductDTO product : products) {
+            final List<ProductLangDTO> productLangs = langs.getOrDefault(product.getProductId(), new ArrayList<>());
+            product.setLangs(productLangs);
+            for (ProductLangDTO productLang : productLangs) {
+                if (productLang.getLangId().equals(requestContext.getLangId())) {
+                    product.setLang(productLang);
+                }
+            }
+        }
+        return products;
+    }
+
+
 }

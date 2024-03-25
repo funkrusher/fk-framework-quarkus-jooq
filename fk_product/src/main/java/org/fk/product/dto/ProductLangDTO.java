@@ -1,4 +1,4 @@
-package org.fk.core.dto;
+package org.fk.product.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
