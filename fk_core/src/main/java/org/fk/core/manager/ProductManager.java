@@ -52,6 +52,9 @@ public class ProductManager extends AbstractBaseManager {
 
         List<Field<?>> fields = new ArrayList<>();
         fields.addAll(List.of(table().fields()));
+
+        // note: for MULTISET to work, we need to activate allowMultiQueries=true in mariadb via jdbc-url.
+        // see: https://blog.jooq.org/mysqls-allowmultiqueries-flag-with-jdbc-and-jooq/
         fields.add(multiset(
                 selectDistinct(asterisk())
                         .from(ProductLang.PRODUCT_LANG)
