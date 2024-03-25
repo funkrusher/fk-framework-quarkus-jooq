@@ -1,6 +1,5 @@
 package org.fk.core.dao;
 
-import org.fk.core.jooq.JooqContext;
 import org.fk.codegen.dto.AbstractDTO;
 import org.jooq.*;
 import org.jooq.Record;
@@ -11,7 +10,6 @@ import java.util.*;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.jooq.impl.DSL.name;
 
 /**
  * A common base-class for CRUD Record-DAOs
@@ -31,8 +29,8 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    protected AbstractRecordDAO(JooqContext jooqContext, Table<R> table) {
-        super(jooqContext, table);
+    protected AbstractRecordDAO(DSLContext dsl, Table<R> table) {
+        super(dsl, table);
     }
 
     // ------------------------------------------------------------------------
@@ -52,7 +50,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
                 // create new record for this pojo/table that has no change-mark for all its fields
                 // then set the change-marks
                 AbstractDTO pojo = (AbstractDTO) obj;
-                R record = ctx().newRecord(table(), obj);
+                R record = dsl().newRecord(table(), obj);
                 record.changed(false);
 
                 for (Field<?> field : record.fields()) {
@@ -63,7 +61,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
                 }
                 records.add(record);
             } else {
-                records.add(ctx().newRecord(table(), obj));
+                records.add(dsl().newRecord(table(), obj));
             }
         }
         return records;
@@ -220,7 +218,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
         List<R> inserts = prepareInserts(records);
 
         int k = 1;
-        InsertSetMoreStep step = ctx().insertInto(inserts.getFirst().getTable())
+        InsertSetMoreStep step = dsl().insertInto(inserts.getFirst().getTable())
                 .set(inserts.getFirst());
         if (inserts.size() > 1) {
             step.set(inserts.get(k));
@@ -295,7 +293,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
             return new int[]{inserts.getFirst().insert()};
         } else if (!inserts.isEmpty()) {
             // Execute a batch INSERT
-            return ctx().batchInsert(inserts).execute();
+            return dsl().batchInsert(inserts).execute();
         }
         return new int[]{0};
     }
@@ -363,14 +361,14 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
             // Execute a batch UPDATE
             List<UpdateConditionStep<R>> conditions = new ArrayList<>();
             for (R record : updates) {
-                conditions.add(ctx().update(table())
+                conditions.add(dsl().update(table())
                         .set(record)
                         .where(equal(pk(), getId(record))));
             }
-            ctx().batch(conditions).execute();
+            dsl().batch(conditions).execute();
         } else if (updates.size() == 1) {
             // Execute a regular UPDATE
-            ctx().update(table()).set(updates.getFirst()).where(equal(pk(), getId(updates.getFirst()))).execute();
+            dsl().update(table()).set(updates.getFirst()).where(equal(pk(), getId(updates.getFirst()))).execute();
         }
     }
 
@@ -434,7 +432,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
     public void delete(List<R> records) throws DataAccessException {
         if (records.size() > 1) {
             // Execute a batch DELETE
-            ctx().batchDelete(records).execute();
+            dsl().batchDelete(records).execute();
         } else if (records.size() == 1) {
             // Execute a regular DELETE
             records.getFirst().delete();
@@ -471,7 +469,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
     public void deleteById(Collection<T> ids) throws DataAccessException {
         Field<?>[] pk = pk();
         if (pk != null)
-            ctx().delete(table()).where(equal(pk, ids)).execute();
+            dsl().delete(table()).where(equal(pk, ids)).execute();
     }
 
     /**
@@ -496,7 +494,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
         Field<?>[] pk = pk();
 
         if (pk != null)
-            return ctx()
+            return dsl()
                     .selectCount()
                     .from(table())
                     .where(equal(pk, id))
@@ -512,7 +510,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      * @throws DataAccessException if something went wrong executing the query
      */
     public long count() throws DataAccessException {
-        return ctx()
+        return dsl()
                 .selectCount()
                 .from(table())
                 .fetchOne(0, Long.class);
@@ -525,7 +523,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      * @throws DataAccessException if something went wrong executing the query
      */
     public List<R> findAll() throws DataAccessException {
-        return ctx()
+        return dsl()
                 .selectFrom(table())
                 .fetch();
     }
@@ -542,7 +540,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
         Field<?>[] pk = pk();
 
         if (pk != null)
-            return ctx().selectFrom(table())
+            return dsl().selectFrom(table())
                     .where(equal(pk, id))
                     .fetchOne();
         return null;
@@ -572,7 +570,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      * @throws DataAccessException if something went wrong executing the query
      */
     public <Z> List<R> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) throws DataAccessException {
-        return ctx()
+        return dsl()
                 .selectFrom(table())
                 .where(
                         lowerInclusive == null
@@ -606,7 +604,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      * @throws DataAccessException if something went wrong executing the query
      */
     public <Z> List<R> fetch(Field<Z> field, Collection<? extends Z> values) throws DataAccessException {
-        return ctx()
+        return dsl()
                 .selectFrom(table())
                 .where(field.in(values))
                 .fetch();
@@ -626,7 +624,7 @@ public abstract class AbstractRecordDAO<R extends UpdatableRecord<R>, Y, T> exte
      *                             </ul>
      */
     public <Z> R fetchOne(Field<Z> field, Z value) throws DataAccessException {
-        return ctx()
+        return dsl()
                 .selectFrom(table())
                 .where(field.equal(value))
                 .fetchOne();

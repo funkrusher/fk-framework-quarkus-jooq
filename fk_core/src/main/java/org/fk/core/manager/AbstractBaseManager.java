@@ -3,14 +3,8 @@ package org.fk.core.manager;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import jakarta.validation.constraints.NotNull;
 import org.fk.codegen.dto.AbstractDTO;
-import org.fk.core.dto.ProductDTO;
-import org.fk.core.jooq.JooqContext;
 import org.fk.core.util.exception.ValidationException;
-import org.jooq.Record;
-import org.jooq.Table;
-import org.jooq.UpdatableRecord;
 
 import java.util.HashSet;
 import java.util.List;

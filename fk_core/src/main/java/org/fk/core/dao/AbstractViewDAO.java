@@ -1,7 +1,6 @@
 package org.fk.core.dao;
 
 import jakarta.validation.constraints.NotNull;
-import org.fk.core.jooq.JooqContext;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.*;
 import org.fk.codegen.dto.AbstractDTO;
@@ -31,8 +30,8 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    protected AbstractViewDAO(JooqContext jooqContext, Table<R> table) {
-        super(jooqContext, table);
+    protected AbstractViewDAO(DSLContext dsl, Table<R> table) {
+        super(dsl, table);
     }
 
     // ------------------------------------------------------------------------
@@ -41,7 +40,7 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
 
     private SelectJoinStep<Record> getViewQuery() {
         // prepare our view-query with the fields/joins of the subclass.
-        return ctx()
+        return dsl()
                 .select(getViewFields())
                 .from(getViewJoins());
     }
@@ -204,7 +203,7 @@ public abstract class AbstractViewDAO<R extends UpdatableRecord<R>, P extends Ab
         // 2. select all full joined entries for the found grouped-ids of the main-table (those may be more entries
         // than the LIMIT given, but this is ok then as they are combined in the upper layer.
         //
-        var query = ctx()
+        var query = dsl()
                 .select(pk())
                 .from(getViewJoins())
                 .where(DSL.and(filterFields))

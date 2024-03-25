@@ -3,7 +3,7 @@ package org.fk.core.dao;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.fk.core.dao.record.*;
 import org.fk.core.dao.view.ProductViewDAO;
-import org.fk.core.jooq.JooqContext;
+import org.jooq.DSLContext;
 
 /**
  * DAOFactory to create instances of context-scoped daos.
@@ -11,32 +11,26 @@ import org.fk.core.jooq.JooqContext;
 @ApplicationScoped
 public class DAOFactory {
 
-    public ClientRecordDAO createClientRecordDAO(JooqContext jooqContext) {
-        return new ClientRecordDAO(jooqContext);
+    public ClientRecordDAO createClientRecordDAO(DSLContext dsl) {
+        return new ClientRecordDAO(dsl);
     }
 
-    public ProductRecordDAO createProductRecordDAO(JooqContext jooqContext) {
-        return new ProductRecordDAO(jooqContext);
+    public ProductRecordDAO createProductRecordDAO(DSLContext dsl) { return new ProductRecordDAO(dsl); }
+
+    public ProductViewDAO createProductViewDAO(DSLContext dsl) {
+        return new ProductViewDAO(dsl);
     }
 
-    public ProductViewDAO createProductViewDAO(JooqContext jooqContext) {
-        return new ProductViewDAO(jooqContext);
+    public ProductLangRecordDAO createProductLangRecordDAO(DSLContext dsl) { return new ProductLangRecordDAO(dsl); }
+
+    public LangRecordDAO createLangRecordDAO(DSLContext dsl) {
+        return new LangRecordDAO(dsl);
     }
 
-    public ProductLangRecordDAO createProductLangRecordDAO(JooqContext jooqContext) {
-        return new ProductLangRecordDAO(jooqContext);
+    public UserRecordDAO createUserRecordDAO(DSLContext dsl) {
+        return new UserRecordDAO(dsl);
     }
 
-    public LangRecordDAO createLangRecordDAO(JooqContext jooqContext) {
-        return new LangRecordDAO(jooqContext);
-    }
-
-    public UserRecordDAO createUserRecordDAO(JooqContext jooqContext) {
-        return new UserRecordDAO(jooqContext);
-    }
-
-    public UserRoleRecordDAO createUserRoleRecordDAO(JooqContext jooqContext) {
-        return new UserRoleRecordDAO(jooqContext);
-    }
+    public UserRoleRecordDAO createUserRoleRecordDAO(DSLContext dsl) { return new UserRoleRecordDAO(dsl); }
 
 }

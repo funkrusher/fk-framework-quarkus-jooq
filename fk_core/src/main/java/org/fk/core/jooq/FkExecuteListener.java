@@ -9,16 +9,16 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 
 /**
- * JooqExecuteListener
+ * FkExecuteListener
  * <p>
  * is used to append a clientId=X criteria to all possible SQL-statements of our queries for safe multi-tenancy
  * </p>
  */
-public class JooqExecuteListener extends DefaultExecuteListener {
+public class FkExecuteListener extends DefaultExecuteListener {
 
     private RequestContext requestContext;
 
-    public JooqExecuteListener(RequestContext requestContext) {
+    public FkExecuteListener(RequestContext requestContext) {
         this.requestContext = requestContext;
     }
 

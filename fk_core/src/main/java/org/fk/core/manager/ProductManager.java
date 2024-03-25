@@ -3,11 +3,8 @@ package org.fk.core.manager;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
 import org.fk.codegen.testshop.tables.ProductLang;
-import org.fk.core.jooq.JooqContext;
-import org.fk.core.jooq.JooqContextFactory;
+import org.fk.core.jooq.DSLFactory;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.Filter;
 import org.fk.core.util.query.FilterOperator;
@@ -24,6 +21,7 @@ import org.fk.core.dto.ProductLangDTO;
 import org.fk.core.util.exception.ValidationException;
 import org.fk.core.util.request.RequestContext;
 import org.jboss.logging.Logger;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.exception.DataAccessException;
 
@@ -43,14 +41,14 @@ public class ProductManager extends AbstractBaseManager {
     private static final Logger LOGGER = Logger.getLogger(ProductManager.class);
 
     @Inject
-    JooqContextFactory jooqContextFactory;
+    DSLFactory dslFactory;
 
     @Inject
     DAOFactory daoFactory;
 
     public List<ProductDTO> testMultiset(final RequestContext requestContext) {
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
 
         List<Field<?>> fields = new ArrayList<>();
         fields.addAll(List.of(table().fields()));
@@ -60,8 +58,7 @@ public class ProductManager extends AbstractBaseManager {
                         .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
         ).as("langs"));
 
-        return jooqContext.getCtx()
-                .select(fields)
+        return dsl.select(fields)
                 .from(Product.PRODUCT)
                 .limit(10)
                 .fetchInto(ProductDTO.class);
@@ -70,14 +67,14 @@ public class ProductManager extends AbstractBaseManager {
 
     public List<ProductDTO> query(final RequestContext requestContext, final QueryParameters queryParameters) throws InvalidDataException {
         // we use the request-scoped dsl-context as source for the configuration of the dao.
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
         return productViewDAO.query(queryParameters);
     }
 
     public Optional<ProductDTO> getOne(final RequestContext requestContext, final Long productId) throws DataAccessException {
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
         return productViewDAO.findOptionalById(productId);
     }
 
@@ -96,7 +93,9 @@ public class ProductManager extends AbstractBaseManager {
         }
 
         try {
-            jooqContextFactory.withinTransaction(requestContext, jooqContext -> {
+            final DSLContext dsl = dslFactory.create(requestContext);
+            dslFactory.create(requestContext).transaction(tx1 -> {
+                // transaction1
                 Filter filter1 = new Filter("productId", FilterOperator.GREATER_THAN_OR_EQUALS, List.of("90000000"));
                 Filter filter2 = new Filter("productId", FilterOperator.LESS_THAN_OR_EQUALS, List.of("90050000"));
 
@@ -106,17 +105,19 @@ public class ProductManager extends AbstractBaseManager {
                 queryParameters.getFilters().add(filter1);
                 queryParameters.getFilters().add(filter2);
 
-                ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(jooqContext);
+                ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(tx1.dsl());
                 List<ProductDTO> queryResult = productViewDAO.query(queryParameters);
 
-                jooqContextFactory.withinTransaction(requestContext, subContextA -> {
-                    ProductRecordDAO aProductRecordDAO = daoFactory.createProductRecordDAO(subContextA);
+                tx1.dsl().transaction(tx2 -> {
+                    // transaction2
+                    ProductRecordDAO aProductRecordDAO = daoFactory.createProductRecordDAO(tx2.dsl());
                     aProductRecordDAO.deleteDTOs(queryResult);
                 });
 
                 try {
-                    jooqContextFactory.withinTransaction(requestContext, subContextB -> {
-                        ProductRecordDAO bProductRecordDAO = daoFactory.createProductRecordDAO(subContextB);
+                    tx1.dsl().transaction(tx3 -> {
+                        // transaction3
+                        ProductRecordDAO bProductRecordDAO = daoFactory.createProductRecordDAO(tx3.dsl());
                         bProductRecordDAO.insert(inserts);
                         // Integer x = Integer.valueOf("test");
                     });
@@ -134,9 +135,9 @@ public class ProductManager extends AbstractBaseManager {
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
     public ProductDTO create(final RequestContext requestContext, final ProductDTO product) throws ValidationException {
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(jooqContext);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(dsl);
+        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
 
         // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
         // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
@@ -155,9 +156,9 @@ public class ProductManager extends AbstractBaseManager {
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
     public ProductDTO update(final RequestContext requestContext, final ProductDTO product) throws ValidationException {
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(jooqContext);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(dsl);
+        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
 
         this.validateUpdate(product);
         productRecordDAO.updateDTO(product);
@@ -187,9 +188,9 @@ public class ProductManager extends AbstractBaseManager {
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
     public void delete(final RequestContext requestContext, final ProductDTO product) {
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(jooqContext);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(dsl);
+        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
 
         // we do use the explicit delete-by-id methods here, because they are the most performant.
         productLangRecordDAO.deleteByProductId(product.getProductId());
@@ -203,12 +204,11 @@ public class ProductManager extends AbstractBaseManager {
      * @return stream
      */
     public Stream<ProductDTO> streamAll(final RequestContext requestContext) {
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
 
         // TODO: try to find how this can be put into the Abstraction,
-        Stream<ProductRecord> stream1 = jooqContext.getCtx()
-                .selectFrom(Product.PRODUCT)
+        Stream<ProductRecord> stream1 = dsl.selectFrom(Product.PRODUCT)
                 .fetchSize(250)
                 .fetchStream();
         Stream<List<ProductRecord>> chunkStream = chunk(stream1, 250);

@@ -4,7 +4,7 @@ import org.fk.core.dao.AbstractRecordDAO;
 import org.fk.codegen.testshop.tables.UserRole;
 import org.fk.codegen.testshop.tables.interfaces.IUserRole;
 import org.fk.codegen.testshop.tables.records.UserRoleRecord;
-import org.fk.core.jooq.JooqContext;
+import org.jooq.DSLContext;
 import org.jooq.Record2;
 
 /**
@@ -12,8 +12,8 @@ import org.jooq.Record2;
  */
 public class UserRoleRecordDAO extends AbstractRecordDAO<UserRoleRecord, IUserRole, Record2<Integer, String>> {
 
-    public UserRoleRecordDAO(JooqContext jooqContext) {
-        super(jooqContext, UserRole.USER_ROLE);
+    public UserRoleRecordDAO(DSLContext dsl) {
+        super(dsl, UserRole.USER_ROLE);
     }
 
     @Override

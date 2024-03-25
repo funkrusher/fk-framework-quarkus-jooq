@@ -4,15 +4,15 @@ import org.fk.core.dao.AbstractRecordDAO;
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.interfaces.IClient;
 import org.fk.codegen.testshop.tables.records.ClientRecord;
-import org.fk.core.jooq.JooqContext;
+import org.jooq.DSLContext;
 
 /**
  * ClientRecordDAO
  */
 public class ClientRecordDAO extends AbstractRecordDAO<ClientRecord, IClient, Integer> {
 
-    public ClientRecordDAO(JooqContext jooqContext) {
-        super(jooqContext, Client.CLIENT);
+    public ClientRecordDAO(DSLContext dsl) {
+        super(dsl, Client.CLIENT);
     }
 
     @Override

@@ -6,13 +6,10 @@ import org.fk.core.dao.RecordToViewMapper;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.ProductLang;
 import org.fk.codegen.testshop.tables.records.ProductRecord;
-import org.fk.core.jooq.JooqContext;
 import org.fk.core.dto.ProductDTO;
 import org.fk.core.dto.ProductLangDTO;
-import org.jooq.Field;
+import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.TableOnConditionStep;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,8 +24,8 @@ import static org.jooq.impl.DSL.*;
  */
 public class ProductViewDAO extends AbstractViewDAO<ProductRecord, ProductDTO, Long> {
 
-    public ProductViewDAO(JooqContext jooqContext) {
-        super(jooqContext, Product.PRODUCT);
+    public ProductViewDAO(DSLContext dsl) {
+        super(dsl, Product.PRODUCT);
     }
 
     @Override

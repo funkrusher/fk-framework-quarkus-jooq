@@ -2,8 +2,7 @@ package org.fk.core.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.validation.Validator;
-import org.fk.core.jooq.JooqContextFactory;
+import org.fk.core.jooq.DSLFactory;
 import org.fk.core.dao.DAOFactory;
 import org.jboss.logging.Logger;
 
@@ -16,7 +15,7 @@ public class GreetingManager extends AbstractBaseManager {
     private static final Logger LOGGER = Logger.getLogger(GreetingManager.class);
 
     @Inject
-    JooqContextFactory jooqContextFactory;
+    DSLFactory dslFactory;
 
     @Inject
     DAOFactory daoFactory;

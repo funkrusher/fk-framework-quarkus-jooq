@@ -1,6 +1,5 @@
 package org.fk.core.dao;
 
-import org.fk.core.jooq.JooqContext;
 import org.fk.core.util.request.RequestContext;
 import org.jooq.*;
 import org.jooq.Record;
@@ -21,16 +20,19 @@ import java.util.Collection;
  */
 public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
 
-    private final JooqContext jooqContext;
+    private final DSLContext dsl;
+
+    private final RequestContext requestContext;
     private final Table<R> table;
 
     // -------------------------------------------------------------------------
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    protected AbstractBaseDAO(JooqContext jooqContext, Table<R> table) {
-        this.jooqContext = jooqContext;
+    protected AbstractBaseDAO(DSLContext dsl, Table<R> table) {
+        this.dsl = dsl;
         this.table = table;
+        this.requestContext = (RequestContext) dsl.data("request");
     }
 
     // ------------------------------------------------------------------------
@@ -72,7 +74,7 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
             return null;
 
         TableField<R, Object>[] fields = (TableField<R, Object>[]) key.getFieldsArray();
-        Record result = ctx().newRecord(fields);
+        Record result = dsl().newRecord(fields);
 
         for (int i = 0; i < values.length; i++)
             result.set(fields[i], fields[i].getDataType().convert(values[i]));
@@ -110,8 +112,8 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
      *
      * @return the <code>DAO</code>'s underlying <code>dslContext</code>
      */
-    public DSLContext ctx() {
-        return this.jooqContext.getCtx();
+    public DSLContext dsl() {
+        return this.dsl;
     }
 
     /**
@@ -120,7 +122,7 @@ public abstract class AbstractBaseDAO<R extends UpdatableRecord<R>, T> {
      * @return the <code>DAO</code>'s underlying <code>requestContext</code>
      */
     public RequestContext requestContext() {
-        return this.jooqContext.getRequestContext();
+        return this.requestContext;
     }
 
     /**

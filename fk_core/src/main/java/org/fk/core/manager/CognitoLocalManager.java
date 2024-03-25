@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
-import org.fk.core.jooq.JooqContext;
-import org.fk.core.jooq.JooqContextFactory;
+import org.fk.core.jooq.DSLFactory;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.codegen.testshop.tables.records.UserRoleRecord;
 import org.fk.core.dao.DAOFactory;
@@ -16,6 +15,7 @@ import org.fk.core.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
 import org.fk.core.util.request.RequestContext;
 import org.jboss.logging.Logger;
+import org.jooq.DSLContext;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.*;
 
@@ -42,7 +42,7 @@ public class CognitoLocalManager extends AbstractBaseManager {
     private CognitoIdentityProviderClient cognitoIpc;
 
     @Inject
-    JooqContextFactory jooqContextFactory;
+    DSLFactory dslFactory;
 
     @Inject
     DAOFactory daoFactory;
@@ -70,9 +70,9 @@ public class CognitoLocalManager extends AbstractBaseManager {
             String roleId) {
 
         RequestContext requestContext = new RequestContext(clientId, 1);
-        JooqContext jooqContext = jooqContextFactory.createJooqContext(requestContext);
-        UserRecordDAO userRecordDAO = daoFactory.createUserRecordDAO(jooqContext);
-        UserRoleRecordDAO userRoleRecordDAO = daoFactory.createUserRoleRecordDAO(jooqContext);
+        DSLContext dsl = dslFactory.create(requestContext);
+        UserRecordDAO userRecordDAO = daoFactory.createUserRecordDAO(dsl);
+        UserRoleRecordDAO userRoleRecordDAO = daoFactory.createUserRoleRecordDAO(dsl);
 
         UserDTO user = new UserDTO();
         user.setClientId(clientId);

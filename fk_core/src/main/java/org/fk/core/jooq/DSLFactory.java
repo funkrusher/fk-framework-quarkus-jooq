@@ -1,6 +1,7 @@
 package org.fk.core.jooq;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.fk.core.util.request.RequestContext;
 import org.jboss.logging.Logger;
 import org.jooq.Configuration;
@@ -9,49 +10,30 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
-
-import java.sql.Connection;
-import java.util.function.Consumer;
-
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.DefaultRecordListenerProvider;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import javax.sql.DataSource;
+import java.sql.Connection;
 
 /**
- * JooqContextFactory to create instances of context-scoped jooq dsl-contexts.
+ * DSLFactory to create instances of jooq dsl-context.
  */
 @ApplicationScoped
-public class JooqContextFactory {
+public class DSLFactory {
 
-    public static final Logger LOGGER = Logger.getLogger(JooqContextFactory.class);
+    public static final Logger LOGGER = Logger.getLogger(DSLFactory.class);
 
     @Inject
     DataSource dataSource;
 
     SQLDialect sqlDialect = null;
 
-    public JooqContext createJooqContext(RequestContext requestContext) {
+    public DSLContext create(RequestContext requestContext) {
         try {
-            DSLContext ctx = DSL.using(getConfiguration(requestContext));
-            return new JooqContext(requestContext, ctx);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void withinTransaction(RequestContext requestContext, JooqContextFunction fn) throws RuntimeException {
-        try {
-            DSLContext ctx = DSL.using(getConfiguration(requestContext));
-
-            ctx.transaction(trx -> {
-                JooqContext tjc = new JooqContext(requestContext, DSL.using(trx));
-                fn.run(tjc);
-            });
+            return DSL.using(getConfiguration(requestContext));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -79,9 +61,9 @@ public class JooqContextFactory {
                         .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
                         .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
                 );
-        configuration.set(new DefaultRecordListenerProvider(new JooqInsertListener()));
-        configuration.set(new DefaultExecuteListenerProvider(new JooqExecuteListener(requestContext)));
-
+        configuration.set(new DefaultRecordListenerProvider(new FkInsertListener()));
+        configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener(requestContext)));
+        configuration.data("request", requestContext);
         return configuration;
     }
 }

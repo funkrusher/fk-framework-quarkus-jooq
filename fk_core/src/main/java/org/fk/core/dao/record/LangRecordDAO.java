@@ -4,15 +4,15 @@ import org.fk.core.dao.AbstractRecordDAO;
 import org.fk.codegen.testshop.tables.Lang;
 import org.fk.codegen.testshop.tables.interfaces.ILang;
 import org.fk.codegen.testshop.tables.records.LangRecord;
-import org.fk.core.jooq.JooqContext;
+import org.jooq.DSLContext;
 
 /**
  * LangRecordDAO
  */
 public class LangRecordDAO extends AbstractRecordDAO<LangRecord, ILang, Integer> {
 
-    public LangRecordDAO(JooqContext jooqContext) {
-        super(jooqContext, Lang.LANG);
+    public LangRecordDAO(DSLContext dsl) {
+        super(dsl, Lang.LANG);
     }
 
     @Override
