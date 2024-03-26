@@ -1,8 +1,7 @@
-package org.fk.core.mapper;
+package org.fk.core.repository;
 
 import org.fk.codegen.dto.AbstractDTO;
 import org.jooq.Field;
-import org.jooq.Record;
 import org.jooq.UpdatableRecord;
 
 import java.io.Serializable;

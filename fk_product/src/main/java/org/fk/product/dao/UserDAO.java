@@ -1,17 +1,17 @@
 package org.fk.product.dao;
 
-import org.fk.core.dao.AbstractRecordDAO;
 import org.fk.codegen.testshop.tables.User;
 import org.fk.codegen.testshop.tables.interfaces.IUser;
 import org.fk.codegen.testshop.tables.records.UserRecord;
 import org.jooq.DSLContext;
+import org.fk.core.dao.AbstractDAO;
 
 /**
  * UserRecordDAO
  */
-public class UserRecordDAO extends AbstractRecordDAO<UserRecord, IUser, Integer> {
+public class UserDAO extends AbstractDAO<UserRecord, IUser, Integer> {
 
-    public UserRecordDAO(DSLContext dsl) {
+    public UserDAO(DSLContext dsl) {
         super(dsl, User.USER);
     }
 

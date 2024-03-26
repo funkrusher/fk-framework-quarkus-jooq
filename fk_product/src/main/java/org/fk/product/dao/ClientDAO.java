@@ -1,6 +1,6 @@
 package org.fk.product.dao;
 
-import org.fk.core.dao.AbstractRecordDAO;
+import org.fk.core.dao.AbstractDAO;
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.interfaces.IClient;
 import org.fk.codegen.testshop.tables.records.ClientRecord;
@@ -9,9 +9,9 @@ import org.jooq.DSLContext;
 /**
  * ClientRecordDAO
  */
-public class ClientRecordDAO extends AbstractRecordDAO<ClientRecord, IClient, Integer> {
+public class ClientDAO extends AbstractDAO<ClientRecord, IClient, Integer> {
 
-    public ClientRecordDAO(DSLContext dsl) {
+    public ClientDAO(DSLContext dsl) {
         super(dsl, Client.CLIENT);
     }
 

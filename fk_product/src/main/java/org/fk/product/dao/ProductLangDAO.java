@@ -1,20 +1,25 @@
 package org.fk.product.dao;
 
+import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.interfaces.IProductLang;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;
-import org.fk.core.dao.AbstractRecordDAO;
+import org.fk.core.dao.AbstractDAO;
 import org.fk.codegen.testshop.tables.ProductLang;
-import org.jooq.DSLContext;
-import org.jooq.Record2;
+import org.jooq.*;
+import org.jooq.Record;
 
 import java.util.List;
+import java.util.Map;
+
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.DSL.asterisk;
 
 /**
  * ProductLangRecordDAO
  */
-public class ProductLangRecordDAO extends AbstractRecordDAO<ProductLangRecord, IProductLang, Record2<Long, Integer>> {
+public class ProductLangDAO extends AbstractDAO<ProductLangRecord, IProductLang, Record2<Long, Integer>> {
 
-    public ProductLangRecordDAO(DSLContext dsl) {
+    public ProductLangDAO(DSLContext dsl) {
         super(dsl, ProductLang.PRODUCT_LANG);
     }
 
@@ -32,9 +37,4 @@ public class ProductLangRecordDAO extends AbstractRecordDAO<ProductLangRecord, I
     public int deleteByProductId(Long productId) {
         return dsl().deleteFrom(table()).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(productId)).execute();
     }
-
-    public List<ProductLangRecord> fetchAllByProductsIds(List<Long> productIds) {
-        return dsl().selectFrom(table()).where(ProductLang.PRODUCT_LANG.PRODUCTID.in(productIds)).fetch();
-    }
-
 }

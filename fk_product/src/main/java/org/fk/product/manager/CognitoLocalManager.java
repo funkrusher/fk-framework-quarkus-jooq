@@ -9,8 +9,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.codegen.testshop.tables.records.UserRoleRecord;
 import org.fk.core.manager.AbstractManager;
 import org.fk.product.dao.DAOFactory;
-import org.fk.product.dao.UserRecordDAO;
-import org.fk.product.dao.UserRoleRecordDAO;
+import org.fk.product.dao.UserDAO;
+import org.fk.product.dao.UserRoleDAO;
 import org.fk.product.dto.UserDTO;
 import org.fk.product.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
@@ -72,8 +72,8 @@ public class CognitoLocalManager extends AbstractManager {
 
         RequestContext request = new RequestContext(clientId, 1);
         DSLContext dsl = dslFactory.create(request);
-        UserRecordDAO userRecordDAO = daoFactory.createUserRecordDAO(dsl);
-        UserRoleRecordDAO userRoleRecordDAO = daoFactory.createUserRoleRecordDAO(dsl);
+        UserDAO userRecordDAO = daoFactory.createUserDAO(dsl);
+        UserRoleDAO userRoleRecordDAO = daoFactory.createUserRoleDAO(dsl);
 
         UserDTO user = new UserDTO();
         user.setClientId(clientId);

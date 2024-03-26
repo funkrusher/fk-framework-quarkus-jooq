@@ -9,26 +9,22 @@ import org.jooq.DSLContext;
 @ApplicationScoped
 public class DAOFactory {
 
-    public ClientRecordDAO createClientRecordDAO(DSLContext dsl) {
-        return new ClientRecordDAO(dsl);
+    public ClientDAO createClientDAO(DSLContext dsl) {
+        return new ClientDAO(dsl);
     }
 
-    public ProductRecordDAO createProductRecordDAO(DSLContext dsl) { return new ProductRecordDAO(dsl); }
+    public ProductDAO createProductDAO(DSLContext dsl) { return new ProductDAO(dsl); }
 
-    public ProductViewDAO createProductViewDAO(DSLContext dsl) {
-        return new ProductViewDAO(dsl);
+    public ProductLangDAO createProductLangDAO(DSLContext dsl) { return new ProductLangDAO(dsl); }
+
+    public LangDAO createLangDAO(DSLContext dsl) {
+        return new LangDAO(dsl);
     }
 
-    public ProductLangRecordDAO createProductLangRecordDAO(DSLContext dsl) { return new ProductLangRecordDAO(dsl); }
-
-    public LangRecordDAO createLangRecordDAO(DSLContext dsl) {
-        return new LangRecordDAO(dsl);
+    public UserDAO createUserDAO(DSLContext dsl) {
+        return new UserDAO(dsl);
     }
 
-    public UserRecordDAO createUserRecordDAO(DSLContext dsl) {
-        return new UserRecordDAO(dsl);
-    }
-
-    public UserRoleRecordDAO createUserRoleRecordDAO(DSLContext dsl) { return new UserRoleRecordDAO(dsl); }
+    public UserRoleDAO createUserRoleDAO(DSLContext dsl) { return new UserRoleDAO(dsl); }
 
 }

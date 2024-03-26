@@ -13,20 +13,17 @@ import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;
 import org.fk.codegen.testshop.tables.records.ProductRecord;
 import org.fk.product.dao.DAOFactory;
-import org.fk.product.dao.ProductLangRecordDAO;
-import org.fk.product.dao.ProductRecordDAO;
-import org.fk.product.dao.ProductViewDAO;
+import org.fk.product.dao.ProductLangDAO;
+import org.fk.product.dao.ProductDAO;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.fk.core.util.exception.ValidationException;
 import org.fk.core.util.request.RequestContext;
-import org.fk.product.mapper.MapperFactory;
-import org.fk.product.mapper.ProductMapper;
+import org.fk.product.dto.ProductPaginateDTO;
+import org.fk.product.repository.ProductRepository;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 import org.fk.core.manager.AbstractManager;
 
@@ -52,11 +49,11 @@ public class ProductManager extends AbstractManager {
     DAOFactory daoFactory;
 
     @Inject
-    MapperFactory mapperFactory;
+    ProductRepository productRepository;
 
     public List<ProductDTO> testMultiset(final RequestContext request) {
         DSLContext dsl = dslFactory.create(request);
-        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
+        ProductDAO productViewDAO = daoFactory.createProductDAO(dsl);
 
         List<Field<?>> fields = new ArrayList<>();
         fields.addAll(List.of(table().fields()));
@@ -76,25 +73,14 @@ public class ProductManager extends AbstractManager {
     }
 
 
-    public List<ProductDTO> query(final RequestContext request, final QueryParameters queryParameters) throws InvalidDataException {
-        // we use the request-scoped dsl-context as source for the configuration of the dao.
+    public ProductPaginateDTO query(final RequestContext request, final QueryParameters queryParameters) throws InvalidDataException {
         DSLContext dsl = dslFactory.create(request);
-        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
-        Result<Record> records = productViewDAO.query(queryParameters);
-        return mapperFactory.createProductMapper(request).map(records);
+        return productRepository.paginate(request, dsl, queryParameters);
     }
 
     public Optional<ProductDTO> getOne(final RequestContext request, final Long productId) throws DataAccessException {
         DSLContext dsl = dslFactory.create(request);
-        ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(dsl);
-
-        Result<Record> result = productViewDAO.findById(productId);
-        if (result == null || result.isEmpty()) {
-            return Optional.empty();
-        } else {
-            ProductDTO product = mapperFactory.createProductMapper(request).map(result).getFirst();
-            return Optional.of(product);
-        }
+        return productRepository.fetchOne(request, dsl, productId);
     }
 
     public void testMultiTransaction(final RequestContext request) {
@@ -112,7 +98,6 @@ public class ProductManager extends AbstractManager {
         }
 
         try {
-            final DSLContext dsl = dslFactory.create(request);
             dslFactory.create(request).transaction(tx1 -> {
                 // transaction1
                 Filter filter1 = new Filter("productId", FilterOperator.GREATER_THAN_OR_EQUALS, List.of("90000000"));
@@ -124,21 +109,18 @@ public class ProductManager extends AbstractManager {
                 queryParameters.getFilters().add(filter1);
                 queryParameters.getFilters().add(filter2);
 
-                ProductViewDAO productViewDAO = daoFactory.createProductViewDAO(tx1.dsl());
-                Result<Record> queryResult = productViewDAO.query(queryParameters);
-
-                List<ProductDTO> existingProducts = mapperFactory.createProductMapper(request).map(queryResult);
+                ProductPaginateDTO productPaginate = productRepository.paginate(request, tx1.dsl(), queryParameters);
 
                 tx1.dsl().transaction(tx2 -> {
                     // transaction2
-                    ProductRecordDAO aProductRecordDAO = daoFactory.createProductRecordDAO(tx2.dsl());
-                    aProductRecordDAO.deleteDTOs(existingProducts);
+                    ProductDAO aProductRecordDAO = daoFactory.createProductDAO(tx2.dsl());
+                    aProductRecordDAO.deleteDTOs(productPaginate.getProducts());
                 });
 
                 try {
                     tx1.dsl().transaction(tx3 -> {
                         // transaction3
-                        ProductRecordDAO bProductRecordDAO = daoFactory.createProductRecordDAO(tx3.dsl());
+                        ProductDAO bProductRecordDAO = daoFactory.createProductDAO(tx3.dsl());
                         bProductRecordDAO.insert(inserts);
                         // Integer x = Integer.valueOf("test");
                     });
@@ -157,8 +139,8 @@ public class ProductManager extends AbstractManager {
     @Transactional(rollbackOn = Exception.class)
     public ProductDTO create(final RequestContext request, final ProductDTO product) throws ValidationException {
         DSLContext dsl = dslFactory.create(request);
-        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(dsl);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
+        ProductDAO productRecordDAO = daoFactory.createProductDAO(dsl);
+        ProductLangDAO productLangRecordDAO = daoFactory.createProductLangDAO(dsl);
 
         // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
         // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
@@ -178,8 +160,8 @@ public class ProductManager extends AbstractManager {
     @Transactional(rollbackOn = Exception.class)
     public ProductDTO update(final RequestContext request, final ProductDTO product) throws ValidationException {
         DSLContext dsl = dslFactory.create(request);
-        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(dsl);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
+        ProductDAO productRecordDAO = daoFactory.createProductDAO(dsl);
+        ProductLangDAO productLangRecordDAO = daoFactory.createProductLangDAO(dsl);
 
         this.validateUpdate(product);
         productRecordDAO.updateDTO(product);
@@ -210,8 +192,8 @@ public class ProductManager extends AbstractManager {
     @Transactional(rollbackOn = Exception.class)
     public void delete(final RequestContext request, final ProductDTO product) {
         DSLContext dsl = dslFactory.create(request);
-        ProductRecordDAO productRecordDAO = daoFactory.createProductRecordDAO(dsl);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
+        ProductDAO productRecordDAO = daoFactory.createProductDAO(dsl);
+        ProductLangDAO productLangRecordDAO = daoFactory.createProductLangDAO(dsl);
 
         // we do use the explicit delete-by-id methods here, because they are the most performant.
         productLangRecordDAO.deleteByProductId(product.getProductId());
@@ -226,8 +208,7 @@ public class ProductManager extends AbstractManager {
      */
     public Stream<ProductDTO> streamAll(final RequestContext request) {
         DSLContext dsl = dslFactory.create(request);
-        ProductLangRecordDAO productLangRecordDAO = daoFactory.createProductLangRecordDAO(dsl);
-        ProductMapper productMapper = mapperFactory.createProductMapper(request);
+        ProductLangDAO productLangRecordDAO = daoFactory.createProductLangDAO(dsl);
 
         // TODO: try to find how this can be put into the Abstraction,
         Stream<ProductRecord> stream1 = dsl.selectFrom(Product.PRODUCT)
@@ -241,8 +222,7 @@ public class ProductManager extends AbstractManager {
             for (ProductRecord record : records) {
                 ids.add(record.getProductId());
             }
-            List<ProductLangRecord> xLangs = productLangRecordDAO.fetchAllByProductsIds(ids);
-            return productMapper.map(records, xLangs);
+            return productRepository.fetch(request, dsl, ids);
         }).flatMap(List::stream);
     }
 

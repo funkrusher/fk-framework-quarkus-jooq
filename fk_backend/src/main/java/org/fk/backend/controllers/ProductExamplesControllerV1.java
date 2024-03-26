@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.fk.product.dto.ProductDTO;
+import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.exception.ValidationException;
@@ -29,7 +30,7 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public List<ProductDTO> query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
+    public ProductPaginateDTO query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
         RequestContext request = new RequestContext(1, 1);
         return productService.query(request, queryParameters);
     }

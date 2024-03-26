@@ -1,6 +1,6 @@
 package org.fk.product.dao;
 
-import org.fk.core.dao.AbstractRecordDAO;
+import org.fk.core.dao.AbstractDAO;
 import org.fk.codegen.testshop.tables.Lang;
 import org.fk.codegen.testshop.tables.interfaces.ILang;
 import org.fk.codegen.testshop.tables.records.LangRecord;
@@ -9,9 +9,9 @@ import org.jooq.DSLContext;
 /**
  * LangRecordDAO
  */
-public class LangRecordDAO extends AbstractRecordDAO<LangRecord, ILang, Integer> {
+public class LangDAO extends AbstractDAO<LangRecord, ILang, Integer> {
 
-    public LangRecordDAO(DSLContext dsl) {
+    public LangDAO(DSLContext dsl) {
         super(dsl, Lang.LANG);
     }
 

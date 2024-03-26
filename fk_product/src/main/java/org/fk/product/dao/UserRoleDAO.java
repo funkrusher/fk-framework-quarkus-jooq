@@ -1,6 +1,6 @@
 package org.fk.product.dao;
 
-import org.fk.core.dao.AbstractRecordDAO;
+import org.fk.core.dao.AbstractDAO;
 import org.fk.codegen.testshop.tables.UserRole;
 import org.fk.codegen.testshop.tables.interfaces.IUserRole;
 import org.fk.codegen.testshop.tables.records.UserRoleRecord;
@@ -10,9 +10,9 @@ import org.jooq.Record2;
 /**
  * UserRoleRecordDAO
  */
-public class UserRoleRecordDAO extends AbstractRecordDAO<UserRoleRecord, IUserRole, Record2<Integer, String>> {
+public class UserRoleDAO extends AbstractDAO<UserRoleRecord, IUserRole, Record2<Integer, String>> {
 
-    public UserRoleRecordDAO(DSLContext dsl) {
+    public UserRoleDAO(DSLContext dsl) {
         super(dsl, UserRole.USER_ROLE);
     }
 
