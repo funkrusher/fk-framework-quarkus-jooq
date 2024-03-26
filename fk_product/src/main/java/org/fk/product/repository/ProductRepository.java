@@ -5,28 +5,21 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.ProductLang;
-import org.fk.codegen.testshop.tables.records.ProductLangRecord;
-import org.fk.codegen.testshop.tables.records.ProductRecord;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.repository.AbstractRepository;
-import org.fk.core.repository.RecordToViewMapper;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.QueryParameters;
 import org.fk.core.util.request.RequestContext;
 import org.fk.product.dao.DAOFactory;
-import org.fk.product.dao.ProductDAO;
-import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.fk.product.dto.ProductPaginateDTO;
 import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.jooq.impl.DSL.*;
