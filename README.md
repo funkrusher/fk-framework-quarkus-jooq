@@ -232,8 +232,7 @@ All the described operations can also be started up from within the Intellij IDE
 
 The used versions of third-party libraries must be balanced with each other. 
 
-i use jOOQ 3.16 instead of the latest jOOQ, because it was the most convenient for me, because Linux Mint (my development-os),
-only installs Mariadb 10.6 by default and it was too much hassle to install a newer version. I will upgrade eventually, see:
+Use the jOOQ Version, that is fitting for your database or upgrade your database. See:
 - https://www.jooq.org/download/support-matrix
 
 We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
