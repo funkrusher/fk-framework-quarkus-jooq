@@ -18,32 +18,18 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.jooq.impl.DSL.*;
 
 @ApplicationScoped
-public class ProductRepository extends AbstractRepository {
+public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
 
     public ProductRepository(DSLContext dsl) {
         super(dsl);
     }
 
     @Override
-    public List<Field<?>> getViewFields() {
-        List<Field<?>> fields = new ArrayList<>();
-        fields.addAll(List.of(Product.PRODUCT.fields()));
-        fields.addAll(List.of(ProductLang.PRODUCT_LANG.fields()));
-        return fields;
-    }
-
-    @Override
-    public TableOnConditionStep<Record> getViewJoins() {
-        return Product.PRODUCT
-                .leftJoin(ProductLang.PRODUCT_LANG)
-                .on(ProductLang.PRODUCT_LANG.PRODUCTID
-                        .eq(Product.PRODUCT.PRODUCTID));
-    }
-
     public List<ProductDTO> fetch(List<Long> productIds) {
         // use multiset to let the database and jooq do all the work of joining the tables and mapping to dto.
         List<ProductDTO> products = dsl().select(
@@ -68,40 +54,40 @@ public class ProductRepository extends AbstractRepository {
         return products;
     }
 
-    public Optional<ProductDTO> fetchOne(Long productId) {
-        List<ProductDTO> result = fetch(List.of(productId));
-        if (result == null || result.isEmpty()) {
-            return Optional.empty();
-        } else {
-            return Optional.of(result.getFirst());
-        }
-    }
+    @Override
+    public SelectSeekStepN<Record1<Long>> getQuery(QueryParameters queryParameters) throws InvalidDataException {
+        final List<Field<?>> availableFields = new ArrayList<>();
+        availableFields.addAll(List.of(Product.PRODUCT.fields()));
+        availableFields.addAll(List.of(ProductLang.PRODUCT_LANG.fields()));
 
-    public SelectSeekStepN<Record1<Long>> getQueryParamQuery(QueryParameters queryParameters) throws InvalidDataException {
         return dsl()
                 .select(Product.PRODUCT.PRODUCTID)
-                .from(getViewJoins())
-                .where(DSL.and(getFilters(queryParameters, Product.PRODUCT)))
+                .from(Product.PRODUCT
+                        .leftJoin(ProductLang.PRODUCT_LANG)
+                        .on(ProductLang.PRODUCT_LANG.PRODUCTID
+                                .eq(Product.PRODUCT.PRODUCTID)))
+                .where(DSL.and(getFilters(queryParameters, availableFields, Product.PRODUCT)))
                 .groupBy(Product.PRODUCT.PRODUCTID)
-                .orderBy(getSorters(queryParameters, Product.PRODUCT));
+                .orderBy(getSorters(queryParameters, availableFields, Product.PRODUCT));
     }
 
-
-    public ProductPaginateDTO paginate(QueryParameters queryParameters) throws InvalidDataException {
-        List<Long> productIds = getQueryParamQuery(queryParameters)
+    @Override
+    public List<Long> paginate(QueryParameters queryParameters) throws InvalidDataException {
+        return getQuery(queryParameters)
                 .offset(queryParameters.getPage())
                 .limit(queryParameters.getPageSize())
                 .fetch(Product.PRODUCT.PRODUCTID);
-
-        int count = dsl().fetchCount(getQueryParamQuery(queryParameters));
-
-        List<ProductDTO> products = fetch(productIds);
-
-        ProductPaginateDTO paginate = new ProductPaginateDTO();
-        paginate.setProducts(products);
-        paginate.setCount(count);
-        return paginate;
     }
 
+    @Override
+    public int count(QueryParameters queryParameters) throws InvalidDataException {
+        return dsl().fetchCount(getQuery(queryParameters));
+    }
 
+    public Stream<Long> stream(QueryParameters queryParameters) throws InvalidDataException {
+        return getQuery(queryParameters)
+                .fetchSize(250)
+                .fetchStream()
+                .map(Record1::value1);
+    }
 }

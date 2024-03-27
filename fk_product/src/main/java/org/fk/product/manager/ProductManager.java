@@ -63,12 +63,25 @@ public class ProductManager extends AbstractManager {
 
     public ProductPaginateDTO query(DSLContext dsl, final QueryParameters queryParameters) throws InvalidDataException {
         final ProductRepository productRepository = new ProductRepository(dsl);
-        return productRepository.paginate(queryParameters);
+
+        int count = productRepository.count(queryParameters);
+        List<Long> productIds = productRepository.paginate(queryParameters);
+        List<ProductDTO> products = productRepository.fetch(productIds);
+
+        ProductPaginateDTO paginate = new ProductPaginateDTO();
+        paginate.setProducts(products);
+        paginate.setCount(count);
+        return paginate;
     }
 
     public Optional<ProductDTO> getOne(DSLContext dsl, final Long productId) throws DataAccessException {
         final ProductRepository productRepository = new ProductRepository(dsl);
-        return productRepository.fetchOne(productId);
+        List<ProductDTO> result = productRepository.fetch(List.of(productId));
+        if (result == null || result.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(result.getFirst());
+        }
     }
 
     public void testMultiTransaction(DSLContext dsl) {
@@ -98,12 +111,12 @@ public class ProductManager extends AbstractManager {
                 queryParameters.getFilters().add(filter2);
 
                 final ProductRepository productRepository = new ProductRepository(tx1.dsl());
-                ProductPaginateDTO productPaginate = productRepository.paginate(queryParameters);
+                List<Long> productIds = productRepository.paginate(queryParameters);
 
                 tx1.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tx2.dsl());
-                    aProductRecordDAO.deleteDTOs(productPaginate.getProducts());
+                    aProductRecordDAO.deleteById(productIds);
                 });
 
                 try {
@@ -190,24 +203,19 @@ public class ProductManager extends AbstractManager {
      * Trying out streaming
      * @return stream
      */
-    public Stream<ProductDTO> streamAll(DSLContext dsl) {
+    public Stream<ProductDTO> streamAll(DSLContext dsl) throws InvalidDataException {
         ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
-        // TODO: try to find how this can be put into the Abstraction,
-        Stream<ProductRecord> stream1 = dsl.selectFrom(Product.PRODUCT)
-                .fetchSize(250)
-                .fetchStream();
-        Stream<List<ProductRecord>> chunkStream = chunk(stream1, 250);
+        QueryParameters queryParameters = new QueryParameters();
+        queryParameters.setPage(0);
+        queryParameters.setPageSize(100000);
+
+        final ProductRepository productRepository = new ProductRepository(dsl);
+        Stream<Long> stream1 = productRepository.stream(queryParameters);
+        Stream<List<Long>> chunkStream = chunk(stream1, 250);
 
         // the "parallel" is important here, as it really pushes performance.
-        return chunkStream.parallel().map(records -> {
-            List<Long> ids = new ArrayList<>();
-            for (ProductRecord record : records) {
-                ids.add(record.getProductId());
-            }
-            final ProductRepository productRepository = new ProductRepository(dsl);
-            return productRepository.fetch(ids);
-        }).flatMap(List::stream);
+        return chunkStream.parallel().map(productRepository::fetch).flatMap(List::stream);
     }
 
     /**
@@ -217,23 +225,23 @@ public class ProductManager extends AbstractManager {
      * @param size chunk-size of each chunk
      * @return stream of list of items.
      */
-    Stream<List<ProductRecord>> chunk(Stream<ProductRecord> stream, int size) {
-        Iterator<ProductRecord> iterator = stream.iterator();
-        Iterator<List<ProductRecord>> listIterator = new Iterator<>() {
+    Stream<List<Long>> chunk(Stream<Long> stream, int size) {
+        Iterator<Long> iterator = stream.iterator();
+        Iterator<List<Long>> listIterator = new Iterator<>() {
 
             public boolean hasNext() {
                 return iterator.hasNext();
             }
 
-            public List<ProductRecord> next() {
-                List<ProductRecord> result = new ArrayList<>(size);
+            public List<Long> next() {
+                List<Long> result = new ArrayList<>(size);
                 for (int i = 0; i < size && iterator.hasNext(); i++) {
                     result.add(iterator.next());
                 }
                 return result;
             }
         };
-        return StreamSupport.stream(((Iterable<List<ProductRecord>>) () -> listIterator).spliterator(), false);
+        return StreamSupport.stream(((Iterable<List<Long>>) () -> listIterator).spliterator(), false);
     }
 
 }

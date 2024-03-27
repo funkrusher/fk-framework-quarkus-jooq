@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.fk.core.jooq.DSLFactory;
+import org.fk.core.util.exception.InvalidDataException;
 import org.fk.product.dto.ProductDTO;
 import org.fk.core.transfer.TransferJsonMapper;
 import org.fk.product.manager.ProductManager;
@@ -38,7 +39,7 @@ public class ProductJsonExportControllerV1 {
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/")
-    public Response streamRootJsonFile() {
+    public Response streamRootJsonFile() throws InvalidDataException {
         DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
         var productStream = productManager.streamAll(dsl);
 

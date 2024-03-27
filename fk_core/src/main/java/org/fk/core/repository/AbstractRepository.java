@@ -1,6 +1,7 @@
 package org.fk.core.repository;
 
 import jakarta.validation.constraints.NotNull;
+import org.fk.codegen.dto.AbstractDTO;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.jooq.RequestContext;
 import org.fk.core.util.exception.InvalidDataException;
@@ -25,7 +26,7 @@ import java.util.List;
  * and therefore the mapping to the DTO must take this into account.
  * </p>
  */
-public abstract class AbstractRepository {
+public abstract class AbstractRepository<D extends AbstractDTO, T> {
 
     private final DSLContext dsl;
 
@@ -45,21 +46,13 @@ public abstract class AbstractRepository {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    /**
-     * Define all fields in the different tables that are part of this view, and should be resolved
-     * into the DTOs that this view is returning.
-     *
-     * @return fields
-     */
-    abstract public List<Field<?>> getViewFields();
+    abstract public List<D> fetch(List<T> productIds);
 
-    /**
-     * Define all joins on the different tables that are part of this view, and should be resolved
-     * into the DTOs that this view is returning.
-     *
-     * @return joins
-     */
-    abstract public TableOnConditionStep<Record> getViewJoins();
+    abstract protected SelectSeekStepN<Record1<T>> getQuery(QueryParameters queryParameters) throws InvalidDataException;
+
+    abstract public List<T> paginate(QueryParameters queryParameters) throws InvalidDataException;
+
+    abstract public int count(QueryParameters queryParameters) throws InvalidDataException;
 
 
     // -------------------------------------------------------------------------
@@ -96,8 +89,8 @@ public abstract class AbstractRepository {
         }
     }
 
-    private Field<?> findViewFieldByName(Name name) {
-        for (Field<?> viewField : getViewFields()) {
+    private Field<?> findViewFieldByName(Name name, List<Field<?>> availableFields) {
+        for (Field<?> viewField : availableFields) {
             Name viewFieldName = viewField.getQualifiedName();
             if (viewFieldName.equals(name)) {
                 return viewField;
@@ -107,12 +100,12 @@ public abstract class AbstractRepository {
     }
 
 
-    protected Collection<SortField<?>> getSorters(QueryParameters queryParameters, Table<?> defaultTable) throws InvalidDataException {
+    protected Collection<SortField<?>> getSorters(QueryParameters queryParameters, List<Field<?>> availableFields, Table<?> defaultTable) throws InvalidDataException {
         Collection<SortField<?>> sortFields = new ArrayList<>();
         if (queryParameters.getSorter() != null) {
             Sorter sorter = queryParameters.getSorter();
             Name fieldName = getNameForQueryParamKey(sorter.getField(), defaultTable);
-            Field<?> field = findViewFieldByName(fieldName);
+            Field<?> field = findViewFieldByName(fieldName, availableFields);
             if (field == null) {
                 throw new InvalidDataException("invalid sorter-field in query: " + sorter.getField());
             }
@@ -125,12 +118,12 @@ public abstract class AbstractRepository {
         return sortFields;
     }
 
-    protected Collection<Condition> getFilters(QueryParameters queryParameters, Table<?> defaultTable) throws InvalidDataException {
+    protected Collection<Condition> getFilters(QueryParameters queryParameters, List<Field<?>> availableFields, Table<?> defaultTable) throws InvalidDataException {
         Collection<Condition> filterFields = new ArrayList<>();
         if (!queryParameters.getFilters().isEmpty()) {
             for (Filter filter : queryParameters.getFilters()) {
                 Name fieldName = getNameForQueryParamKey(filter.getField(), defaultTable);
-                Field<?> field = findViewFieldByName(fieldName);
+                Field<?> field = findViewFieldByName(fieldName, availableFields);
                 if (field == null) {
                     throw new InvalidDataException("invalid filter-field in query: " + filter.getField());
                 }

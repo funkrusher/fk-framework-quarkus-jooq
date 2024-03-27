@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.fk.core.jooq.DSLFactory;
+import org.fk.core.util.exception.InvalidDataException;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;
@@ -40,7 +41,7 @@ public class ProductCsvExportControllerV1 {
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/")
-    public Response streamRootCsvFile() {
+    public Response streamRootCsvFile() throws InvalidDataException {
         DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
         var productStream = productManager.streamAll(dsl);
 
@@ -81,7 +82,7 @@ public class ProductCsvExportControllerV1 {
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/lang")
-    public Response streamLangCsvFile() {
+    public Response streamLangCsvFile() throws InvalidDataException {
         DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
         var productStream = productManager.streamAll(dsl);
 
