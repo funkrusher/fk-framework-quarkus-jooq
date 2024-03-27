@@ -10,7 +10,19 @@ import org.fk.codegen.testshop.tables.Databasechangeloglock;
 import org.fk.codegen.testshop.tables.Lang;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.ProductLang;
+import org.fk.codegen.testshop.tables.QrtzBlobTriggers;
+import org.fk.codegen.testshop.tables.QrtzCalendars;
+import org.fk.codegen.testshop.tables.QrtzCronTriggers;
+import org.fk.codegen.testshop.tables.QrtzFiredTriggers;
+import org.fk.codegen.testshop.tables.QrtzJobDetails;
+import org.fk.codegen.testshop.tables.QrtzLocks;
+import org.fk.codegen.testshop.tables.QrtzPausedTriggerGrps;
+import org.fk.codegen.testshop.tables.QrtzSchedulerState;
+import org.fk.codegen.testshop.tables.QrtzSimpleTriggers;
+import org.fk.codegen.testshop.tables.QrtzSimpropTriggers;
+import org.fk.codegen.testshop.tables.QrtzTriggers;
 import org.fk.codegen.testshop.tables.Role;
+import org.fk.codegen.testshop.tables.Task;
 import org.fk.codegen.testshop.tables.User;
 import org.fk.codegen.testshop.tables.UserRole;
 
@@ -52,9 +64,69 @@ public class Tables {
     public static final ProductLang PRODUCT_LANG = ProductLang.PRODUCT_LANG;
 
     /**
+     * The table <code>testshop.QRTZ_BLOB_TRIGGERS</code>.
+     */
+    public static final QrtzBlobTriggers QRTZ_BLOB_TRIGGERS = QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS;
+
+    /**
+     * The table <code>testshop.QRTZ_CALENDARS</code>.
+     */
+    public static final QrtzCalendars QRTZ_CALENDARS = QrtzCalendars.QRTZ_CALENDARS;
+
+    /**
+     * The table <code>testshop.QRTZ_CRON_TRIGGERS</code>.
+     */
+    public static final QrtzCronTriggers QRTZ_CRON_TRIGGERS = QrtzCronTriggers.QRTZ_CRON_TRIGGERS;
+
+    /**
+     * The table <code>testshop.QRTZ_FIRED_TRIGGERS</code>.
+     */
+    public static final QrtzFiredTriggers QRTZ_FIRED_TRIGGERS = QrtzFiredTriggers.QRTZ_FIRED_TRIGGERS;
+
+    /**
+     * The table <code>testshop.QRTZ_JOB_DETAILS</code>.
+     */
+    public static final QrtzJobDetails QRTZ_JOB_DETAILS = QrtzJobDetails.QRTZ_JOB_DETAILS;
+
+    /**
+     * The table <code>testshop.QRTZ_LOCKS</code>.
+     */
+    public static final QrtzLocks QRTZ_LOCKS = QrtzLocks.QRTZ_LOCKS;
+
+    /**
+     * The table <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS</code>.
+     */
+    public static final QrtzPausedTriggerGrps QRTZ_PAUSED_TRIGGER_GRPS = QrtzPausedTriggerGrps.QRTZ_PAUSED_TRIGGER_GRPS;
+
+    /**
+     * The table <code>testshop.QRTZ_SCHEDULER_STATE</code>.
+     */
+    public static final QrtzSchedulerState QRTZ_SCHEDULER_STATE = QrtzSchedulerState.QRTZ_SCHEDULER_STATE;
+
+    /**
+     * The table <code>testshop.QRTZ_SIMPLE_TRIGGERS</code>.
+     */
+    public static final QrtzSimpleTriggers QRTZ_SIMPLE_TRIGGERS = QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS;
+
+    /**
+     * The table <code>testshop.QRTZ_SIMPROP_TRIGGERS</code>.
+     */
+    public static final QrtzSimpropTriggers QRTZ_SIMPROP_TRIGGERS = QrtzSimpropTriggers.QRTZ_SIMPROP_TRIGGERS;
+
+    /**
+     * The table <code>testshop.QRTZ_TRIGGERS</code>.
+     */
+    public static final QrtzTriggers QRTZ_TRIGGERS = QrtzTriggers.QRTZ_TRIGGERS;
+
+    /**
      * The table <code>testshop.role</code>.
      */
     public static final Role ROLE = Role.ROLE;
+
+    /**
+     * The table <code>testshop.task</code>.
+     */
+    public static final Task TASK = Task.TASK;
 
     /**
      * The table <code>testshop.user</code>.

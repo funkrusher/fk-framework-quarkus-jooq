@@ -29,7 +29,7 @@ public class ConfigurationFactory {
     SQLDialect sqlDialect = null;
 
     @Produces
-    private Configuration getConfiguration() {
+    public Configuration getConfiguration() {
         if (sqlDialect == null) {
             try {
                 final Connection connection = dataSource.getConnection();

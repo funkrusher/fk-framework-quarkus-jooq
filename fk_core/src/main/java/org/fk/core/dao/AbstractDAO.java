@@ -95,15 +95,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         // Set the auto-increment fields to null using reflection
         for (Field<?> field : autoIncrementFields) {
             try {
+                // touch the auto-increment-fields as changed=true,
+                // because when all fields are changed=false, then jooq will not process the insert,
+                // so that way we can make sure that the insert is processed for such rare cases.
                 Field<T> recordField = (Field<T>) field;
-                // TODO: when do we need to do this???
-                //record.set(recordField, null);
-
-                // note: setting changed=true, will also mark all fields as NULL that are NOT NULL in database,
-                // and jooq would in that case not use the DEFAULT of the database, but will say that they
-                // should not be null
-                // record.changed(true);
-
+                record.changed(recordField, true);
             } catch (Exception e) {
                 // Handle any exceptions that occur while setting the field to null
                 // For example, if the field is not nullable, you may get a NullPointerException

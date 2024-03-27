@@ -240,6 +240,11 @@ We also can check conflicting dependencies, with gradlew. For example. The follo
 ./gradlew -p fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
 ```
 
+## Quartz
+
+Table-SQLs for your database type (mariadb, ...) are hidden in the quartz repositories. See:
+- https://github.com/quartz-scheduler/quartz/blob/quartz-2.3.x/quartz-core/src/main/resources/org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql
+
 ## Related Guides
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations
 - Gradle+Quarkus ([guide](https://quarkus.io/guides/gradle-tooling)): Building quarkus apps with gradle
