@@ -4,7 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.manager.AbstractManager;
-import org.fk.product.dao.DAOFactory;
 import org.jboss.logging.Logger;
 
 /**
@@ -17,10 +16,6 @@ public class GreetingManager extends AbstractManager {
 
     @Inject
     DSLFactory dslFactory;
-
-    @Inject
-    DAOFactory daoFactory;
-
 
     public String test() {
         return "Hello my world";

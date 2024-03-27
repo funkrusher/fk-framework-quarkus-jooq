@@ -1,6 +1,5 @@
 package org.fk.core.jooq;
 
-import org.fk.core.util.request.RequestContext;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
@@ -17,10 +16,9 @@ import static org.jooq.impl.DSL.name;
  */
 public class FkExecuteListener extends DefaultExecuteListener {
 
-    private RequestContext request;
 
-    public FkExecuteListener(RequestContext request) {
-        this.request = request;
+    public FkExecuteListener() {
+
     }
 
     @Override
@@ -60,6 +58,7 @@ public class FkExecuteListener extends DefaultExecuteListener {
                 // Do something with the table
                 Field<Integer> clientIdField = table.field(DSL.field(DSL.name("clientId"), Integer.class));
                 if (clientIdField != null) {
+                    RequestContext request = (RequestContext) ctx.dsl().data(DSLFactory.REQUEST);
                     Field<Integer> field = DSL.field(DSL.name("clientId"), Integer.class);
                     select.addConditions(field.eq(request.getClientId()));
                 } else {

@@ -6,13 +6,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.fk.core.jooq.DSLFactory;
+import org.fk.core.jooq.RequestContext;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.exception.ValidationException;
 import org.fk.core.util.query.QueryParameters;
-import org.fk.core.util.request.RequestContext;
+import org.jooq.DSLContext;
 
 import java.util.List;
 
@@ -23,7 +25,11 @@ import java.util.List;
 public class ProductExamplesControllerV1 {
 
     @Inject
-    ProductManager productService;
+    ProductManager productManager;
+
+    @Inject
+    DSLFactory dslFactory;
+
 
     @GET
     @Operation(summary = "returns a list of all products unauthenticated")
@@ -31,8 +37,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public ProductPaginateDTO query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
-        RequestContext request = new RequestContext(1, 1);
-        return productService.query(request, queryParameters);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        return productManager.query(dsl, queryParameters);
     }
 
     @POST
@@ -41,8 +47,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public Response create(ProductDTO product) throws ValidationException {
-        RequestContext request = new RequestContext(1, 1);
-        ProductDTO created = productService.create(request, product);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        ProductDTO created = productManager.create(dsl, product);
         return Response.ok(created).status(201).build();
     }
 
@@ -52,8 +58,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
     public ProductDTO update(ProductDTO product) throws ValidationException {
-        RequestContext request = new RequestContext(1, 1);
-        return productService.update(request, product);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        return productManager.update(dsl, product);
     }
 
     @GET
@@ -62,8 +68,8 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/testMultiTransaction")
     public Response testMultiTransaction() {
-        RequestContext request = new RequestContext(1, 1);
-        productService.testMultiTransaction(request);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        productManager.testMultiTransaction(dsl);
         return Response.status(200).build();
     }
 
@@ -74,9 +80,7 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/multiset")
     public List<ProductDTO> testMultiset() {
-        RequestContext request = new RequestContext(1, 1);
-        return productService.testMultiset(request);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        return productManager.testMultiset(dsl);
     }
-
-
 }

@@ -1,6 +1,8 @@
 package org.fk.core.repository;
 
 import jakarta.validation.constraints.NotNull;
+import org.fk.core.jooq.DSLFactory;
+import org.fk.core.jooq.RequestContext;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.*;
 import org.jooq.*;
@@ -25,6 +27,20 @@ import java.util.List;
  */
 public abstract class AbstractRepository {
 
+    private final DSLContext dsl;
+
+    private final RequestContext request;
+
+    // -------------------------------------------------------------------------
+    // Constructors and initialisation
+    // -------------------------------------------------------------------------
+
+    protected AbstractRepository(DSLContext dsl) {
+        this.dsl = dsl;
+        this.request = (RequestContext) dsl.data(DSLFactory.REQUEST);
+    }
+
+
     // ------------------------------------------------------------------------
     // Template methods for subclasses
     // ------------------------------------------------------------------------
@@ -46,7 +62,27 @@ public abstract class AbstractRepository {
     abstract public TableOnConditionStep<Record> getViewJoins();
 
 
+    // -------------------------------------------------------------------------
+    // Repository API
+    // -------------------------------------------------------------------------
 
+    /**
+     * Expose the dslContext this <code>DAO</code> is operating.
+     *
+     * @return the <code>DAO</code>'s underlying <code>dslContext</code>
+     */
+    public DSLContext dsl() {
+        return this.dsl;
+    }
+
+    /**
+     * Expose the request this <code>DAO</code> is operating.
+     *
+     * @return the <code>DAO</code>'s underlying <code>request</code>
+     */
+    public RequestContext request() {
+        return this.request;
+    }
 
 
     private Name getNameForQueryParamKey(String queryParamKey, Table<?> defaultTable) {

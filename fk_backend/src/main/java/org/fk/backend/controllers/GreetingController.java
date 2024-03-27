@@ -11,11 +11,11 @@ import org.fk.product.manager.GreetingManager;
 public class GreetingController {
 
     @Inject
-    GreetingManager greetingService;
+    GreetingManager greetingManager;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return greetingService.test();
+        return greetingManager.test();
     }
 }

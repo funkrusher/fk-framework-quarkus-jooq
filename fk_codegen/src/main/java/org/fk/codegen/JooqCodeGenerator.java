@@ -72,7 +72,7 @@ public class JooqCodeGenerator {
                             .withGenerate(new Generate()
                                     .withInterfaces(true)
                                     .withSerializableInterfaces(true)
-                                    .withDaos(true)
+                                    .withPojos(true)
                                     .withValidationAnnotations(true)
                                     .withPojosEqualsAndHashCode(true)
                             )

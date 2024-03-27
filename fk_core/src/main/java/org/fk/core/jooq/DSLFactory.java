@@ -1,69 +1,60 @@
 package org.fk.core.jooq;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
-import org.fk.core.util.request.RequestContext;
+import org.fk.core.auth.FkSecurityIdentity;
 import org.jboss.logging.Logger;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.conf.RenderNameCase;
-import org.jooq.conf.RenderQuotedNames;
-import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.DefaultExecuteListenerProvider;
-import org.jooq.impl.DefaultRecordListenerProvider;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
 
 /**
- * DSLFactory to create instances of jooq dsl-context.
+ * DSLFactory to create request-specific instances of jooq dsl-context.
+ * <p>
+ * It must be request-scoped, because we need to configure tenant-specific checks on the DSLContext,
+ * that need to be provided by the requests SecurityIdentity (tenant_id).
+ * </p>
  */
-@ApplicationScoped
+@RequestScoped
 public class DSLFactory {
 
     public static final Logger LOGGER = Logger.getLogger(DSLFactory.class);
 
+    public static final String REQUEST = "request";
+
     @Inject
-    DataSource dataSource;
+    Configuration configuration;
 
-    SQLDialect sqlDialect = null;
+    @Inject
+    FkSecurityIdentity fkSecurityIdentity;
 
-    public DSLContext create(RequestContext request) {
+    @Produces
+    public DSLContext create() {
         try {
-            return DSL.using(getConfiguration(request));
+            DSLContext dsl = DSL.using(configuration);
+
+            // put request into dsl (to make tenant-checks, and provide other layers with access to it)
+            RequestContext request = new RequestContext(fkSecurityIdentity, 1);
+            dsl.data(REQUEST, request);
+            return dsl;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Configuration getConfiguration(RequestContext request) {
-        if (sqlDialect == null) {
-            try {
-                final Connection connection = dataSource.getConnection();
-                sqlDialect = DSL.using(connection).configuration().dialect();
-            } catch (Exception e) {
-                LOGGER.error("unable to resolve SQLDialect from database!", e);
-                throw new RuntimeException(e);
-            }
+    public DSLContext create(RequestContext customRequest) {
+        try {
+            DSLContext dsl = DSL.using(configuration);
+
+            // put request into dsl (to make tenant-checks, and provide other layers with access to it)
+            dsl.data(REQUEST, customRequest);
+            return dsl;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Configuration configuration = new DefaultConfiguration()
-                .set(dataSource)
-                .set(sqlDialect)
-                .set(new Settings()
-                        .withExecuteLogging(true)
-                        .withRenderFormatted(true)
-                        .withRenderCatalog(false)
-                        .withRenderSchema(false)
-                        .withMaxRows(Integer.MAX_VALUE)
-                        .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
-                        .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
-                );
-        configuration.set(new DefaultRecordListenerProvider(new FkInsertListener()));
-        configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener(request)));
-        configuration.data("request", request);
-        return configuration;
     }
+
 }

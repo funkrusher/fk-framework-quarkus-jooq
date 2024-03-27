@@ -1,17 +1,13 @@
 package org.fk.core.dao;
 
-import jakarta.validation.constraints.NotNull;
 import org.fk.codegen.dto.AbstractDTO;
-import org.fk.core.repository.AbstractRepository;
-import org.fk.core.util.exception.InvalidDataException;
-import org.fk.core.util.query.*;
-import org.fk.core.util.request.RequestContext;
+import org.fk.core.jooq.DSLFactory;
+import org.fk.core.jooq.RequestContext;
 import org.jooq.*;
 import org.jooq.Record;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -42,7 +38,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     protected AbstractDAO(DSLContext dsl, Table<R> table) {
         this.dsl = dsl;
         this.table = table;
-        this.request = (RequestContext) dsl.data("request");
+        this.request = (RequestContext) dsl.data(DSLFactory.REQUEST);
     }
 
     // ------------------------------------------------------------------------
@@ -400,7 +396,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     public int[] insert(List<R> records) throws DataAccessException {
         List<R> inserts = prepareInserts(records);
         if (inserts.size() == 1) {
-            return new int[]{inserts.getFirst().insert()};
+            // Execute a regular INSERT (logging looks nicer that way)
+            return new int[] {dsl().executeInsert(inserts.getFirst())};
         } else if (!inserts.isEmpty()) {
             // Execute a batch INSERT
             return dsl().batchInsert(inserts).execute();
@@ -477,7 +474,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             }
             dsl().batch(conditions).execute();
         } else if (updates.size() == 1) {
-            // Execute a regular UPDATE
+            // Execute a regular UPDATE (logging looks nicer that way)
             dsl().update(table()).set(updates.getFirst()).where(equal(pk(), getId(updates.getFirst()))).execute();
         }
     }
@@ -544,8 +541,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             // Execute a batch DELETE
             dsl().batchDelete(records).execute();
         } else if (records.size() == 1) {
-            // Execute a regular DELETE
-            records.getFirst().delete();
+            // Execute a regular DELETE (logging looks nicer that way)
+            dsl().executeDelete(records.getFirst());
         }
     }
 

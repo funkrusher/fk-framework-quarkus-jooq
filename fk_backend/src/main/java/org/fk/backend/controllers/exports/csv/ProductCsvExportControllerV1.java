@@ -3,20 +3,20 @@ package org.fk.backend.controllers.exports.csv;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
-import org.fk.core.auth.FkSecurityIdentity;
+import org.fk.core.jooq.DSLFactory;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.fk.codegen.testshop.tables.records.ProductLangRecord;
 import org.fk.codegen.testshop.tables.records.ProductRecord;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.transfer.TransferCsvMapper;
-import org.fk.core.util.request.RequestContext;
+import org.fk.core.jooq.RequestContext;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 
 import java.util.*;
@@ -28,18 +28,21 @@ import java.util.*;
 public class ProductCsvExportControllerV1 {
 
     @Inject
-    ProductManager productService;
+    ProductManager productManager;
 
     @Inject
     @TransferCsvMapper
     CsvMapper csvMapper;
 
+    @Inject
+    DSLFactory dslFactory;
+
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/")
     public Response streamRootCsvFile() {
-        RequestContext request = new RequestContext(1, 1);
-        var productStream = productService.streamAll(request);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        var productStream = productManager.streamAll(dsl);
 
         StreamingOutput streamingOutput = outputStream -> {
             ProductRecord pc = new ProductRecord();
@@ -75,14 +78,12 @@ public class ProductCsvExportControllerV1 {
                 .build();
     }
 
-
-
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/lang")
     public Response streamLangCsvFile() {
-        RequestContext request = new RequestContext(1, 1);
-        var productStream = productService.streamAll(request);
+        DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
+        var productStream = productManager.streamAll(dsl);
 
         StreamingOutput streamingOutput = outputStream -> {
             ProductLangRecord pc = new ProductLangRecord();

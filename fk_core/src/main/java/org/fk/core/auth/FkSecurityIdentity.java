@@ -14,7 +14,11 @@ public class FkSecurityIdentity {
 
     public Integer getClientId() {
         TenantCredential tenantCredential = securityIdentity.getCredential(TenantCredential.class);
-        return tenantCredential.getTenantId();
+        if (tenantCredential != null) {
+            return tenantCredential.getTenantId();
+        } else {
+            return null;
+        }
     }
 
     public boolean hasClientAccess(Integer requiredClientId) {
