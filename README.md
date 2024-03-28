@@ -247,8 +247,10 @@ Table-SQLs for your database type (mariadb, ...) are hidden in the quartz reposi
 
 ## TSID
 
-we use the time-sorted unique identifiers. See:
+we use the time-sorted unique identifiers instead of autoincrement ids, whenever possible. See:
+- https://github.com/vladmihalcea/hypersistence-tsid
 - https://vladmihalcea.com/uuid-database-primary-key/
+- https://www.foxhound.systems/blog/time-sorted-unique-identifiers/
 
 ## Related Guides
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations
