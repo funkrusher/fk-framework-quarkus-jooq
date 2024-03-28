@@ -8,6 +8,7 @@ import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.Databasechangelog;
 import org.fk.codegen.testshop.tables.Databasechangeloglock;
 import org.fk.codegen.testshop.tables.Lang;
+import org.fk.codegen.testshop.tables.Post;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.ProductLang;
 import org.fk.codegen.testshop.tables.QrtzBlobTriggers;
@@ -52,6 +53,11 @@ public class Tables {
      * The table <code>testshop.lang</code>.
      */
     public static final Lang LANG = Lang.LANG;
+
+    /**
+     * The table <code>testshop.post</code>.
+     */
+    public static final Post POST = Post.POST;
 
     /**
      * The table <code>testshop.product</code>.

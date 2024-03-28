@@ -245,6 +245,11 @@ We also can check conflicting dependencies, with gradlew. For example. The follo
 Table-SQLs for your database type (mariadb, ...) are hidden in the quartz repositories. See:
 - https://github.com/quartz-scheduler/quartz/blob/quartz-2.3.x/quartz-core/src/main/resources/org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql
 
+## TSID
+
+we use the time-sorted unique identifiers. See:
+- https://vladmihalcea.com/uuid-database-primary-key/
+
 ## Related Guides
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations
 - Gradle+Quarkus ([guide](https://quarkus.io/guides/gradle-tooling)): Building quarkus apps with gradle

@@ -12,6 +12,7 @@ import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.Databasechangelog;
 import org.fk.codegen.testshop.tables.Databasechangeloglock;
 import org.fk.codegen.testshop.tables.Lang;
+import org.fk.codegen.testshop.tables.Post;
 import org.fk.codegen.testshop.tables.Product;
 import org.fk.codegen.testshop.tables.ProductLang;
 import org.fk.codegen.testshop.tables.QrtzBlobTriggers;
@@ -66,6 +67,11 @@ public class Testshop extends SchemaImpl {
      * The table <code>testshop.lang</code>.
      */
     public final Lang LANG = Lang.LANG;
+
+    /**
+     * The table <code>testshop.post</code>.
+     */
+    public final Post POST = Post.POST;
 
     /**
      * The table <code>testshop.product</code>.
@@ -172,6 +178,7 @@ public class Testshop extends SchemaImpl {
             Databasechangelog.DATABASECHANGELOG,
             Databasechangeloglock.DATABASECHANGELOGLOCK,
             Lang.LANG,
+            Post.POST,
             Product.PRODUCT,
             ProductLang.PRODUCT_LANG,
             QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS,

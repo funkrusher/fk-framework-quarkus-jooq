@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="bernd" id="feature-tsid">
+        <tagDatabase tag="feature-tsid" />
+    </changeSet>
+    <changeSet author="bernd" id="feature-tsid-sql">
+        <sql>
+            DROP TABLE IF EXISTS post;
+            CREATE TABLE post (
+                                  id bigint NOT NULL,
+                                  title varchar(255),
+                                  PRIMARY KEY (id)
+            );
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS post;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
