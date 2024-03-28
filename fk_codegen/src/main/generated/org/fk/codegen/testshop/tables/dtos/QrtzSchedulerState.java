@@ -61,7 +61,7 @@ public class QrtzSchedulerState extends AbstractDTO implements IQrtzSchedulerSta
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -80,7 +80,7 @@ public class QrtzSchedulerState extends AbstractDTO implements IQrtzSchedulerSta
     @Override
     public void setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.setAt("INSTANCE_NAME", INSTANCE_NAME);
+        this.touch();
     }
 
     /**
@@ -98,7 +98,7 @@ public class QrtzSchedulerState extends AbstractDTO implements IQrtzSchedulerSta
     @Override
     public void setLAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
         this.LAST_CHECKIN_TIME = LAST_CHECKIN_TIME;
-        this.setAt("LAST_CHECKIN_TIME", LAST_CHECKIN_TIME);
+        this.touch();
     }
 
     /**
@@ -116,7 +116,7 @@ public class QrtzSchedulerState extends AbstractDTO implements IQrtzSchedulerSta
     @Override
     public void setCHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
         this.CHECKIN_INTERVAL = CHECKIN_INTERVAL;
-        this.setAt("CHECKIN_INTERVAL", CHECKIN_INTERVAL);
+        this.touch();
     }
 
     @Override

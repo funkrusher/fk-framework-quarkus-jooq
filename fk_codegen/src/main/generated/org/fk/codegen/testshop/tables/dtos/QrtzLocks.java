@@ -53,7 +53,7 @@ public class QrtzLocks extends AbstractDTO implements IQrtzLocks {
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -72,7 +72,7 @@ public class QrtzLocks extends AbstractDTO implements IQrtzLocks {
     @Override
     public void setLOCK_NAME(String LOCK_NAME) {
         this.LOCK_NAME = LOCK_NAME;
-        this.setAt("LOCK_NAME", LOCK_NAME);
+        this.touch();
     }
 
     @Override

@@ -49,7 +49,7 @@ public class Role extends AbstractDTO implements IRole {
     @Override
     public void setRoleId(String roleId) {
         this.roleId = roleId;
-        this.setAt("roleId", roleId);
+        this.touch();
     }
 
     @Override

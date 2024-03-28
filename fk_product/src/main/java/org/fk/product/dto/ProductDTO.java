@@ -34,7 +34,7 @@ public class ProductDTO extends Product implements IProduct {
     @JsonIgnore
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-        setAt("deleteFlag", deleteFlag);
+        touch();
     }
 
     @JsonProperty
@@ -45,7 +45,7 @@ public class ProductDTO extends Product implements IProduct {
     @JsonIgnore
     public void setLang(ProductLangDTO lang) {
         this.lang = lang;
-        setAt("lang", lang);
+        touch();
     }
 
     @JsonProperty
@@ -59,6 +59,6 @@ public class ProductDTO extends Product implements IProduct {
 
     public void setLangs(List<ProductLangDTO> langs) {
         this.langs = langs;
-        setAt("langs", langs);
+        touch();
     }
 }

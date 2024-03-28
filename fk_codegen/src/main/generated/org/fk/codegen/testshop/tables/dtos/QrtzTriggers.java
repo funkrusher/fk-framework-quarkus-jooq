@@ -111,7 +111,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -130,7 +130,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.setAt("TRIGGER_NAME", TRIGGER_NAME);
+        this.touch();
     }
 
     /**
@@ -149,7 +149,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     /**
@@ -168,7 +168,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.setAt("JOB_NAME", JOB_NAME);
+        this.touch();
     }
 
     /**
@@ -187,7 +187,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.setAt("JOB_GROUP", JOB_GROUP);
+        this.touch();
     }
 
     /**
@@ -205,7 +205,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.setAt("DESCRIPTION", DESCRIPTION);
+        this.touch();
     }
 
     /**
@@ -222,7 +222,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setNEXT_FIRE_TIME(Long NEXT_FIRE_TIME) {
         this.NEXT_FIRE_TIME = NEXT_FIRE_TIME;
-        this.setAt("NEXT_FIRE_TIME", NEXT_FIRE_TIME);
+        this.touch();
     }
 
     /**
@@ -239,7 +239,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setPREV_FIRE_TIME(Long PREV_FIRE_TIME) {
         this.PREV_FIRE_TIME = PREV_FIRE_TIME;
-        this.setAt("PREV_FIRE_TIME", PREV_FIRE_TIME);
+        this.touch();
     }
 
     /**
@@ -256,7 +256,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
-        this.setAt("PRIORITY", PRIORITY);
+        this.touch();
     }
 
     /**
@@ -275,7 +275,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setTRIGGER_STATE(String TRIGGER_STATE) {
         this.TRIGGER_STATE = TRIGGER_STATE;
-        this.setAt("TRIGGER_STATE", TRIGGER_STATE);
+        this.touch();
     }
 
     /**
@@ -294,7 +294,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setTRIGGER_TYPE(String TRIGGER_TYPE) {
         this.TRIGGER_TYPE = TRIGGER_TYPE;
-        this.setAt("TRIGGER_TYPE", TRIGGER_TYPE);
+        this.touch();
     }
 
     /**
@@ -312,7 +312,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setSTART_TIME(Long START_TIME) {
         this.START_TIME = START_TIME;
-        this.setAt("START_TIME", START_TIME);
+        this.touch();
     }
 
     /**
@@ -329,7 +329,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setEND_TIME(Long END_TIME) {
         this.END_TIME = END_TIME;
-        this.setAt("END_TIME", END_TIME);
+        this.touch();
     }
 
     /**
@@ -347,7 +347,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
-        this.setAt("CALENDAR_NAME", CALENDAR_NAME);
+        this.touch();
     }
 
     /**
@@ -364,7 +364,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setMISFIRE_INSTR(Short MISFIRE_INSTR) {
         this.MISFIRE_INSTR = MISFIRE_INSTR;
-        this.setAt("MISFIRE_INSTR", MISFIRE_INSTR);
+        this.touch();
     }
 
     /**
@@ -382,7 +382,7 @@ public class QrtzTriggers extends AbstractDTO implements IQrtzTriggers {
     @Override
     public void setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.setAt("JOB_DATA", JOB_DATA);
+        this.touch();
     }
 
     @Override

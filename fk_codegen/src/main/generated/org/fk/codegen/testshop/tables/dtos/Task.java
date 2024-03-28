@@ -50,7 +50,7 @@ public class Task extends AbstractDTO implements ITask {
     @Override
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
-        this.setAt("taskId", taskId);
+        this.touch();
     }
 
     /**
@@ -67,7 +67,7 @@ public class Task extends AbstractDTO implements ITask {
     @Override
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        this.setAt("createdAt", createdAt);
+        this.touch();
     }
 
     @Override

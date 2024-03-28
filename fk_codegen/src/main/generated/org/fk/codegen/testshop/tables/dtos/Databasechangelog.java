@@ -103,7 +103,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setID(String ID) {
         this.ID = ID;
-        this.setAt("ID", ID);
+        this.touch();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setAUTHOR(String AUTHOR) {
         this.AUTHOR = AUTHOR;
-        this.setAt("AUTHOR", AUTHOR);
+        this.touch();
     }
 
     /**
@@ -141,7 +141,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setFILENAME(String FILENAME) {
         this.FILENAME = FILENAME;
-        this.setAt("FILENAME", FILENAME);
+        this.touch();
     }
 
     /**
@@ -159,7 +159,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setDATEEXECUTED(LocalDateTime DATEEXECUTED) {
         this.DATEEXECUTED = DATEEXECUTED;
-        this.setAt("DATEEXECUTED", DATEEXECUTED);
+        this.touch();
     }
 
     /**
@@ -177,7 +177,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setORDEREXECUTED(Integer ORDEREXECUTED) {
         this.ORDEREXECUTED = ORDEREXECUTED;
-        this.setAt("ORDEREXECUTED", ORDEREXECUTED);
+        this.touch();
     }
 
     /**
@@ -196,7 +196,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setEXECTYPE(String EXECTYPE) {
         this.EXECTYPE = EXECTYPE;
-        this.setAt("EXECTYPE", EXECTYPE);
+        this.touch();
     }
 
     /**
@@ -214,7 +214,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setMD5SUM(String MD5SUM) {
         this.MD5SUM = MD5SUM;
-        this.setAt("MD5SUM", MD5SUM);
+        this.touch();
     }
 
     /**
@@ -232,7 +232,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.setAt("DESCRIPTION", DESCRIPTION);
+        this.touch();
     }
 
     /**
@@ -250,7 +250,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setCOMMENTS(String COMMENTS) {
         this.COMMENTS = COMMENTS;
-        this.setAt("COMMENTS", COMMENTS);
+        this.touch();
     }
 
     /**
@@ -268,7 +268,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setTAG(String TAG) {
         this.TAG = TAG;
-        this.setAt("TAG", TAG);
+        this.touch();
     }
 
     /**
@@ -286,7 +286,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setLIQUIBASE(String LIQUIBASE) {
         this.LIQUIBASE = LIQUIBASE;
-        this.setAt("LIQUIBASE", LIQUIBASE);
+        this.touch();
     }
 
     /**
@@ -304,7 +304,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setCONTEXTS(String CONTEXTS) {
         this.CONTEXTS = CONTEXTS;
-        this.setAt("CONTEXTS", CONTEXTS);
+        this.touch();
     }
 
     /**
@@ -322,7 +322,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setLABELS(String LABELS) {
         this.LABELS = LABELS;
-        this.setAt("LABELS", LABELS);
+        this.touch();
     }
 
     /**
@@ -340,7 +340,7 @@ public class Databasechangelog extends AbstractDTO implements IDatabasechangelog
     @Override
     public void setDEPLOYMENT_ID(String DEPLOYMENT_ID) {
         this.DEPLOYMENT_ID = DEPLOYMENT_ID;
-        this.setAt("DEPLOYMENT_ID", DEPLOYMENT_ID);
+        this.touch();
     }
 
     @Override

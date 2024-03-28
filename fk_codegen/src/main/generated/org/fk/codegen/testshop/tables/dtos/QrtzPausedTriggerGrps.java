@@ -53,7 +53,7 @@ public class QrtzPausedTriggerGrps extends AbstractDTO implements IQrtzPausedTri
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -72,7 +72,7 @@ public class QrtzPausedTriggerGrps extends AbstractDTO implements IQrtzPausedTri
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     @Override

@@ -62,7 +62,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     @Override
     public void setID(Integer ID) {
         this.ID = ID;
-        this.setAt("ID", ID);
+        this.touch();
     }
 
     /**
@@ -80,7 +80,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     @Override
     public void setLOCKED(Byte LOCKED) {
         this.LOCKED = LOCKED;
-        this.setAt("LOCKED", LOCKED);
+        this.touch();
     }
 
     /**
@@ -97,7 +97,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     @Override
     public void setLOCKGRANTED(LocalDateTime LOCKGRANTED) {
         this.LOCKGRANTED = LOCKGRANTED;
-        this.setAt("LOCKGRANTED", LOCKGRANTED);
+        this.touch();
     }
 
     /**
@@ -115,7 +115,7 @@ public class Databasechangeloglock extends AbstractDTO implements IDatabasechang
     @Override
     public void setLOCKEDBY(String LOCKEDBY) {
         this.LOCKEDBY = LOCKEDBY;
-        this.setAt("LOCKEDBY", LOCKEDBY);
+        this.touch();
     }
 
     @Override

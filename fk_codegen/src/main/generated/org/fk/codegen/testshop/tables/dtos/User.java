@@ -63,7 +63,7 @@ public class User extends AbstractDTO implements IUser {
     @Override
     public void setUserId(Integer userId) {
         this.userId = userId;
-        this.setAt("userId", userId);
+        this.touch();
     }
 
     /**
@@ -81,7 +81,7 @@ public class User extends AbstractDTO implements IUser {
     @Override
     public void setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.setAt("clientId", clientId);
+        this.touch();
     }
 
     /**
@@ -100,7 +100,7 @@ public class User extends AbstractDTO implements IUser {
     @Override
     public void setEmail(String email) {
         this.email = email;
-        this.setAt("email", email);
+        this.touch();
     }
 
     /**
@@ -119,7 +119,7 @@ public class User extends AbstractDTO implements IUser {
     @Override
     public void setFirstname(String firstname) {
         this.firstname = firstname;
-        this.setAt("firstname", firstname);
+        this.touch();
     }
 
     /**
@@ -138,7 +138,7 @@ public class User extends AbstractDTO implements IUser {
     @Override
     public void setLastname(String lastname) {
         this.lastname = lastname;
-        this.setAt("lastname", lastname);
+        this.touch();
     }
 
     @Override

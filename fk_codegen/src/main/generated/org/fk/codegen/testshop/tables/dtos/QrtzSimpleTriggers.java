@@ -69,7 +69,7 @@ public class QrtzSimpleTriggers extends AbstractDTO implements IQrtzSimpleTrigge
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -88,7 +88,7 @@ public class QrtzSimpleTriggers extends AbstractDTO implements IQrtzSimpleTrigge
     @Override
     public void setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.setAt("TRIGGER_NAME", TRIGGER_NAME);
+        this.touch();
     }
 
     /**
@@ -107,7 +107,7 @@ public class QrtzSimpleTriggers extends AbstractDTO implements IQrtzSimpleTrigge
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     /**
@@ -125,7 +125,7 @@ public class QrtzSimpleTriggers extends AbstractDTO implements IQrtzSimpleTrigge
     @Override
     public void setREPEAT_COUNT(Long REPEAT_COUNT) {
         this.REPEAT_COUNT = REPEAT_COUNT;
-        this.setAt("REPEAT_COUNT", REPEAT_COUNT);
+        this.touch();
     }
 
     /**
@@ -143,7 +143,7 @@ public class QrtzSimpleTriggers extends AbstractDTO implements IQrtzSimpleTrigge
     @Override
     public void setREPEAT_INTERVAL(Long REPEAT_INTERVAL) {
         this.REPEAT_INTERVAL = REPEAT_INTERVAL;
-        this.setAt("REPEAT_INTERVAL", REPEAT_INTERVAL);
+        this.touch();
     }
 
     /**
@@ -161,7 +161,7 @@ public class QrtzSimpleTriggers extends AbstractDTO implements IQrtzSimpleTrigge
     @Override
     public void setTIMES_TRIGGERED(Long TIMES_TRIGGERED) {
         this.TIMES_TRIGGERED = TIMES_TRIGGERED;
-        this.setAt("TIMES_TRIGGERED", TIMES_TRIGGERED);
+        this.touch();
     }
 
     @Override

@@ -52,7 +52,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
     @Override
     public void setUserId(Integer userId) {
         this.userId = userId;
-        this.setAt("userId", userId);
+        this.touch();
     }
 
     /**
@@ -71,7 +71,7 @@ public class UserRole extends AbstractDTO implements IUserRole {
     @Override
     public void setRoleId(String roleId) {
         this.roleId = roleId;
-        this.setAt("roleId", roleId);
+        this.touch();
     }
 
     @Override

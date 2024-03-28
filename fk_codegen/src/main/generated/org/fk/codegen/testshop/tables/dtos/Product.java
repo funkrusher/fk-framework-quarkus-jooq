@@ -69,7 +69,7 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setProductId(Long productId) {
         this.productId = productId;
-        this.setAt("productId", productId);
+        this.touch();
     }
 
     /**
@@ -87,7 +87,7 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.setAt("clientId", clientId);
+        this.touch();
     }
 
     /**
@@ -105,7 +105,7 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setPrice(BigDecimal price) {
         this.price = price;
-        this.setAt("price", price);
+        this.touch();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        this.setAt("createdAt", createdAt);
+        this.touch();
     }
 
     /**
@@ -139,7 +139,7 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-        this.setAt("updatedAt", updatedAt);
+        this.touch();
     }
 
     /**
@@ -156,7 +156,7 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-        this.setAt("deleted", deleted);
+        this.touch();
     }
 
     @Override

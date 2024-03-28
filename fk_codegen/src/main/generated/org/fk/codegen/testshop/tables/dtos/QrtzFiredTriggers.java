@@ -97,7 +97,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -116,7 +116,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setENTRY_ID(String ENTRY_ID) {
         this.ENTRY_ID = ENTRY_ID;
-        this.setAt("ENTRY_ID", ENTRY_ID);
+        this.touch();
     }
 
     /**
@@ -135,7 +135,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.setAt("TRIGGER_NAME", TRIGGER_NAME);
+        this.touch();
     }
 
     /**
@@ -154,7 +154,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     /**
@@ -173,7 +173,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.setAt("INSTANCE_NAME", INSTANCE_NAME);
+        this.touch();
     }
 
     /**
@@ -191,7 +191,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setFIRED_TIME(Long FIRED_TIME) {
         this.FIRED_TIME = FIRED_TIME;
-        this.setAt("FIRED_TIME", FIRED_TIME);
+        this.touch();
     }
 
     /**
@@ -209,7 +209,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setSCHED_TIME(Long SCHED_TIME) {
         this.SCHED_TIME = SCHED_TIME;
-        this.setAt("SCHED_TIME", SCHED_TIME);
+        this.touch();
     }
 
     /**
@@ -227,7 +227,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
-        this.setAt("PRIORITY", PRIORITY);
+        this.touch();
     }
 
     /**
@@ -246,7 +246,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setSTATE(String STATE) {
         this.STATE = STATE;
-        this.setAt("STATE", STATE);
+        this.touch();
     }
 
     /**
@@ -264,7 +264,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.setAt("JOB_NAME", JOB_NAME);
+        this.touch();
     }
 
     /**
@@ -282,7 +282,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.setAt("JOB_GROUP", JOB_GROUP);
+        this.touch();
     }
 
     /**
@@ -300,7 +300,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.setAt("IS_NONCONCURRENT", IS_NONCONCURRENT);
+        this.touch();
     }
 
     /**
@@ -318,7 +318,7 @@ public class QrtzFiredTriggers extends AbstractDTO implements IQrtzFiredTriggers
     @Override
     public void setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.setAt("REQUESTS_RECOVERY", REQUESTS_RECOVERY);
+        this.touch();
     }
 
     @Override

@@ -87,7 +87,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -106,7 +106,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.setAt("JOB_NAME", JOB_NAME);
+        this.touch();
     }
 
     /**
@@ -125,7 +125,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.setAt("JOB_GROUP", JOB_GROUP);
+        this.touch();
     }
 
     /**
@@ -143,7 +143,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.setAt("DESCRIPTION", DESCRIPTION);
+        this.touch();
     }
 
     /**
@@ -162,7 +162,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setJOB_CLASS_NAME(String JOB_CLASS_NAME) {
         this.JOB_CLASS_NAME = JOB_CLASS_NAME;
-        this.setAt("JOB_CLASS_NAME", JOB_CLASS_NAME);
+        this.touch();
     }
 
     /**
@@ -181,7 +181,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setIS_DURABLE(String IS_DURABLE) {
         this.IS_DURABLE = IS_DURABLE;
-        this.setAt("IS_DURABLE", IS_DURABLE);
+        this.touch();
     }
 
     /**
@@ -200,7 +200,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.setAt("IS_NONCONCURRENT", IS_NONCONCURRENT);
+        this.touch();
     }
 
     /**
@@ -219,7 +219,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setIS_UPDATE_DATA(String IS_UPDATE_DATA) {
         this.IS_UPDATE_DATA = IS_UPDATE_DATA;
-        this.setAt("IS_UPDATE_DATA", IS_UPDATE_DATA);
+        this.touch();
     }
 
     /**
@@ -238,7 +238,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.setAt("REQUESTS_RECOVERY", REQUESTS_RECOVERY);
+        this.touch();
     }
 
     /**
@@ -256,7 +256,7 @@ public class QrtzJobDetails extends AbstractDTO implements IQrtzJobDetails {
     @Override
     public void setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.setAt("JOB_DATA", JOB_DATA);
+        this.touch();
     }
 
     @Override

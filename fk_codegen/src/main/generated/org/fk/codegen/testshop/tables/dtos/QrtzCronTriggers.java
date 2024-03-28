@@ -65,7 +65,7 @@ public class QrtzCronTriggers extends AbstractDTO implements IQrtzCronTriggers {
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -84,7 +84,7 @@ public class QrtzCronTriggers extends AbstractDTO implements IQrtzCronTriggers {
     @Override
     public void setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.setAt("TRIGGER_NAME", TRIGGER_NAME);
+        this.touch();
     }
 
     /**
@@ -103,7 +103,7 @@ public class QrtzCronTriggers extends AbstractDTO implements IQrtzCronTriggers {
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     /**
@@ -122,7 +122,7 @@ public class QrtzCronTriggers extends AbstractDTO implements IQrtzCronTriggers {
     @Override
     public void setCRON_EXPRESSION(String CRON_EXPRESSION) {
         this.CRON_EXPRESSION = CRON_EXPRESSION;
-        this.setAt("CRON_EXPRESSION", CRON_EXPRESSION);
+        this.touch();
     }
 
     /**
@@ -140,7 +140,7 @@ public class QrtzCronTriggers extends AbstractDTO implements IQrtzCronTriggers {
     @Override
     public void setTIME_ZONE_ID(String TIME_ZONE_ID) {
         this.TIME_ZONE_ID = TIME_ZONE_ID;
-        this.setAt("TIME_ZONE_ID", TIME_ZONE_ID);
+        this.touch();
     }
 
     @Override

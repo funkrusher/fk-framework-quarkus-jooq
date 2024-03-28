@@ -89,6 +89,9 @@ public class ProductManager extends AbstractManager {
         // we use jooq transactions, because they are more fine-tuneable.
         // see: https://blog.jooq.org/nested-transactions-in-jooq/
 
+        ProductDTO p = new ProductDTO();
+        p.setProductId(3L);
+
         List<ProductRecord> inserts = new ArrayList<>();
         for (int i= 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();

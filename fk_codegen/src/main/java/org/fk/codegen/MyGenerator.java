@@ -43,7 +43,7 @@ public class MyGenerator extends JavaGenerator {
         out.overrideIf(generateInterfaces() && !generateImmutableInterfaces());
         out.println("%s %s %s([[before=@][after= ][%s]]%s %s) {", "public", "void", columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
         out.println("this.%s = %s;", columnMember, columnMember);
-        out.println("this.setAt(\"%s\", %s);", columnMember, columnMember);
+        out.println("this.touch();", columnMember, columnMember);
         if (generateFluentSetters())
             out.println("return this;");
 

@@ -60,7 +60,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     @Override
     public void setProductId(Long productId) {
         this.productId = productId;
-        this.setAt("productId", productId);
+        this.touch();
     }
 
     /**
@@ -78,7 +78,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     @Override
     public void setLangId(Integer langId) {
         this.langId = langId;
-        this.setAt("langId", langId);
+        this.touch();
     }
 
     /**
@@ -97,7 +97,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     @Override
     public void setName(String name) {
         this.name = name;
-        this.setAt("name", name);
+        this.touch();
     }
 
     /**
@@ -116,7 +116,7 @@ public class ProductLang extends AbstractDTO implements IProductLang {
     @Override
     public void setDescription(String description) {
         this.description = description;
-        this.setAt("description", description);
+        this.touch();
     }
 
     @Override

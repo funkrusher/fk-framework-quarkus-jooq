@@ -55,7 +55,7 @@ public class Lang extends AbstractDTO implements ILang {
     @Override
     public void setLangId(Integer langId) {
         this.langId = langId;
-        this.setAt("langId", langId);
+        this.touch();
     }
 
     /**
@@ -74,7 +74,7 @@ public class Lang extends AbstractDTO implements ILang {
     @Override
     public void setCode(String code) {
         this.code = code;
-        this.setAt("code", code);
+        this.touch();
     }
 
     /**
@@ -92,7 +92,7 @@ public class Lang extends AbstractDTO implements ILang {
     @Override
     public void setDescription(String description) {
         this.description = description;
-        this.setAt("description", description);
+        this.touch();
     }
 
     @Override

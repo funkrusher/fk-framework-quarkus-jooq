@@ -26,7 +26,7 @@ public class ProductLangDTO extends ProductLang implements IProductLang {
     @JsonProperty
     public void setInsertFlag(boolean insertFlag) {
         this.insertFlag = insertFlag;
-        setAt("insertFlag", insertFlag);
+        touch();
     }
 
     @JsonIgnore
@@ -37,7 +37,7 @@ public class ProductLangDTO extends ProductLang implements IProductLang {
     @JsonProperty
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-        setAt("deleteFlag", deleteFlag);
+        touch();
     }
 
     @JsonIgnore

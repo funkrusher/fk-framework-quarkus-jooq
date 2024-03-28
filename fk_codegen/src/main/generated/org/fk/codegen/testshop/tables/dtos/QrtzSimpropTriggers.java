@@ -103,7 +103,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -122,7 +122,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.setAt("TRIGGER_NAME", TRIGGER_NAME);
+        this.touch();
     }
 
     /**
@@ -141,7 +141,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     /**
@@ -159,7 +159,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setSTR_PROP_1(String STR_PROP_1) {
         this.STR_PROP_1 = STR_PROP_1;
-        this.setAt("STR_PROP_1", STR_PROP_1);
+        this.touch();
     }
 
     /**
@@ -177,7 +177,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setSTR_PROP_2(String STR_PROP_2) {
         this.STR_PROP_2 = STR_PROP_2;
-        this.setAt("STR_PROP_2", STR_PROP_2);
+        this.touch();
     }
 
     /**
@@ -195,7 +195,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setSTR_PROP_3(String STR_PROP_3) {
         this.STR_PROP_3 = STR_PROP_3;
-        this.setAt("STR_PROP_3", STR_PROP_3);
+        this.touch();
     }
 
     /**
@@ -212,7 +212,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setINT_PROP_1(Integer INT_PROP_1) {
         this.INT_PROP_1 = INT_PROP_1;
-        this.setAt("INT_PROP_1", INT_PROP_1);
+        this.touch();
     }
 
     /**
@@ -229,7 +229,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setINT_PROP_2(Integer INT_PROP_2) {
         this.INT_PROP_2 = INT_PROP_2;
-        this.setAt("INT_PROP_2", INT_PROP_2);
+        this.touch();
     }
 
     /**
@@ -246,7 +246,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setLONG_PROP_1(Long LONG_PROP_1) {
         this.LONG_PROP_1 = LONG_PROP_1;
-        this.setAt("LONG_PROP_1", LONG_PROP_1);
+        this.touch();
     }
 
     /**
@@ -263,7 +263,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setLONG_PROP_2(Long LONG_PROP_2) {
         this.LONG_PROP_2 = LONG_PROP_2;
-        this.setAt("LONG_PROP_2", LONG_PROP_2);
+        this.touch();
     }
 
     /**
@@ -280,7 +280,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setDEC_PROP_1(BigDecimal DEC_PROP_1) {
         this.DEC_PROP_1 = DEC_PROP_1;
-        this.setAt("DEC_PROP_1", DEC_PROP_1);
+        this.touch();
     }
 
     /**
@@ -297,7 +297,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setDEC_PROP_2(BigDecimal DEC_PROP_2) {
         this.DEC_PROP_2 = DEC_PROP_2;
-        this.setAt("DEC_PROP_2", DEC_PROP_2);
+        this.touch();
     }
 
     /**
@@ -315,7 +315,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setBOOL_PROP_1(String BOOL_PROP_1) {
         this.BOOL_PROP_1 = BOOL_PROP_1;
-        this.setAt("BOOL_PROP_1", BOOL_PROP_1);
+        this.touch();
     }
 
     /**
@@ -333,7 +333,7 @@ public class QrtzSimpropTriggers extends AbstractDTO implements IQrtzSimpropTrig
     @Override
     public void setBOOL_PROP_2(String BOOL_PROP_2) {
         this.BOOL_PROP_2 = BOOL_PROP_2;
-        this.setAt("BOOL_PROP_2", BOOL_PROP_2);
+        this.touch();
     }
 
     @Override

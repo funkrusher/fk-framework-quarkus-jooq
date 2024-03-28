@@ -24,7 +24,7 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     public void setProducts(List<ProductDTO> products) {
         this.products = products;
-        setAt("products", products);
+        touch();
     }
 
     public Integer getCount() {
@@ -33,6 +33,6 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     public void setCount(Integer count) {
         this.count = count;
-        setAt("count", count);
+        touch();
     }
 }

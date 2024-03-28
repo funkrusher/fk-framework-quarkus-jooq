@@ -63,7 +63,7 @@ public class QrtzBlobTriggers extends AbstractDTO implements IQrtzBlobTriggers {
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -82,7 +82,7 @@ public class QrtzBlobTriggers extends AbstractDTO implements IQrtzBlobTriggers {
     @Override
     public void setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.setAt("TRIGGER_NAME", TRIGGER_NAME);
+        this.touch();
     }
 
     /**
@@ -101,7 +101,7 @@ public class QrtzBlobTriggers extends AbstractDTO implements IQrtzBlobTriggers {
     @Override
     public void setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.setAt("TRIGGER_GROUP", TRIGGER_GROUP);
+        this.touch();
     }
 
     /**
@@ -119,7 +119,7 @@ public class QrtzBlobTriggers extends AbstractDTO implements IQrtzBlobTriggers {
     @Override
     public void setBLOB_DATA(byte[] BLOB_DATA) {
         this.BLOB_DATA = BLOB_DATA;
-        this.setAt("BLOB_DATA", BLOB_DATA);
+        this.touch();
     }
 
     @Override

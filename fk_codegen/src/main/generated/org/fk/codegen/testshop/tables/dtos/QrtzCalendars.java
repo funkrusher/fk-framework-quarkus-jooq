@@ -59,7 +59,7 @@ public class QrtzCalendars extends AbstractDTO implements IQrtzCalendars {
     @Override
     public void setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.setAt("SCHED_NAME", SCHED_NAME);
+        this.touch();
     }
 
     /**
@@ -78,7 +78,7 @@ public class QrtzCalendars extends AbstractDTO implements IQrtzCalendars {
     @Override
     public void setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
-        this.setAt("CALENDAR_NAME", CALENDAR_NAME);
+        this.touch();
     }
 
     /**
@@ -97,7 +97,7 @@ public class QrtzCalendars extends AbstractDTO implements IQrtzCalendars {
     @Override
     public void setCALENDAR(byte[] CALENDAR) {
         this.CALENDAR = CALENDAR;
-        this.setAt("CALENDAR", CALENDAR);
+        this.touch();
     }
 
     @Override

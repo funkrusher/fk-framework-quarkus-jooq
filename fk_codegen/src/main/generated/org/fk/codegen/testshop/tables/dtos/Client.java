@@ -44,7 +44,7 @@ public class Client extends AbstractDTO implements IClient {
     @Override
     public void setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.setAt("clientId", clientId);
+        this.touch();
     }
 
     @Override
