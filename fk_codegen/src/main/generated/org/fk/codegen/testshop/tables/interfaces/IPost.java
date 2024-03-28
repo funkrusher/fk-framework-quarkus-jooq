@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 
 /**
@@ -19,13 +20,13 @@ public interface IPost extends Serializable {
     /**
      * Setter for <code>testshop.post.id</code>.
      */
-    public void setId(Long value);
+    public void setId(UUID value);
 
     /**
      * Getter for <code>testshop.post.id</code>.
      */
     @NotNull
-    public Long getId();
+    public UUID getId();
 
     /**
      * Setter for <code>testshop.post.title</code>.

@@ -7,6 +7,8 @@ package org.fk.codegen.testshop.tables.dtos;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 import org.fk.codegen.dto.AbstractDTO;
 import org.fk.codegen.testshop.tables.interfaces.IPost;
 
@@ -19,7 +21,7 @@ public class Post extends AbstractDTO implements IPost {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private UUID id;
     private String title;
 
     public Post() {}
@@ -30,7 +32,7 @@ public class Post extends AbstractDTO implements IPost {
     }
 
     public Post(
-        Long id,
+        UUID id,
         String title
     ) {
         this.id = id;
@@ -42,7 +44,7 @@ public class Post extends AbstractDTO implements IPost {
      */
     @NotNull
     @Override
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 
@@ -50,7 +52,7 @@ public class Post extends AbstractDTO implements IPost {
      * Setter for <code>testshop.post.id</code>.
      */
     @Override
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
         this.touch();
     }

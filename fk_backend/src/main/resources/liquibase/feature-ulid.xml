@@ -9,7 +9,7 @@
         <sql>
             DROP TABLE IF EXISTS post;
             CREATE TABLE post (
-                                  id bigint NOT NULL,
+                                  id UUID NOT NULL,
                                   title varchar(255),
                                   PRIMARY KEY (id)
             );

@@ -26,7 +26,7 @@ dependencies {
     api libs.mariadbJavaClient
     api libs.jacksonCsv
     api libs.jacksonJsr310
-    api libs.tsid
+    api libs.ulid
 }
 
 // cognitoLocalSetup task

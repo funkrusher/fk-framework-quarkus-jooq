@@ -2,24 +2,22 @@ package org.fk.product.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.hypersistence.tsid.TSID;
+import com.github.f4b6a3.ulid.Ulid;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.codegen.testshop.tables.dtos.Post;
-import org.fk.codegen.testshop.tables.dtos.Task;
 import org.fk.codegen.testshop.tables.interfaces.IPost;
-import org.fk.codegen.testshop.tables.interfaces.ITask;
 
 /**
  * PostDTO
  */
 public class PostDTO extends Post implements IPost {
 
-    // product encoded with Crockford Base 32 encoded for readability in the UI.
+    // ULID string of the UUID id (readable for user)
     @Schema(writeOnly = true)
     private String idEnc;
 
     @JsonProperty
     String getIdEnc() {
-        return TSID.from(this.getId()).toString();
+        return Ulid.from(this.getId()).toString();
     }
 }

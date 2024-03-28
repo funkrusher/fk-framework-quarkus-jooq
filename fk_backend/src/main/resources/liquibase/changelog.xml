@@ -8,5 +8,5 @@
     <include file="feature-1234.xml" relativeToChangelogFile="true"/>
     <include file="feature-1122.xml" relativeToChangelogFile="true"/>
     <include file="feature-1321.xml" relativeToChangelogFile="true"/>
-    <include file="feature-tsid.xml" relativeToChangelogFile="true"/>
+    <include file="feature-ulid.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

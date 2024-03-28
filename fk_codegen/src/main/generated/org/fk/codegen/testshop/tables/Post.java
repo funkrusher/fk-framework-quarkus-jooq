@@ -5,6 +5,7 @@ package org.fk.codegen.testshop.tables;
 
 
 import java.util.Collection;
+import java.util.UUID;
 
 import org.fk.codegen.testshop.Keys;
 import org.fk.codegen.testshop.Testshop;
@@ -51,7 +52,7 @@ public class Post extends TableImpl<PostRecord> {
     /**
      * The column <code>testshop.post.id</code>.
      */
-    public final TableField<PostRecord, Long> ID = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<PostRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
      * The column <code>testshop.post.title</code>.

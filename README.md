@@ -245,12 +245,15 @@ We also can check conflicting dependencies, with gradlew. For example. The follo
 Table-SQLs for your database type (mariadb, ...) are hidden in the quartz repositories. See:
 - https://github.com/quartz-scheduler/quartz/blob/quartz-2.3.x/quartz-core/src/main/resources/org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql
 
-## TSID
+## ULID
 
-we use the time-sorted unique identifiers instead of autoincrement ids, whenever possible. See:
-- https://github.com/vladmihalcea/hypersistence-tsid
-- https://vladmihalcea.com/uuid-database-primary-key/
-- https://www.foxhound.systems/blog/time-sorted-unique-identifiers/
+we are assuming that our SaaS will have a medium-size in regards to client and user-base.
+- The UUID must be able to be encoded in a way that it is short and readable by the user
+- It is helpful if the UUID is sorted by creation-time.
+- we do not want to manage the complexity of TSID, in regards to giving each node a unique id (dev-ops maintenance).
+- UUID is too long to be encrypted in a way that it is readable for the user (even with base32/crockford).
+
+For those reasons ULID is chosen here. 
 
 ## Related Guides
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations

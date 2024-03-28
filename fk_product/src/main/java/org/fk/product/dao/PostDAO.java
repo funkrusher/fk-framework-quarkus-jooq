@@ -9,17 +9,19 @@ import org.fk.codegen.testshop.tables.records.TaskRecord;
 import org.fk.core.dao.AbstractDAO;
 import org.jooq.DSLContext;
 
+import java.util.UUID;
+
 /**
  * PostDAO
  */
-public class PostDAO extends AbstractDAO<PostRecord, IPost, Long> {
+public class PostDAO extends AbstractDAO<PostRecord, IPost, UUID> {
 
     public PostDAO(DSLContext dsl) {
         super(dsl, Post.POST);
     }
 
     @Override
-    public Long getId(PostRecord object) {
+    public UUID getId(PostRecord object) {
         return object.getId();
     }
 }

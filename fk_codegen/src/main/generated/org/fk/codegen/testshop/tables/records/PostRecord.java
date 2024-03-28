@@ -7,6 +7,8 @@ package org.fk.codegen.testshop.tables.records;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 import org.fk.codegen.testshop.tables.Post;
 import org.fk.codegen.testshop.tables.interfaces.IPost;
 import org.jooq.Record1;
@@ -25,7 +27,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      * Setter for <code>testshop.post.id</code>.
      */
     @Override
-    public void setId(Long value) {
+    public void setId(UUID value) {
         set(0, value);
     }
 
@@ -34,8 +36,8 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      */
     @NotNull
     @Override
-    public Long getId() {
-        return (Long) get(0);
+    public UUID getId() {
+        return (UUID) get(0);
     }
 
     /**
@@ -60,7 +62,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<Long> key() {
+    public Record1<UUID> key() {
         return (Record1) super.key();
     }
 
@@ -95,7 +97,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
     /**
      * Create a detached, initialised PostRecord
      */
-    public PostRecord(Long id, String title) {
+    public PostRecord(UUID id, String title) {
         super(Post.POST);
 
         setId(id);
