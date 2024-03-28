@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Optional;
 
 import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 
@@ -26,7 +25,7 @@ public abstract class AbstractDTO {
     // inspired by: https://blog.jooq.org/orms-should-update-changed-values-not-just-modified-ones/
     @JsonIgnore
     @XmlTransient
-    private Map<String, Object> modifiedFields = new HashMap<>();
+    private final Map<String, Object> modifiedFields = new HashMap<>();
 
     public AbstractDTO() {
     }
@@ -37,15 +36,15 @@ public abstract class AbstractDTO {
         StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
         StackWalker.StackFrame frame = walker.walk(frames -> {
             Iterator<StackWalker.StackFrame> it = frames.iterator();
-            StackWalker.StackFrame a = it.next();
+            it.next();
             return it.next();
         });
         String methodName = frame.getMethodName();
         try {
             String withoutSet = methodName.substring(3);
-            String fieldname = Character.toLowerCase(withoutSet.charAt(0)) + withoutSet.substring(1);
+            String fieldName = Character.toLowerCase(withoutSet.charAt(0)) + withoutSet.substring(1);
             Class<?> declaringClass = frame.getDeclaringClass();
-            Field field = frame.getDeclaringClass().getDeclaredField(fieldname);
+            Field field = frame.getDeclaringClass().getDeclaredField(fieldName);
             String getterName = "get" + withoutSet;
             Method getter = declaringClass.getMethod(getterName);
             Object value = getter.invoke(this);
@@ -53,12 +52,6 @@ public abstract class AbstractDTO {
         } catch (Exception e) {
             throw new RuntimeException("unable to find field!");
         }
-    }
-
-    @JsonIgnore
-    @XmlTransient
-    private void setAt(String key, Object value) {
-        this.modifiedFields.put(key, value);
     }
 
     @JsonIgnore
