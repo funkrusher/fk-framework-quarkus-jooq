@@ -40,7 +40,7 @@ file('src/main/resources/application.properties').withInputStream {
 task liquibaseRollback(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     mainClass = 'liquibase.integration.commandline.Main'
-    args '--changeLogFile=liquibase/changelog.xml',
+    args '--changeLogFile=database/liquibase/changelog.xml',
             '--driver=org.mariadb.jdbc.Driver',
             '--url=' + properties.getProperty('quarkus.datasource.jdbc.url'),
             '--username=' + properties.getProperty('quarkus.datasource.username'),

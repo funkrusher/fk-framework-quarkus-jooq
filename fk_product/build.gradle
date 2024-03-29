@@ -31,11 +31,3 @@ dependencies {
     testImplementation libs.restAssured
     testImplementation project(':fk_database')
 }
-
-// cognitoLocalSetup task
-task cognitoLocalSetup(type: JavaExec) {
-    group = 'application'
-    description = 'Runs cognitoLocalInit Java Application'
-    mainClass = 'org.fk.cognito.CognitoLocalSetup'
-    classpath = sourceSets.main.runtimeClasspath
-}
