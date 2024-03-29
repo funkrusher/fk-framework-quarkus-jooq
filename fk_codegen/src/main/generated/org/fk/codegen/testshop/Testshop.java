@@ -11,6 +11,7 @@ import org.fk.codegen.DefaultCatalog;
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.Databasechangelog;
 import org.fk.codegen.testshop.tables.Databasechangeloglock;
+import org.fk.codegen.testshop.tables.Init;
 import org.fk.codegen.testshop.tables.Lang;
 import org.fk.codegen.testshop.tables.Post;
 import org.fk.codegen.testshop.tables.Product;
@@ -62,6 +63,11 @@ public class Testshop extends SchemaImpl {
      * The table <code>testshop.DATABASECHANGELOGLOCK</code>.
      */
     public final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
+
+    /**
+     * The table <code>testshop.init</code>.
+     */
+    public final Init INIT = Init.INIT;
 
     /**
      * The table <code>testshop.lang</code>.
@@ -177,6 +183,7 @@ public class Testshop extends SchemaImpl {
             Client.CLIENT,
             Databasechangelog.DATABASECHANGELOG,
             Databasechangeloglock.DATABASECHANGELOGLOCK,
+            Init.INIT,
             Lang.LANG,
             Post.POST,
             Product.PRODUCT,

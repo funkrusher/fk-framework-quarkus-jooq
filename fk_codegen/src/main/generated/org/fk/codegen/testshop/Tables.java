@@ -7,6 +7,7 @@ package org.fk.codegen.testshop;
 import org.fk.codegen.testshop.tables.Client;
 import org.fk.codegen.testshop.tables.Databasechangelog;
 import org.fk.codegen.testshop.tables.Databasechangeloglock;
+import org.fk.codegen.testshop.tables.Init;
 import org.fk.codegen.testshop.tables.Lang;
 import org.fk.codegen.testshop.tables.Post;
 import org.fk.codegen.testshop.tables.Product;
@@ -48,6 +49,11 @@ public class Tables {
      * The table <code>testshop.DATABASECHANGELOGLOCK</code>.
      */
     public static final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
+
+    /**
+     * The table <code>testshop.init</code>.
+     */
+    public static final Init INIT = Init.INIT;
 
     /**
      * The table <code>testshop.lang</code>.

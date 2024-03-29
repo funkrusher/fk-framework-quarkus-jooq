@@ -1,0 +1,19 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="bernd" id="feature-3823">
+        <tagDatabase tag="feature-3823" />
+    </changeSet>
+    <changeSet author="bernd" id="feature-3823-sql">
+        <sql>
+            CREATE TABLE init
+            (
+                initialized  VARCHAR(255) NOT NULL
+            );
+        </sql>
+        <rollback>
+            DROP TABLE init;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

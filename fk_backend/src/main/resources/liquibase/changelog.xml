@@ -7,6 +7,6 @@
     <include file="feature-quartz-example.xml" relativeToChangelogFile="true"/>
     <include file="feature-1234.xml" relativeToChangelogFile="true"/>
     <include file="feature-1122.xml" relativeToChangelogFile="true"/>
-    <include file="feature-1321.xml" relativeToChangelogFile="true"/>
     <include file="feature-ulid.xml" relativeToChangelogFile="true"/>
+    <include file="feature-3823.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -32,13 +32,6 @@
                 CONSTRAINT fk_user_role_userId FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
                 CONSTRAINT fk_user_role_roleId FOREIGN KEY (roleId) REFERENCES role (roleId) ON DELETE CASCADE
             );
-
-            INSERT INTO role (roleId)
-            VALUES ("ADMIN");
-            INSERT INTO role (roleId)
-            VALUES ("EDITOR");
-            INSERT INTO role (roleId)
-            VALUES ("VIEWER");
         </sql>
         <rollback>
             DROP TABLE user_role;

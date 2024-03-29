@@ -13,6 +13,9 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.DirectoryResourceAccessor;
 import liquibase.resource.ResourceAccessor;
 import org.awaitility.Awaitility;
+import org.fk.product.init.ProductInit;
+import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -59,6 +62,12 @@ public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManag
         createDatabase(container.getJdbcUrl(), container.getUsername(), container.getPassword());
         try {
             migrateDatabase(container.getJdbcUrl(), container.getUsername(), container.getPassword());
+
+            // populate the db with the basis-data for each product, and set them initialized!
+            DSLContext dsl = DSL.using(this.container.getJdbcUrl(), this.container.getUsername(), this.container.getPassword());
+            ProductInit productInit = new ProductInit();
+            productInit.init(dsl);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
