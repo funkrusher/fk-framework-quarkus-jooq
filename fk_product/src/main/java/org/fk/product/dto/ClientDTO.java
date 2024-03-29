@@ -2,8 +2,8 @@ package org.fk.product.dto;
 
 
 import jakarta.validation.Valid;
-import org.fk.codegen.testshop.tables.dtos.Client;
-import org.fk.codegen.testshop.tables.interfaces.IClient;
+import org.fk.database.testshop.tables.dtos.Client;
+import org.fk.database.testshop.tables.interfaces.IClient;
 
 /**
  * ClientDTO

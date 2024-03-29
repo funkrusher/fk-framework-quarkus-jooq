@@ -18,7 +18,6 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    api project(':fk_codegen')
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.aws

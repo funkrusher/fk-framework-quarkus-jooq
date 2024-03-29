@@ -1,7 +1,7 @@
 package org.fk.core.repository;
 
 import jakarta.validation.constraints.NotNull;
-import org.fk.codegen.dto.AbstractDTO;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.jooq.RequestContext;
 import org.fk.core.util.exception.InvalidDataException;

@@ -2,7 +2,7 @@ package org.fk.product.dto;
 
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.fk.codegen.dto.AbstractDTO;
+import org.fk.core.dto.AbstractDTO;
 
 import java.util.List;
 

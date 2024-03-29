@@ -5,7 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.fk.codegen.testshop.tables.records.InitRecord;
+import org.fk.database.testshop.tables.records.InitRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -13,12 +13,12 @@ import org.jooq.impl.DSL;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.fk.codegen.testshop.tables.Client.CLIENT;
-import static org.fk.codegen.testshop.tables.Init.INIT;
-import static org.fk.codegen.testshop.tables.Product.PRODUCT;
-import static org.fk.codegen.testshop.tables.Lang.LANG;
-import static org.fk.codegen.testshop.tables.ProductLang.PRODUCT_LANG;
-import static org.fk.codegen.testshop.tables.Role.ROLE;
+import static org.fk.database.testshop.tables.Client.CLIENT;
+import static org.fk.database.testshop.tables.Init.INIT;
+import static org.fk.database.testshop.tables.Product.PRODUCT;
+import static org.fk.database.testshop.tables.Lang.LANG;
+import static org.fk.database.testshop.tables.ProductLang.PRODUCT_LANG;
+import static org.fk.database.testshop.tables.Role.ROLE;
 
 @ApplicationScoped
 public class ProductInit {

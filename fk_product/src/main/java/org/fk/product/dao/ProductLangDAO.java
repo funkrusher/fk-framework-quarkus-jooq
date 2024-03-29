@@ -1,10 +1,10 @@
 package org.fk.product.dao;
 
-import org.fk.codegen.testshop.tables.Product;
-import org.fk.codegen.testshop.tables.interfaces.IProductLang;
-import org.fk.codegen.testshop.tables.records.ProductLangRecord;
+import org.fk.database.testshop.tables.Product;
+import org.fk.database.testshop.tables.interfaces.IProductLang;
+import org.fk.database.testshop.tables.records.ProductLangRecord;
 import org.fk.core.dao.AbstractDAO;
-import org.fk.codegen.testshop.tables.ProductLang;
+import org.fk.database.testshop.tables.ProductLang;
 import org.jooq.*;
 import org.jooq.Record;
 

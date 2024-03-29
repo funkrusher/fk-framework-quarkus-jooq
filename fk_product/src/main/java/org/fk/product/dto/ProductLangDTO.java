@@ -4,8 +4,8 @@ package org.fk.product.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
-import org.fk.codegen.testshop.tables.dtos.ProductLang;
-import org.fk.codegen.testshop.tables.interfaces.IProductLang;
+import org.fk.database.testshop.tables.dtos.ProductLang;
+import org.fk.database.testshop.tables.interfaces.IProductLang;
 
 /**
  * ProductLangDTO

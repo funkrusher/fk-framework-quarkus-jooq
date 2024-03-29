@@ -9,20 +9,28 @@ services:
       - 8080:8080
     networks:
       - quarkus
+    depends_on:
+      fk-db:
+        condition: service_healthy
 
   fk-db:
       image: mariadb:10.10.7
       restart: always
       ports:
-          - 127.0.0.1:5451:3306
+          - "5451:3306"
       environment:
           MYSQL_ROOT_PASSWORD: changeme
           MYSQL_DATABASE: mydb
           MYSQL_USER: mydbuser
           MYSQL_PASSWORD: changeme
+      volumes:
+          - ./fk_database/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
       networks:
           - quarkus
+      healthcheck:
+          test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+          timeout: 5s
+          retries: 10
 
 networks:
   quarkus:
-    driver: bridge

@@ -1,9 +1,9 @@
 package org.fk.product.dao;
 
 import org.fk.core.dao.AbstractDAO;
-import org.fk.codegen.testshop.tables.Lang;
-import org.fk.codegen.testshop.tables.interfaces.ILang;
-import org.fk.codegen.testshop.tables.records.LangRecord;
+import org.fk.database.testshop.tables.Lang;
+import org.fk.database.testshop.tables.interfaces.ILang;
+import org.fk.database.testshop.tables.records.LangRecord;
 import org.jooq.DSLContext;
 
 /**

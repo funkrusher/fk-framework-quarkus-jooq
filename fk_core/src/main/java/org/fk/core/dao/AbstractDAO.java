@@ -1,6 +1,6 @@
 package org.fk.core.dao;
 
-import org.fk.codegen.dto.AbstractDTO;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.jooq.RequestContext;
 import org.jooq.*;

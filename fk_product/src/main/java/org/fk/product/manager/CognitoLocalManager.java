@@ -6,7 +6,7 @@ import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
 import org.fk.core.jooq.DSLFactory;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.fk.codegen.testshop.tables.records.UserRoleRecord;
+import org.fk.database.testshop.tables.records.UserRoleRecord;
 import org.fk.core.manager.AbstractManager;
 import org.fk.product.dao.UserDAO;
 import org.fk.product.dao.UserRoleDAO;

@@ -186,12 +186,14 @@ Note: this is only relevant/helpful for local-dev, you never! want to use this w
 ### Running the jOOQ Code-Generator
 
 After all database-changes via liquibase-migrations, the codegen must be executed, to recreate the database-specific code. 
+Each database gets its own folder. We have `fk_database` as example. But more database-folders would be possible. 
+Each such folder would have an own code-generator command to call it then.
 
 Start the jOOQ Code-Generator from the Console with following command:
 ```code
-./gradlew generateJooqCode
+./gradlew generateDatabaseJooqCode
 ```
-The generated code will reside in the folder `fk_codegen/src/main/generated`. 
+The generated code will reside in the folder `fk_database/src/main/generated`. 
 The generator will fire up a mariadb-testcontainer automatically, apply the liquibase-migrations to it 
 and will then generate the code from this database-schema. Afterwards the testcontainer is stopped again.
 
@@ -203,8 +205,11 @@ The first step is, to prepare the `fk_backend/src/main/resources/application.pro
 within the docker-container. Note that, normally you would prepare this file within a ci-pipeline (like in gitlab for example),
 so it is already prepared with the correct settings for the live-environment.
 
-For testing it, we can replace all `localhost` occurrences with an ip-address that would be reachable from within
-the docker-container.
+For testing it, we can replace all `localhost` occurrences with a host/port that would be reachable from within
+the docker-container. For our example this would be:
+```
+fk-db:3306
+```
 
 Next, build the JAR-files with following command. It will execute the tests and build everything.
 ```shell script

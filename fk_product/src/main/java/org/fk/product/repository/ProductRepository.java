@@ -2,8 +2,8 @@ package org.fk.product.repository;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.fk.codegen.testshop.tables.Product;
-import org.fk.codegen.testshop.tables.ProductLang;
+import org.fk.database.testshop.tables.Product;
+import org.fk.database.testshop.tables.ProductLang;
 import org.fk.core.repository.AbstractRepository;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.QueryParameters;

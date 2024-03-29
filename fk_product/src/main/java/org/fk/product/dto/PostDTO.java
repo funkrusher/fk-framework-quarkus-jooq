@@ -4,8 +4,8 @@ package org.fk.product.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.f4b6a3.ulid.Ulid;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.fk.codegen.testshop.tables.dtos.Post;
-import org.fk.codegen.testshop.tables.interfaces.IPost;
+import org.fk.database.testshop.tables.dtos.Post;
+import org.fk.database.testshop.tables.interfaces.IPost;
 
 /**
  * PostDTO

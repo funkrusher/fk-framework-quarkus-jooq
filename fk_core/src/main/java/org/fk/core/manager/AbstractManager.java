@@ -3,7 +3,7 @@ package org.fk.core.manager;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import org.fk.codegen.dto.AbstractDTO;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.util.exception.ValidationException;
 

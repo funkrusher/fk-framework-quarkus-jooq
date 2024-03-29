@@ -18,6 +18,7 @@ repositories {
 }
 dependencies {
     api project(':fk_core')
+    api project(':fk_database')
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.aws

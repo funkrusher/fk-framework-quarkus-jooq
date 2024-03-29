@@ -13,6 +13,9 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.DirectoryResourceAccessor;
 import liquibase.resource.ResourceAccessor;
 import org.awaitility.Awaitility;
+import org.fk.core.liquibase.FkLiquibase;
+import org.fk.core.testcontainers.FkMariaDb;
+import org.fk.database.DatabaseTestcontainer;
 import org.fk.product.init.ProductInit;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -39,88 +42,50 @@ import java.util.Map;
  */
 public class TestDbLifecycleManager implements QuarkusTestResourceLifecycleManager {
 
-    private MariaDBContainer<?> container;
+    DatabaseTestcontainer databaseTestcontainer;
 
     @Override
     public Map<String, String> start() {
-        container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
-                .withDatabaseName("testshop")
-                .withUsername("tester")
-                .withPassword("test123");
-
-        container.start();
-        waitUntilContainerStarted();
-
-        final Map<String, String> jdbcUrl = new HashMap<>();
-        jdbcUrl.put("quarkus.datasource.url", container.getJdbcUrl());
-        jdbcUrl.put("mariadb.testcontainer.host", "localhost");
-        jdbcUrl.put("mariadb.testcontainer.port", String.valueOf(container.getFirstMappedPort()));
-        jdbcUrl.put("mariadb.testcontainer.username", String.valueOf(container.getUsername()));
-        jdbcUrl.put("mariadb.testcontainer.password", String.valueOf(container.getPassword()));
-        jdbcUrl.put("mariadb.testcontainer.database", String.valueOf(container.getDatabaseName()));
-
-        createDatabase(container.getJdbcUrl(), container.getUsername(), container.getPassword());
         try {
-            migrateDatabase(container.getJdbcUrl(), container.getUsername(), container.getPassword());
+            this.databaseTestcontainer = new DatabaseTestcontainer();
+            MariaDBContainer<?> container = databaseTestcontainer.getFkMariadb().getContainer();
 
             // populate the db with the basis-data for each product, and set them initialized!
-            DSLContext dsl = DSL.using(this.container.getJdbcUrl(), this.container.getUsername(), this.container.getPassword());
+            DSLContext dsl = DSL.using(container.getJdbcUrl(), container.getUsername(), container.getPassword());
             ProductInit productInit = new ProductInit();
             productInit.init(dsl);
+
+            final Map<String, String> jdbcUrl = new HashMap<>();
+            jdbcUrl.put("quarkus.datasource.url", container.getJdbcUrl());
+            jdbcUrl.put("mariadb.testcontainer.host", "localhost");
+            jdbcUrl.put("mariadb.testcontainer.port", String.valueOf(container.getFirstMappedPort()));
+            jdbcUrl.put("mariadb.testcontainer.username", String.valueOf(container.getUsername()));
+            jdbcUrl.put("mariadb.testcontainer.password", String.valueOf(container.getPassword()));
+            jdbcUrl.put("mariadb.testcontainer.database", String.valueOf(container.getDatabaseName()));
+            return jdbcUrl;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return jdbcUrl;
     }
 
     @Override
     public void stop() {
-        container.stop();
-    }
-
-    private void createDatabase(String jdbcUrl, String username, String password) {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS testshop");
-        } catch (SQLException e) {
+        try {
+            databaseTestcontainer.close();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void migrateDatabase(String jdbcUrl, String username, String password) throws Exception {
-        // execute liquibase update
-        final Connection connection = DriverManager.getConnection(container.getJdbcUrl(), container.getUsername(), container.getPassword());
-        final ResourceAccessor resourceAccessor = new DirectoryResourceAccessor(new File("src/main/resources/liquibase"));
-        final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-
-        Map<String, Object> scopedSettings = new LinkedHashMap<>();
-        scopedSettings.put(Scope.Attr.resourceAccessor.name(), resourceAccessor);
-        Scope.child(scopedSettings, () -> {
-            final CommandScope updateCommand = new CommandScope(UpdateCommandStep.COMMAND_NAME);
-            updateCommand.addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database);
-            updateCommand.addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, "changelog.xml");
-            updateCommand.addArgumentValue(ShowSummaryArgument.SHOW_SUMMARY, UpdateSummaryEnum.SUMMARY);
-            updateCommand.execute();
-        });
-
-        connection.close();
-    }
-
-    private void waitUntilContainerStarted() {
-        Awaitility.await()
-                .atMost(Duration.ofSeconds(30))
-                .pollInterval(Duration.ofSeconds(1))
-                .until(container::isRunning);
-    }
-
     @Override
     public void inject(Object testInstance) {
-
     }
 
     @Override
     public void inject(TestInjector testInjector) {
-        testInjector.injectIntoFields(new TestDbUtil(container), new TestInjector.AnnotatedAndMatchesType(InjectTestDbUtil.class, TestDbUtil.class));
+        testInjector.injectIntoFields(
+                new TestDbUtil(databaseTestcontainer.getFkMariadb().getContainer()),
+                new TestInjector.AnnotatedAndMatchesType(InjectTestDbUtil.class, TestDbUtil.class));
     }
 }

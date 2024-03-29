@@ -3,7 +3,7 @@ package org.fk.backend.test;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.fk.codegen.dto.AbstractDTO;
+import org.fk.core.dto.AbstractDTO;
 
 import java.io.IOException;
 import java.io.StringWriter;

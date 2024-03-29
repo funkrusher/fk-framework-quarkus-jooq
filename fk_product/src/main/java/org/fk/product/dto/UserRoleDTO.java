@@ -2,8 +2,8 @@ package org.fk.product.dto;
 
 
 import jakarta.validation.Valid;
-import org.fk.codegen.testshop.tables.dtos.UserRole;
-import org.fk.codegen.testshop.tables.interfaces.IUserRole;
+import org.fk.database.testshop.tables.dtos.UserRole;
+import org.fk.database.testshop.tables.interfaces.IUserRole;
 
 /**
  * UserRoleDTO
