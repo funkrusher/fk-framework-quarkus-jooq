@@ -1,5 +1,6 @@
 package org.fk.core.jooq;
 
+import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
@@ -22,8 +23,9 @@ public class ConfigurationFactory {
 
     public static final Logger LOGGER = Logger.getLogger(ConfigurationFactory.class);
 
+    // pleas use AgroalDataSource and not DataSource to avoid Build-Time Error.
     @Inject
-    DataSource dataSource;
+    AgroalDataSource dataSource;
 
 
     SQLDialect sqlDialect = null;

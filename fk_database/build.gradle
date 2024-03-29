@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'java-library'
     id 'idea'
-    id 'org.kordamp.gradle.jandex'
 }
 
 // dependencies-resolvement
@@ -42,5 +41,4 @@ task generateDatabaseJooqCode(type: JavaExec) {
     description = 'Runs JooqCodeGenerator Java Application'
     mainClass = 'org.fk.database.DatabaseCodeGenerator'
     classpath = sourceSets.main.runtimeClasspath
-    dependsOn("jandex")
 }

@@ -31,10 +31,12 @@ import java.util.Map;
 public class CognitoLocalManager extends AbstractManager {
     private static final Logger LOGGER = Logger.getLogger(CognitoLocalManager.class);
 
-    @ConfigProperty(name = "cognitolocal.userpoolid")
+    // set a default-value, so the unit-tests don't crash
+    @ConfigProperty(name = "cognitolocal.userpoolid", defaultValue = "[missing]")
     String userPoolId;
 
-    @ConfigProperty(name = "cognitolocal.userpoolclientid")
+    // set a default-value, so the unit-tests don't crash
+    @ConfigProperty(name = "cognitolocal.userpoolclientid", defaultValue = "[missing]")
     String userPoolClientId;
 
     @Inject

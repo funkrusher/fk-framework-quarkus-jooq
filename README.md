@@ -258,7 +258,27 @@ we are assuming that our SaaS will have a medium-size in regards to client and u
 - we do not want to manage the complexity of TSID, in regards to giving each node a unique id (dev-ops maintenance).
 - UUID is too long to be encrypted in a way that it is readable for the user (even with base32/crockford).
 
-For those reasons ULID is chosen here. 
+For those reasons ULID is chosen here.
+
+## Multi-Project Build with Quarkus
+
+All Modules should contain a `src/main/resources/META-INF/beans.xml` file. 
+This file can be used instead of Jandex to declare that all beans in the project need to be discovered for DI.
+
+In all projects that contain QuarkusTest tests, we need to use the quarkus-plugin in the gradle-file:
+- `id 'io.quarkus'`
+and we also need to define the dependency to the quarkus bom:
+- `implementation enforcedPlatform(libs.quarkusPlatform)`
+
+As soon as we do so, the `./gradlew build` command will get an error, 
+because the quarkus-plugin seeks if all `@Inject` annotations, can be resolved (during build-time? why?).
+To make the quarkus-plugin accept our project in the build we need to provide the project a `src/main/resources/application.conf` file,
+that contains only the following line, so the `@Inject` for the DataSource can be resolved. 
+```
+quarkus.datasource.db-kind=mariadb
+```
+See also:
+- https://stackoverflow.com/questions/78245861/quarkus-gradle-multi-project-build-modular-testing-build-problem
 
 ## Related Guides
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations

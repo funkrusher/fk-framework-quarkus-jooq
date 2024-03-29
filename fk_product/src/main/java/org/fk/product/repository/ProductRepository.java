@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static org.fk.core.jooq.DSLFactory.REQUEST;
 import static org.jooq.impl.DSL.*;
 
 @ApplicationScoped
@@ -67,6 +68,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                         .on(ProductLang.PRODUCT_LANG.PRODUCTID
                                 .eq(Product.PRODUCT.PRODUCTID)))
                 .where(DSL.and(getFilters(queryParameters, availableFields, Product.PRODUCT)))
+                .and(Product.PRODUCT.CLIENTID.eq(request().getClientId()))
                 .groupBy(Product.PRODUCT.PRODUCTID)
                 .orderBy(getSorters(queryParameters, availableFields, Product.PRODUCT));
     }

@@ -1,4 +1,4 @@
-package org.fk.backend.controllers.exports.json;
+package org.fk.product.controllers.exports.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;

@@ -1,4 +1,4 @@
-package org.fk.backend.test;
+package org.fk.product.test;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.*;
@@ -7,5 +7,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD, ElementType.TYPE})
 @Documented
-public @interface InjectTestDbUtil {
+public @interface InjectProductTestUtil {
 }

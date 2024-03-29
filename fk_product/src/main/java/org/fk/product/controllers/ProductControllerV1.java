@@ -1,4 +1,4 @@
-package org.fk.backend.controllers;
+package org.fk.product.controllers;
 
 import io.quarkus.security.Authenticated;
 import org.fk.core.auth.FkSecurityIdentity;

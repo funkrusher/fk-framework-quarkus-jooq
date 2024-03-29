@@ -1,4 +1,4 @@
-package org.fk.backend.test;
+package org.fk.core.util.test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;

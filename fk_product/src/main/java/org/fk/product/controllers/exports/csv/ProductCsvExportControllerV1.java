@@ -1,4 +1,4 @@
-package org.fk.backend.controllers.exports.csv;
+package org.fk.product.controllers.exports.csv;
 
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;

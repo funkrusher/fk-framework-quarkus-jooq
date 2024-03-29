@@ -1,4 +1,4 @@
-package org.fk.backend.controllers;
+package org.fk.product.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.oidc.IdToken;
