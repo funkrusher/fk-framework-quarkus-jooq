@@ -17,14 +17,13 @@ public class TaskJob {
     DSLFactory dslFactory;
 
     @Scheduled(every = "300s", identity = "task-job")
-    @Transactional(rollbackOn = Exception.class)
     void schedule() {
-        // note: the Transactional annotation is important here,
-        // because in failback case when server restarts and missed times will be fired during startup
-        // it would otherwise fail.
+        // either use Transactional annotation of quarkus, or DSLContext.transaction, to make sure we commit.
         DSLContext dsl = dslFactory.create(new RequestContext(1, 1));
-        TaskDTO task = new TaskDTO();
-        TaskDAO taskDAO = new TaskDAO(dsl);
-        taskDAO.insertDTO(task);
+        dsl.transaction(trx -> {
+            TaskDTO task = new TaskDTO();
+            TaskDAO taskDAO = new TaskDAO(trx.dsl());
+            taskDAO.insertDTO(task);
+        });
     }
 }
