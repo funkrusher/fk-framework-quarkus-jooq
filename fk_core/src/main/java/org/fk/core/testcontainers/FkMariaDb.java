@@ -17,10 +17,13 @@ public class FkMariaDb implements AutoCloseable {
 
     public FkMariaDb() {
         // Start the MariaDB test container
+        // Speed up the execution with help of tempfs (it still starts up slow, but runs statements very fast)
+        // see: https://vladmihalcea.com/how-to-run-integration-tests-at-warp-speed-with-docker-and-tmpfs/
         container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
                 .withDatabaseName("testshop")
                 .withUsername("tester")
-                .withPassword("test123");
+                .withPassword("test123")
+                .withTmpFs(Map.of("/var/lib/mysql", "rw"));
         container.start();
 
         waitUntilContainerStarted();
