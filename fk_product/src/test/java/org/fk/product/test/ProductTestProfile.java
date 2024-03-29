@@ -10,6 +10,9 @@ public class ProductTestProfile implements QuarkusTestProfile {
     public Map<String, String> getConfigOverrides() {
         Map<String, String> map = new HashMap<>();
 
+        // devservices slow down our unittest, but we need some of them (OIDC)
+        map.put("quarkus.devservices.enabled", "true");
+
         map.put("quarkus.datasource.db-kind", "mariadb");
         map.put("quarkus.datasource.jdbc.url", "jdbc:mariadb://${mariadb.testcontainer.host}:${mariadb.testcontainer.port}/${mariadb.testcontainer.database}?useCursorFetch=true&rewriteBatchedStatements=true&allowMultiQueries=true");
         map.put("quarkus.datasource.username", "${mariadb.testcontainer.username}");

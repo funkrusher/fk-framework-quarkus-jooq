@@ -20,6 +20,7 @@ public class FkMariaDb implements AutoCloseable {
         // Speed up the execution with help of tempfs (it still starts up slow, but runs statements very fast)
         // see: https://vladmihalcea.com/how-to-run-integration-tests-at-warp-speed-with-docker-and-tmpfs/
         container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
+                //.withReuse(true) // need to delete database where reuse=true (could boost performance)
                 .withDatabaseName("testshop")
                 .withUsername("tester")
                 .withPassword("test123")

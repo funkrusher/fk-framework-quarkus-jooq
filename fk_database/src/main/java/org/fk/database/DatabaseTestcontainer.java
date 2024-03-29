@@ -18,7 +18,7 @@ public class DatabaseTestcontainer implements AutoCloseable {
         // create database if it does not exist
         try (Connection connection = fkMariaDb.createConnection();
              Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS testshop");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS testshop;");
         }
         // execute liquibase-update
         try (Connection connection = fkMariaDb.createConnection()) {
