@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'java-library'
     id 'idea'
+    id 'io.quarkus'
     id "org.liquibase.gradle" version "2.0.2"
 }
 
@@ -11,6 +12,7 @@ repositories {
     mavenLocal()
 }
 dependencies {
+    implementation enforcedPlatform(libs.quarkusPlatform)
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.aws
@@ -19,6 +21,12 @@ dependencies {
     api libs.jacksonCsv
     api libs.jacksonJsr310
     api libs.ulid
+
+    testImplementation libs.bundles.test.quarkus
+    testImplementation libs.bundles.test.testcontainers
+    testImplementation libs.awaitility
+    testImplementation libs.mariadbJavaClient
+    testImplementation libs.restAssured
 }
 
 // cognitoLocalSetup task
