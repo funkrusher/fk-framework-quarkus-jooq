@@ -25,7 +25,7 @@ public class ConfigurationFactory {
 
     // pleas use AgroalDataSource and not DataSource to avoid Build-Time Error.
     @Inject
-    AgroalDataSource dataSource;
+    DataSource dataSource;
 
 
     SQLDialect sqlDialect = null;
@@ -33,8 +33,7 @@ public class ConfigurationFactory {
     @Produces
     public Configuration getConfiguration() {
         if (sqlDialect == null) {
-            try {
-                final Connection connection = dataSource.getConnection();
+            try (final Connection connection = dataSource.getConnection()) {
                 sqlDialect = DSL.using(connection).configuration().dialect();
             } catch (Exception e) {
                 LOGGER.error("unable to resolve SQLDialect from database!", e);

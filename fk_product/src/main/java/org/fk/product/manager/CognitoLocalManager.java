@@ -80,21 +80,20 @@ public class CognitoLocalManager extends AbstractManager {
         user.setFirstname(firstname);
         user.setLastname(lastname);
 
-        UserDTO createdUser = null;
-        UserRoleDTO createdUserRole = null;
+        UserRoleDTO userRole = null;
         String userSub = null;
         try {
-            createdUser = userRecordDAO.insertAndReturnDTO(user);
+            userRecordDAO.insert(user);
 
-            UserRoleDTO userRole = new UserRoleDTO();
-            userRole.setUserId(createdUser.getUserId());
+            userRole = new UserRoleDTO();
+            userRole.setUserId(user.getUserId());
             userRole.setRoleId(roleId);
-            createdUserRole = userRoleRecordDAO.insertAndReturnDTO(userRole);
+            userRoleRecordDAO.insert(userRole);
 
             List<String> roles = new ArrayList<>();
             roles.add(roleId);
 
-            FkClaim fkClaim = new FkClaim(clientId, createdUser.getUserId(), roles);
+            FkClaim fkClaim = new FkClaim(clientId, user.getUserId(), roles);
             String fkClaimStr = objectMapper.writeValueAsString(fkClaim);
 
             SignUpRequest signUpRequest = SignUpRequest.builder()
@@ -117,11 +116,11 @@ public class CognitoLocalManager extends AbstractManager {
 
         } catch (Exception e) {
             // delete database entries in case of error (manual rollback)
-            if (createdUserRole != null) {
-                userRoleRecordDAO.delete(createdUserRole.into(new UserRoleRecord()));
+            if (userRole != null) {
+                userRoleRecordDAO.delete(userRole.into(new UserRoleRecord()));
             }
-            if (createdUser != null) {
-                userRecordDAO.deleteById(createdUser.getUserId());
+            if (user.getUserId() != null) {
+                userRecordDAO.deleteById(user.getUserId());
             }
         }
         return userSub;

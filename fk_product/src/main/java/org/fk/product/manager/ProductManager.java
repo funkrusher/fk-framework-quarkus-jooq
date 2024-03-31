@@ -11,6 +11,9 @@ import org.fk.core.util.query.Filter;
 import org.fk.core.util.query.FilterOperator;
 import org.fk.core.util.query.QueryParameters;
 import org.fk.database.testshop.tables.Product;
+import org.fk.database.testshop.tables.interfaces.IProduct;
+import org.fk.database.testshop.tables.interfaces.IProductLang;
+import org.fk.database.testshop.tables.records.ProductLangRecord;
 import org.fk.database.testshop.tables.records.ProductRecord;
 import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dao.ProductDAO;
@@ -30,6 +33,7 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.*;
 
 /**
@@ -92,7 +96,7 @@ public class ProductManager extends AbstractManager {
         ProductDTO p = new ProductDTO();
         p.setProductId(3L);
 
-        List<ProductRecord> inserts = new ArrayList<>();
+        List<IProduct> inserts = new ArrayList<>();
         for (int i= 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();
             insert1.setProductId(90000000L + i);
@@ -149,13 +153,17 @@ public class ProductManager extends AbstractManager {
         // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
         // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
         this.validateInsert(product);
-        productRecordDAO.insertAndReturnDTO(product);
+        productRecordDAO.insert(product);
+
+        List<IProductLang> productLangInserts = new ArrayList<>();
         for (ProductLangDTO xLang : product.getLangs()) {
             xLang.setProductId(product.getProductId());
             this.validateInsert(xLang);
+            productLangInserts.add(xLang);
         }
-        productLangRecordDAO.insertDTOs(product.getLangs());
-        return product;
+        productLangRecordDAO.insert(productLangInserts);
+
+        return new ProductRepository(dsl).fetchById(product.getProductId());
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
@@ -167,11 +175,11 @@ public class ProductManager extends AbstractManager {
         ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
         this.validateUpdate(product);
-        productRecordDAO.updateDTO(product);
+        productRecordDAO.update(product);
 
-        List<ProductLangDTO> insertXLangs = new ArrayList<>();
-        List<ProductLangDTO> updateXLangs = new ArrayList<>();
-        List<ProductLangDTO> deleteXLangs = new ArrayList<>();
+        List<IProductLang> insertXLangs = new ArrayList<>();
+        List<IProductLang> updateXLangs = new ArrayList<>();
+        List<IProductLang> deleteXLangs = new ArrayList<>();
         for (ProductLangDTO xLang : product.getLangs()) {
             xLang.setProductId(product.getProductId());
             if (xLang.getDeleteFlag()) {
@@ -183,10 +191,11 @@ public class ProductManager extends AbstractManager {
             }
             this.validateUpdate(xLang);
         }
-        productLangRecordDAO.deleteDTOs(deleteXLangs);
-        productLangRecordDAO.insertDTOs(insertXLangs);
-        productLangRecordDAO.updateDTOs(updateXLangs);
-        return product;
+        productLangRecordDAO.delete(deleteXLangs);
+        productLangRecordDAO.insert(insertXLangs);
+        productLangRecordDAO.update(updateXLangs);
+
+        return new ProductRepository(dsl).fetchById(product.getProductId());
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default

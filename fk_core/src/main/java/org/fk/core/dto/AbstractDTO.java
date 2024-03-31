@@ -2,6 +2,7 @@ package org.fk.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlTransient;
+import org.jooq.UpdatableRecord;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

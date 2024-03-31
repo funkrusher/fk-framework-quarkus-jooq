@@ -28,6 +28,7 @@ public class PostManager extends AbstractManager {
         post.setId(ulid.toRfc4122().toUuid());
 
         PostDAO postDAO = new PostDAO(dsl);
-        return postDAO.insertAndReturnDTO(post);
+        postDAO.insert(post);
+        return post;
     }
 }

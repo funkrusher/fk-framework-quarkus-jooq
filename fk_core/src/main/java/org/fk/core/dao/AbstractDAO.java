@@ -27,12 +27,11 @@ import static java.util.Collections.singletonList;
 public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
     private final DSLContext dsl;
-
     private final RequestContext request;
     private final Table<R> table;
 
     // -------------------------------------------------------------------------
-    // Constructors and initialisation
+    // Constructors and initialization
     // -------------------------------------------------------------------------
 
     protected AbstractDAO(DSLContext dsl, Table<R> table) {
@@ -239,137 +238,13 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         return this.table;
     }
 
-
-    /**
-     * Performs an <code>INSERT</code> statement for a given DTO.
-     *
-     * @param dto The DTO to be inserted
-     * @return inserted DTO with database-generated ID
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> A insertAndReturnDTO(A dto) {
-        return insertAndReturnDTOs(singletonList(dto)).getFirst();
-    }
-
-    /**
-     * Performs a <code>INSERT</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be inserted
-     * @return inserted DTOs with database-generated ID
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> List<A> insertAndReturnDTOs(A... dtos) {
-        return insertAndReturnDTOs(asList(dtos));
-    }
-
-    /**
-     * Performs a <code>INSERT</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be inserted
-     * @return inserted DTOs with database-generated ID
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> List<A> insertAndReturnDTOs(List<A> dtos) {
-        List<R> records = transformToRecords(dtos);
-        Result<R> result = insertAndReturn(records);
-        int i = 0;
-        for (R item : result) {
-            Field<?> setField = records.get(i).field(autoIncrementField());
-            records.get(i).setValue(setField, item.getValue(autoIncrementField()));
-            i++;
-        }
-        int j = 0;
-        for (R record : records) {
-            A obj = dtos.get(j);
-            record.into(obj);
-            j++;
-        }
-        return dtos;
-    }
-
-    /**
-     * Performs an <code>INSERT</code> statement for a given Record.
-     *
-     * @param record The record to be inserted
-     * @return inserted record with database-generated ID
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public R insertAndReturn(R record) {
-        return insertAndReturn(singletonList(record)).getFirst();
-    }
-
-    /**
-     * Performs a <code>INSERT</code> statement for a given set of records.
-     *
-     * @param records The records to be inserted
-     * @return inserted records with database-generated ID
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public List<R> insertAndReturn(R... records) {
-        return insertAndReturn(asList(records));
-    }
-
-    /**
-     * Performs a <code>INSERT</code> statement for a given set of records.
-     *
-     * @param records The records to be inserted
-     * @return inserted records with database-generated ID
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public Result<R> insertAndReturn(List<R> records) {
-        List<R> inserts = prepareInserts(records);
-
-        int k = 1;
-        InsertSetMoreStep step = dsl().insertInto(inserts.getFirst().getTable())
-                .set(inserts.getFirst());
-        if (inserts.size() > 1) {
-            step.set(inserts.get(k));
-            k++;
-        }
-        Result<R> result = step
-                .returning(autoIncrementField())
-                .fetch();
-        return result;
-    }
-
-    /**
-     * Performs a <code>INSERT</code> statement for a given DTO.
-     *
-     * @param dto The DTO to be inserted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> int insertDTO(A dto) throws DataAccessException {
-        return insertDTOs(singletonList(dto))[0];
-    }
-
-    /**
-     * Performs a batch <code>INSERT</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be inserted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> int[] insertDTOs(A... dtos) throws DataAccessException {
-        return insertDTOs(dtos);
-    }
-
-    /**
-     * Performs a batch <code>INSERT</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be inserted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> int[] insertDTOs(List<A> dtos) throws DataAccessException {
-        List<R> records = transformToRecords(dtos);
-        return insert(records);
-    }
-
     /**
      * Performs a <code>INSERT</code> statement for a given record.
      *
      * @param record The record to be inserted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public int insert(R record) throws DataAccessException {
+    public int insert(Y record) throws DataAccessException {
         return insert(singletonList(record))[0];
     }
 
@@ -379,8 +254,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be inserted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public int[] insert(R... records) throws DataAccessException {
-        return insert(records);
+    public int[] insert(Y... records) throws DataAccessException {
+        return insert(asList(records));
     }
 
     /**
@@ -389,47 +264,49 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be inserted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public int[] insert(List<R> records) throws DataAccessException {
-        List<R> inserts = prepareInserts(records);
-        if (inserts.size() == 1) {
-            // Execute a regular INSERT (logging looks nicer that way)
-            return new int[] {dsl().executeInsert(inserts.getFirst())};
-        } else if (!inserts.isEmpty()) {
-            // Execute a batch INSERT
-            return dsl().batchInsert(inserts).execute();
+    public int[] insert(List<Y> records) throws DataAccessException {
+        List<R> records0 = transformToRecords(records);
+        List<R> inserts = prepareInserts(records0);
+
+        if (autoIncrementField() != null) {
+            // we want to resolve the autoincrement from the database into the model
+            // we need to use a way that has lower performance...
+            int k = 1;
+            InsertSetMoreStep step = dsl().insertInto(inserts.getFirst().getTable())
+                    .set(inserts.getFirst());
+            if (inserts.size() > 1) {
+                step.set(inserts.get(k));
+                k++;
+            }
+            Result<R> result = step
+                    .returning(autoIncrementField())
+                    .fetch();
+
+            int i = 0;
+            for (R item : result) {
+                Field<?> setField = records0.get(i).field(autoIncrementField());
+                records0.get(i).setValue(setField, item.getValue(autoIncrementField()));
+                i++;
+            }
+            int j = 0;
+            for (R record : records0) {
+                Y obj = records.get(j);
+                record.into(obj);
+                j++;
+            }
+            return new int[]{result.size()};
+        } else {
+            // we have no autoincrement-field
+            // we can insert with bulk-inserts to gain performance.
+            if (inserts.size() == 1) {
+                // Execute a regular INSERT (logging looks nicer that way)
+                return new int[] {dsl().executeInsert(inserts.getFirst())};
+            } else if (!inserts.isEmpty()) {
+                // Execute a batch INSERT
+                return dsl().batchInsert(inserts).execute();
+            }
+            return new int[]{0};
         }
-        return new int[]{0};
-    }
-
-    /**
-     * Performs an <code>UPDATE</code> statement for a given DTO.
-     *
-     * @param dto The DTO to be updated
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public void updateDTO(Y dto) throws DataAccessException {
-        updateDTOs(singletonList(dto));
-    }
-
-    /**
-     * Performs a batch <code>UPDATE</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be updated
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public void updateDTOs(Y... dtos) throws DataAccessException {
-        updateDTOs(asList(dtos));
-    }
-
-    /**
-     * Performs a batch <code>UPDATE</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be updated
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public void updateDTOs(List<? extends Y> dtos) throws DataAccessException {
-        List<R> records = transformToRecords(dtos);
-        update(records);
     }
 
     /**
@@ -438,7 +315,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param record The record to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void update(R record) throws DataAccessException {
+    public void update(Y record) throws DataAccessException {
         update(singletonList(record));
     }
 
@@ -448,7 +325,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void update(R... records) throws DataAccessException {
+    public void update(Y... records) throws DataAccessException {
         update(asList(records));
     }
 
@@ -458,8 +335,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void update(List<R> records) throws DataAccessException {
-        List<R> updates = prepareUpdates(records);
+    public void update(List<Y> records) throws DataAccessException {
+        List<R> records0 = transformToRecords(records);
+        List<R> updates = prepareUpdates(records0);
         if (updates.size() > 1) {
             // Execute a batch UPDATE
             List<UpdateConditionStep<R>> conditions = new ArrayList<>();
@@ -476,43 +354,12 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
     /**
-     * Performs a <code>DELETE</code> statement for a DTO
-     *
-     * @param dto The DTO to be deleted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> void deleteDTO(A dto) throws DataAccessException {
-        deleteDTOs(singletonList(dto));
-    }
-
-    /**
-     * Performs a <code>DELETE</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be deleted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> void deleteDTOs(A... dtos) throws DataAccessException {
-        deleteDTOs(asList(dtos));
-    }
-
-    /**
-     * Performs a <code>DELETE</code> statement for a given set of DTOs.
-     *
-     * @param dtos The DTOs to be deleted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <A extends Y> void deleteDTOs(List<A> dtos) throws DataAccessException {
-        List<R> records = transformToRecords(dtos);
-        delete(records);
-    }
-
-    /**
      * Performs a <code>DELETE</code> statement for a record
      *
      * @param record The record to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void delete(R record) throws DataAccessException {
+    public void delete(Y record) throws DataAccessException {
         delete(singletonList(record));
     }
 
@@ -522,7 +369,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void delete(R... records) throws DataAccessException {
+    public void delete(Y... records) throws DataAccessException {
         delete(asList(records));
     }
 
@@ -532,13 +379,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void delete(List<R> records) throws DataAccessException {
-        if (records.size() > 1) {
+    public void delete(List<Y> records) throws DataAccessException {
+        List<R> records0 = transformToRecords(records);
+        if (records0.size() > 1) {
             // Execute a batch DELETE
-            dsl().batchDelete(records).execute();
-        } else if (records.size() == 1) {
+            dsl().batchDelete(records0).execute();
+        } else if (records0.size() == 1) {
             // Execute a regular DELETE (logging looks nicer that way)
-            dsl().executeDelete(records.getFirst());
+            dsl().executeDelete(records0.getFirst());
         }
     }
 
@@ -595,7 +443,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public boolean existsById(T id) throws DataAccessException {
         Field<?>[] pk = pk();
-
         if (pk != null)
             return dsl()
                     .selectCount()
@@ -612,7 +459,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return The number of records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
-    public long count() throws DataAccessException {
+    public long countAll() throws DataAccessException {
         return dsl()
                 .selectCount()
                 .from(table())
@@ -625,7 +472,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return All records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
-    public List<R> findAll() throws DataAccessException {
+    public List<R> fetchAll() throws DataAccessException {
         return dsl()
                 .selectFrom(table())
                 .fetch();
@@ -641,7 +488,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public R findById(T id) throws DataAccessException {
         Field<?>[] pk = pk();
-
         if (pk != null)
             return dsl().selectFrom(table())
                     .where(equal(pk, id))
@@ -658,94 +504,5 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public Optional<R> findOptionalById(T id) throws DataAccessException {
         return Optional.ofNullable(findById(id));
-    }
-
-    /**
-     * Find records by a given field and a range of values.
-     *
-     * @param field          The field to compare values against
-     * @param lowerInclusive The range's lower bound (inclusive), or unbounded
-     *                       if <code>null</code>.
-     * @param upperInclusive The range's upper bound (inclusive), or unbounded
-     *                       if <code>null</code>.
-     * @return A list of records fulfilling
-     * <code>field BETWEEN lowerInclusive AND upperInclusive</code>
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <Z> List<R> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) throws DataAccessException {
-        return dsl()
-                .selectFrom(table())
-                .where(
-                        lowerInclusive == null
-                                ? upperInclusive == null
-                                ? DSL.noCondition()
-                                : field.le(upperInclusive)
-                                : upperInclusive == null
-                                ? field.ge(lowerInclusive)
-                                : field.between(lowerInclusive, upperInclusive))
-                .fetch();
-    }
-
-    /**
-     * Find records by a given field and a set of values.
-     *
-     * @param field  The field to compare values against
-     * @param values The accepted values
-     * @return A list of records fulfilling <code>field IN (values)</code>
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <Z> List<R> fetch(Field<Z> field, Z... values) throws DataAccessException {
-        return fetch(field, Arrays.asList(values));
-    }
-
-    /**
-     * Find records by a given field and a set of values.
-     *
-     * @param field  The field to compare values against
-     * @param values The accepted values
-     * @return A list of records fulfilling <code>field IN (values)</code>
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public <Z> List<R> fetch(Field<Z> field, Collection<? extends Z> values) throws DataAccessException {
-        return dsl()
-                .selectFrom(table())
-                .where(field.in(values))
-                .fetch();
-    }
-
-    /**
-     * Find a unique record by a given field and a value.
-     *
-     * @param field The field to compare value against
-     * @param value The accepted value
-     * @return A record fulfilling <code>field = value</code>, or
-     * <code>null</code>
-     * @throws DataAccessException This exception is thrown
-     *                             <ul>
-     *                             <li>if something went wrong executing the query</li>
-     *                             <li>if the query returned more than one value</li>
-     *                             </ul>
-     */
-    public <Z> R fetchOne(Field<Z> field, Z value) throws DataAccessException {
-        return dsl()
-                .selectFrom(table())
-                .where(field.equal(value))
-                .fetchOne();
-    }
-
-    /**
-     * Find a unique record by a given field and a value.
-     *
-     * @param field The field to compare value against
-     * @param value The accepted value
-     * @return A record fulfilling <code>field = value</code>
-     * @throws DataAccessException This exception is thrown
-     *                             <ul>
-     *                             <li>if something went wrong executing the query</li>
-     *                             <li>if the query returned more than one value</li>
-     *                             </ul>
-     */
-    public <Z> Optional<R> fetchOptional(Field<Z> field, Z value) throws DataAccessException {
-        return Optional.ofNullable(fetchOne(field, value));
     }
 }

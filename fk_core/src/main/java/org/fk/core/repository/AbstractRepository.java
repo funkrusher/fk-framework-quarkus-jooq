@@ -14,6 +14,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Collections.singletonList;
 
 /**
  * A common base-class for Repositories
@@ -58,6 +61,22 @@ public abstract class AbstractRepository<D extends AbstractDTO, T> {
     // -------------------------------------------------------------------------
     // Repository API
     // -------------------------------------------------------------------------
+
+    public D fetchById(T productId) {
+        List<D> result = fetch(singletonList(productId));
+        if (!result.isEmpty()) {
+            return result.getFirst();
+        }
+        return null;
+    }
+
+    public Optional<D> fetchOptionalById(T productId) {
+        D result = fetchById(productId);
+        if (result == null) {
+            return Optional.empty();
+        }
+        return Optional.of(result);
+    }
 
     /**
      * Expose the dslContext this <code>DAO</code> is operating.

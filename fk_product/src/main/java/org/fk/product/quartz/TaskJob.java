@@ -23,7 +23,7 @@ public class TaskJob {
         dsl.transaction(trx -> {
             TaskDTO task = new TaskDTO();
             TaskDAO taskDAO = new TaskDAO(trx.dsl());
-            taskDAO.insertDTO(task);
+            taskDAO.insert(task);
         });
     }
 }
