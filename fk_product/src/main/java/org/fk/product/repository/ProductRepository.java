@@ -42,6 +42,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                         ).as("langs")
                 ).from(Product.PRODUCT)
                 .where(Product.PRODUCT.PRODUCTID.in(productIds))
+                .and(Product.PRODUCT.CLIENTID.eq(request().getClientId()))
                 .fetchInto(ProductDTO.class);
 
         // append and change some data that is still missing after our fetch.
