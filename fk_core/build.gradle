@@ -33,6 +33,6 @@ dependencies {
 task cognitoLocalSetup(type: JavaExec) {
     group = 'application'
     description = 'Runs cognitoLocalInit Java Application'
-    mainClass = 'org.fk.cognito.CognitoLocalSetup'
+    mainClass = 'org.fk.core.cognito.CognitoLocalSetup'
     classpath = sourceSets.main.runtimeClasspath
 }

@@ -33,8 +33,10 @@ dependencies {
 
 // liquibase command, needed to apply rollbacks in local-dev.
 def properties = new Properties()
-file('src/main/resources/application.properties').withInputStream {
-    stream -> properties.load(stream)
+if (file('src/main/resources/application.properties').exists()) {
+    file('src/main/resources/application.properties').withInputStream {
+        stream -> properties.load(stream)
+    }
 }
 
 task liquibaseRollback(type: JavaExec) {
