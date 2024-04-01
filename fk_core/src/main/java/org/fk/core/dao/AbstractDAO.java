@@ -1,5 +1,8 @@
 package org.fk.core.dao;
 
+import com.github.f4b6a3.ulid.Ulid;
+import com.github.f4b6a3.ulid.UlidCreator;
+import jakarta.annotation.Nullable;
 import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jooq.DSLFactory;
 import org.fk.core.jooq.RequestContext;
@@ -29,6 +32,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     private final DSLContext dsl;
     private final RequestContext request;
     private final Table<R> table;
+    private final UniqueKey<?> pk;
+    private final Field<?>[] pkAutoIncFields;
+    private final Field<UUID>[] pkUuidFields;
 
     // -------------------------------------------------------------------------
     // Constructors and initialization
@@ -38,6 +44,16 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         this.dsl = dsl;
         this.table = table;
         this.request = (RequestContext) dsl.data(DSLFactory.REQUEST);
+
+        // primary-key, auto-inc, uuid.
+        this.pk = table.getPrimaryKey();
+        if (this.pk == null) {
+            throw new RuntimeException("table has no primary-key! this is currently unsupported");
+        }
+        this.pkAutoIncFields = Arrays.stream(this.pk.getFieldsArray())
+                .filter(f -> f.getDataType().identity()).toArray(Field[]::new);
+        this.pkUuidFields = (Field<UUID>[]) Arrays.stream(this.pk.getFieldsArray())
+                .filter(f -> f.getDataType().isUUID()).toArray(Field[]::new);
     }
 
     // ------------------------------------------------------------------------
@@ -86,13 +102,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         // Get the table definition from the record
         Table<?> table = record.getTable();
 
-        // Get the fields of the table that are auto-increment
-        Field<?>[] autoIncrementFields = table().fieldStream()
-                .filter(f -> f.getDataType().identity())
-                .toArray(Field[]::new);
-
         // Set the auto-increment fields to null using reflection
-        for (Field<?> field : autoIncrementFields) {
+        for (Field<?> field : pkAutoIncFields) {
             try {
                 // touch the auto-increment-fields as changed=true,
                 // because when all fields are changed=false, then jooq will not process the insert,
@@ -104,6 +115,17 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                 // For example, if the field is not nullable, you may get a NullPointerException
                 // You can log the exception or handle it in any other way that is appropriate for your application
                 e.printStackTrace();
+            }
+        }
+        for (Field<UUID> field : pkUuidFields) {
+            // generate ulid id.
+            if (dsl().dialect() == SQLDialect.MARIADB) {
+                // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
+                Ulid ulid = UlidCreator.getMonotonicUlid();
+                record.set(field, ulid.toRfc4122().toUuid());
+            } else {
+                // should be changed for additional db-types.
+                throw new RuntimeException("unsupported dialect for ULID-generation, please add your dialect here.");
             }
         }
         return record;
@@ -119,7 +141,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
     private R prepareUpdate(R record) {
         // Set the auto-increment fields to null using reflection
-        for (Field<?> pkField : pk()) {
+        for (Field<?> pkField : pk.getFieldsArray()) {
             try {
                 // primary key values are never allowed to be changed for an update!
                 // the database will give an error, if we try to change them in an update clause
@@ -154,23 +176,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     // ------------------------------------------------------------------------
     // Helper methods for subclasses, for extracting/resolving common meta.
     // ------------------------------------------------------------------------
-
-    protected <L> Field<L> autoIncrementField() {
-        // Get the fields of the table that are auto-increment
-        Field<L>[] autoIncrementFields = table().fieldStream()
-                .filter(f -> f.getDataType().identity())
-                .toArray(Field[]::new);
-        if (autoIncrementFields.length > 0) {
-            return autoIncrementFields[0];
-        } else {
-            return null;
-        }
-    }
-
-    protected Field<?>[] pk() {
-        UniqueKey<?> key = table.getPrimaryKey();
-        return key == null ? null : key.getFieldsArray();
-    }
 
     protected T compositeKeyRecord(Object... values) {
         UniqueKey<R> key = table().getPrimaryKey();
@@ -238,6 +243,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         return this.table;
     }
 
+
     /**
      * Performs a <code>INSERT</code> statement for a given record.
      *
@@ -264,13 +270,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param records The records to be inserted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public int[] insert(List<Y> records) throws DataAccessException {
+    public <A> int[] insert(List<Y> records) throws DataAccessException {
         List<R> records0 = transformToRecords(records);
         List<R> inserts = prepareInserts(records0);
 
-        if (autoIncrementField() != null) {
+        if (pkAutoIncFields.length > 0) {
             // we want to resolve the autoincrement from the database into the model
             // we need to use a way that has lower performance...
+            Field<A> firstAutoIncField = (Field<A>) pkAutoIncFields[0];
             int k = 1;
             InsertSetMoreStep step = dsl().insertInto(inserts.getFirst().getTable())
                     .set(inserts.getFirst());
@@ -279,13 +286,13 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                 k++;
             }
             Result<R> result = step
-                    .returning(autoIncrementField())
+                    .returning(firstAutoIncField)
                     .fetch();
 
             int i = 0;
             for (R item : result) {
-                Field<?> setField = records0.get(i).field(autoIncrementField());
-                records0.get(i).setValue(setField, item.getValue(autoIncrementField()));
+                A value = item.getValue(firstAutoIncField);
+                records0.get(i).setValue(firstAutoIncField, value);
                 i++;
             }
             int j = 0;
@@ -298,6 +305,13 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         } else {
             // we have no autoincrement-field
             // we can insert with bulk-inserts to gain performance.
+            int j = 0;
+            for (R record : inserts) {
+                Y obj = records.get(j);
+                record.into(obj);
+                j++;
+            }
+
             if (inserts.size() == 1) {
                 // Execute a regular INSERT (logging looks nicer that way)
                 return new int[] {dsl().executeInsert(inserts.getFirst())};
@@ -344,12 +358,12 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             for (R record : updates) {
                 conditions.add(dsl().update(table())
                         .set(record)
-                        .where(equal(pk(), getId(record))));
+                        .where(equal(pk.getFieldsArray(), getId(record))));
             }
             dsl().batch(conditions).execute();
         } else if (updates.size() == 1) {
             // Execute a regular UPDATE (logging looks nicer that way)
-            dsl().update(table()).set(updates.getFirst()).where(equal(pk(), getId(updates.getFirst()))).execute();
+            dsl().update(table()).set(updates.getFirst()).where(equal(pk.getFieldsArray(), getId(updates.getFirst()))).execute();
         }
     }
 
@@ -418,9 +432,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     public void deleteById(Collection<T> ids) throws DataAccessException {
-        Field<?>[] pk = pk();
         if (pk != null)
-            dsl().delete(table()).where(equal(pk, ids)).execute();
+            dsl().delete(table()).where(equal(pk.getFieldsArray(), ids)).execute();
     }
 
     /**
@@ -442,12 +455,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     public boolean existsById(T id) throws DataAccessException {
-        Field<?>[] pk = pk();
         if (pk != null)
             return dsl()
                     .selectCount()
                     .from(table())
-                    .where(equal(pk, id))
+                    .where(equal(pk.getFieldsArray(), id))
                     .fetchOne(0, Integer.class) > 0;
         else
             return false;
@@ -487,10 +499,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     public R findById(T id) throws DataAccessException {
-        Field<?>[] pk = pk();
         if (pk != null)
             return dsl().selectFrom(table())
-                    .where(equal(pk, id))
+                    .where(equal(pk.getFieldsArray(), id))
                     .fetchOne();
         return null;
     }

@@ -52,7 +52,6 @@ public class ConfigurationFactory {
                         .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
                         .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
                 );
-        configuration.set(new DefaultRecordListenerProvider(new FkInsertListener()));
         configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener()));
         return configuration;
     }

@@ -2,7 +2,6 @@ package org.fk.core.util.query;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
-import io.quarkus.test.security.TestSecurity;
 import org.fk.core.test.CoreTestProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -21,7 +20,6 @@ public class QueryParametersTest {
     }
 
     @Test
-    @TestSecurity(authorizationEnabled = false)
     @Order(1)
     public void test1() throws IOException {
         QueryParameters qp = new QueryParameters();

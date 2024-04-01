@@ -21,12 +21,8 @@ public class PostManager extends AbstractManager {
 
     @Transactional(rollbackOn = Exception.class)
     public PostDTO create(DSLContext dsl) throws ValidationException {
+        // post will be given a ULID uuid automatically during the insert call on the dao.
         PostDTO post = new PostDTO();
-
-        // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
-        Ulid ulid = UlidCreator.getMonotonicUlid();
-        post.setId(ulid.toRfc4122().toUuid());
-
         PostDAO postDAO = new PostDAO(dsl);
         postDAO.insert(post);
         return post;
