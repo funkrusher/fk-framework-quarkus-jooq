@@ -111,7 +111,7 @@ quarkus.datasource.database1.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?u
 quarkus.datasource.database1.username=[username]
 quarkus.datasource.database1.password=[password]
 
-quarkus.datasource.database2.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?useCursorFetch=true&rewriteBatchedStatements=true
+quarkus.datasource.database2.jdbc.url=jdbc:postgresql://localhost:[port]/testlibrary
 quarkus.datasource.database2.username=[username]
 quarkus.datasource.database2.password=[password]
 ```
