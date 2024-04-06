@@ -38,7 +38,7 @@ public class LibraryInit {
     }
 
     public void init(DSLContext dsl) {
-        Optional<InitRecord> maybeInit = dsl.selectFrom(INIT).where(INIT.INITIALIZED.eq("product")).fetchOptional();
+        Optional<InitRecord> maybeInit = dsl.selectFrom(INIT).where(INIT.INITIALIZED.eq("library")).fetchOptional();
         if (maybeInit.isEmpty()) {
             dsl.transaction(tx1 -> {
                 tx1.dsl().insertInto(AUTHOR, AUTHOR.AUTHOR_ID, AUTHOR.NAME)

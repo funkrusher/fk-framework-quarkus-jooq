@@ -100,8 +100,8 @@ CREATE DATABASE testlibrary;
 
 ### Create application.properties
 
-Within the folder `_services/fk_backend/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
-then edit this newly created file `_services/fk_backend/src/main/resources/application.properties` in your editor of choice 
+Within the folder `_services/fk_backend1/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
+then edit this newly created file `_services/fk_backend1/src/main/resources/application.properties` in your editor of choice 
 and replace the following settings ([port], [username], [password])  for a connection with: 
 - database1: your mariadb-database with your settings.
 - database2: your postgresql-database with your settings.
@@ -139,7 +139,7 @@ please note down the following three outputs of this task:
 - cognitolocal.userpoolclientid
 - cognitolocal.userpoolclientsecret
 
-copy those three outputs directly into your `fk_backend/src/main/resources/application.properties` file.
+copy those three outputs directly into your `fk_backend1/src/main/resources/application.properties` file.
 For example:
 ```
 # cognito-local
@@ -198,14 +198,14 @@ The Liquibase-Migrations are automatically applied when the Quarkus-Application 
 (as defined in `application.properties` with the `quarkus.databaseX.liquibase.migrate-at-start=true` parameter)
 While the Liquibase-Migrations are part of the database-projects, the Rollback-Functionality is a task that is defined on the services-projects,
 because the services, define the concrete database, and a rollback is an activity on the concrete database-instance.
-You can find the Rollback-Task in `_services/fk_backend/build.gradle`.
+You can find the Rollback-Task in `_services/fk_backend1/build.gradle`.
 
 It is often convenient in local-dev, to be able to rollback to a specific tag, if you want to switch your git-branch, that you are working on.
 For this use-case a gradle-task is provided, that helps you to rollback your database to a specific changeset. 
 This will automatically execute all rollbacks of already applied changesets until the tag-changeset is reached.
 ```code
-./gradlew backendDatabase1Rollback -ProllbackTag=feature-1122
-./gradlew backendDatabase2Rollback -ProllbackTag=feature-3823
+./gradlew backend1Database1Rollback -ProllbackTag=feature-1122
+./gradlew backend2Database2Rollback -ProllbackTag=feature-3823
 ```
 This example would rollback all migrations that followed after the file `feature-1122.sql` in database1 (mariadb) and all migrations that
 followed after `feature-3823` in database (postgresql).
@@ -235,7 +235,7 @@ You also need to commit this generated code into your version-control system, as
 
 ## Dockerizing the application
 
-The first step is, to prepare the `_services/fk_backend/src/main/resources/application.properties` file to be ready for the deploy
+The first step is, to prepare the `_services/fk_backend1/src/main/resources/application.properties` file to be ready for the deploy
 within the docker-container. Note that, normally you would prepare this file within a ci-pipeline (like in gitlab for example),
 so it is already prepared with the correct settings for the live-environment.
 
@@ -252,14 +252,14 @@ Next, build the JAR-files with following command. It will execute the tests and 
 ```shell script
 ./gradlew build
 ```
-The build produces the `quarkus-run.jar` file in the `_services/fk_backend/build/quarkus-app/` directory along with other files,
+The build produces the `quarkus-run.jar` file in the `_services/fk_backend1/build/quarkus-app/` directory along with other files,
 and also with our prepared `application.properties`. 
 
 Finally, we can build the docker-image and start it as docker-container by executing the docker-compose file as follows:
 ```shell script
 docker-compose up --build
 ```
-This will start up a docker-container build with the `_services/fk_backend/src/main/docker/Dockerfile.jvm` which will use the `_services/fk_backend/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
+This will start up a docker-container build with the `_services/fk_backend1/src/main/docker/Dockerfile.jvm` which will use the `_services/fk_backend1/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
 - http://localhost:8000/products/1
 
@@ -277,9 +277,9 @@ The used versions of third-party libraries must be balanced with each other.
 Use the jOOQ Version, that is fitting for your database or upgrade your database. See:
 - https://www.jooq.org/download/support-matrix
 
-We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
+We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend1` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
 ```code
-./gradlew -p _services/fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
+./gradlew -p _services/fk_backend1 dependencyInsight --dependency validation-api --configuration runtimeClasspath
 ```
 
 ## Quartz

@@ -34,5 +34,5 @@ nb-configuration.xml
 
 # Local environment
 .env
-_services/fk_backend/src/main/resources/*.properties
-_services/fk_backend/src/main/resources/application.properties
+_services/fk_backend1/src/main/resources/*.properties
+_services/fk_backend1/src/main/resources/application.properties

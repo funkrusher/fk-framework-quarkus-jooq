@@ -3,7 +3,7 @@ version: "3.5"
 services:
   fk-backend:
     build:
-      context: _services/fk_backend
+      context: _services/fk_backend1
       dockerfile: src/main/docker/Dockerfile.jvm
     ports:
       - 8080:8080

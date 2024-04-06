@@ -1,4 +1,4 @@
-package org.fk.backend.controllers;
+package org.fk.backend1.controllers;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

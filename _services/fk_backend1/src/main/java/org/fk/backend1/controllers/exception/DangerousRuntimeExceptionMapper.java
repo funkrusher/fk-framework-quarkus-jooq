@@ -1,4 +1,4 @@
-package org.fk.backend.controllers.exception;
+package org.fk.backend1.controllers.exception;
 
 import io.quarkus.arc.profile.UnlessBuildProfile;
 import jakarta.ws.rs.core.Response;

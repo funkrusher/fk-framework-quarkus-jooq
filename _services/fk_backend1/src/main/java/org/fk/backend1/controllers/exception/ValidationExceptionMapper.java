@@ -1,4 +1,4 @@
-package org.fk.backend.controllers.exception;
+package org.fk.backend1.controllers.exception;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.ws.rs.core.MediaType;
