@@ -1,0 +1,9 @@
+stages:
+  - compile
+
+project:
+  stage: compile
+  script:
+    - echo "fk_backend1 pipe"
+  tags:
+    - docker
