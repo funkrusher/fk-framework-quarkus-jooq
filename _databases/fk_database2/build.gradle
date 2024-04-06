@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea'
+}
+
+// dependencies-resolvement
+repositories {
+    mavenCentral()
+}
+dependencies {
+    api project(':_core:fk_core')
+    api libs.bundles.quarkus
+    api libs.bundles.jooq
+    api libs.bundles.testcontainers
+    api libs.postgresJavaClient
+}
+
+// configure generated/src-directories, necessary for use in intellij-idea.
+def mySrcDir = "src/main/java"
+def generatedDir = "src/main/generated"
+sourceSets {
+    main {
+        java {
+            srcDir generatedDir
+            srcDir mySrcDir
+        }
+    }
+}
+idea {
+    module {
+        generatedSourceDirs.addAll(file(generatedDir))
+        sourceDirs.addAll(file(generatedDir))
+        sourceDirs.addAll(file(mySrcDir))
+    }
+}
+
+// jooqCodeGenerator task
+task generateDatabase2JooqCode(type: JavaExec) {
+    group = 'application'
+    description = 'Runs JooqCodeGenerator Java Application'
+    mainClass = 'org.fk.database2.Database2CodeGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+}

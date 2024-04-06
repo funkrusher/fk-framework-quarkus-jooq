@@ -1,8 +1,13 @@
 # Quarkus demo: jOOQ with Liquibase, RESTEasy, Gradle, Testcontainers
 
-This is a minimal CRUD service exposing a couple of endpoints over REST. 
+This is an example of a Mono-Repo Multi-Module Project, that can be a starter for the typical 
+SaaS Project-Teams-Approach, where several Project-Teams work on a SaaS-Application in the context
+of a mid-sized company, where the teams want to start with a Modular Monolith because it is easier to maintain,
+but need a good modular separation between the Project-Teams, and an easy splitting of modules into
+separate microservices, as soon as this is becoming more relevant, when the teams are growing.
 
-Instead of using the typical Hibernate/ORM, we will explore jOOQ Object Oriented Querying and the possible benefits of using such a more dynamic approach to database operations in a multi-tenancy + multi-language context.
+Instead of using the typical Hibernate/ORM, we will explore jOOQ Object Oriented Querying and the possible benefits 
+of using such a more dynamic approach to database operations in a multi-tenancy + multi-language context.
 
 Under the hood, the code is using:
 - Quarkus Framework
@@ -14,15 +19,45 @@ Under the hood, the code is using:
   - Object Oriented Querying on the database
   - Db-Schema-To-Code-Generator
 - Liquibase Db-Migrations
-- Mariadb-Testcontainer for Unit-Tests and Code-Generator
+- Mariadb/Postgresql-Testcontainers for Unit-Tests and Code-Generator
 - Gradle Build
   - Multi-Module project for shared-libraries approach 
-- Customizable Helpers
+- Core-Libraries
     - own DAO-Abstraction that you can extend from and fine tune.
     - own Pojo-Abstraction with Modified-Fields detection support.
     - own RemotePagination Pojo to use for remote pagination
 
 In the folder `./docs` you can find specific documentations about the different concepts this small seed-project implements, so you can benefit from them.
+
+## Overview
+
+```mermaid
+graph TD;
+subgraph core
+Core
+end
+subgraph databases
+Database1 --> Core
+Database2 --> Core
+Database3 --> Core
+end
+subgraph modules
+Module1 --> Core
+Module2 --> Core
+Module3 --> Core
+Module1 --> Module2
+Module2 --> Module3
+end
+subgraph services
+Service1 --> Module1
+Service1 --> Module2
+Service1 --> Database1
+Service2 --> Module2
+Service2 --> Database2
+Service3 --> Module3
+Service3 --> Database3
+end
+```
 
 ## Requirements
 
@@ -49,23 +84,36 @@ It is recommended to use a tool like sdkman for easy JDK-selection.
 
 ## Setup/run server for local development
 
-### Create database
+### Create database1
 
 Connect with your mariadb-database and create the database `testshop`
 ```
-CREATE DATABASE testshop
+CREATE DATABASE testshop;
+```
+
+### Create database2
+
+Connect with your postgresql-database and create the database `testlibrary`
+```
+CREATE DATABASE testlibrary;
 ```
 
 ### Create application.properties
 
-Within the folder `fk_backend/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
-then edit this newly created file `fk_backend/src/main/resources/application.properties` in your editor of choice 
-and replace the following settings ([port], [username], [password]) for a connection with your mariadb-database with your settings.
+Within the folder `_services/fk_backend/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
+then edit this newly created file `_services/fk_backend/src/main/resources/application.properties` in your editor of choice 
+and replace the following settings ([port], [username], [password])  for a connection with: 
+- database1: your mariadb-database with your settings.
+- database2: your postgresql-database with your settings.
 
 ```code
-quarkus.datasource.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?useCursorFetch=true&rewriteBatchedStatements=true
-quarkus.datasource.username=[username]
-quarkus.datasource.password=[password]
+quarkus.datasource.database1.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?useCursorFetch=true&rewriteBatchedStatements=true
+quarkus.datasource.database1.username=[username]
+quarkus.datasource.database1.password=[password]
+
+quarkus.datasource.database2.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?useCursorFetch=true&rewriteBatchedStatements=true
+quarkus.datasource.database2.username=[username]
+quarkus.datasource.database2.password=[password]
 ```
 
 ### Setup/run Cognito-Simulator
@@ -118,28 +166,10 @@ Start the Server from the Console with following command:
 ./gradlew --console=plain quarkusDev
 ```
 You can then navigate your webbrowser directly to the swagger-ui or dev-ui:
-- http://localhost:8080/q/swagger-ui/
-- http://localhost:8080/q/dev-ui/
+- http://localhost:8000/q/swagger-ui/
+- http://localhost:8000/q/dev-ui/
 
 ## Setup/run Unit-Tests for local development
-
-### Create application.properties
-
-Within the folder `fk_backend/src/test/resources/`, copy the file `./templates/application.properties` to `./application.properties`,
-then edit this newly created file `fk_backend/src/test/resources/application.properties` in your editor of choice
-and copy the cognito and oidc settings from your `fk_backend/src/main/resources/application.properties` into your 
-`fk_backend/src/test/resources/application.properties`, which are the following:
-```
-# cognito-local
-cognitolocal.userpoolid=[userpoolid]
-cognitolocal.userpoolclientid=[userpoolclientid]
-cognitolocal.userpoolclientsecret=[userpoolclientsecret]
-
-# quarkus oidc
-quarkus.oidc.auth-server-url=http://localhost:9229/[userpoolid]
-quarkus.oidc.discovery-enabled=false
-quarkus.oidc.jwks-path=http://localhost:9229/[userpoolid]/.well-known/jwks.json
-```
 
 ### Run the Unit-Tests
 
@@ -149,7 +179,7 @@ Alternatively you can start them via the console with following command:
 ```code
 ./gradlew test
 ```
-The testing-framework will fire up a mariadb-testcontainer automatically and will apply the liquibase-migrations to it.
+The testing-framework will fire up a mariadb/postgresql-testcontainer automatically and will apply the liquibase-migrations to it.
 This way the Unit-Tests can expect a real database to be available behind the tested code, 
 and with the help of jOOQ the expected database-content can be validated after each test.
 
@@ -157,7 +187,7 @@ and with the help of jOOQ the expected database-content can be validated after e
 
 ### Apply Liquibase-Migrations
 
-You can place the liquibase-migrations in the folder `fk_backend/src/main/resources/liquibase`.
+You can place the liquibase-migrations in the folder `_databases/databaseX/src/main/resources/databaseX/liquibase` (replace X with the number of your choice).
 For each new migration you can add a new file `feature-xxxx.xml` with replacing xxx with your ticket-id from your 
 version-control system (gitlab), to relate your database-migrations to your tickets.
 
@@ -165,7 +195,7 @@ You also need to add this identifier in the file `changelog.xml` in the same fol
 liquibase in which sequence the migration-files need to be applied (latest at the bottom).
 
 The Liquibase-Migrations are automatically applied when the Quarkus-Application is started 
-(as defined in `application.properties` with the `quarkus.liquibase.migrate-at-start=true` parameter)
+(as defined in `application.properties` with the `quarkus.databaseX.liquibase.migrate-at-start=true` parameter)
 
 It is often convenient in local-dev, to be able to rollback to a specific tag, if you want to switch your git-branch, that you are working on.
 For this use-case a gradle-task is provided, that helps you to rollback your database to a specific changeset. 
@@ -186,45 +216,50 @@ Note: this is only relevant/helpful for local-dev, you never! want to use this w
 ### Running the jOOQ Code-Generator
 
 After all database-changes via liquibase-migrations, the codegen must be executed, to recreate the database-specific code. 
-Each database gets its own folder. We have `fk_database` as example. But more database-folders would be possible. 
+Each database gets its own folder. We have `fk_database1` as example. But more database-folders would be possible. 
 Each such folder would have an own code-generator command to call it then.
 
 Start the jOOQ Code-Generator from the Console with following command:
 ```code
-./gradlew generateDatabaseJooqCode
+./gradlew generateDatabase1JooqCode
+./gradlew generateDatabase2JooqCode
+...
 ```
-The generated code will reside in the folder `fk_database/src/main/generated`. 
-The generator will fire up a mariadb-testcontainer automatically, apply the liquibase-migrations to it 
+The generated code will reside in the folder `_databases/fk_databaseX/src/main/generated`. 
+The generator will fire up a mariadb/postgresql-testcontainer automatically, apply the liquibase-migrations to it 
 and will then generate the code from this database-schema. Afterwards the testcontainer is stopped again.
 
 You also need to commit this generated code into your version-control system, as it is used within your code.
 
 ## Dockerizing the application
 
-The first step is, to prepare the `fk_backend/src/main/resources/application.properties` file to be ready for the deploy
+The first step is, to prepare the `_services/fk_backend/src/main/resources/application.properties` file to be ready for the deploy
 within the docker-container. Note that, normally you would prepare this file within a ci-pipeline (like in gitlab for example),
 so it is already prepared with the correct settings for the live-environment.
 
 For testing it, we can replace all `localhost` occurrences with a host/port that would be reachable from within
 the docker-container. For our example this would be:
+- fk-db1 for database1 (mariadb)
+- fk-db2 for database2 (postgresql)
 ```
-fk-db:3306
+fk-db1:3306
+fk-db2:5432
 ```
 
 Next, build the JAR-files with following command. It will execute the tests and build everything.
 ```shell script
 ./gradlew build
 ```
-The build produces the `quarkus-run.jar` file in the `fk_backend/build/quarkus-app/` directory along with other files,
+The build produces the `quarkus-run.jar` file in the `_services/fk_backend/build/quarkus-app/` directory along with other files,
 and also with our prepared `application.properties`. 
 
 Finally, we can build the docker-image and start it as docker-container by executing the docker-compose file as follows:
 ```shell script
 docker-compose up --build
 ```
-This will start up a docker-container build with the `fk_backend/src/main/docker/Dockerfile.jvm` which will use the `fk_backend/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
+This will start up a docker-container build with the `_services/fk_backend/src/main/docker/Dockerfile.jvm` which will use the `_services/fk_backend/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
-- http://localhost:8080/products/1
+- http://localhost:8000/products/1
 
 ## Intellij IDEA
 
@@ -242,7 +277,7 @@ Use the jOOQ Version, that is fitting for your database or upgrade your database
 
 We also can check conflicting dependencies, with gradlew. For example. The following command would check the dependency `validation-api` in our module `fk_backend` and show as all versions of this (possibly transitive) dependency in the runtime classpath: 
 ```code
-./gradlew -p fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
+./gradlew -p _services/fk_backend dependencyInsight --dependency validation-api --configuration runtimeClasspath
 ```
 
 ## Quartz
@@ -275,7 +310,9 @@ because the quarkus-plugin seeks if all `@Inject` annotations, can be resolved (
 To make the quarkus-plugin accept our project in the build we need to provide the project a `src/main/resources/application.conf` file,
 that contains only the following line, so the `@Inject` for the DataSource can be resolved. 
 ```
-quarkus.datasource.db-kind=mariadb
+quarkus.datasource.active=false
+quarkus.datasource.database1.db-kind=mariadb
+quarkus.datasource.database2.db-kind=postgresql
 ```
 See also:
 - https://stackoverflow.com/questions/78245861/quarkus-gradle-multi-project-build-modular-testing-build-problem

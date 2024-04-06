@@ -3,17 +3,17 @@ version: "3.5"
 services:
   fk-backend:
     build:
-      context: fk_backend
+      context: _services/fk_backend
       dockerfile: src/main/docker/Dockerfile.jvm
     ports:
       - 8080:8080
     networks:
       - quarkus
     depends_on:
-      fk-db:
+      fk-db1:
         condition: service_healthy
 
-  fk-db:
+  fk-db1:
       image: mariadb:10.10.7
       restart: always
       ports:
@@ -24,13 +24,26 @@ services:
           MYSQL_USER: mydbuser
           MYSQL_PASSWORD: changeme
       volumes:
-          - ./fk_database/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+          - ./_databases/fk_database1/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
       networks:
           - quarkus
       healthcheck:
           test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
           timeout: 5s
           retries: 10
+
+  fk-db2:
+      image: postgres:16.2
+      ports:
+          - 5432:5432
+      volumes:
+          - ./_databases/fk_database2/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+      environment:
+          - POSTGRES_PASSWORD=changeme
+          - POSTGRES_USER=mydbuser
+          - POSTGRES_DB=mydb
+      networks:
+          - quarkus
 
 networks:
   quarkus:

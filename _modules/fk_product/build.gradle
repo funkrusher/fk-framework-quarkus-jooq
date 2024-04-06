@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea'
+    id 'io.quarkus'
+    id "org.liquibase.gradle" version "2.0.2"
+}
+
+// dependencies-resolvement
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+dependencies {
+    implementation enforcedPlatform(libs.quarkusPlatform)
+    api project(':_core:fk_core')
+    api project(':_databases:fk_database1')
+
+    api libs.bundles.quarkus
+    api libs.bundles.jooq
+    api libs.bundles.aws
+    api libs.bundles.testcontainers
+    api libs.mariadbJavaClient
+    api libs.jacksonCsv
+    api libs.jacksonJsr310
+
+    testImplementation libs.bundles.test.quarkus
+    testImplementation libs.bundles.test.testcontainers
+    testImplementation libs.awaitility
+    testImplementation libs.mariadbJavaClient
+    testImplementation libs.restAssured
+    testImplementation project(':_databases:fk_database1')
+}
