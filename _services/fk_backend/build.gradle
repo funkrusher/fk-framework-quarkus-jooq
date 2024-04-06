@@ -44,14 +44,26 @@ if (file('src/main/resources/application.properties').exists()) {
     }
 }
 
-task liquibaseRollback(type: JavaExec) {
+task backendDatabase1Rollback(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     mainClass = 'liquibase.integration.commandline.Main'
     args '--changeLogFile=database1/liquibase/changelog.xml',
             '--driver=org.mariadb.jdbc.Driver',
-            '--url=' + properties.getProperty('quarkus.datasource.jdbc.url'),
-            '--username=' + properties.getProperty('quarkus.datasource.username'),
-            '--password=' + properties.getProperty('quarkus.datasource.password'),
+            '--url=' + properties.getProperty('quarkus.datasource.database1.jdbc.url'),
+            '--username=' + properties.getProperty('quarkus.datasource.database1.username'),
+            '--password=' + properties.getProperty('quarkus.datasource.database1.password'),
+            'rollback',
+            project.properties['rollbackTag'] ? project.properties['rollbackTag'] : ''
+}
+
+task backendDatabase2Rollback(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    mainClass = 'liquibase.integration.commandline.Main'
+    args '--changeLogFile=database2/liquibase/changelog.xml',
+            '--driver=org.postgresql.Driver',
+            '--url=' + properties.getProperty('quarkus.datasource.database2.jdbc.url'),
+            '--username=' + properties.getProperty('quarkus.datasource.database2.username'),
+            '--password=' + properties.getProperty('quarkus.datasource.database2.password'),
             'rollback',
             project.properties['rollbackTag'] ? project.properties['rollbackTag'] : ''
 }

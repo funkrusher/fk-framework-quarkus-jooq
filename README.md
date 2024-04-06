@@ -196,22 +196,24 @@ liquibase in which sequence the migration-files need to be applied (latest at th
 
 The Liquibase-Migrations are automatically applied when the Quarkus-Application is started 
 (as defined in `application.properties` with the `quarkus.databaseX.liquibase.migrate-at-start=true` parameter)
+While the Liquibase-Migrations are part of the database-projects, the Rollback-Functionality is a task that is defined on the services-projects,
+because the services, define the concrete database, and a rollback is an activity on the concrete database-instance.
+You can find the Rollback-Task in `_services/fk_backend/build.gradle`.
 
 It is often convenient in local-dev, to be able to rollback to a specific tag, if you want to switch your git-branch, that you are working on.
 For this use-case a gradle-task is provided, that helps you to rollback your database to a specific changeset. 
 This will automatically execute all rollbacks of already applied changesets until the tag-changeset is reached.
 ```code
-./gradlew liquibaseRollback -ProllbackTag=feature-1122
+./gradlew backendDatabase1Rollback -ProllbackTag=feature-1122
+./gradlew backendDatabase2Rollback -ProllbackTag=feature-3823
 ```
-This example would rollback the following tags, in this order:
-- feature-1321
-- feature-1122
+This example would rollback all migrations that followed after the file `feature-1122.sql` in database1 (mariadb) and all migrations that
+followed after `feature-3823` in database (postgresql).
 
 The typical workflow would consider of first rolling back your changesets by rolling back to the latest changeSet-tag in the dev-branch. 
-Then you would switch branches to an other feature branch, and start the quarkus-application, 
-so all changeSets of this branch are applied to your database.
+Then you would switch branches to another feature branch, and start the quarkus-application, so all changeSets of this branch are applied to your database.
 
-Note: this is only relevant/helpful for local-dev, you never! want to use this with any other environment (staging, production).
+Note: Rollback is only relevant/helpful for local-dev, you never! want to use this with any other environment (staging, production).
 
 ### Running the jOOQ Code-Generator
 
