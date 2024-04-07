@@ -35,28 +35,28 @@ In the folder `./docs` you can find specific documentations about the different 
 
 ```mermaid
 graph TD;
-subgraph core
-Core
+subgraph  
+fk_core
 end
-subgraph databases
-Database1 --> Core
-Database2 --> Core
+subgraph  
+fk_database1 --> fk_core
+fk_database2 --> fk_core
 end
-subgraph modules
-Module1 --> Core
-Module2 --> Core
-Module1 --> Module2
-Module1 -.->|init, connect| Database1
-Module1 -.->|connect| Database2
-Module2 -.->|init, connect| Database2
+subgraph  
+fk_product --> fk_core
+fk_library --> fk_core
+fk_library --> fk_product
+fk_product -.->|init,\n connect| fk_database1
+fk_product -.->|connect| fk_database2
+fk_library -.->|init,\n connect| fk_database2
 end
-subgraph services
-Service1 --> Module1
-Service1 --> Module2
-Service1 -->|define, migrate| Database1
-Service1 -->|use| Database2
-Service2 --> Module2
-Service2 -->|define, migrate| Database2
+subgraph  
+fk_backend1 --> fk_product
+fk_backend1 --> fk_library
+fk_backend1 -->|define,\n migrate| fk_database1
+fk_backend1 -->|use| fk_database2
+fk_backend2 --> fk_library
+fk_backend2 -->|define,\n migrate| fk_database2
 end
 ```
 
