@@ -1,0 +1,14 @@
+stages:
+    - deploy
+
+fk_backend2:
+    stage: deploy
+    before_script:
+        - docker info
+    script:
+        - cd $CI_PROJECT_DIR && cp ./_services/fk_backend2/src/main/resources/templates/application-prod.properties ./_services/fk_backend2/src/main/resources/application.properties
+        - ./gradlew clean build -p _services/fk_backend2 -x test
+        - docker-compose -f _services/fk_backend2/docker-compose-backend2.yml up -d --build
+        - echo "fk_backend2 pipeline finished"
+    tags:
+        - shell

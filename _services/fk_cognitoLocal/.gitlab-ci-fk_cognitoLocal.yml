@@ -1,0 +1,15 @@
+stages:
+    - deploy
+
+fk_cognitoLocal:
+    stage: deploy
+    before_script:
+        - docker info
+    script:
+        - cd $CI_PROJECT_DIR
+        - docker-compose -f _services/fk_cognitoLocal/docker-compose-cognitoLocal.yml up -d --build
+        - sleep 15
+        - ./gradlew cognitoLocalSetup
+        - echo "fk_cognitoLocal pipeline finished"
+    tags:
+        - shell

@@ -1,0 +1,14 @@
+version: "3.5"
+
+services:
+  fk-cognito-local:
+    container_name: fk-cognito-local
+    image: jagregory/cognito-local
+    ports:
+      - "9229:9229"
+    networks:
+      - fk-framework
+
+networks:
+  fk-framework:
+    external: true

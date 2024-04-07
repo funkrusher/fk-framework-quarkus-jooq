@@ -1,0 +1,16 @@
+version: "3.5"
+
+services:
+  fk-backend2:
+    container_name: fk-backend2
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - 9051:8080
+    networks:
+      - fk-framework
+
+networks:
+    fk-framework:
+        external: true

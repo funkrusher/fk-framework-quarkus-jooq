@@ -90,12 +90,20 @@ Connect with your mariadb-database and create the database `testshop`
 ```
 CREATE DATABASE testshop;
 ```
+you can start up a mariadb database-instance for this if you do not already have one preset:
+```
+docker-compose -f _databases/fk_database1/docker-compose-database1.yml up --build -d
+```
 
 ### Create database2
 
 Connect with your postgresql-database and create the database `testlibrary`
 ```
 CREATE DATABASE testlibrary;
+```
+you can start up a postgresql database-instance for this if you do not already have one preset:
+```
+docker-compose -f _databases/fk_database2/docker-compose-database2.yml up --build -d
 ```
 
 ### Create application.properties
@@ -127,7 +135,7 @@ Therefor we will use the `cognito-local` offline emulator:
 We will first start `cognito-local` as a docker-container running on port 9229. Open up a console within the root-folder
 of this project and enter following command:
 ```
-docker-compose -f cognito-local-docker-compose.yml up --build -d
+docker-compose -f _services/fk_cognitoLocal/docker-compose-cognitoLocal.yml up --build -d
 ```
 
 Start the cognitoLocalSetup task from the Console with following command:
@@ -262,6 +270,22 @@ docker-compose up --build
 This will start up a docker-container build with the `_services/fk_backend1/src/main/docker/Dockerfile.jvm` which will use the `_services/fk_backend1/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
 - http://localhost:8000/products/1
+
+## Gitlab-Deploy
+
+As example for deployment of this multi-services project, we use Gitlab Downstream-Pipelines. See:
+- https://docs.gitlab.com/ee/ci/pipelines/downstream_pipelines.html
+
+The entrypoint is: `.gitlab-ci.yml`. 
+
+When you want to test this deployment you must first make sure that the docker-network `fk-framework` exists on the target-system,
+where the containers will be deployed to. It can be created as follow:
+```
+docker network create fk-framework --attachable
+```
+
+Afterwards you can push this code to gitlab, and adjust the gitlab-ci files and referenced docker-compose files to your needs.
+They have been tested to work, but may need small adjustments for your system.
 
 ## Intellij IDEA
 

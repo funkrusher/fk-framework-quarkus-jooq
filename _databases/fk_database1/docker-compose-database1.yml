@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  fk-database1:
+      container_name: fk-database1
+      image: mariadb:10.10.7
+      restart: always
+      ports:
+          - "1763:3306"
+      environment:
+          MYSQL_ROOT_PASSWORD: changeme
+          MYSQL_DATABASE: mydb
+          MYSQL_USER: mydbuser
+          MYSQL_PASSWORD: changeme
+      volumes:
+          - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+      networks:
+          - fk-framework
+      healthcheck:
+          test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+          timeout: 5s
+          retries: 10
+
+networks:
+    fk-framework:
+        external: true

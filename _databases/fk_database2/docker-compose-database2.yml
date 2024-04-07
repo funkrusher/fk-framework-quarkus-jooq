@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  fk-database2:
+      container_name: fk-database2
+      image: postgres:16.2
+      restart: always
+      ports:
+          - 1764:5432
+      environment:
+          - POSTGRES_PASSWORD=changeme
+          - POSTGRES_USER=mydbuser
+          - POSTGRES_DB=mydb
+      volumes:
+          - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+      networks:
+          - fk-framework
+      healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres"]
+          interval: 10s
+          timeout: 5s
+          retries: 5
+
+networks:
+    fk-framework:
+        external: true

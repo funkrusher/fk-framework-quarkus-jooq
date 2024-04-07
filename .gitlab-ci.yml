@@ -1,18 +1,42 @@
 stages:
   - triggers
 
+fk-cognitoLocal:
+    stage: triggers
+    trigger:
+        include: _services/fk_cognitoLocal/.gitlab-ci-fk_cognitoLocal.yml
+        strategy: depend
+    rules:
+        - changes: [_services/fk_cognitoLocal/**/*]
+
+fk-database1:
+    stage: triggers
+    trigger:
+        include: _databases/fk_database1/.gitlab-ci-fk_database1.yml
+        strategy: depend
+    rules:
+        - changes: [_databases/fk_database1/**/*]
+
+fk-database2:
+    stage: triggers
+    trigger:
+        include: _databases/fk_database2/.gitlab-ci-fk_database2.yml
+        strategy: depend
+    rules:
+        - changes: [_databases/fk_database2/**/*]
+
 fk-backend1:
-  stage: triggers
-  trigger:
-    include: .gitlab-ci-fk_backend1.yml
-    strategy: depend
-  rules:
-    - changes: [_services/fk_backend1/**/*, _core/**/*, _modules/fk_product/**/*, _modules/fk_library/**/*, _databases/**/*]
+    stage: triggers
+    trigger:
+        include: _services/fk_backend1/.gitlab-ci-fk_backend1.yml
+        strategy: depend
+    rules:
+        - changes: [_services/fk_backend1/**/*, _core/**/*, _modules/fk_product/**/*, _modules/fk_library/**/*, _databases/**/*]
 
 fk-backend2:
-  stage: triggers
-  trigger:
-    include: .gitlab-ci-fk_backend2.yml
-    strategy: depend
-  rules:
-    - changes: [_services/fk_backend2/**/*, _core/**/*, _modules/fk_library/**/*, _databases/**/*]
+    stage: triggers
+    trigger:
+        include: _services/fk_backend2/.gitlab-ci-fk_backend2.yml
+        strategy: depend
+    rules:
+        - changes: [_services/fk_backend2/**/*, _core/**/*, _modules/fk_library/**/*, _databases/**/*]

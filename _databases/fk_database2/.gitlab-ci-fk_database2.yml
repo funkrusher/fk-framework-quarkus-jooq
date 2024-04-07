@@ -1,0 +1,12 @@
+stages:
+    - deploy
+
+fk_database2:
+    stage: deploy
+    before_script:
+        - docker info
+    script:
+        - docker-compose -f _databases/fk_database2/docker-compose-database2.yml up -d --build
+        - echo "fk_database2 pipeline finished"
+    tags:
+        - shell
