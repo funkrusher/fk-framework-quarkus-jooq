@@ -136,7 +136,7 @@ graph LR;
 
 ### Testing with Testcontainers
 
-```
+```mermaid
 graph TD;
 Tester[Tester] --> StartTestContainer[Starts a MariaDB test container];
 StartTestContainer --> ApplyMigrations[Applies Liquibase migrations to the MariaDB test container];
