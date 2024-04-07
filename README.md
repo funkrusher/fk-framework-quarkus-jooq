@@ -45,7 +45,6 @@ end
 subgraph  
 fk_product --> fk_core
 fk_library --> fk_core
-fk_library --> fk_product
 fk_product -.->|init,\n connect| fk_database1
 fk_product -.->|connect| fk_database2
 fk_library -.->|init,\n connect| fk_database2
