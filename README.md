@@ -265,7 +265,7 @@ and also with our prepared `application.properties`.
 
 Finally, we can build the docker-image and start it as docker-container by executing the docker-compose file as follows:
 ```shell script
-docker-compose up --build
+docker-compose -f _services/fk_backend1/docker-compose-backend1.yml up -d --build
 ```
 This will start up a docker-container build with the `_services/fk_backend1/src/main/docker/Dockerfile.jvm` which will use the `_services/fk_backend1/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
