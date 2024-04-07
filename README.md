@@ -41,23 +41,22 @@ end
 subgraph databases
 Database1 --> Core
 Database2 --> Core
-Database3 --> Core
 end
 subgraph modules
 Module1 --> Core
 Module2 --> Core
-Module3 --> Core
 Module1 --> Module2
-Module2 --> Module3
+Module1 -.->|init, connect| Database1
+Module1 -.->|connect| Database2
+Module2 -.->|init, connect| Database2
 end
 subgraph services
 Service1 --> Module1
 Service1 --> Module2
-Service1 --> Database1
+Service1 -->|define, migrate| Database1
+Service1 -->|use| Database2
 Service2 --> Module2
-Service2 --> Database2
-Service3 --> Module3
-Service3 --> Database3
+Service2 -->|define, migrate| Database2
 end
 ```
 
