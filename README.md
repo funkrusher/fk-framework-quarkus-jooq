@@ -31,6 +31,8 @@ In the folder `./docs` you can find specific documentations about the different 
 
 ## Overview
 
+### Multi-Modules Overview 
+
 ```mermaid
 graph TD;
 subgraph core
@@ -57,6 +59,89 @@ Service2 --> Database2
 Service3 --> Module3
 Service3 --> Database3
 end
+```
+
+### Quarkus OIDC with Cognito-Local
+
+The Backend1 and Backend2 Services are using the Cognito-Local Service with Quarkus OIDC to provide Authentication,
+and Backend1 also uses the Users-Table in Database1. The Browser will save the Authentication/Authorization. 
+The Roles of the User (Simple Authorization) is also saved in the Browser-Session. 
+
+```mermaid
+graph TD;
+subgraph Backend_Services
+fk_backend1 -->|Quarkus OIDC| fk_cognitoLocal;
+fk_backend2 -->|Quarkus OIDC| fk_cognitoLocal;
+fk_backend1 -->|Database1| database1;
+end
+
+    subgraph Frontend_User
+        browser_session -->|Authorized Token| fk_backend1;
+        browser_session -->|Authorized Token| fk_backend2;
+    end
+
+    fk_cognitoLocal -->|Token Validation| browser_session;
+```
+
+### Backend1 Code-Generator
+
+```mermaid
+graph LR;
+A(Start Mariadb Testcontainer) --> B(Apply Liquibase-Migrations to Mariadb Testcontainer);
+B --> C(Generate Jooq-Code from Mariadb Testcontainer);
+```
+
+### Backend1 Database-Changes
+
+Backend1 is the manager of Database1 (is allowed to apply DDL liquibase-migrations to database1).
+Backend1 may also initialize the basic-data of all its modules (DML), during startup. 
+This will only happen once and only in dev-environment and during Tests.
+
+```mermaid
+graph LR;
+    fk_product --> fk_database1;
+    fk_library --> fk_database2;
+    fk_backend1 --> fk_library;
+    fk_backend1 --> fk_product;
+    fk_backend1 -->|Applies database migrations| fk_database1;
+    subgraph Apply_Once
+        fk_product -.->|Applies initProduct code| fk_database1((Database 1));
+        fk_library -.->|Applies initLibrary code| fk_database2((Database 2));
+    end
+```
+
+### Backend2 Code-Generator
+
+```mermaid
+graph LR;
+A(Start Postgresql Testcontainer) --> B(Apply Liquibase-Migrations to Postgresql Testcontainer);
+B --> C(Generate Jooq-Code from Postgresql Testcontainer);
+```
+
+### Backend2 Database-Changes
+
+Backend2 is the manager of Database2 (is allowed to apply DDL liquibase-migrations to database2).
+Backend2 may also initialize the basic-data of all its modules (DML), during startup.
+This will only happen once and only in dev-environment and during Tests.
+
+```mermaid
+graph LR;
+    fk_library --> fk_database2;
+    fk_backend2 --> fk_library;
+    fk_backend2 -->|Applies database migrations| fk_database2;
+    subgraph Apply_Once
+        fk_library -.->|Applies initLibrary code| fk_database2((Database 2));
+    end
+```
+
+### Testing with Testcontainers
+
+```
+graph TD;
+Tester[Tester] --> StartTestContainer[Starts a MariaDB test container];
+StartTestContainer --> ApplyMigrations[Applies Liquibase migrations to the MariaDB test container];
+ApplyMigrations --> ExecuteProductInit[Executes the productInit method to initialize basic data];
+ExecuteProductInit --> ExecuteAllTests[Executes all tests];
 ```
 
 ## Requirements
