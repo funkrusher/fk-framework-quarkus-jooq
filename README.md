@@ -345,11 +345,11 @@ so it is already prepared with the correct settings for the live-environment.
 
 For testing it, we can replace all `localhost` occurrences with a host/port that would be reachable from within
 the docker-container. For our example this would be:
-- fk-db1 for database1 (mariadb)
-- fk-db2 for database2 (postgresql)
+- fk-database1 for database1 (mariadb)
+- fk-database1 for database2 (postgresql)
 ```
-fk-db1:3306
-fk-db2:5432
+fk-database1:3306
+fk-database1:5432
 ```
 
 Next, build the JAR-files with following command. It will execute the tests and build everything.
