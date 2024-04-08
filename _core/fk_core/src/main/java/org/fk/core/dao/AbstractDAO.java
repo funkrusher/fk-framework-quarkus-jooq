@@ -60,11 +60,16 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     // ------------------------------------------------------------------------
 
     private List<R> transformToRecords(List<? extends Y> objects) {
+        // TODO: this function must be refactored! instanceof-checks are not good.
+        // we only support Records or AbstractDTO here.
         List<R> records = new ArrayList<>();
         boolean isDTO = false;
+        boolean isRecord = false;
         if (!objects.isEmpty()) {
             if (objects.getFirst() instanceof AbstractDTO) {
                 isDTO = true;
+            } else if (objects.getFirst() instanceof UpdatableRecord<?>) {
+                isRecord = true;
             }
         }
         for (Y obj : objects) {
@@ -82,8 +87,10 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                     }
                 }
                 records.add(record);
+            } else if (isRecord){
+                records.add((R) obj);
             } else {
-                records.add(dsl().newRecord(table(), obj));
+                throw new RuntimeException("unsupported type!");
             }
         }
         return records;

@@ -84,12 +84,8 @@ public class ProductManager extends AbstractManager {
     }
 
     public void testMultiTransaction(DSLContext dsl) {
-
         // we use jooq transactions, because they are more fine-tuneable.
         // see: https://blog.jooq.org/nested-transactions-in-jooq/
-
-        ProductDTO p = new ProductDTO();
-        p.setProductId(3L);
 
         List<IProduct> inserts = new ArrayList<>();
         for (int i= 0; i < 1000; i++) {
@@ -137,28 +133,26 @@ public class ProductManager extends AbstractManager {
         }
     }
 
-    // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
-    // can we please not! use it?
-    // see: https://github.com/quarkusio/quarkus/issues/34569
-    @Transactional(rollbackOn = Exception.class)
     public ProductDTO create(DSLContext dsl, final ProductDTO product) throws ValidationException {
-        ProductDAO productRecordDAO = new ProductDAO(dsl);
-        ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
+        return dsl.transactionResult(tx1 -> {
+            ProductDAO productRecordDAO = new ProductDAO(dsl);
+            ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
-        // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
-        // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
-        this.validateInsert(product);
-        productRecordDAO.insert(product);
+            // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
+            // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
+            this.validateInsert(product);
+            productRecordDAO.insert(product);
 
-        List<IProductLang> productLangInserts = new ArrayList<>();
-        for (ProductLangDTO xLang : product.getLangs()) {
-            xLang.setProductId(product.getProductId());
-            this.validateInsert(xLang);
-            productLangInserts.add(xLang);
-        }
-        productLangRecordDAO.insert(productLangInserts);
+            List<IProductLang> productLangInserts = new ArrayList<>();
+            for (ProductLangDTO xLang : product.getLangs()) {
+                xLang.setProductId(product.getProductId());
+                this.validateInsert(xLang);
+                productLangInserts.add(xLang);
+            }
+            productLangRecordDAO.insert(productLangInserts);
 
-        return new ProductRepository(dsl).fetchById(product.getProductId());
+            return new ProductRepository(dsl).fetchById(product.getProductId());
+        });
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
