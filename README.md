@@ -169,25 +169,25 @@ It is recommended to use a tool like sdkman for easy JDK-selection.
 
 ### Create database1
 
-Connect with your mariadb-database and create the database `testshop`
-```
-CREATE DATABASE testshop;
-```
-you can start up a mariadb database-instance for this if you do not already have one preset:
+you can start up a mariadb database-instance for this if you do not already have one preset (it also creates the database `testshop`, that you can connect to):
 ```
 docker-compose -f _databases/fk_database1/docker-compose-database1.yml up --build -d
 ```
+After starting, you can connect to it with:
+- host: localhost:1763
+- user: root
+- pass: changeme
 
 ### Create database2
 
-Connect with your postgresql-database and create the database `testlibrary`
-```
-CREATE DATABASE testlibrary;
-```
-you can start up a postgresql database-instance for this if you do not already have one preset:
+you can start up a postgresql database-instance for this if you do not already have one preset (it also creates the database `testlibrary`, that you can connect to):
 ```
 docker-compose -f _databases/fk_database2/docker-compose-database2.yml up --build -d
 ```
+After starting, you can connect to it with:
+- host: localhost:1764
+- user: mydbuser
+- pass: changeme
 
 ### Create application.properties
 
@@ -206,6 +206,7 @@ quarkus.datasource.database2.jdbc.url=jdbc:postgresql://localhost:[port]/testlib
 quarkus.datasource.database2.username=[username]
 quarkus.datasource.database2.password=[password]
 ```
+Do the same for `_services/fk_backend2`.
 
 ### Setup/run Cognito-Simulator
 
@@ -238,7 +239,6 @@ cognitolocal.userpoolid=local_7GsYn8Qh
 cognitolocal.userpoolclientid=67jqekw6w9193e8khcu9d5slh
 cognitolocal.userpoolclientsecret=6sjqzo1wyemkrjecj4qlqembt
 ```
-
 Quarkus will take care of the JWT-Verify, for the JWT that has been created by a successful AWS-Cognito Authentication.
 We need to tell it where to get the OIDC configuration. So make sure that your `application.properties` file also contains the following configurations from the template
 (please insert the correct value for <cognitolocal.userpoolid>):
@@ -250,15 +250,28 @@ quarkus.oidc.jwks-path=http://localhost:9229/<cognitolocal.userpoolid>/.well-kno
 quarkus.oidc.roles.role-claim-path=custom:fk_roles
 ```
 
+Do the same for `_services/fk_backend2`.
+
 ### Run the server
 
-Start the Server from the Console with following command:
+For the first start, please start the service `backend2` first, because `backend1` also connects to `database2` and 
+`backend2` needs to apply the db-migrations first on `database2` for it to be usable by `backend1`.
+
+If you use Intellij, you can simply use the starters for the `backend2` and `backend1`,
+otherwise, start the Backends from the Console with following commands:
 ```code
-./gradlew --console=plain quarkusDev
+./gradlew --console=plain quarkusRun -p _services/fk_backend1
+./gradlew --console=plain quarkusRun -p _services/fk_backend2
 ```
-You can then navigate your webbrowser directly to the swagger-ui or dev-ui:
+You can then navigate your webbrowser directly to the swagger-ui or dev-ui.
+
+Backend1:
 - http://localhost:8000/q/swagger-ui/
 - http://localhost:8000/q/dev-ui/
+
+Backend2:
+- http://localhost:8001/q/swagger-ui/
+- http://localhost:8001/q/dev-ui/
 
 ## Setup/run Unit-Tests for local development
 
