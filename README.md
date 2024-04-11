@@ -260,8 +260,8 @@ For the first start, please start the service `backend2` first, because `backend
 If you use Intellij, you can simply use the starters for the `backend2` and `backend1`,
 otherwise, start the Backends from the Console with following commands:
 ```code
-./gradlew --console=plain quarkusRun -p _services/fk_backend1
-./gradlew --console=plain quarkusRun -p _services/fk_backend2
+./gradlew :_services:fk_backend1:quarkusDev
+./gradlew :_services:fk_backend2:quarkusDev
 ```
 You can then navigate your webbrowser directly to the swagger-ui or dev-ui.
 
