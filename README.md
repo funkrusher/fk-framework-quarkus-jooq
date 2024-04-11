@@ -273,6 +273,13 @@ Backend2:
 - http://localhost:8001/q/swagger-ui/
 - http://localhost:8001/q/dev-ui/
 
+if you want to start multiple instances of the same server for testing purposes of concurrency, 
+you can do like this (just give each a different port, but use the same configuration)
+```code
+./gradlew :_services:fk_backend1:quarkusDev -Dquarkus.http.port=9010
+./gradlew :_services:fk_backend1:quarkusDev -Dquarkus.http.port=9020
+...
+
 ## Setup/run Unit-Tests for local development
 
 ### Run the Unit-Tests
