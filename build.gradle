@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'maven-publish'
 }
 
 // dependencies-resolvement
@@ -9,8 +10,8 @@ repositories {
     mavenLocal()
 }
 
-group 'org.fk'
-version '1.0.0-SNAPSHOT'
+group theGroup
+version theVersion
 
 // java-settings for the whole project
 java {
@@ -34,5 +35,53 @@ idea {
         jdkName = '21'
         languageLevel = '21'
         vcs = 'Git'
+    }
+}
+
+// enable publishing for all projects
+subprojects {
+    apply plugin: 'maven-publish'
+
+    // set subprojects version here because gradle-problem, see: https://stackoverflow.com/questions/17262856/how-to-set-the-project-name-group-version-plus-source-target-compatibility-in
+    version theVersion
+
+    // quarkus-specific workaround, see: https://quarkus.io/guides/gradle-tooling#publishing-your-application
+    tasks.withType(GenerateModuleMetadata).configureEach {
+        suppressedValidationErrors.add('enforced-platform')
+    }
+    publishing {
+        repositories {
+            maven {
+                name = "fkReposilite"
+                if (project.version.toString().endsWith('SNAPSHOT')) {
+                    url = "http://localhost:9333/snapshots"
+                } else {
+                    url = "http://localhost:9333/releases"
+                }
+                allowInsecureProtocol = true
+                credentials(PasswordCredentials)
+                authentication {
+                    basic(BasicAuthentication)
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url 'http://localhost:9333/releases'
+            allowInsecureProtocol = true
+            credentials {
+                username = 'admin'
+                password = 'secret'
+            }
+        }
+        maven {
+            url 'http://localhost:9333/snapshots'
+            allowInsecureProtocol = true
+            credentials {
+                username = 'admin'
+                password = 'secret'
+            }
+        }
     }
 }

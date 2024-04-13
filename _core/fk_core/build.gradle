@@ -36,3 +36,15 @@ task cognitoLocalSetup(type: JavaExec) {
     mainClass = 'org.fk.core.cognito.CognitoLocalSetup'
     classpath = sourceSets.main.runtimeClasspath
 }
+
+// publishing
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = theGroup
+            artifactId = "fk-core"
+            version = theVersion
+            from components.java
+        }
+    }
+}

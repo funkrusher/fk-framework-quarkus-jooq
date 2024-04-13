@@ -167,6 +167,12 @@ It is recommended to use a tool like sdkman for easy JDK-selection.
 
 ## Setup/run server for local development
 
+First create the docker-network our containers will reside in.
+
+```
+docker network create fk-framework --attachable
+```
+
 ### Create database1
 
 you can start up a mariadb database-instance for this if you do not already have one preset (it also creates the database `testshop`, that you can connect to):
@@ -389,6 +395,80 @@ docker network create fk-framework --attachable
 
 Afterwards you can push this code to gitlab, and adjust the gitlab-ci files and referenced docker-compose files to your needs.
 They have been tested to work, but may need small adjustments for your system.
+
+## Reposilite Artifacts
+
+For testing purposes we also take a look at an artifact-repository, which can be used to test
+the publish/get of the projects modules as artifacts into the reposilite testing-instance.
+
+Reposilite can be started with following command:
+```
+docker-compose -f _services/fk_reposilite/docker-compose-reposilite.yml up --build -d
+```
+you can then navigate to the browser and login with `username=admin` and `password=secret`:
+- http://localhost:9333
+
+Afterwards we can publish our modules/projects to this repository with following command:
+```
+./gradlew publish -PfkReposiliteUsername=admin -PfkReposilitePassword=secretH
+```
+
+That way, we can always remove one of the projects (the core-module for example) from our mono-repo into
+a separate git-repo where we can deploy it to this repository as an artifact with a specific version.
+And then we can get this version in our other git-repository as a normal gradle-dependency, to allow a stronger split 
+between the teams working on the code.
+
+Please not that Gradle/Maven does not like publishing libraries that have a dependency
+on the quarkus-bom (enforcedPlatform). But quarkus recommends to ignore this error/warning:
+- see: https://quarkus.io/guides/gradle-tooling#publishing-your-application
+
+After you have published the artifacts with the command, we can afterwards use the published `fk-core` module,
+in all the projects. Simply open the `build.gradle` in each of the project, and replace the dependency to the
+`fk-core` module accordingly, so it will not be loaded as a local gradle-project, but will instead be pulled
+from the reposilite repository:
+```
+    // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
+    // api project(':_core:fk_core')
+    api libs.fkCore
+```
+It is still possible to set debug-breakpoints in intellij when you are using the reposilite as source,
+but it is not possible to change the source-code in the fk-core project for hot-reload. 
+After changes to the source-code of the fk-core project have been made, it must be published again,
+and pulled again for the other projects to be updated with it.
+
+By default all artifacts are published as "SNAPSHOT" artifacts into reposilite. Those are special in regards,
+that the timestamp they have will force them to be pulled/get again when they are changed, which is not true
+for release artifacts.
+
+When a release will be made you should change the file `gradle.properties` before you publish the artifacts 
+and set the desired release-version without the SNAPSHOT-suffix. Afterwards you need to increase the version-number,
+and add the SNAPSHOT-suffix again, so you can continue with your next version-snapshot on dev until it is
+ready again for the next release.
+
+Please note, that when you change code in a snapshot-project and republished it to the repository, and want to instantly
+work with this new version in you app (in local-dev for example), you need to refresh the gradle-dependencies,
+because otherwise gradle will just pull/use the old version from the cache. 
+- See: https://stackoverflow.com/questions/32652738/how-can-i-force-update-all-the-snapshot-gradle-dependencies-in-intellij
+
+In Console this would be:
+```
+./gradlew clean --refresh-dependencies
+```
+If you use the Intellij-Starter to start the App/Backend, please be aware that in that case
+you need to use the Gradle-Refresh Button in the Intellij-Gradle-Widget instead.
+
+So to summarize:
+1. Publish your change code
+2. Refresh the Gradle Dependencies
+3. Start your app depending on the changed code
+
+With this explanation you should have all tools necessary to:
+- create unique versions of artifacts for each release / merge to master
+- depend on / use old versions of artifacts to stay on older versions for some time until you have catched up with the snapshot again
+
+This should help you in a multi-team environment, where each team works on a service and an other team changes a core functionality.
+In that case the team-A can use the latest version and set the team-B to the current release-version. 
+Team B can then take their time to decide/plan, when they also use the latest version of the artifact again.
 
 ## Intellij IDEA
 

@@ -13,8 +13,11 @@ repositories {
 }
 dependencies {
     implementation enforcedPlatform(libs.quarkusPlatform)
-    api project(':_core:fk_core')
     api project(':_databases:fk_database2')
+
+    // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
+    api project(':_core:fk_core')
+    // api libs.fkCore
 
     api libs.bundles.quarkus
     api libs.bundles.jooq
@@ -30,4 +33,16 @@ dependencies {
     testImplementation libs.postgresJavaClient
     testImplementation libs.restAssured
     testImplementation project(':_databases:fk_database2')
+}
+
+// publishing
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = theGroup
+            artifactId = "fk-library"
+            version = theVersion
+            from components.java
+        }
+    }
 }

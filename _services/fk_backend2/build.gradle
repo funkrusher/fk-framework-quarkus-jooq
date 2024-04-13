@@ -54,3 +54,15 @@ task backend2Database2Rollback(type: JavaExec) {
             'rollback',
             project.properties['rollbackTag'] ? project.properties['rollbackTag'] : ''
 }
+
+// publishing
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = theGroup
+            artifactId = "fk-backend2"
+            version = theVersion
+            from components.java
+        }
+    }
+}

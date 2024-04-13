@@ -9,7 +9,10 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
     api project(':_core:fk_core')
+    // api libs.fkCore
+
     api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.testcontainers
@@ -41,4 +44,16 @@ task generateDatabase2JooqCode(type: JavaExec) {
     description = 'Runs JooqCodeGenerator Java Application'
     mainClass = 'org.fk.database2.Database2CodeGenerator'
     classpath = sourceSets.main.runtimeClasspath
+}
+
+// publishing
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = theGroup
+            artifactId = "fk-database2"
+            version = theVersion
+            from components.java
+        }
+    }
 }
