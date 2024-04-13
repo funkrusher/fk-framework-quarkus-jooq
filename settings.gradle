@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         libs {
             // versions
-            version('fk-framework', '1.0.0-SNAPSHOT')
+            version('fk-core', '1.0.0-SNAPSHOT')
             version('quarkus', '3.8.2')
             version('mariadb-java-client', '3.3.3')
             version('postgres-java-client', '42.7.3')
@@ -25,8 +25,9 @@ dependencyResolutionManagement {
             version('awssdk', '2.25.11')
             version('ulid', '5.2.3')
 
-            // fk-framework self-dependencies
-            library('fkCore', 'org.fk', 'fk-core').versionRef('fk-framework')
+            // fk-framework self-dependencies (sticky versions)
+            // this should mostly be stable core-libraries / shared modules that don't change often.
+            library('fkCore', 'org.fk', 'fk-core').versionRef('fk-core')
 
             // ulid identifiers
             library('ulid', 'com.github.f4b6a3', 'ulid-creator').versionRef('ulid')

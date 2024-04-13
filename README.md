@@ -418,36 +418,36 @@ a separate git-repo where we can deploy it to this repository as an artifact wit
 And then we can get this version in our other git-repository as a normal gradle-dependency, to allow a stronger split 
 between the teams working on the code.
 
-Please not that Gradle/Maven does not like publishing libraries that have a dependency
+Please note, that Gradle/Maven does not like publishing libraries that have a dependency
 on the quarkus-bom (enforcedPlatform). But quarkus recommends to ignore this error/warning:
 - see: https://quarkus.io/guides/gradle-tooling#publishing-your-application
 
-After you have published the artifacts with the command, we can afterwards use the published `fk-core` module,
+After you have published the artifacts with the command, we can afterward use the published `fk-core` module,
 in all the projects. Simply open the `build.gradle` in each of the project, and replace the dependency to the
 `fk-core` module accordingly, so it will not be loaded as a local gradle-project, but will instead be pulled
 from the reposilite repository:
 ```
-    // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
     // api project(':_core:fk_core')
     api libs.fkCore
 ```
-It is still possible to set debug-breakpoints in intellij when you are using the reposilite as source,
+It is still possible to set debug-breakpoints in intellij, when you are using the reposilite as source,
 but it is not possible to change the source-code in the fk-core project for hot-reload. 
 After changes to the source-code of the fk-core project have been made, it must be published again,
 and pulled again for the other projects to be updated with it.
 
-By default all artifacts are published as "SNAPSHOT" artifacts into reposilite. Those are special in regards,
-that the timestamp they have will force them to be pulled/get again when they are changed, which is not true
-for release artifacts.
+By default, all artifacts are published as "SNAPSHOT" artifacts into reposilite. Those are special in regards,
+that they are allowed to be overridden when they are changed, which is not true for release artifacts.
 
-When a release will be made you should change the file `gradle.properties` before you publish the artifacts 
-and set the desired release-version without the SNAPSHOT-suffix. Afterwards you need to increase the version-number,
-and add the SNAPSHOT-suffix again, so you can continue with your next version-snapshot on dev until it is
-ready again for the next release.
+When your team is ready to release the software, you should change the `gradle.properties` file, and remove the
+"SNAPSHOT" part from the current version (for example: 1.0.0). Then you push this new version to git, and the 
+gitlab-pipeline should execute the publish-task, to publish the 1.0.0 artifacts to your repository for later use.
 
-Please note, that when you change code in a snapshot-project and republished it to the repository, and want to instantly
-work with this new version in you app (in local-dev for example), you need to refresh the gradle-dependencies,
-because otherwise gradle will just pull/use the old version from the cache. 
+Afterward you need to change the file again and replace the 1.0.0 version with the next snapshot version,
+which would be 1.0.1-SNAPSHOT. Then your team will work on the next release reiterate the described process.
+
+Please note, that when you change code in a snapshot-project and republished it to the reposilite-repository, 
+and want to instantly work with this new version in you app (in local-dev for example), you need to refresh 
+the gradle-dependencies, because otherwise gradle will just pull/use the old version from the cache. 
 - See: https://stackoverflow.com/questions/32652738/how-can-i-force-update-all-the-snapshot-gradle-dependencies-in-intellij
 
 In Console this would be:
@@ -455,20 +455,30 @@ In Console this would be:
 ./gradlew clean --refresh-dependencies
 ```
 If you use the Intellij-Starter to start the App/Backend, please be aware that in that case
-you need to use the Gradle-Refresh Button in the Intellij-Gradle-Widget instead.
+you need to use the Gradle-Refresh Button in the Intellij-Gradle-Widget instead as described in the above link.
 
 So to summarize:
-1. Publish your change code
+1. Publish your changed code
 2. Refresh the Gradle Dependencies
 3. Start your app depending on the changed code
 
 With this explanation you should have all tools necessary to:
 - create unique versions of artifacts for each release / merge to master
-- depend on / use old versions of artifacts to stay on older versions for some time until you have catched up with the snapshot again
+- depend on / use old versions of artifacts to stay on older versions for some time, until you have caught up with the snapshot again
 
-This should help you in a multi-team environment, where each team works on a service and an other team changes a core functionality.
-In that case the team-A can use the latest version and set the team-B to the current release-version. 
+This should help you in a multi-team environment, where each team works on a service and another team changes a core functionality.
+In that case the team-A can use the latest version and set the team-B to the current valid release-version. 
 Team B can then take their time to decide/plan, when they also use the latest version of the artifact again.
+
+If you really need this, you should think about splitting up this mono-repo into separate repos per team.
+- platform-team: defines core-module and shared-modules (shared account/user-management) with own release-versioning and git-repo
+- teamA: defines serviceA with own release-versioning and git-repo
+- teamB: defines serviceB with own release-versioning and git-repo
+
+This way the platform-team will be able to prepare new versions of core functionality, and the other teams can decide
+in their own release-cycle when they are ready to include those new versions into their own services.
+
+But this should be doable with the tools/demo presented in this project.
 
 ## Intellij IDEA
 
