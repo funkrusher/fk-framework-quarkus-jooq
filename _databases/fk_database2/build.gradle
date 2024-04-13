@@ -4,16 +4,11 @@ plugins {
     id 'idea'
 }
 
-// dependencies-resolvement
-repositories {
-    mavenCentral()
-}
 dependencies {
     // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
     api project(':_core:fk_core')
     // api libs.fkCore
 
-    api libs.bundles.quarkus
     api libs.bundles.jooq
     api libs.bundles.testcontainers
     api libs.postgresJavaClient

@@ -45,6 +45,12 @@ subprojects {
     // set subprojects version here because gradle-problem, see: https://stackoverflow.com/questions/17262856/how-to-set-the-project-name-group-version-plus-source-target-compatibility-in
     version theVersion
 
+    // dependencies-resolvement for all sub-projects
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
     // quarkus-specific workaround, see: https://quarkus.io/guides/gradle-tooling#publishing-your-application
     tasks.withType(GenerateModuleMetadata).configureEach {
         suppressedValidationErrors.add('enforced-platform')

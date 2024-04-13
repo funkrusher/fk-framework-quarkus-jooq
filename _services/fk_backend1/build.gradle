@@ -3,37 +3,15 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'io.quarkus'
-    id "org.liquibase.gradle" version "2.0.2"
+    id "org.liquibase.gradle"
 }
 
-// dependencies-resolvement
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
 dependencies {
     implementation enforcedPlatform(libs.quarkusPlatform)
     implementation project(':_databases:fk_database1')
     implementation project(':_databases:fk_database2')
     implementation project(':_modules:fk_product')
     implementation project(':_modules:fk_library')
-
-    implementation libs.bundles.quarkus
-    implementation libs.bundles.jooq
-    implementation libs.bundles.aws
-    implementation libs.mariadbJavaClient
-    implementation libs.postgresJavaClient
-    implementation libs.jacksonCsv
-    implementation libs.jacksonJsr310
-
-    testImplementation libs.bundles.test.quarkus
-    testImplementation libs.bundles.test.testcontainers
-    testImplementation libs.awaitility
-    testImplementation libs.mariadbJavaClient
-    testImplementation libs.postgresJavaClient
-    testImplementation libs.restAssured
-    testImplementation project(':_databases:fk_database1')
-    testImplementation project(':_databases:fk_database2')
 }
 
 // liquibase command, needed to apply rollbacks in local-dev.

@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea'
+}
+
+dependencies {
+    // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
+    api project(':_core:fk_core')
+    // api libs.fkCore
+}
+
+// cognitoLocalSetup task
+task cognitoLocalSetup(type: JavaExec) {
+    group = 'application'
+    description = 'Runs cognitoLocalInit Java Application'
+    mainClass = 'org.fk.core.cognito.CognitoLocalSetup'
+    classpath = sourceSets.main.runtimeClasspath
+}

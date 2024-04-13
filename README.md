@@ -410,7 +410,7 @@ you can then navigate to the browser and login with `username=admin` and `passwo
 
 Afterwards we can publish our modules/projects to this repository with following command:
 ```
-./gradlew publish -PfkReposiliteUsername=admin -PfkReposilitePassword=secretH
+./gradlew publish -PfkReposiliteUsername=admin -PfkReposilitePassword=secret
 ```
 
 That way, we can always remove one of the projects (the core-module for example) from our mono-repo into
