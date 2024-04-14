@@ -9,6 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.media.SchemaProperty;
 import org.fk.database1.testshop.tables.dtos.Product;
 import org.fk.database1.testshop.tables.interfaces.IProduct;
+import org.fk.product.type.ProductTypeId;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,12 +32,35 @@ public class ProductDTO extends Product implements IProduct {
 
     private List<ProductLangDTO> langs;
 
+    @Schema(hidden = true)
+    private ProductTypeId productTypeId;
+
     public ProductDTO() {
         super();
     }
 
     public ProductDTO(IProduct value) {
         super(value);
+    }
+
+
+    @JsonIgnore
+    public ProductTypeId getProductTypeIdLabel() {
+        return productTypeId;
+    }
+
+    @JsonIgnore
+    public void setProductTypeIdLabel(ProductTypeId productTypeId) {
+        this.productTypeId = productTypeId;
+        this.setTypeId(productTypeId.getValue());
+    }
+
+    @Override
+    public void setTypeId(String typeId) {
+        // this helps us to instantly let the jackson crash, when the given value
+        // from the frontend is not one of the expected typeIds.
+        this.productTypeId = ProductTypeId.fromValue(typeId);
+        super.setTypeId(typeId);
     }
 
     @JsonIgnore

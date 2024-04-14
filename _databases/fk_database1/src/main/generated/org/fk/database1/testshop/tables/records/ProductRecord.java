@@ -5,6 +5,7 @@ package org.fk.database1.testshop.tables.records;
 
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -74,11 +75,29 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     }
 
     /**
+     * Setter for <code>testshop.product.typeId</code>.
+     */
+    @Override
+    public void setTypeId(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>testshop.product.typeId</code>.
+     */
+    @NotNull
+    @Size(max = 255)
+    @Override
+    public String getTypeId() {
+        return (String) get(3);
+    }
+
+    /**
      * Setter for <code>testshop.product.createdAt</code>.
      */
     @Override
     public void setCreatedAt(LocalDateTime value) {
-        set(3, value);
+        set(4, value);
     }
 
     /**
@@ -86,7 +105,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      */
     @Override
     public LocalDateTime getCreatedAt() {
-        return (LocalDateTime) get(3);
+        return (LocalDateTime) get(4);
     }
 
     /**
@@ -94,7 +113,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      */
     @Override
     public void setUpdatedAt(LocalDateTime value) {
-        set(4, value);
+        set(5, value);
     }
 
     /**
@@ -102,7 +121,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      */
     @Override
     public LocalDateTime getUpdatedAt() {
-        return (LocalDateTime) get(4);
+        return (LocalDateTime) get(5);
     }
 
     /**
@@ -110,7 +129,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      */
     @Override
     public void setDeleted(Boolean value) {
-        set(5, value);
+        set(6, value);
     }
 
     /**
@@ -118,7 +137,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      */
     @Override
     public Boolean getDeleted() {
-        return (Boolean) get(5);
+        return (Boolean) get(6);
     }
 
     // -------------------------------------------------------------------------
@@ -139,6 +158,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         setProductId(from.getProductId());
         setClientId(from.getClientId());
         setPrice(from.getPrice());
+        setTypeId(from.getTypeId());
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
@@ -165,12 +185,13 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Create a detached, initialised ProductRecord
      */
-    public ProductRecord(Long productId, Integer clientId, BigDecimal price, LocalDateTime createdAt, LocalDateTime updatedAt, Boolean deleted) {
+    public ProductRecord(Long productId, Integer clientId, BigDecimal price, String typeId, LocalDateTime createdAt, LocalDateTime updatedAt, Boolean deleted) {
         super(Product.PRODUCT);
 
         setProductId(productId);
         setClientId(clientId);
         setPrice(price);
+        setTypeId(typeId);
         setCreatedAt(createdAt);
         setUpdatedAt(updatedAt);
         setDeleted(deleted);
@@ -187,6 +208,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
             setProductId(value.getProductId());
             setClientId(value.getClientId());
             setPrice(value.getPrice());
+            setTypeId(value.getTypeId());
             setCreatedAt(value.getCreatedAt());
             setUpdatedAt(value.getUpdatedAt());
             setDeleted(value.getDeleted());

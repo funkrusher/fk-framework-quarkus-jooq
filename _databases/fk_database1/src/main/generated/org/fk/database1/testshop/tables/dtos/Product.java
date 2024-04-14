@@ -5,6 +5,7 @@ package org.fk.database1.testshop.tables.dtos;
 
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class Product extends AbstractDTO implements IProduct {
     private Long productId;
     private Integer clientId;
     private BigDecimal price;
+    private String typeId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;
@@ -34,6 +36,7 @@ public class Product extends AbstractDTO implements IProduct {
         this.productId = value.getProductId();
         this.clientId = value.getClientId();
         this.price = value.getPrice();
+        this.typeId = value.getTypeId();
         this.createdAt = value.getCreatedAt();
         this.updatedAt = value.getUpdatedAt();
         this.deleted = value.getDeleted();
@@ -43,6 +46,7 @@ public class Product extends AbstractDTO implements IProduct {
         Long productId,
         Integer clientId,
         BigDecimal price,
+        String typeId,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Boolean deleted
@@ -50,6 +54,7 @@ public class Product extends AbstractDTO implements IProduct {
         this.productId = productId;
         this.clientId = clientId;
         this.price = price;
+        this.typeId = typeId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deleted = deleted;
@@ -105,6 +110,25 @@ public class Product extends AbstractDTO implements IProduct {
     @Override
     public void setPrice(BigDecimal price) {
         this.price = price;
+        this.touch();
+    }
+
+    /**
+     * Getter for <code>testshop.product.typeId</code>.
+     */
+    @NotNull
+    @Size(max = 255)
+    @Override
+    public String getTypeId() {
+        return this.typeId;
+    }
+
+    /**
+     * Setter for <code>testshop.product.typeId</code>.
+     */
+    @Override
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
         this.touch();
     }
 
@@ -186,6 +210,12 @@ public class Product extends AbstractDTO implements IProduct {
         }
         else if (!this.price.equals(other.price))
             return false;
+        if (this.typeId == null) {
+            if (other.typeId != null)
+                return false;
+        }
+        else if (!this.typeId.equals(other.typeId))
+            return false;
         if (this.createdAt == null) {
             if (other.createdAt != null)
                 return false;
@@ -214,6 +244,7 @@ public class Product extends AbstractDTO implements IProduct {
         result = prime * result + ((this.productId == null) ? 0 : this.productId.hashCode());
         result = prime * result + ((this.clientId == null) ? 0 : this.clientId.hashCode());
         result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
+        result = prime * result + ((this.typeId == null) ? 0 : this.typeId.hashCode());
         result = prime * result + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
         result = prime * result + ((this.updatedAt == null) ? 0 : this.updatedAt.hashCode());
         result = prime * result + ((this.deleted == null) ? 0 : this.deleted.hashCode());
@@ -227,6 +258,7 @@ public class Product extends AbstractDTO implements IProduct {
         sb.append(productId);
         sb.append(", ").append(clientId);
         sb.append(", ").append(price);
+        sb.append(", ").append(typeId);
         sb.append(", ").append(createdAt);
         sb.append(", ").append(updatedAt);
         sb.append(", ").append(deleted);
@@ -244,6 +276,7 @@ public class Product extends AbstractDTO implements IProduct {
         setProductId(from.getProductId());
         setClientId(from.getClientId());
         setPrice(from.getPrice());
+        setTypeId(from.getTypeId());
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());

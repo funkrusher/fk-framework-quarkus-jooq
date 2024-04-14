@@ -76,6 +76,11 @@ public class Product extends TableImpl<ProductRecord> {
     public final TableField<ProductRecord, BigDecimal> PRICE = createField(DSL.name("price"), SQLDataType.DECIMAL(10, 2).nullable(false), this, "");
 
     /**
+     * The column <code>testshop.product.typeId</code>.
+     */
+    public final TableField<ProductRecord, String> TYPEID = createField(DSL.name("typeId"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+
+    /**
      * The column <code>testshop.product.createdAt</code>.
      */
     public final TableField<ProductRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");

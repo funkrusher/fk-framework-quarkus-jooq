@@ -5,6 +5,7 @@ package org.fk.database1.testshop.tables.interfaces;
 
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -48,6 +49,18 @@ public interface IProduct extends Serializable {
      */
     @NotNull
     public BigDecimal getPrice();
+
+    /**
+     * Setter for <code>testshop.product.typeId</code>.
+     */
+    public void setTypeId(String value);
+
+    /**
+     * Getter for <code>testshop.product.typeId</code>.
+     */
+    @NotNull
+    @Size(max = 255)
+    public String getTypeId();
 
     /**
      * Setter for <code>testshop.product.createdAt</code>.

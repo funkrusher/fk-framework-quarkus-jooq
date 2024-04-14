@@ -24,6 +24,7 @@ import org.fk.product.test.InjectProductTestUtil;
 import org.fk.product.test.ProductTestProfile;
 import org.fk.product.test.ProductTestLifecycleManager;
 import org.fk.product.test.ProductTestUtil;
+import org.fk.product.type.ProductTypeId;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,6 +93,7 @@ public class ProductControllerV1Test {
 
         ProductDTO productDTO = new ProductDTO();
         productDTO.setClientId(1);
+        productDTO.setProductTypeIdLabel(ProductTypeId.BOOK);
         productDTO.setPrice(new BigDecimal("10.00"));
         productDTO.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
         productDTO.setUpdatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
@@ -152,6 +154,7 @@ public class ProductControllerV1Test {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductId(insertedId);
         productDTO.setClientId(1);
+        productDTO.setProductTypeIdLabel(ProductTypeId.CLOTHING);
         productDTO.setPrice(new BigDecimal("22.00"));
         productDTO.setDeleted(false);
         productDTO.setLangs(xLangs);

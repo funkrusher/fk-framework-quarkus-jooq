@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.database1.Database1ConfigurationFactory;
 import org.fk.database1.testshop.tables.records.InitRecord;
+import org.fk.product.type.ProductTypeId;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -54,9 +55,9 @@ public class ProductInit {
                         .values(3)
                         .execute();
 
-                tx1.dsl().insertInto(PRODUCT, PRODUCT.PRODUCTID, PRODUCT.CLIENTID, PRODUCT.PRICE)
-                        .values(1L, 1, new BigDecimal("10.20"))
-                        .values(2L, 1, new BigDecimal("99.99"))
+                tx1.dsl().insertInto(PRODUCT, PRODUCT.PRODUCTID, PRODUCT.CLIENTID, PRODUCT.PRICE, PRODUCT.TYPEID)
+                        .values(1L, 1, new BigDecimal("10.20"), ProductTypeId.CLOTHING.getValue())
+                        .values(2L, 1, new BigDecimal("99.99"), ProductTypeId.BOOK.getValue())
                         .execute();
 
                 tx1.dsl().insertInto(PRODUCT_LANG, PRODUCT_LANG.PRODUCTID, PRODUCT_LANG.LANGID, PRODUCT_LANG.NAME, PRODUCT_LANG.DESCRIPTION)
@@ -74,10 +75,11 @@ public class ProductInit {
 
                 tx1.dsl().execute("" +
                         "-- Generate 15000 random products for client IDs 1, 2, and 3\n" +
-                        "            INSERT INTO product (clientId, price)\n" +
+                        "            INSERT INTO product (clientId, price, typeId)\n" +
                         "            SELECT\n" +
                         "                RAND()*2+1 AS clientId, -- random client ID between 1 and 3\n" +
-                        "                ROUND(RAND() * 100, 2) AS price    -- random price between 0 and 100 with 2 decimal places\n" +
+                        "                ROUND(RAND() * 100, 2) AS price,    -- random price between 0 and 100 with 2 decimal places\n" +
+                        "                '" + ProductTypeId.BOOK.getValue() + "' \n" +
                         "            FROM\n" +
                         "                    (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5) AS nums\n" +
                         "                        CROSS JOIN\n" +
