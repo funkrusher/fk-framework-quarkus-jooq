@@ -173,6 +173,14 @@ First create the docker-network our containers will reside in.
 docker network create fk-framework --attachable
 ```
 
+### Start Reposilite
+
+Reposilite can be started with following command, and is needed to be started:
+```
+docker-compose -f _services/fk_reposilite/docker-compose-reposilite.yml up --build -d
+```
+See the chapter for Reposilite further down below for more informations, later on.
+
 ### Create database1
 
 you can start up a mariadb database-instance for this if you do not already have one preset (it also creates the database `testshop`, that you can connect to):
