@@ -480,6 +480,20 @@ in their own release-cycle when they are ready to include those new versions int
 
 But this should be doable with the tools/demo presented in this project.
 
+## UTC LocalDateTime
+
+We want to serialize LocalDateTime as Milliseconds since 1970 into JSON. 
+That way frontend will be able to work with this value which is expected to be in UTC.
+This works as intended, and the Default Jackson-Serializer/Deserializer that is user by the Quarkus-Framework
+has been configured in the fk_core module to correctly serialize/deserialize such fields.
+
+There is a open problem with OpenAPI/Swagger-UI to not detect Schema annotations in superclasses.
+This currently forces us to rewrite the Schema Annotations directly in the DTO-Class-Definition,
+as can be seen in the `_modules/fk_product/src/main/java/org/fk/product/dto/ProductDTO.java` file.
+We would normally have created those Schema-Annotations with help of the Jooq-Codegenerator if OpenAPI would be
+able to scan the superclasses for the Schema-Annotations.
+- see: https://stackoverflow.com/questions/77494154/inherit-required-fields-from-parent-class-schema-annotation
+
 ## Intellij IDEA
 
 All the described operations can also be started up from within the Intellij IDEA.
