@@ -1,8 +1,11 @@
 package org.fk.core.util.test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.fk.core.dto.AbstractDTO;
 
 import java.io.IOException;
@@ -17,20 +20,29 @@ import java.util.Map;
  * We use the bookKeepingMap of the pojos recursively and only use this, as the source of our data that we serialize,
  * as it contains only the set data of the pojo and not the data that has never been set.
  */
+@ApplicationScoped
 public class PojoUnitTestSerializer {
 
-    public static String serializePojo(AbstractDTO pojo) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    @Inject
+    ObjectMapper objectMapper;
+
+    public <T> T deserializePojo(String value, Class<T> valueType) throws JsonProcessingException {
+        return objectMapper.readValue(value, valueType);
+    }
+
+
+    public String serializePojo(AbstractDTO pojo) throws IOException {
+        // ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         StringWriter writer = new StringWriter();
         JsonGenerator gen = objectMapper.getFactory().createGenerator(writer);
-        PojoUnitTestSerializer.serializePojo(pojo, gen, objectMapper);
+        serializePojo(pojo, gen, objectMapper);
         gen.flush();
         String json = writer.toString();
         return json;
     }
 
 
-    private static void serializePojo(AbstractDTO value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
+    private void serializePojo(AbstractDTO value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
         if (value == null) {
             gen.writeNull();
             return;
@@ -48,7 +60,7 @@ public class PojoUnitTestSerializer {
         gen.writeEndObject();
     }
 
-    private static void serializeValue(Object value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
+    private void serializeValue(Object value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
         if (value instanceof Map) {
             gen.writeStartObject();
             for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {

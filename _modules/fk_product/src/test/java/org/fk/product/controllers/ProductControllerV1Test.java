@@ -1,5 +1,6 @@
 package org.fk.product.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.security.credential.Credential;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.test.common.QuarkusTestResource;
@@ -8,6 +9,9 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.TestProfile;
 import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import jakarta.inject.Inject;
 import org.fk.core.auth.TenantCredential;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
@@ -29,9 +33,13 @@ import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
+import static java.time.ZoneOffset.UTC;
 import static org.fk.core.auth.FkSecurityIdentity.MASTER_TENANT_ID;
 import static org.fk.core.auth.FkRoles.ADMIN;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -49,6 +57,9 @@ public class ProductControllerV1Test {
     static ProductTestUtil testDbUtil;
     @InjectMock
     SecurityIdentity identity;
+
+    @Inject
+    PojoUnitTestSerializer serializer;
 
     @BeforeEach
     public void setup() {
@@ -77,22 +88,29 @@ public class ProductControllerV1Test {
         xLangDTO.setDescription("Meine Description 1");
         xLangs.add(xLangDTO);
 
+        long milliSince = 1713099217899L;
+
         ProductDTO productDTO = new ProductDTO();
         productDTO.setClientId(1);
         productDTO.setPrice(new BigDecimal("10.00"));
+        productDTO.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
+        productDTO.setUpdatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
         productDTO.setLangs(xLangs);
 
-        String json = PojoUnitTestSerializer.serializePojo(productDTO);
+        String json = serializer.serializePojo(productDTO);
 
-        ProductDTO responseDTO = given()
+        ExtractableResponse<Response> er = given()
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
                 .post("/api/v1/products")
                 .then()
                 .statusCode(201)
-                .extract()
-                .as(ProductDTO.class);
+                .extract();
+        ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
+
+        assertEquals(productDTO.getCreatedAt(), LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
+        assertEquals(productDTO.getUpdatedAt(), LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
 
         // verify rest-result is as expected...
         assertEquals(productDTO.getClientId(), responseDTO.getClientId());
@@ -138,17 +156,17 @@ public class ProductControllerV1Test {
         productDTO.setDeleted(false);
         productDTO.setLangs(xLangs);
 
-        String json = PojoUnitTestSerializer.serializePojo(productDTO);
+        String json = serializer.serializePojo(productDTO);
 
-        ProductDTO responseDTO = given()
+        ExtractableResponse<Response> er = given()
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
                 .put("/api/v1/products/" + insertedId)
                 .then()
                 .statusCode(200)
-                .extract()
-                .as(ProductDTO.class);
+                .extract();
+        ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
 
         // verify rest-result is as expected...
         assertEquals(productDTO.getClientId(), responseDTO.getClientId());
@@ -198,7 +216,7 @@ public class ProductControllerV1Test {
         productDTO.setProductId(1L);
         productDTO.setClientId(1);
 
-        String json = PojoUnitTestSerializer.serializePojo(productDTO);
+        String json = serializer.serializePojo(productDTO);
 
         given()
                 .contentType(ContentType.JSON)

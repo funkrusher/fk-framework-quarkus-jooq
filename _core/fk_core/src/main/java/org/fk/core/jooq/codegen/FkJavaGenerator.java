@@ -1,5 +1,7 @@
 package org.fk.core.jooq.codegen;
 
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.AbstractDTO;
 import org.jooq.codegen.GeneratorStrategy;
 import org.jooq.codegen.JavaGenerator;
@@ -15,7 +17,6 @@ import java.util.regex.Pattern;
 public class FkJavaGenerator extends JavaGenerator {
 
     private static final Pattern SQUARE_BRACKETS = Pattern.compile("\\[\\]$");
-
 
     @Override
     protected void printClassAnnotations(JavaWriter out, Definition definition, GeneratorStrategy.Mode mode) {
@@ -37,7 +38,6 @@ public class FkJavaGenerator extends JavaGenerator {
             out.javadoc("Setter for <code>%s</code>.", name);
 
         final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
-
         out.overrideIf(generateInterfaces() && !generateImmutableInterfaces());
         out.println("%s %s %s([[before=@][after= ][%s]]%s %s) {", "public", "void", columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
         out.println("this.%s = %s;", columnMember, columnMember);
@@ -47,40 +47,6 @@ public class FkJavaGenerator extends JavaGenerator {
 
         out.println("}");
     }
-
-/*
-    @Override
-    protected void generatePojoClassFooter(TableDefinition table, JavaWriter out) {
-        super.generatePojoClassFooter(table, out);
-
-        out.println();
-        out.tab(0).println("private Map<String, Object> bookKeepingMap = new HashMap<>();");
-        out.tab(0).println("");
-        out.tab(0).println("@JsonIgnore");
-        out.tab(0).println("@XmlTransient");
-        out.tab(0).println("protected void setAt(String key, Object value) {");
-        out.tab(1).println("// inspired by: https://blog.jooq.org/orms-should-update-changed-values-not-just-modified-ones/");
-        out.tab(1).println("this.bookKeepingMap.put(key, value);");
-        out.tab(0).println("}");
-        out.tab(0).println("");
-        out.tab(0).println("@JsonIgnore");
-        out.tab(0).println("@XmlTransient");
-        out.tab(0).println("public void clearBookKeepingMap() {");
-        out.tab(1).println("this.bookKeepingMap.clear();;");
-        out.tab(0).println("}");
-        out.tab(0).println("");
-        out.tab(0).println("@JsonIgnore");
-        out.tab(0).println("@XmlTransient");
-        out.tab(0).println("public Map<String, Object> getBookKeepingMap() {");
-        out.tab(1).println("return this.bookKeepingMap;");
-        out.tab(0).println("}");
-
-        out.ref(Map.class);
-        out.ref(HashMap.class);
-        out.ref(JsonIgnore.class);
-        out.ref(XmlTransient.class);
-    }
-*/
 
     @Override
     protected void generatePojoClassFooter(TableDefinition table, JavaWriter out) {
