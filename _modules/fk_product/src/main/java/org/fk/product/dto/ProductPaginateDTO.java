@@ -14,6 +14,8 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     private Integer count;
 
+    private String localizationTest;
+
     public ProductPaginateDTO() {
         super();
     }
@@ -33,6 +35,15 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     public void setCount(Integer count) {
         this.count = count;
+        touch();
+    }
+
+    public String getLocalizationTest() {
+        return localizationTest;
+    }
+
+    public void setLocalizationTest(String localizationTest) {
+        this.localizationTest = localizationTest;
         touch();
     }
 }

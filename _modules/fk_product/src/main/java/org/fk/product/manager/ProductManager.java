@@ -2,6 +2,7 @@ package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import org.fk.core.jooq.RequestContext;
 import org.fk.database1.testshop.tables.ProductLang;
 import org.fk.core.util.exception.InvalidDataException;
 import org.fk.core.util.query.Filter;
@@ -29,6 +30,7 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
 import static org.jooq.impl.DSL.*;
 
 /**
@@ -70,6 +72,13 @@ public class ProductManager extends AbstractManager {
         ProductPaginateDTO paginate = new ProductPaginateDTO();
         paginate.setProducts(products);
         paginate.setCount(count);
+
+        // test localization here.
+        RequestContext request = (RequestContext) dsl.data(DSL_DATA_KEY);
+        Locale locale = Locale.of("en");
+        String localizationTest = ResourceBundle.getBundle("messages", locale).getString("product.paginate.localizationTest");
+        paginate.setLocalizationTest(localizationTest);
+
         return paginate;
     }
 
