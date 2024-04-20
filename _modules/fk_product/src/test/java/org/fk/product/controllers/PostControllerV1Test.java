@@ -24,9 +24,7 @@ import org.fk.product.test.ProductTestProfile;
 import org.fk.product.test.ProductTestUtil;
 import org.jooq.DSLContext;
 import org.jooq.Result;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -45,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 @TestProfile(ProductTestProfile.class)
 @QuarkusTestResource(ProductTestLifecycleManager.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PostControllerV1Test {
 
     @InjectProductTestUtil

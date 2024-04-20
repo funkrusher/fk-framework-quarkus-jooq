@@ -10,8 +10,11 @@ public class ProductTestProfile implements QuarkusTestProfile {
     public Map<String, String> getConfigOverrides() {
         Map<String, String> map = new HashMap<>();
 
-        // devservices slow down our unittest, but we need some of them (OIDC)
-        map.put("quarkus.devservices.enabled", "true");
+        // speed up our unittests, by disabling dev-services and features that are not needed here.
+        map.put("quarkus.devservices.enabled", "false");
+        map.put("quarkus.oidc.enabled", "false");
+        map.put("quarkus.liquibase.enabled", "false");
+        map.put("quarkus.scheduler.enabled", "false");
 
         map.put("quarkus.datasource.active", "false");
         map.put("quarkus.datasource.database1.db-kind", "mariadb");

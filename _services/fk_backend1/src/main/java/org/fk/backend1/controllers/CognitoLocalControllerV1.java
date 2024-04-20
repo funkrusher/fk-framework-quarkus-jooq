@@ -1,4 +1,4 @@
-package org.fk.product.controllers;
+package org.fk.backend1.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.oidc.IdToken;
@@ -8,18 +8,18 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.ext.RuntimeDelegate;
-import org.fk.core.auth.MasterTenantOnly;
-import org.fk.core.auth.FkSecurityIdentity;
-import org.fk.product.manager.CognitoLocalManager;
-import org.fk.core.auth.FkClaim;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.security.SecuritySchemes;
+import org.fk.core.auth.FkClaim;
+import org.fk.core.auth.FkSecurityIdentity;
+import org.fk.core.auth.MasterTenantOnly;
+import org.fk.product.manager.CognitoLocalManager;
 import org.jboss.logging.Logger;
-import software.amazon.awssdk.services.cognitoidentityprovider.model.*;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.NotAuthorizedException;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.UserNotFoundException;
 
 import java.util.Map;
 import java.util.Set;

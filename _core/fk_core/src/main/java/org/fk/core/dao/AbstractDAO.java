@@ -1,9 +1,9 @@
 package org.fk.core.dao;
 
-import com.github.f4b6a3.ulid.Ulid;
-import com.github.f4b6a3.ulid.UlidCreator;
 import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jooq.RequestContext;
+import org.fk.core.util.ulid.UlidGenerator;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.Record;
 import org.jooq.exception.DataAccessException;
@@ -12,159 +12,246 @@ import org.jooq.impl.DSL;
 import java.util.*;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
 
 /**
  * A common base-class for DAOs
  * <p>
- * This type is implemented by DAO classes to provide a common context-scoped API
- * for common actions
+ * This type is implemented by DAO classes to provide a common context-scoped API for common actions
  * </p>
- * @param <R> The generic record type.
- * @param <T> The generic primary key type. This is a regular
- *            <code>&lt;T&gt;</code> type for single-column keys, or a
- *            {@link Record} subtype for composite keys.
+ * @param <R> The generic record type. This must be a jOOQ generated Record.
+ * @param <Y> The generic interface that R needs to implement. This must be a jOOQ generated Interface
+ * @param <T> The generic primary key type. Either a regular type for single-column keys,
+ *          or a {@link Record} subtype for composite keys.
  */
 public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
-
     private final DSLContext dsl;
-    private final RequestContext request;
     private final Table<R> table;
-    private final UniqueKey<?> pk;
-    private final Field<?>[] pkAutoIncFields;
-    private final Field<UUID>[] pkUuidFields;
+    private final @Nullable RequestContext request;
+    private final @Nullable UniqueKey<R> pk;
+    private final @Nullable Field<Object> autoIncGeneratingField;
+    private final @Nullable Field<UUID> uuidGeneratingField;
+    private final @Nullable Field<Integer> clientIdField;
 
     // -------------------------------------------------------------------------
     // Constructors and initialization
     // -------------------------------------------------------------------------
 
-    protected AbstractDAO(DSLContext dsl, Table<R> table) {
+    protected AbstractDAO(final DSLContext dsl, final Table<R> table) {
         this.dsl = dsl;
         this.table = table;
         this.request = (RequestContext) dsl.data(DSL_DATA_KEY);
-
-        // primary-key, auto-inc, uuid.
         this.pk = table.getPrimaryKey();
-        if (this.pk == null) {
-            throw new RuntimeException("table has no primary-key! this is currently unsupported");
+
+        // search the 'generating' field in the primary-key
+        // most tables have such a 'generating' field. Currently supported: either an auto-inc or uuid field.
+        // some tables (like N:M tables, don't have such a field, which is also supported)
+        // we will use this, to automatically generate and return those ids to the caller.
+        Field<Object> autoIncGeneratingField0 = null;
+        Field<UUID> uuidGeneratingField0 = null;
+        if (this.pk != null) {
+            for (Field<?> primaryKeyField : this.pk.getFields()) {
+                boolean isFk = false;
+                for (ForeignKey<?, ?> foreignKey : table.getReferences()) {
+                    if (foreignKey.getFields().getFirst().getName().equals(primaryKeyField.getName())) {
+                        isFk = true;
+                        break;
+                    }
+                }
+                if (!isFk) {
+                    if (primaryKeyField.getDataType().identity()) {
+                        //noinspection unchecked
+                        autoIncGeneratingField0 = (Field<Object>) primaryKeyField;
+                    } else if (primaryKeyField.getDataType().isUUID()) {
+                        //noinspection unchecked
+                        uuidGeneratingField0 = (Field<UUID>) primaryKeyField;
+                    }
+                    break;
+                }
+            }
         }
-        this.pkAutoIncFields = Arrays.stream(this.pk.getFieldsArray())
-                .filter(f -> f.getDataType().identity()).toArray(Field[]::new);
-        this.pkUuidFields = (Field<UUID>[]) Arrays.stream(this.pk.getFieldsArray())
-                .filter(f -> f.getDataType().isUUID()).toArray(Field[]::new);
+        this.autoIncGeneratingField = autoIncGeneratingField0;
+        this.uuidGeneratingField = uuidGeneratingField0;
+
+        // if table has a field clientId, we must match it always with request-context clientId.
+        final Field<Integer> field = DSL.field(DSL.name("clientId"), Integer.class);
+        this.clientIdField = this.table.field(field);
+        if (this.clientIdField != null && this.request == null) {
+            // fail-fast if we expect a clientId in any case!
+            throw new RuntimeException("DAO table contains field clientId but request is missing!");
+        }
     }
 
     // ------------------------------------------------------------------------
     // Internal/Private Helper methods
     // ------------------------------------------------------------------------
 
-    private List<R> transformToRecords(List<? extends Y> objects) {
-        // TODO: this function must be refactored! instanceof-checks are not good.
-        // we only support Records or AbstractDTO here.
-        List<R> records = new ArrayList<>();
-        boolean isDTO = false;
-        boolean isRecord = false;
-        if (!objects.isEmpty()) {
-            if (objects.getFirst() instanceof AbstractDTO) {
-                isDTO = true;
-            } else if (objects.getFirst() instanceof UpdatableRecord<?>) {
-                isRecord = true;
-            }
-        }
-        for (Y obj : objects) {
-            if (isDTO) {
-                // create new record for this pojo/table that has no change-mark for all its fields
-                // then set the change-marks
-                AbstractDTO pojo = (AbstractDTO) obj;
-                R record = dsl().newRecord(table(), obj);
+    /**
+     * The main-purpose of this function is, to convert the DTO-classes to the Record-Classes, because
+     * only Record-Classes can directly be used within the jooq-statements, and we must map the modified-fields
+     * of the DTO-classes to the Record-classes.
+     *
+     * @param items items (Records of DTOs)
+     * @return records
+     */
+    private List<R> prepareRecords(final List<? extends Y> items) {
+        if (items.isEmpty()) {
+            return Collections.emptyList();
+        } else if (items.getFirst() instanceof UpdatableRecord<?>) {
+            //noinspection unchecked
+            return (List<R>) items;
+        } else if (items.getFirst() instanceof AbstractDTO) {
+            final List<R> records = new ArrayList<>();
+            for (final Y item : items) {
+                // transform DTO to Record.
+                final AbstractDTO dto = (AbstractDTO) item;
+                final R record = dsl().newRecord(table(), dto);
                 record.changed(false);
-
                 for (Field<?> field : record.fields()) {
-                    boolean isModified = pojo.getModifiedFields().containsKey(field.getName());
-                    if (isModified) {
+                    // we need to transfer the DTO-changed markers to the Record-changed markers.
+                    if (dto.getModifiedFields().containsKey(field.getName())) {
                         record.changed(field.getName(), true);
                     }
                 }
                 records.add(record);
-            } else if (isRecord){
-                records.add((R) obj);
-            } else {
-                throw new RuntimeException("unsupported type!");
             }
+            return records;
+        } else {
+            throw new RuntimeException("unexpected implementation of DAO-typed interface!");
         }
-        return records;
     }
 
-    private List<R> prepareInserts(List<R> records) {
-        List<R> results = new ArrayList<>();
-        for (R record : records) {
-            results.add(prepareInsert(record));
+    /**
+     * The given Records will be prepared for an Insert-Statement.
+     * - enforces the correct clientId into the record.
+     * - touches primary-key fields
+     * - populates the generating primary-key uuid-field, if it does not already have a value given by the caller.
+     *
+     * @param records records
+     * @return records prepared for insert
+     */
+    private List<R> prepareInserts(final List<R> records) {
+        final List<R> results = new ArrayList<>();
+        for (final R record : records) {
+            if (this.clientIdField != null && request != null) {
+                // enforce expected clientId!
+                record.set(this.clientIdField, request.getClientId());
+            }
+            if (this.pk != null) {
+                for (final Field<?> field : pk.getFieldsArray()) {
+                    // we need to 'touch' all fields of the primary-key,
+                    // so jooq recognizes them as always relevant for the insert.
+                    record.changed(field, true);
+                }
+                if (uuidGeneratingField != null) {
+                    if (record.get(uuidGeneratingField) == null) {
+                        // uuid field in pk is empty, we need to generate it now.
+                        if (dsl().dialect() == SQLDialect.MARIADB) {
+                            if (record.get(uuidGeneratingField) == null) {
+                                // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
+                                record.set(uuidGeneratingField, UlidGenerator.createMariadbUuid());
+                            }
+                        } else {
+                            // should be changed for additional db-types.
+                            throw new RuntimeException("unexpected dialect for ulid generator!");
+                        }
+                    }
+                }
+            }
+            results.add(record);
         }
         return results;
     }
 
-    private R prepareInsert(R record) {
-        // Get the table definition from the record
-        Table<?> table = record.getTable();
-
-        // Set the auto-increment fields to null using reflection
-        for (Field<?> field : pkAutoIncFields) {
-            try {
-                // touch the auto-increment-fields as changed=true,
-                // because when all fields are changed=false, then jooq will not process the insert,
-                // so that way we can make sure that the insert is processed for such rare cases.
-                Field<T> recordField = (Field<T>) field;
-                record.changed(recordField, true);
-            } catch (Exception e) {
-                // Handle any exceptions that occur while setting the field to null
-                // For example, if the field is not nullable, you may get a NullPointerException
-                // You can log the exception or handle it in any other way that is appropriate for your application
-                e.printStackTrace();
+    /**
+     * The given Records will be prepared for an Update-Statement.
+     * - enforces the correct clientId into the record.
+     * - sets primary-key fields to 'unchanged', because in update pk-fields must never change.
+     *
+     * @param records records
+     * @return records prepared for update
+     */
+    private List<R> prepareUpdates(final List<R> records) {
+        final List<R> results = new ArrayList<>();
+        for (final R record : records) {
+            if (this.clientIdField != null && request != null) {
+                // enforce expected clientId!
+                record.set(this.clientIdField, request.getClientId());
             }
-        }
-        for (Field<UUID> field : pkUuidFields) {
-            // generate ulid id.
-            if (dsl().dialect() == SQLDialect.MARIADB) {
-                // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
-                Ulid ulid = UlidCreator.getMonotonicUlid();
-                record.set(field, ulid.toRfc4122().toUuid());
-            } else {
-                // should be changed for additional db-types.
-                throw new RuntimeException("unsupported dialect for ULID-generation, please add your dialect here.");
+            if (this.pk != null) {
+                for (final Field<?> field : pk.getFieldsArray()) {
+                    // primary key values are never allowed to be changed for an update!
+                    // the database will give an error, if we try to change them in an update clause
+                    record.changed(field, false);
+                }
             }
-        }
-        return record;
-    }
-
-    private List<R> prepareUpdates(List<R> records) {
-        List<R> results = new ArrayList<>();
-        for (R record : records) {
-            results.add(prepareUpdate(record));
+            results.add(record);
         }
         return results;
     }
 
-    private R prepareUpdate(R record) {
-        // Set the auto-increment fields to null using reflection
-        for (Field<?> pkField : pk.getFieldsArray()) {
-            try {
-                // primary key values are never allowed to be changed for an update!
-                // the database will give an error, if we try to change them in an update clause
-                // they are only allowed to be used in where-clause of the update.
-                Field<T> recordField = (Field<T>) pkField;
-                record.changed(recordField, false);
-
-            } catch (Exception e) {
-                // Handle any exceptions that occur while setting the field to null
-                // For example, if the field is not nullable, you may get a NullPointerException
-                // You can log the exception or handle it in any other way that is appropriate for your application
-                e.printStackTrace();
-            }
+    /**
+     * The Record-Condition will be used for Update and Delete Statements,
+     * to enforce that they work only on following WHERE-Criteria:
+     * - enforces the correct clientId into the WHERE-Criteria.
+     * - enforces the correct primary-key criteria into the WHERE-Criteria.
+     *
+     * @param record record
+     * @return condition that must be used for all common Update and Delete Statements on this record.
+     */
+    private Condition getRecordCondition(final R record) {
+        Condition condition = getPrimaryKeyCondition(getId(record));
+        if (this.clientIdField != null && request != null) {
+            condition = condition.and(this.clientIdField.eq(request.getClientId()));
         }
-        return record;
+        return condition;
     }
 
+    /**
+     * Resolves the Primary-Key Condition for the given pk-value
+     * The Primary-Key may be a single field, but also can consist of multiple fields.
+     *
+     * @param value primary-key value
+     * @return Condition for the given id
+     */
+    private Condition getPrimaryKeyCondition(final T value) {
+        if (this.pk == null) {
+            throw new RuntimeException("internal-error: DTO table has no primary-key, but expected.");
+        }
+        // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
+        //noinspection unchecked
+        final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
+        if (fields.length == 1)
+            return (fields[0]).equal(fields[0].getDataType().convert(value));
+        else
+            return DSL.row(fields).equal((Record) value);
+    }
+
+    /**
+     * Resolves the Primary-Key Condition for the given pk-values
+     * The Primary-Key may be a single field, but also can consist of multiple fields.
+     * The result will be an SQL-IN Clause, if the given pk-values consist of more than 1 value.
+     *
+     * @param values list of primary-key values
+     * @return Condition for the given values
+     */
+    private Condition getPrimaryKeyCondition(final Collection<T> values) {
+        if (this.pk == null) {
+            throw new RuntimeException("internal-error: DTO table has no primary-key, but expected.");
+        }
+        // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
+        //noinspection unchecked
+        final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
+        if (fields.length == 1) {
+            if (values.size() == 1)
+                return getPrimaryKeyCondition(values.iterator().next());
+            else
+                return fields[0].in(fields[0].getDataType().convert(values));
+        } else {
+            // TODO: test this code-part a bit more for the case of multi-pk
+            return DSL.row(fields).in(values.toArray(new Record[]{}));
+        }
+    }
 
     // ------------------------------------------------------------------------
     // Template methods for subclasses
@@ -172,51 +259,41 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
     /**
      * Extract the ID value of the given record
+     * You need to provide this function in your DTO, and define the correct mapping.
      *
      * @param record record of the table
      * @return value of the id field(s) of the given record.
      */
-    protected abstract T getId(R record);
+    protected abstract T getId(final R record);
 
 
     // ------------------------------------------------------------------------
     // Helper methods for subclasses, for extracting/resolving common meta.
     // ------------------------------------------------------------------------
 
-    protected T compositeKeyRecord(Object... values) {
-        UniqueKey<R> key = table().getPrimaryKey();
-        if (key == null)
+    /**
+     * Helper-function needed to be used together with {@link #getId(UpdatableRecord)} in your DTO implementation,
+     * if your getId implementation needs to provide the record for a primary-key that consists of more than one field.
+     *
+     * @param values values that must be mappable to the T-class.
+     * @return instance of T (combined primary-key)
+     */
+    protected T compositeKeyRecord(final Object... values) {
+        if (this.pk == null) {
             return null;
-
-        TableField<R, Object>[] fields = (TableField<R, Object>[]) key.getFieldsArray();
-        Record result = dsl().newRecord(fields);
+        }
+        // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
+        //noinspection unchecked
+        final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
+        final Record result = dsl().newRecord(fields);
 
         for (int i = 0; i < values.length; i++)
             result.set(fields[i], fields[i].getDataType().convert(values[i]));
 
+        // TODO: this would crash at runtime, when the user provides values that do not fit to the T-class.
         return (T) result;
     }
 
-    protected Condition equal(Field<?>[] pk, T id) {
-        if (pk.length == 1)
-            return ((Field<Object>) pk[0]).equal(pk[0].getDataType().convert(id));
-
-            // [#2573] Composite key T types are of type Record[N]
-        else
-            return DSL.row(pk).equal((Record) id);
-    }
-
-    protected Condition equal(Field<?>[] pk, Collection<T> ids) {
-        if (pk.length == 1)
-            if (ids.size() == 1)
-                return equal(pk, ids.iterator().next());
-            else
-                return ((Field<Object>) pk[0]).in(pk[0].getDataType().convert(ids));
-
-            // [#2573] Composite key T types are of type Record[N]
-        else
-            return DSL.row(pk).in(ids.toArray(new Record[]{}));
-    }
 
     // -------------------------------------------------------------------------
     // DAO API
@@ -232,15 +309,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
     /**
-     * Expose the request this <code>DAO</code> is operating.
-     *
-     * @return the <code>DAO</code>'s underlying <code>request</code>
-     */
-    public RequestContext request() {
-        return this.request;
-    }
-
-    /**
      * Expose the table this <code>DAO</code> is operating.
      *
      * @return the <code>DAO</code>'s underlying <code>table</code>
@@ -251,183 +319,157 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
 
     /**
-     * Performs a <code>INSERT</code> statement for a given record.
+     * Performs a <code>INSERT</code> statement for a given set of items.
      *
-     * @param record The record to be inserted
+     * @param items The items to be inserted
      * @throws DataAccessException if something went wrong executing the query
+     *
+     * @return insert-count of successful inserts.
      */
-    public int insert(Y record) throws DataAccessException {
-        return insert(singletonList(record))[0];
+    @SafeVarargs
+    public final int insert(final Y... items) throws DataAccessException {
+        return insert(asList(items));
     }
 
     /**
-     * Performs a batch <code>INSERT</code> statement for a given set of records.
+     * Performs a <code>INSERT</code> statement for a given set of items.
      *
-     * @param records The records to be inserted
+     * @param items The items to be inserted
      * @throws DataAccessException if something went wrong executing the query
-     */
-    public int[] insert(Y... records) throws DataAccessException {
-        return insert(asList(records));
-    }
-
-    /**
-     * Performs a batch <code>INSERT</code> statement for a given set of records.
      *
-     * @param records The records to be inserted
-     * @throws DataAccessException if something went wrong executing the query
+     * @return insert-count of successful inserts.
      */
-    public <A> int[] insert(List<Y> records) throws DataAccessException {
-        List<R> records0 = transformToRecords(records);
-        List<R> inserts = prepareInserts(records0);
+    public int insert(final List<Y> items) throws DataAccessException {
+        final List<R> inserts = prepareInserts(prepareRecords(items));
+        int insertCount = 0;
 
-        if (pkAutoIncFields.length > 0) {
-            // we want to resolve the autoincrement from the database into the model
-            // we need to use a way that has lower performance...
-            Field<A> firstAutoIncField = (Field<A>) pkAutoIncFields[0];
-            int k = 1;
-            InsertSetMoreStep step = dsl().insertInto(inserts.getFirst().getTable())
-                    .set(inserts.getFirst());
-            if (inserts.size() > 1) {
-                step.set(inserts.get(k));
-                k++;
-            }
-            Result<R> result = step
-                    .returning(firstAutoIncField)
+        if (autoIncGeneratingField != null) {
+            // inserts that have autoinc primary-key
+            final Result<R> result = dsl()
+                    .insertInto(inserts.getFirst().getTable())
+                    .set(inserts)
+                    .returning(autoIncGeneratingField)
                     .fetch();
+            insertCount = result.size();
 
-            int i = 0;
-            for (R item : result) {
-                A value = item.getValue(firstAutoIncField);
-                records0.get(i).setValue(firstAutoIncField, value);
-                i++;
+            // database has created autoinc-ids, we have retrieved them from the db,
+            // now we must reflect them back into the inserts, so the caller has them available.
+            // we need to use generic type A here which may be a concrete subclass of Number (we already made sure)
+            for (int j = 0; j < items.size(); j++) {
+                inserts.get(j).setValue(autoIncGeneratingField, result.get(j).getValue(autoIncGeneratingField));
             }
-            int j = 0;
-            for (R record : records0) {
-                Y obj = records.get(j);
-                record.into(obj);
-                j++;
-            }
-            return new int[]{result.size()};
         } else {
-            // we have no autoincrement-field
-            // we can insert with bulk-inserts to gain performance.
-            int j = 0;
-            for (R record : inserts) {
-                Y obj = records.get(j);
-                record.into(obj);
-                j++;
+            // inserts that have uuid primary-key, or no primary-key.
+            if (inserts.size() > 1) {
+                // batch insert (performance gain)
+                final int[] batchResult = dsl().batchInsert(inserts).execute();
+                for (int oneResult : batchResult) {
+                    if (oneResult == 1) {
+                        insertCount = insertCount + 1;
+                    }
+                }
+            } else {
+                // single insert
+                insertCount = dsl().executeInsert(inserts.getFirst());
             }
-
-            if (inserts.size() == 1) {
-                // Execute a regular INSERT (logging looks nicer that way)
-                return new int[] {dsl().executeInsert(inserts.getFirst())};
-            } else if (!inserts.isEmpty()) {
-                // Execute a batch INSERT
-                return dsl().batchInsert(inserts).execute();
-            }
-            return new int[]{0};
         }
+
+        // inserts have been changed (got autinc-value, uuid-value, ...)
+        // we need to reflect changes back into the given items,
+        // so the caller has them available.
+        for (int j = 0; j < items.size(); j++) {
+            inserts.get(j).into(items.get(j));
+        }
+        return insertCount;
     }
 
     /**
-     * Performs an <code>UPDATE</code> statement for a given record.
+     * Performs a <code>UPDATE</code> statement for a given set of items.
      *
-     * @param record The record to be updated
+     * @param items The items to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void update(Y record) throws DataAccessException {
-        update(singletonList(record));
+    @SafeVarargs
+    public final void update(final Y... items) throws DataAccessException {
+        update(asList(items));
     }
 
     /**
-     * Performs a batch <code>UPDATE</code> statement for a given set of records.
+     * Performs a <code>UPDATE</code> statement for a given set of items.
      *
-     * @param records The records to be updated
+     * @param items The items to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void update(Y... records) throws DataAccessException {
-        update(asList(records));
-    }
-
-    /**
-     * Performs a batch <code>UPDATE</code> statement for a given set of records.
-     *
-     * @param records The records to be updated
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public void update(List<Y> records) throws DataAccessException {
-        List<R> records0 = transformToRecords(records);
-        List<R> updates = prepareUpdates(records0);
+    public void update(final List<Y> items) throws DataAccessException {
+        final List<R> updates = prepareUpdates(prepareRecords(items));
         if (updates.size() > 1) {
-            // Execute a batch UPDATE
-            List<UpdateConditionStep<R>> conditions = new ArrayList<>();
+            // batch update (performance gain)
+            final List<UpdateConditionStep<R>> conditions = new ArrayList<>();
             for (R record : updates) {
                 conditions.add(dsl().update(table())
                         .set(record)
-                        .where(equal(pk.getFieldsArray(), getId(record))));
+                        .where(getRecordCondition(record)));
             }
             dsl().batch(conditions).execute();
         } else if (updates.size() == 1) {
-            // Execute a regular UPDATE (logging looks nicer that way)
-            dsl().update(table()).set(updates.getFirst()).where(equal(pk.getFieldsArray(), getId(updates.getFirst()))).execute();
+            // single update
+            final R record = updates.getFirst();
+            dsl().update(table())
+                    .set(record)
+                    .where(getRecordCondition(record))
+                    .execute();
         }
     }
 
     /**
-     * Performs a <code>DELETE</code> statement for a record
+     * Performs a <code>DELETE</code> statement for a given set of items.
      *
-     * @param record The record to be deleted
+     * @param items The items to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void delete(Y record) throws DataAccessException {
-        delete(singletonList(record));
+    @SafeVarargs
+    public final void delete(final Y... items) throws DataAccessException {
+        delete(asList(items));
     }
 
     /**
-     * Performs a <code>DELETE</code> statement for a given set of records.
+     * Performs a <code>DELETE</code> statement for a given set of items.
      *
-     * @param records The records to be deleted
+     * @param items The items to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void delete(Y... records) throws DataAccessException {
-        delete(asList(records));
-    }
-
-    /**
-     * Performs a <code>DELETE</code> statement for a given set of records.
-     *
-     * @param records The records to be deleted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public void delete(List<Y> records) throws DataAccessException {
-        List<R> records0 = transformToRecords(records);
-        if (records0.size() > 1) {
-            // Execute a batch DELETE
-            dsl().batchDelete(records0).execute();
-        } else if (records0.size() == 1) {
-            // Execute a regular DELETE (logging looks nicer that way)
-            dsl().executeDelete(records0.getFirst());
+    public void delete(final List<Y> items) throws DataAccessException {
+        final List<R> deletes = prepareRecords(items);
+        if (deletes.size() > 1) {
+            // batch delete (performance gain)
+            final List<DeleteConditionStep<R>> conditions = new ArrayList<>();
+            for (R record : deletes) {
+                Condition deleteCondition = getRecordCondition(record);
+                if (this.pk != null) {
+                    deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(record)));
+                }
+                conditions.add(dsl().delete(table()).where(deleteCondition));
+            }
+            dsl().batch(conditions).execute();
+        } else if (deletes.size() == 1) {
+            // single delete
+            final R record = deletes.getFirst();
+            Condition deleteCondition = getRecordCondition(record);
+            if (this.pk != null) {
+                deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(record)));
+            }
+            dsl().delete(table()).where(deleteCondition).execute();
         }
     }
 
-    /**
-     * Performs a <code>DELETE</code> statement for a given set of IDs.
-     *
-     * @param id The ID to be deleted
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public void deleteById(T id) throws DataAccessException {
-        deleteById(singletonList(id));
-    }
-
-
-    /**
+   /**
      * Performs a <code>DELETE</code> statement for a given set of IDs.
      *
      * @param ids The IDs to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void deleteById(T... ids) throws DataAccessException {
+    @SafeVarargs
+    public final void deleteById(final T... ids) throws DataAccessException {
         deleteById(asList(ids));
     }
 
@@ -437,20 +479,12 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param ids The IDs to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void deleteById(Collection<T> ids) throws DataAccessException {
+    public void deleteById(final Collection<T> ids) throws DataAccessException {
         if (pk != null)
-            dsl().delete(table()).where(equal(pk.getFieldsArray(), ids)).execute();
-    }
-
-    /**
-     * Checks if a given record exists.
-     *
-     * @param object The record whose existence is checked
-     * @return Whether the record already exists
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public boolean exists(R object) throws DataAccessException {
-        return existsById(getId(object));
+            dsl()
+                    .delete(table())
+                    .where(getPrimaryKeyCondition(ids))
+                    .execute();
     }
 
     /**
@@ -460,15 +494,13 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return Whether the ID already exists
      * @throws DataAccessException if something went wrong executing the query
      */
-    public boolean existsById(T id) throws DataAccessException {
-        if (pk != null)
-            return dsl()
-                    .selectCount()
-                    .from(table())
-                    .where(equal(pk.getFieldsArray(), id))
-                    .fetchOne(0, Integer.class) > 0;
-        else
+    public boolean existsById(final T id) throws DataAccessException {
+        if (pk == null) {
             return false;
+        } else {
+            final SelectConditionStep<R> selectStep = dsl.selectFrom(table()).where(getPrimaryKeyCondition(id));
+            return dsl().fetchCount(selectStep) > 0;
+        }
     }
 
     /**
@@ -477,23 +509,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return The number of records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
-    public long countAll() throws DataAccessException {
-        return dsl()
-                .selectCount()
-                .from(table())
-                .fetchOne(0, Long.class);
-    }
-
-    /**
-     * Find all records of the underlying table.
-     *
-     * @return All records of the underlying table
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public List<R> fetchAll() throws DataAccessException {
-        return dsl()
-                .selectFrom(table())
-                .fetch();
+    public int countAll() throws DataAccessException {
+        return dsl().fetchCount(dsl.selectFrom(table()));
     }
 
     /**
@@ -504,22 +521,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * <code>null</code> if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
-    public R findById(T id) throws DataAccessException {
+    public @Nullable R findById(final T id) throws DataAccessException {
         if (pk != null)
             return dsl().selectFrom(table())
-                    .where(equal(pk.getFieldsArray(), id))
+                    .where(getPrimaryKeyCondition(id))
                     .fetchOne();
         return null;
-    }
-
-    /**
-     * Find a record of the underlying table by ID.
-     *
-     * @param id The ID of a record in the underlying table
-     * @return A record of the underlying table given its ID.
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    public Optional<R> findOptionalById(T id) throws DataAccessException {
-        return Optional.ofNullable(findById(id));
     }
 }

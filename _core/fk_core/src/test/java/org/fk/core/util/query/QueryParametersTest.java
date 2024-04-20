@@ -3,9 +3,8 @@ package org.fk.core.util.query;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import org.fk.core.test.CoreTestProfile;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import java.io.IOException;
 
 /**
@@ -13,6 +12,7 @@ import java.io.IOException;
  */
 @QuarkusTest
 @TestProfile(CoreTestProfile.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class QueryParametersTest {
 
     @BeforeEach
