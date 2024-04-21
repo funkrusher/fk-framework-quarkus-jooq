@@ -1,23 +1,18 @@
 package org.fk.product.repository;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
 import org.fk.database1.testshop.tables.Product;
 import org.fk.database1.testshop.tables.ProductLang;
 import org.fk.core.repository.AbstractRepository;
-import org.fk.core.util.exception.InvalidDataException;
-import org.fk.core.util.query.QueryParameters;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.exception.InvalidDataException;
+import org.fk.core.query.QueryParameters;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
-import org.fk.product.dto.ProductPaginateDTO;
 import org.jooq.*;
-import org.jooq.Record;
 import org.jooq.impl.DSL;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.jooq.impl.DSL.*;

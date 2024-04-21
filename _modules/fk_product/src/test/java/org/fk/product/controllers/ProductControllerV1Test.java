@@ -1,6 +1,5 @@
 package org.fk.product.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.security.credential.Credential;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.test.common.QuarkusTestResource;
@@ -15,7 +14,7 @@ import jakarta.inject.Inject;
 import org.fk.core.auth.TenantCredential;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
-import org.fk.core.util.test.PojoUnitTestSerializer;
+import org.fk.core.dto.DTOMapper;
 import org.fk.database1.testshop.tables.Product;
 import org.fk.database1.testshop.tables.ProductLang;
 import org.fk.database1.testshop.tables.records.ProductLangRecord;
@@ -34,7 +33,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
@@ -59,7 +57,7 @@ public class ProductControllerV1Test {
     SecurityIdentity identity;
 
     @Inject
-    PojoUnitTestSerializer serializer;
+    DTOMapper serializer;
 
     @BeforeEach
     public void setup() {

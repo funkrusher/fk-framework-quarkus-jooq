@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.fk.core.dto.AbstractDTO;
-import org.fk.core.util.exception.ValidationException;
+import org.fk.core.exception.ValidationException;
 
 import java.util.HashSet;
 import java.util.List;

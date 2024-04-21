@@ -7,17 +7,9 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import io.quarkus.test.security.TestSecurity;
-import io.restassured.http.ContentType;
 import org.fk.core.auth.TenantCredential;
-import org.fk.core.util.test.PojoUnitTestSerializer;
 import org.fk.database1.testshop.tables.Post;
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.ProductLang;
 import org.fk.database1.testshop.tables.records.PostRecord;
-import org.fk.database1.testshop.tables.records.ProductLangRecord;
-import org.fk.database1.testshop.tables.records.ProductRecord;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductLangDTO;
 import org.fk.product.test.InjectProductTestUtil;
 import org.fk.product.test.ProductTestLifecycleManager;
 import org.fk.product.test.ProductTestProfile;
@@ -28,13 +20,11 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static org.fk.core.auth.FkRoles.ADMIN;
 import static org.fk.core.auth.FkSecurityIdentity.MASTER_TENANT_ID;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

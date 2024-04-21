@@ -2,7 +2,7 @@ package org.fk.core.dao;
 
 import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jooq.RequestContext;
-import org.fk.core.util.ulid.UlidGenerator;
+import org.fk.core.ulid.UlidGenerator;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
 import org.jooq.Record;

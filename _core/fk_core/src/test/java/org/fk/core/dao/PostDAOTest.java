@@ -9,7 +9,7 @@ import org.fk.core.test.CoreTestLifecycleManager;
 import org.fk.core.test.CoreTestProfile;
 import org.fk.core.test.CoreTestUtil;
 import org.fk.core.test.InjectCoreTestUtil;
-import org.fk.core.util.ulid.UlidGenerator;
+import org.fk.core.ulid.UlidGenerator;
 import org.fk.coreTestDatabase.CoreTestDatabase;
 import org.fk.coreTestDatabase.coretestdatabase.tables.Post;
 import org.fk.coreTestDatabase.coretestdatabase.tables.records.PostRecord;

@@ -1,10 +1,9 @@
 package org.fk.library.repository;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
 import org.fk.core.repository.AbstractRepository;
-import org.fk.core.util.exception.InvalidDataException;
-import org.fk.core.util.query.QueryParameters;
+import org.fk.core.exception.InvalidDataException;
+import org.fk.core.query.QueryParameters;
 import org.fk.database2.public_.tables.Book;
 import org.fk.database2.public_.tables.Author;
 import org.fk.library.dto.AuthorDTO;
