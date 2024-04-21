@@ -1,28 +1,22 @@
-package org.fk.product.dao;
+package org.fk.core.dao;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
 import org.fk.core.jooq.RequestContext;
+import org.fk.core.test.CoreTestLifecycleManager;
+import org.fk.core.test.CoreTestProfile;
+import org.fk.core.test.CoreTestUtil;
+import org.fk.core.test.InjectCoreTestUtil;
 import org.fk.core.util.ulid.UlidGenerator;
-import org.fk.database1.Database1;
-import org.fk.database1.testshop.tables.Post;
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.records.PostRecord;
-import org.fk.database1.testshop.tables.records.PostRecord;
-import org.fk.product.dto.PostDTO;
-import org.fk.product.dto.PostDTO;
-import org.fk.product.test.InjectProductTestUtil;
-import org.fk.product.test.ProductTestLifecycleManager;
-import org.fk.product.test.ProductTestProfile;
-import org.fk.product.test.ProductTestUtil;
-import org.fk.product.type.ProductTypeId;
+import org.fk.coreTestDatabase.CoreTestDatabase;
+import org.fk.coreTestDatabase.coretestdatabase.tables.Post;
+import org.fk.coreTestDatabase.coretestdatabase.tables.records.PostRecord;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,23 +29,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * PostDAOTest
  */
 @QuarkusTest
-@TestProfile(ProductTestProfile.class)
-@QuarkusTestResource(ProductTestLifecycleManager.class)
+@TestProfile(CoreTestProfile.class)
+@QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PostDAOTest {
 
-    @InjectProductTestUtil
-    static ProductTestUtil testDbUtil;
+    @InjectCoreTestUtil
+    static CoreTestUtil testDbUtil;
 
     @Inject
-    Database1 database1;
+    CoreTestDatabase database;
 
     private DSLContext dsl;
 
     @BeforeEach
     public void setup() {
         RequestContext request = new RequestContext(1, 1);
-        this.dsl = database1.dsl(request);
+        this.dsl = database.dsl(request);
     }
 
     private PostRecord createTestRecord(Optional<UUID> maybePostId) {

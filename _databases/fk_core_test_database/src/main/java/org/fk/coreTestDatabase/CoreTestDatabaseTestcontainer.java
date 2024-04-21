@@ -1,4 +1,4 @@
-package org.fk.database1;
+package org.fk.coreTestDatabase;
 
 import org.fk.core.liquibase.FkLiquibase;
 import org.fk.core.testcontainers.FkMariaDb;
@@ -8,22 +8,22 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Database1Testcontainer implements AutoCloseable {
+public class CoreTestDatabaseTestcontainer implements AutoCloseable {
 
     private final FkMariaDb fkMariaDb;
 
-    public Database1Testcontainer() throws Exception {
-        this.fkMariaDb = new FkMariaDb("testshop");
+    public CoreTestDatabaseTestcontainer() throws Exception {
+        this.fkMariaDb = new FkMariaDb("coreTestDatabase");
 
         // create database if it does not exist
         try (Connection connection = fkMariaDb.createConnection();
              Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS testshop;");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS coreTestDatabase;");
         }
         // execute liquibase-update
         try (Connection connection = fkMariaDb.createConnection()) {
             FkLiquibase fkLiquibase = new FkLiquibase(
-                    "database1/liquibase/changelog.xml", "database1/liquibase/changelog.xml");
+                    "coreTestDatabase/liquibase/changelog.xml", "coreTestDatabase/liquibase/changelog.xml");
             fkLiquibase.executeUpdate(connection);
         }
     }

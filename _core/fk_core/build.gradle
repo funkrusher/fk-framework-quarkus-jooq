@@ -15,6 +15,7 @@ dependencies {
     api libs.jacksonJsr310
     api libs.ulid
 
+    testImplementation project(':_databases:fk_core_test_database')
     testImplementation libs.bundles.test.quarkus
     testImplementation libs.bundles.test.testcontainers
     testImplementation libs.awaitility

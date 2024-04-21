@@ -1,20 +1,17 @@
-package org.fk.product.dao;
+package org.fk.core.dao;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
 import org.fk.core.jooq.RequestContext;
-import org.fk.database1.Database1;
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.records.ProductRecord;
-import org.fk.product.dao.ProductDAO;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.test.InjectProductTestUtil;
-import org.fk.product.test.ProductTestLifecycleManager;
-import org.fk.product.test.ProductTestProfile;
-import org.fk.product.test.ProductTestUtil;
-import org.fk.product.type.ProductTypeId;
+import org.fk.core.test.CoreTestLifecycleManager;
+import org.fk.core.test.CoreTestProfile;
+import org.fk.core.test.CoreTestUtil;
+import org.fk.core.test.InjectCoreTestUtil;
+import org.fk.coreTestDatabase.CoreTestDatabase;
+import org.fk.coreTestDatabase.coretestdatabase.tables.Product;
+import org.fk.coreTestDatabase.coretestdatabase.tables.records.ProductRecord;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.*;
 
@@ -23,9 +20,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static io.restassured.RestAssured.given;
 import static java.util.Optional.empty;
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -33,23 +28,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * ProductDAOTest
  */
 @QuarkusTest
-@TestProfile(ProductTestProfile.class)
-@QuarkusTestResource(ProductTestLifecycleManager.class)
+@TestProfile(CoreTestProfile.class)
+@QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProductDAOTest {
 
-    @InjectProductTestUtil
-    static ProductTestUtil testDbUtil;
+    @InjectCoreTestUtil
+    static CoreTestUtil testDbUtil;
 
     @Inject
-    Database1 database1;
+    CoreTestDatabase database;
 
     private DSLContext dsl;
 
     @BeforeEach
     public void setup() {
         RequestContext request = new RequestContext(1, 1);
-        this.dsl = database1.dsl(request);
+        this.dsl = database.dsl(request);
     }
 
     private ProductRecord createTestRecord(Optional<Long> maybeProductId) {
@@ -57,7 +52,7 @@ public class ProductDAOTest {
         maybeProductId.ifPresent(productRecord::setProductId);
         productRecord.setClientId(1);
         productRecord.setPrice(new BigDecimal("22.00"));
-        productRecord.setTypeId(ProductTypeId.BOOK.getValue());
+        productRecord.setTypeId("book");
         return productRecord;
     }
 
@@ -66,7 +61,7 @@ public class ProductDAOTest {
         maybeProductId.ifPresent(productDTO::setProductId);
         productDTO.setClientId(1);
         productDTO.setPrice(new BigDecimal("22.00"));
-        productDTO.setTypeId(ProductTypeId.BOOK.getValue());
+        productDTO.setTypeId("book");
         return productDTO;
     }
 
@@ -93,7 +88,7 @@ public class ProductDAOTest {
                 .fetchInto(ProductRecord.class);
     }
 
-    private void assertCount(long expectedCount) {
+    private void assertCount(int expectedCount) {
         int count = dsl.fetchCount(dsl.selectFrom(Product.PRODUCT));
         assertEquals(count, expectedCount);
     }
@@ -111,7 +106,7 @@ public class ProductDAOTest {
         ProductRecord existingRecord = resolveRecordsFromDb(productRecord.getProductId()).getFirst();
         validateRecordEqual(productRecord, existingRecord);
 
-        assertCount(15628);
+        assertCount(1);
     }
 
     @Test
@@ -132,7 +127,7 @@ public class ProductDAOTest {
         validateRecordEqual(productRecord2, existingRecords.get(1));
         validateRecordEqual(productRecord3, existingRecords.get(2));
 
-        assertCount(15631);
+        assertCount(4);
     }
 
 
@@ -148,7 +143,7 @@ public class ProductDAOTest {
         ProductRecord existingRecord = resolveRecordsFromDb(productRecord.getProductId()).getFirst();
         validateRecordEqual(productRecord, existingRecord);
 
-        assertCount(15632);
+        assertCount(5);
     }
 
     @Test
@@ -169,7 +164,7 @@ public class ProductDAOTest {
         validateRecordEqual(productRecord2, existingRecords.get(1));
         validateRecordEqual(productRecord3, existingRecords.get(2));
 
-        assertCount(15635);
+        assertCount(8);
     }
 
     @Test
@@ -184,7 +179,7 @@ public class ProductDAOTest {
         ProductRecord existingRecord = resolveRecordsFromDb(productDTO.getProductId()).getFirst();
         validateDTOEqual(productDTO, existingRecord);
 
-        assertCount(15636);
+        assertCount(9);
     }
 
     @Test
@@ -205,7 +200,7 @@ public class ProductDAOTest {
         validateDTOEqual(productDTO2, existingRecords.get(1));
         validateDTOEqual(productDTO3, existingRecords.get(2));
 
-        assertCount(15639);
+        assertCount(12);
     }
 
     @Test
@@ -220,7 +215,7 @@ public class ProductDAOTest {
         ProductRecord existingRecord = resolveRecordsFromDb(productDTO.getProductId()).getFirst();
         validateDTOEqual(productDTO, existingRecord);
 
-        assertCount(15640);
+        assertCount(13);
     }
 
     @Test
@@ -241,7 +236,7 @@ public class ProductDAOTest {
         validateDTOEqual(productDTO2, existingRecords.get(1));
         validateDTOEqual(productDTO3, existingRecords.get(2));
 
-        assertCount(15643);
+        assertCount(16);
     }
 
     @Test
@@ -256,7 +251,7 @@ public class ProductDAOTest {
         ProductRecord existingRecord = resolveRecordsFromDb(productRecord.getProductId()).getFirst();
         validateRecordEqual(productRecord, existingRecord);
 
-        assertCount(15643);
+        assertCount(16);
     }
 
     @Test
@@ -280,7 +275,7 @@ public class ProductDAOTest {
         validateRecordEqual(productRecord2, existingRecords.get(1));
         validateRecordEqual(productRecord3, existingRecords.get(2));
 
-        assertCount(15643);
+        assertCount(16);
     }
 
     @Test
@@ -295,7 +290,7 @@ public class ProductDAOTest {
         ProductRecord existingRecord = resolveRecordsFromDb(productDTO.getProductId()).getFirst();
         validateDTOEqual(productDTO, existingRecord);
 
-        assertCount(15643);
+        assertCount(16);
     }
 
     @Test
@@ -319,7 +314,7 @@ public class ProductDAOTest {
         validateDTOEqual(productDTO2, existingRecords.get(1));
         validateDTOEqual(productDTO3, existingRecords.get(2));
 
-        assertCount(15643);
+        assertCount(16);
     }
 
     @Test
@@ -333,7 +328,7 @@ public class ProductDAOTest {
         List<ProductRecord> existingRecords = resolveRecordsFromDb(productRecord.getProductId());
         assertEquals(existingRecords.size(), 0);
 
-        assertCount(15642);
+        assertCount(15);
     }
 
     @Test
@@ -350,7 +345,7 @@ public class ProductDAOTest {
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60001L, 60002L, 60003L);
         assertEquals(existingRecords.size(), 0);
 
-        assertCount(15639);
+        assertCount(12);
     }
 
     @Test
@@ -364,7 +359,7 @@ public class ProductDAOTest {
         List<ProductRecord> existingRecords = resolveRecordsFromDb(productDTO.getProductId());
         assertEquals(existingRecords.size(), 0);
 
-        assertCount(15638);
+        assertCount(11);
     }
 
     @Test
@@ -381,7 +376,7 @@ public class ProductDAOTest {
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60005L, 60006L, 60007L);
         assertEquals(existingRecords.size(), 0);
 
-        assertCount(15635);
+        assertCount(8);
     }
 
     @Test
@@ -395,7 +390,7 @@ public class ProductDAOTest {
         Assertions.assertTrue(shouldExist);
         Assertions.assertFalse(shouldNotExist);
 
-        assertCount(15635);
+        assertCount(8);
     }
 
     @Test
@@ -403,10 +398,10 @@ public class ProductDAOTest {
     public void testCountAll() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
-        long count = productDAO.countAll();
+        int count = productDAO.countAll();
 
-        assertEquals(count, 15635L);
-        assertCount(15635);
+        assertEquals(count, 8);
+        assertCount(8);
     }
 
     @Test
@@ -420,7 +415,7 @@ public class ProductDAOTest {
         assertNotNull(productRecord1);
         Assertions.assertNull(productRecord2);
 
-        assertCount(15635);
+        assertCount(8);
     }
 
     @Test
@@ -433,7 +428,7 @@ public class ProductDAOTest {
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60008L);
         assertEquals(existingRecords.size(), 0);
 
-        assertCount(15634);
+        assertCount(7);
     }
 
     @Test
@@ -446,7 +441,7 @@ public class ProductDAOTest {
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60009L, 60010L);
         assertEquals(existingRecords.size(), 0);
 
-        assertCount(15632);
+        assertCount(5);
     }
 
 
