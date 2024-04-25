@@ -10,8 +10,6 @@ import org.fk.database1.testshop.tables.Databasechangeloglock;
 import org.fk.database1.testshop.tables.Init;
 import org.fk.database1.testshop.tables.Lang;
 import org.fk.database1.testshop.tables.Post;
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.ProductLang;
 import org.fk.database1.testshop.tables.QrtzBlobTriggers;
 import org.fk.database1.testshop.tables.QrtzCalendars;
 import org.fk.database1.testshop.tables.QrtzCronTriggers;
@@ -64,16 +62,6 @@ public class Tables {
      * The table <code>testshop.post</code>.
      */
     public static final Post POST = Post.POST;
-
-    /**
-     * The table <code>testshop.product</code>.
-     */
-    public static final Product PRODUCT = Product.PRODUCT;
-
-    /**
-     * The table <code>testshop.product_lang</code>.
-     */
-    public static final ProductLang PRODUCT_LANG = ProductLang.PRODUCT_LANG;
 
     /**
      * The table <code>testshop.QRTZ_BLOB_TRIGGERS</code>.

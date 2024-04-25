@@ -49,7 +49,7 @@ public class Database1ConfigurationFactory {
                             .withExecuteLogging(true)
                             .withRenderFormatted(true)
                             .withRenderCatalog(false)
-                            .withRenderSchema(false)
+                            .withRenderSchema(true) // make different databases in single db be recognized
                             .withMaxRows(Integer.MAX_VALUE)
                             .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
                             .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)

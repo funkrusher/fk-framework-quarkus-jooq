@@ -8,8 +8,6 @@ import org.fk.database1.testshop.tables.Client;
 import org.fk.database1.testshop.tables.Databasechangeloglock;
 import org.fk.database1.testshop.tables.Lang;
 import org.fk.database1.testshop.tables.Post;
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.ProductLang;
 import org.fk.database1.testshop.tables.QrtzBlobTriggers;
 import org.fk.database1.testshop.tables.QrtzCalendars;
 import org.fk.database1.testshop.tables.QrtzCronTriggers;
@@ -29,8 +27,6 @@ import org.fk.database1.testshop.tables.records.ClientRecord;
 import org.fk.database1.testshop.tables.records.DatabasechangeloglockRecord;
 import org.fk.database1.testshop.tables.records.LangRecord;
 import org.fk.database1.testshop.tables.records.PostRecord;
-import org.fk.database1.testshop.tables.records.ProductLangRecord;
-import org.fk.database1.testshop.tables.records.ProductRecord;
 import org.fk.database1.testshop.tables.records.QrtzBlobTriggersRecord;
 import org.fk.database1.testshop.tables.records.QrtzCalendarsRecord;
 import org.fk.database1.testshop.tables.records.QrtzCronTriggersRecord;
@@ -68,8 +64,6 @@ public class Keys {
     public static final UniqueKey<DatabasechangeloglockRecord> KEY_DATABASECHANGELOGLOCK_PRIMARY = Internal.createUniqueKey(Databasechangeloglock.DATABASECHANGELOGLOCK, DSL.name("KEY_DATABASECHANGELOGLOCK_PRIMARY"), new TableField[] { Databasechangeloglock.DATABASECHANGELOGLOCK.ID }, true);
     public static final UniqueKey<LangRecord> KEY_LANG_PRIMARY = Internal.createUniqueKey(Lang.LANG, DSL.name("KEY_lang_PRIMARY"), new TableField[] { Lang.LANG.LANGID }, true);
     public static final UniqueKey<PostRecord> KEY_POST_PRIMARY = Internal.createUniqueKey(Post.POST, DSL.name("KEY_post_PRIMARY"), new TableField[] { Post.POST.ID }, true);
-    public static final UniqueKey<ProductRecord> KEY_PRODUCT_PRIMARY = Internal.createUniqueKey(Product.PRODUCT, DSL.name("KEY_product_PRIMARY"), new TableField[] { Product.PRODUCT.PRODUCTID }, true);
-    public static final UniqueKey<ProductLangRecord> KEY_PRODUCT_LANG_PRIMARY = Internal.createUniqueKey(ProductLang.PRODUCT_LANG, DSL.name("KEY_product_lang_PRIMARY"), new TableField[] { ProductLang.PRODUCT_LANG.PRODUCTID, ProductLang.PRODUCT_LANG.LANGID }, true);
     public static final UniqueKey<QrtzBlobTriggersRecord> KEY_QRTZ_BLOB_TRIGGERS_PRIMARY = Internal.createUniqueKey(QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS, DSL.name("KEY_QRTZ_BLOB_TRIGGERS_PRIMARY"), new TableField[] { QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS.SCHED_NAME, QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME, QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP }, true);
     public static final UniqueKey<QrtzCalendarsRecord> KEY_QRTZ_CALENDARS_PRIMARY = Internal.createUniqueKey(QrtzCalendars.QRTZ_CALENDARS, DSL.name("KEY_QRTZ_CALENDARS_PRIMARY"), new TableField[] { QrtzCalendars.QRTZ_CALENDARS.SCHED_NAME, QrtzCalendars.QRTZ_CALENDARS.CALENDAR_NAME }, true);
     public static final UniqueKey<QrtzCronTriggersRecord> KEY_QRTZ_CRON_TRIGGERS_PRIMARY = Internal.createUniqueKey(QrtzCronTriggers.QRTZ_CRON_TRIGGERS, DSL.name("KEY_QRTZ_CRON_TRIGGERS_PRIMARY"), new TableField[] { QrtzCronTriggers.QRTZ_CRON_TRIGGERS.SCHED_NAME, QrtzCronTriggers.QRTZ_CRON_TRIGGERS.TRIGGER_NAME, QrtzCronTriggers.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP }, true);
@@ -90,9 +84,6 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<ProductRecord, ClientRecord> FK_PRODUCT_CLIENTID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_clientId"), new TableField[] { Product.PRODUCT.CLIENTID }, Keys.KEY_CLIENT_PRIMARY, new TableField[] { Client.CLIENT.CLIENTID }, true);
-    public static final ForeignKey<ProductLangRecord, LangRecord> FK_PRODUCT_LANG_LANGID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_langId"), new TableField[] { ProductLang.PRODUCT_LANG.LANGID }, Keys.KEY_LANG_PRIMARY, new TableField[] { Lang.LANG.LANGID }, true);
-    public static final ForeignKey<ProductLangRecord, ProductRecord> FK_PRODUCT_LANG_PRODUCTID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_productId"), new TableField[] { ProductLang.PRODUCT_LANG.PRODUCTID }, Keys.KEY_PRODUCT_PRIMARY, new TableField[] { Product.PRODUCT.PRODUCTID }, true);
     public static final ForeignKey<QrtzBlobTriggersRecord, QrtzTriggersRecord> QRTZ_BLOB_TRIGGERS_IBFK_1 = Internal.createForeignKey(QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS, DSL.name("QRTZ_BLOB_TRIGGERS_ibfk_1"), new TableField[] { QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS.SCHED_NAME, QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME, QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP }, Keys.KEY_QRTZ_TRIGGERS_PRIMARY, new TableField[] { QrtzTriggers.QRTZ_TRIGGERS.SCHED_NAME, QrtzTriggers.QRTZ_TRIGGERS.TRIGGER_NAME, QrtzTriggers.QRTZ_TRIGGERS.TRIGGER_GROUP }, true);
     public static final ForeignKey<QrtzCronTriggersRecord, QrtzTriggersRecord> QRTZ_CRON_TRIGGERS_IBFK_1 = Internal.createForeignKey(QrtzCronTriggers.QRTZ_CRON_TRIGGERS, DSL.name("QRTZ_CRON_TRIGGERS_ibfk_1"), new TableField[] { QrtzCronTriggers.QRTZ_CRON_TRIGGERS.SCHED_NAME, QrtzCronTriggers.QRTZ_CRON_TRIGGERS.TRIGGER_NAME, QrtzCronTriggers.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP }, Keys.KEY_QRTZ_TRIGGERS_PRIMARY, new TableField[] { QrtzTriggers.QRTZ_TRIGGERS.SCHED_NAME, QrtzTriggers.QRTZ_TRIGGERS.TRIGGER_NAME, QrtzTriggers.QRTZ_TRIGGERS.TRIGGER_GROUP }, true);
     public static final ForeignKey<QrtzSimpleTriggersRecord, QrtzTriggersRecord> QRTZ_SIMPLE_TRIGGERS_IBFK_1 = Internal.createForeignKey(QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS, DSL.name("QRTZ_SIMPLE_TRIGGERS_ibfk_1"), new TableField[] { QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME, QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME, QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP }, Keys.KEY_QRTZ_TRIGGERS_PRIMARY, new TableField[] { QrtzTriggers.QRTZ_TRIGGERS.SCHED_NAME, QrtzTriggers.QRTZ_TRIGGERS.TRIGGER_NAME, QrtzTriggers.QRTZ_TRIGGERS.TRIGGER_GROUP }, true);

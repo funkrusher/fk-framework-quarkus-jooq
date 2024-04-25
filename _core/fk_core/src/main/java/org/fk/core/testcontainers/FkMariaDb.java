@@ -22,8 +22,8 @@ public class FkMariaDb implements AutoCloseable {
         container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
                 //.withReuse(true) // need to delete database where reuse=true (could boost performance)
                 .withDatabaseName(databaseName)
-                .withUsername("tester")
-                .withPassword("test123")
+                .withUsername("root")
+                .withPassword("")
                 .withTmpFs(Map.of("/var/lib/mysql", "rw"));
         container.start();
 

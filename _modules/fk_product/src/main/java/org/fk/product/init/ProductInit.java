@@ -17,9 +17,9 @@ import java.util.Optional;
 
 import static org.fk.database1.testshop.tables.Client.CLIENT;
 import static org.fk.database1.testshop.tables.Init.INIT;
-import static org.fk.database1.testshop.tables.Product.PRODUCT;
+import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.fk.database1.testshop.tables.Lang.LANG;
-import static org.fk.database1.testshop.tables.ProductLang.PRODUCT_LANG;
+import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.fk.database1.testshop.tables.Role.ROLE;
 
 @ApplicationScoped
@@ -75,7 +75,7 @@ public class ProductInit {
 
                 tx1.dsl().execute("" +
                         "-- Generate 15000 random products for client IDs 1, 2, and 3\n" +
-                        "            INSERT INTO product (clientId, price, typeId)\n" +
+                        "            INSERT INTO testshop2.product (clientId, price, typeId)\n" +
                         "            SELECT\n" +
                         "                RAND()*2+1 AS clientId, -- random client ID between 1 and 3\n" +
                         "                ROUND(RAND() * 100, 2) AS price,    -- random price between 0 and 100 with 2 decimal places\n" +
@@ -95,19 +95,19 @@ public class ProductInit {
 
                 tx1.dsl().execute("" +
                         " -- Generate product_lang entries for the new products\n" +
-                        "            INSERT INTO product_lang (productId, langId, name, description)\n" +
+                        "            INSERT INTO testshop2.product_lang (productId, langId, name, description)\n" +
                         "            SELECT\n" +
                         "                p.productId,\n" +
                         "                l.langId,\n" +
                         "                CONCAT('Product ', p.productId, ' (', l.code, ')') AS name,\n" +
                         "                CONCAT('This is the ', l.description, ' description for product ', p.productId) AS description\n" +
                         "            FROM\n" +
-                        "                product p\n" +
-                        "                    CROSS JOIN lang l\n" +
+                        "                testshop2.product p\n" +
+                        "                    CROSS JOIN testshop.lang l\n" +
                         "            WHERE\n" +
                         "                NOT EXISTS (\n" +
                         "                        SELECT 1\n" +
-                        "                        FROM product_lang pl\n" +
+                        "                        FROM testshop2.product_lang pl\n" +
                         "                        WHERE pl.productId = p.productId AND pl.langId = l.langId\n" +
                         "                    );");
 

@@ -1,8 +1,8 @@
 package org.fk.product.repository;
 
 
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.ProductLang;
+import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.repository.AbstractRepository;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.QueryParameters;

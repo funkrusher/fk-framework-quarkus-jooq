@@ -8,9 +8,9 @@ import java.util.Collection;
 
 import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
-import org.fk.database1.testshop.tables.Product.ProductPath;
-import org.fk.database1.testshop.tables.ProductLang.ProductLangPath;
 import org.fk.database1.testshop.tables.records.LangRecord;
+import org.fk.database1.testshop2.tables.Product.ProductPath;
+import org.fk.database1.testshop2.tables.ProductLang.ProductLangPath;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -151,18 +151,18 @@ public class Lang extends TableImpl<LangRecord> {
 
     /**
      * Get the implicit to-many join path to the
-     * <code>testshop.product_lang</code> table
+     * <code>testshop2.product_lang</code> table
      */
     public ProductLangPath fk_product_lang_langId() {
         if (_fk_product_lang_langId == null)
-            _fk_product_lang_langId = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_LANGID.getInverseKey());
+            _fk_product_lang_langId = new ProductLangPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_LANG_LANGID.getInverseKey());
 
         return _fk_product_lang_langId;
     }
 
     /**
      * Get the implicit many-to-many join path to the
-     * <code>testshop.product</code> table
+     * <code>testshop2.product</code> table
      */
     public ProductPath fk_product_lang_productId() {
         return fk_product_lang_langId().fk_product_lang_productId();

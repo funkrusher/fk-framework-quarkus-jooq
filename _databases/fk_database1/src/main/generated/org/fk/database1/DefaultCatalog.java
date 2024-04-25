@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.fk.database1.testshop.Testshop;
+import org.fk.database1.testshop2.Testshop2;
 import org.jooq.Constants;
 import org.jooq.Schema;
 import org.jooq.impl.CatalogImpl;
@@ -32,6 +33,11 @@ public class DefaultCatalog extends CatalogImpl {
     public final Testshop TESTSHOP = Testshop.TESTSHOP;
 
     /**
+     * The schema <code>testshop2</code>.
+     */
+    public final Testshop2 TESTSHOP2 = Testshop2.TESTSHOP2;
+
+    /**
      * No further instances allowed
      */
     private DefaultCatalog() {
@@ -41,7 +47,8 @@ public class DefaultCatalog extends CatalogImpl {
     @Override
     public final List<Schema> getSchemas() {
         return Arrays.asList(
-            Testshop.TESTSHOP
+            Testshop.TESTSHOP,
+            Testshop2.TESTSHOP2
         );
     }
 

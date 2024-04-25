@@ -7,8 +7,8 @@ import jakarta.enterprise.context.Dependent;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.media.SchemaProperty;
-import org.fk.database1.testshop.tables.dtos.Product;
-import org.fk.database1.testshop.tables.interfaces.IProduct;
+import org.fk.database1.testshop2.tables.dtos.Product;
+import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.product.type.ProductTypeId;
 
 import java.time.LocalDateTime;

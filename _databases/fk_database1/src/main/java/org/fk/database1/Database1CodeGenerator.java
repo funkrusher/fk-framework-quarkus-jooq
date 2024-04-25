@@ -32,7 +32,7 @@ public class Database1CodeGenerator {
                             )
                             .withDatabase(new Database()
                                     .withName(MariaDBDatabase.class.getName())
-                                    .withIncludes("testshop.*")
+                                    .withIncludes("testshop.*|testshop2.*")
                                     .withExcludes("")
                                     .withForcedTypes(new ForcedType()
                                             .withName("BOOLEAN")

@@ -7,13 +7,13 @@
     </changeSet>
     <changeSet author="bernd" id="feature-3823-sql">
         <sql>
-            CREATE TABLE init
+            CREATE TABLE testshop.init
             (
                 initialized  VARCHAR(255) NOT NULL
             );
         </sql>
         <rollback>
-            DROP TABLE init;
+            DROP TABLE testshop.init;
         </rollback>
     </changeSet>
 </databaseChangeLog>

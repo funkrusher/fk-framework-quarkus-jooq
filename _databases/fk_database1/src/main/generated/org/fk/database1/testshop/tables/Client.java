@@ -8,9 +8,9 @@ import java.util.Collection;
 
 import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
-import org.fk.database1.testshop.tables.Product.ProductPath;
 import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop.tables.records.ClientRecord;
+import org.fk.database1.testshop2.tables.Product.ProductPath;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -137,19 +137,6 @@ public class Client extends TableImpl<ClientRecord> {
         return Keys.KEY_CLIENT_PRIMARY;
     }
 
-    private transient ProductPath _fk_product_clientId;
-
-    /**
-     * Get the implicit to-many join path to the <code>testshop.product</code>
-     * table
-     */
-    public ProductPath fk_product_clientId() {
-        if (_fk_product_clientId == null)
-            _fk_product_clientId = new ProductPath(this, null, Keys.FK_PRODUCT_CLIENTID.getInverseKey());
-
-        return _fk_product_clientId;
-    }
-
     private transient UserPath _fk_user_clientId;
 
     /**
@@ -161,6 +148,19 @@ public class Client extends TableImpl<ClientRecord> {
             _fk_user_clientId = new UserPath(this, null, Keys.FK_USER_CLIENTID.getInverseKey());
 
         return _fk_user_clientId;
+    }
+
+    private transient ProductPath _fk_product_clientId;
+
+    /**
+     * Get the implicit to-many join path to the <code>testshop2.product</code>
+     * table
+     */
+    public ProductPath fk_product_clientId() {
+        if (_fk_product_clientId == null)
+            _fk_product_clientId = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CLIENTID.getInverseKey());
+
+        return _fk_product_clientId;
     }
 
     @Override
