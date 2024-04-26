@@ -17,11 +17,7 @@ import java.util.List;
 /**
  * ProductDTO
  */
-@Schema(name = "Product", description = "Represents a product",
-properties = {
-        @SchemaProperty(name = "createdAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z"),
-        @SchemaProperty(name = "updatedAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-})
+@Schema(name = "Product", description = "Represents a product")
 public class ProductDTO extends Product implements IProduct {
 
     @Schema(writeOnly = true)

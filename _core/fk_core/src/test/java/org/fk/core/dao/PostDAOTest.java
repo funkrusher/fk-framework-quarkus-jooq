@@ -235,9 +235,9 @@ public class PostDAOTest {
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(postDTO1.getId(), postDTO2.getId(), postDTO3.getId());
         assertEquals(existingRecords.size(), 3);
-        validateDTOEqual(postDTO1, existingRecords.get(0));
-        validateDTOEqual(postDTO2, existingRecords.get(1));
-        validateDTOEqual(postDTO3, existingRecords.get(2));
+        validateDTOEqual(postDTO1, existingRecords.stream().filter(x -> x.getId().equals(postDTO1.getId())).toList().getFirst());
+        validateDTOEqual(postDTO2, existingRecords.stream().filter(x -> x.getId().equals(postDTO2.getId())).toList().getFirst());
+        validateDTOEqual(postDTO3, existingRecords.stream().filter(x -> x.getId().equals(postDTO3.getId())).toList().getFirst());
 
         assertCount(16);
     }

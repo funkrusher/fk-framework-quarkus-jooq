@@ -1,6 +1,7 @@
 package org.fk.product.controller;
 
 import io.quarkus.security.Authenticated;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.exception.ValidationException;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -21,6 +22,7 @@ import org.jooq.DSLContext;
 @Path("/api/v1/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Tag(name="Product Controller V1", description = "Product Operations, only available for logged-in users")
 public class ProductControllerV1 {
 
     @Inject

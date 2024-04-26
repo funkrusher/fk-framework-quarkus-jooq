@@ -5,7 +5,6 @@ import org.jooq.meta.Definition;
 
 public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
 
-
     @Override
     public String getJavaClassExtends(Definition definition, Mode mode) {
         String defaultJavaClassExtends = super.getJavaClassExtends(definition, mode);
@@ -33,7 +32,6 @@ public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
     public String getJavaGetterName(Definition definition, Mode mode) {
         return "get" + definition.getOutputName().substring(0, 1).toUpperCase() + definition.getOutputName().substring(1);
     }
-
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
