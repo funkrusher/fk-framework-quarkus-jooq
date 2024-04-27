@@ -27,8 +27,9 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      * Setter for <code>testshop.post.id</code>.
      */
     @Override
-    public void setId(UUID value) {
+    public PostRecord setId(UUID value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -44,8 +45,9 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      * Setter for <code>testshop.post.title</code>.
      */
     @Override
-    public void setTitle(String value) {
+    public PostRecord setTitle(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -108,7 +110,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
     /**
      * Create a detached, initialised PostRecord
      */
-    public PostRecord(org.fk.database1.testshop.tables.dtos.Post value) {
+    public PostRecord(org.fk.database1.testshop.tables.pojos.Post value) {
         super(Post.POST);
 
         if (value != null) {

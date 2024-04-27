@@ -2,13 +2,12 @@ package org.fk.library.dto;
 
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.fk.core.dto.AbstractDTO;
 
 import java.util.List;
 
 @Schema(name = "AuthorPaginate", description = "Represents the pagination result of authors")
 
-public class AuthorPaginateDTO extends AbstractDTO {
+public class AuthorPaginateDTO {
 
     private List<AuthorDTO> authors;
 
@@ -24,7 +23,6 @@ public class AuthorPaginateDTO extends AbstractDTO {
 
     public void setAuthors(List<AuthorDTO> products) {
         this.authors = products;
-        touch();
     }
 
     public Integer getCount() {
@@ -33,6 +31,5 @@ public class AuthorPaginateDTO extends AbstractDTO {
 
     public void setCount(Integer count) {
         this.count = count;
-        touch();
     }
 }

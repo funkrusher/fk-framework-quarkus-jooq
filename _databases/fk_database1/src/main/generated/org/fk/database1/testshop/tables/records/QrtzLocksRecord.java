@@ -25,8 +25,9 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzLocksRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
     @Override
-    public void setLOCK_NAME(String value) {
+    public QrtzLocksRecord setLOCK_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -108,7 +110,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     /**
      * Create a detached, initialised QrtzLocksRecord
      */
-    public QrtzLocksRecord(org.fk.database1.testshop.tables.dtos.QrtzLocks value) {
+    public QrtzLocksRecord(org.fk.database1.testshop.tables.pojos.QrtzLocks value) {
         super(QrtzLocks.QRTZ_LOCKS);
 
         if (value != null) {

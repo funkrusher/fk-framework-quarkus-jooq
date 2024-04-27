@@ -15,10 +15,10 @@ import org.fk.core.auth.TenantCredential;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.fk.core.dto.DTOMapper;
-import org.fk.database1.testshop.tables.Product;
-import org.fk.database1.testshop.tables.ProductLang;
-import org.fk.database1.testshop.tables.records.ProductLangRecord;
-import org.fk.database1.testshop.tables.records.ProductRecord;
+import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.ProductLang;
+import org.fk.database1.testshop2.tables.records.ProductLangRecord;
+import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.test.InjectProductTestUtil;
 import org.fk.product.test.ProductTestProfile;
 import org.fk.product.test.ProductTestLifecycleManager;
@@ -90,7 +90,7 @@ public class ProductControllerV1Test {
 
         ProductDTO productDTO = new ProductDTO();
         productDTO.setClientId(1);
-        productDTO.setProductTypeIdLabel(ProductTypeId.BOOK);
+        productDTO.setProductTypeId(ProductTypeId.BOOK);
         productDTO.setPrice(new BigDecimal("10.00"));
         productDTO.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
         productDTO.setUpdatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
@@ -151,7 +151,7 @@ public class ProductControllerV1Test {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductId(insertedId);
         productDTO.setClientId(1);
-        productDTO.setProductTypeIdLabel(ProductTypeId.CLOTHING);
+        productDTO.setProductTypeId(ProductTypeId.CLOTHING);
         productDTO.setPrice(new BigDecimal("22.00"));
         productDTO.setDeleted(false);
         productDTO.setLangs(xLangs);

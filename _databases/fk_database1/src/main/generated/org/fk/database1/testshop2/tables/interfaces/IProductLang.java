@@ -21,7 +21,7 @@ public interface IProductLang extends Serializable {
     /**
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
-    public void setProductId(Long value);
+    public IProductLang setProductId(Long value);
 
     /**
      * Getter for <code>testshop2.product_lang.productId</code>.
@@ -32,7 +32,7 @@ public interface IProductLang extends Serializable {
     /**
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
-    public void setLangId(Integer value);
+    public IProductLang setLangId(Integer value);
 
     /**
      * Getter for <code>testshop2.product_lang.langId</code>.
@@ -43,7 +43,7 @@ public interface IProductLang extends Serializable {
     /**
      * Setter for <code>testshop2.product_lang.name</code>.
      */
-    public void setName(String value);
+    public IProductLang setName(String value);
 
     /**
      * Getter for <code>testshop2.product_lang.name</code>.
@@ -55,7 +55,7 @@ public interface IProductLang extends Serializable {
     /**
      * Setter for <code>testshop2.product_lang.description</code>.
      */
-    public void setDescription(String value);
+    public IProductLang setDescription(String value);
 
     /**
      * Getter for <code>testshop2.product_lang.description</code>.

@@ -26,8 +26,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.id</code>.
      */
     @Override
-    public void setId(String value) {
+    public DatabasechangelogRecord setId(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -44,8 +45,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.author</code>.
      */
     @Override
-    public void setAuthor(String value) {
+    public DatabasechangelogRecord setAuthor(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -62,8 +64,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.filename</code>.
      */
     @Override
-    public void setFilename(String value) {
+    public DatabasechangelogRecord setFilename(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -80,8 +83,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.dateexecuted</code>.
      */
     @Override
-    public void setDateexecuted(LocalDateTime value) {
+    public DatabasechangelogRecord setDateexecuted(LocalDateTime value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -97,8 +101,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.orderexecuted</code>.
      */
     @Override
-    public void setOrderexecuted(Integer value) {
+    public DatabasechangelogRecord setOrderexecuted(Integer value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -114,8 +119,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.exectype</code>.
      */
     @Override
-    public void setExectype(String value) {
+    public DatabasechangelogRecord setExectype(String value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -132,8 +138,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.md5sum</code>.
      */
     @Override
-    public void setMd5sum(String value) {
+    public DatabasechangelogRecord setMd5sum(String value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -149,8 +156,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.description</code>.
      */
     @Override
-    public void setDescription(String value) {
+    public DatabasechangelogRecord setDescription(String value) {
         set(7, value);
+        return this;
     }
 
     /**
@@ -166,8 +174,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.comments</code>.
      */
     @Override
-    public void setComments(String value) {
+    public DatabasechangelogRecord setComments(String value) {
         set(8, value);
+        return this;
     }
 
     /**
@@ -183,8 +192,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.tag</code>.
      */
     @Override
-    public void setTag(String value) {
+    public DatabasechangelogRecord setTag(String value) {
         set(9, value);
+        return this;
     }
 
     /**
@@ -200,8 +210,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.liquibase</code>.
      */
     @Override
-    public void setLiquibase(String value) {
+    public DatabasechangelogRecord setLiquibase(String value) {
         set(10, value);
+        return this;
     }
 
     /**
@@ -217,8 +228,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.contexts</code>.
      */
     @Override
-    public void setContexts(String value) {
+    public DatabasechangelogRecord setContexts(String value) {
         set(11, value);
+        return this;
     }
 
     /**
@@ -234,8 +246,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.labels</code>.
      */
     @Override
-    public void setLabels(String value) {
+    public DatabasechangelogRecord setLabels(String value) {
         set(12, value);
+        return this;
     }
 
     /**
@@ -251,8 +264,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>public.databasechangelog.deployment_id</code>.
      */
     @Override
-    public void setDeployment_id(String value) {
+    public DatabasechangelogRecord setDeployment_id(String value) {
         set(13, value);
+        return this;
     }
 
     /**
@@ -330,7 +344,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     /**
      * Create a detached, initialised DatabasechangelogRecord
      */
-    public DatabasechangelogRecord(org.fk.database2.public_.tables.dtos.Databasechangelog value) {
+    public DatabasechangelogRecord(org.fk.database2.public_.tables.pojos.Databasechangelog value) {
         super(Databasechangelog.DATABASECHANGELOG);
 
         if (value != null) {

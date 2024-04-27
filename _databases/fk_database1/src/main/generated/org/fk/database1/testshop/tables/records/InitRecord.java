@@ -24,8 +24,9 @@ public class InitRecord extends TableRecordImpl<InitRecord> implements IInit {
      * Setter for <code>testshop.init.initialized</code>.
      */
     @Override
-    public void setInitialized(String value) {
+    public InitRecord setInitialized(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -78,7 +79,7 @@ public class InitRecord extends TableRecordImpl<InitRecord> implements IInit {
     /**
      * Create a detached, initialised InitRecord
      */
-    public InitRecord(org.fk.database1.testshop.tables.dtos.Init value) {
+    public InitRecord(org.fk.database1.testshop.tables.pojos.Init value) {
         super(Init.INIT);
 
         if (value != null) {

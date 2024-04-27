@@ -21,7 +21,7 @@ public interface IInit extends Serializable {
     /**
      * Setter for <code>public.init.initialized</code>.
      */
-    public void setInitialized(String value);
+    public IInit setInitialized(String value);
 
     /**
      * Getter for <code>public.init.initialized</code>.

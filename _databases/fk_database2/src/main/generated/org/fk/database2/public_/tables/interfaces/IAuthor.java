@@ -22,7 +22,7 @@ public interface IAuthor extends Serializable {
     /**
      * Setter for <code>public.author.author_id</code>.
      */
-    public void setAuthor_id(Integer value);
+    public IAuthor setAuthor_id(Integer value);
 
     /**
      * Getter for <code>public.author.author_id</code>.
@@ -32,7 +32,7 @@ public interface IAuthor extends Serializable {
     /**
      * Setter for <code>public.author.name</code>.
      */
-    public void setName(String value);
+    public IAuthor setName(String value);
 
     /**
      * Getter for <code>public.author.name</code>.
@@ -44,7 +44,7 @@ public interface IAuthor extends Serializable {
     /**
      * Setter for <code>public.author.nationality</code>.
      */
-    public void setNationality(String value);
+    public IAuthor setNationality(String value);
 
     /**
      * Getter for <code>public.author.nationality</code>.
@@ -55,7 +55,7 @@ public interface IAuthor extends Serializable {
     /**
      * Setter for <code>public.author.birth_date</code>.
      */
-    public void setBirth_date(LocalDate value);
+    public IAuthor setBirth_date(LocalDate value);
 
     /**
      * Getter for <code>public.author.birth_date</code>.
@@ -65,7 +65,7 @@ public interface IAuthor extends Serializable {
     /**
      * Setter for <code>public.author.biography</code>.
      */
-    public void setBiography(String value);
+    public IAuthor setBiography(String value);
 
     /**
      * Getter for <code>public.author.biography</code>.

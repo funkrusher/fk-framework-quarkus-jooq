@@ -22,8 +22,9 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
      * Setter for <code>coreTestDatabase.client.clientId</code>.
      */
     @Override
-    public void setClientId(Integer value) {
+    public ClientRecord setClientId(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -83,7 +84,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
     /**
      * Create a detached, initialised ClientRecord
      */
-    public ClientRecord(org.fk.coreTestDatabase.coretestdatabase.tables.dtos.Client value) {
+    public ClientRecord(org.fk.coreTestDatabase.coretestdatabase.tables.pojos.Client value) {
         super(Client.CLIENT);
 
         if (value != null) {

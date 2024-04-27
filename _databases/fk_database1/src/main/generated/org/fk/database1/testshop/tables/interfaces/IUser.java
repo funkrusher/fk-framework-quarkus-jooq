@@ -21,7 +21,7 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.userId</code>.
      */
-    public void setUserId(Integer value);
+    public IUser setUserId(Integer value);
 
     /**
      * Getter for <code>testshop.user.userId</code>.
@@ -31,7 +31,7 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.clientId</code>.
      */
-    public void setClientId(Integer value);
+    public IUser setClientId(Integer value);
 
     /**
      * Getter for <code>testshop.user.clientId</code>.
@@ -42,7 +42,7 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.email</code>.
      */
-    public void setEmail(String value);
+    public IUser setEmail(String value);
 
     /**
      * Getter for <code>testshop.user.email</code>.
@@ -54,7 +54,7 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.firstname</code>.
      */
-    public void setFirstname(String value);
+    public IUser setFirstname(String value);
 
     /**
      * Getter for <code>testshop.user.firstname</code>.
@@ -66,7 +66,7 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.lastname</code>.
      */
-    public void setLastname(String value);
+    public IUser setLastname(String value);
 
     /**
      * Getter for <code>testshop.user.lastname</code>.

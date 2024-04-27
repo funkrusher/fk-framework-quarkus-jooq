@@ -2,8 +2,6 @@ package org.fk.database2;
 
 import org.fk.core.jooq.codegen.FkGeneratedFilesPostProcessor;
 import org.fk.core.jooq.codegen.FkGeneratorStrategy;
-import org.fk.core.jooq.codegen.FkJavaGenerator;
-import org.fk.core.testcontainers.FkMariaDb;
 import org.fk.core.testcontainers.FkPostgres;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
@@ -21,13 +19,13 @@ public class Database2CodeGenerator {
                             .withUser(fkPostgres.getUsername())
                             .withPassword(fkPostgres.getPassword()))
                     .withGenerator(new Generator()
-                            .withName(FkJavaGenerator.class.getName())
                             .withGenerate(new Generate()
                                     .withInterfaces(true)
                                     .withSerializableInterfaces(true)
                                     .withPojos(true)
+                                    .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                                    .withPojosEqualsAndHashCode(true)
+                                    .withPojosEqualsAndHashCode(false)
                             )
                             .withStrategy(new Strategy()
                                     .withName(FkGeneratorStrategy.class.getName())
@@ -44,8 +42,9 @@ public class Database2CodeGenerator {
                                     .withPackageName("org.fk.database2")
                                     .withDirectory("src/main/generated"))));
 
-            FkGeneratedFilesPostProcessor.processDTOFiles("src/main/generated");
-            FkGeneratedFilesPostProcessor.processInterfaceFiles("src/main/generated");
+            FkGeneratedFilesPostProcessor processor = new FkGeneratedFilesPostProcessor();
+            processor.processPojoFiles("src/main/generated");
+            processor.processInterfaceFiles("src/main/generated");
         };
     }
 }

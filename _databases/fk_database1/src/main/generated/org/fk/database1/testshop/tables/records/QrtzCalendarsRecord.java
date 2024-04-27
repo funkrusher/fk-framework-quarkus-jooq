@@ -25,8 +25,9 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
      * Setter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzCalendarsRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
      */
     @Override
-    public void setCALENDAR_NAME(String value) {
+    public QrtzCalendarsRecord setCALENDAR_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.
      */
     @Override
-    public void setCALENDAR(byte[] value) {
+    public QrtzCalendarsRecord setCALENDAR(byte[] value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -128,7 +131,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
     /**
      * Create a detached, initialised QrtzCalendarsRecord
      */
-    public QrtzCalendarsRecord(org.fk.database1.testshop.tables.dtos.QrtzCalendars value) {
+    public QrtzCalendarsRecord(org.fk.database1.testshop.tables.pojos.QrtzCalendars value) {
         super(QrtzCalendars.QRTZ_CALENDARS);
 
         if (value != null) {

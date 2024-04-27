@@ -19,7 +19,7 @@ public interface ITask extends Serializable {
     /**
      * Setter for <code>testshop.task.taskId</code>.
      */
-    public void setTaskId(Long value);
+    public ITask setTaskId(Long value);
 
     /**
      * Getter for <code>testshop.task.taskId</code>.
@@ -29,8 +29,7 @@ public interface ITask extends Serializable {
     /**
      * Setter for <code>testshop.task.createdAt</code>.
      */
-    @Schema(name = "createdAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-    public void setCreatedAt(LocalDateTime value);
+    public ITask setCreatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.task.createdAt</code>.

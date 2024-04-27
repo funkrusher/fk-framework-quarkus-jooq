@@ -25,8 +25,9 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzSchedulerStateRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
     @Override
-    public void setINSTANCE_NAME(String value) {
+    public QrtzSchedulerStateRecord setINSTANCE_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
     @Override
-    public void setLAST_CHECKIN_TIME(Long value) {
+    public QrtzSchedulerStateRecord setLAST_CHECKIN_TIME(Long value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -78,8 +81,9 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
     @Override
-    public void setCHECKIN_INTERVAL(Long value) {
+    public QrtzSchedulerStateRecord setCHECKIN_INTERVAL(Long value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -146,7 +150,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
     /**
      * Create a detached, initialised QrtzSchedulerStateRecord
      */
-    public QrtzSchedulerStateRecord(org.fk.database1.testshop.tables.dtos.QrtzSchedulerState value) {
+    public QrtzSchedulerStateRecord(org.fk.database1.testshop.tables.pojos.QrtzSchedulerState value) {
         super(QrtzSchedulerState.QRTZ_SCHEDULER_STATE);
 
         if (value != null) {

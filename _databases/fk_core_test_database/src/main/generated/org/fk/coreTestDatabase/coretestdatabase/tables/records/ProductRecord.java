@@ -28,8 +28,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.productId</code>.
      */
     @Override
-    public void setProductId(Long value) {
+    public ProductRecord setProductId(Long value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -44,8 +45,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.clientId</code>.
      */
     @Override
-    public void setClientId(Integer value) {
+    public ProductRecord setClientId(Integer value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.price</code>.
      */
     @Override
-    public void setPrice(BigDecimal value) {
+    public ProductRecord setPrice(BigDecimal value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -78,8 +81,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.typeId</code>.
      */
     @Override
-    public void setTypeId(String value) {
+    public ProductRecord setTypeId(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -96,8 +100,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.createdAt</code>.
      */
     @Override
-    public void setCreatedAt(LocalDateTime value) {
+    public ProductRecord setCreatedAt(LocalDateTime value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -112,8 +117,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.updatedAt</code>.
      */
     @Override
-    public void setUpdatedAt(LocalDateTime value) {
+    public ProductRecord setUpdatedAt(LocalDateTime value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -128,8 +134,9 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
      * Setter for <code>coreTestDatabase.product.deleted</code>.
      */
     @Override
-    public void setDeleted(Boolean value) {
+    public ProductRecord setDeleted(Boolean value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -201,7 +208,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Create a detached, initialised ProductRecord
      */
-    public ProductRecord(org.fk.coreTestDatabase.coretestdatabase.tables.dtos.Product value) {
+    public ProductRecord(org.fk.coreTestDatabase.coretestdatabase.tables.pojos.Product value) {
         super(Product.PRODUCT);
 
         if (value != null) {

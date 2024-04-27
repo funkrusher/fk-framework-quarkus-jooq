@@ -27,8 +27,9 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
      * Setter for <code>public.author.author_id</code>.
      */
     @Override
-    public void setAuthor_id(Integer value) {
+    public AuthorRecord setAuthor_id(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
      * Setter for <code>public.author.name</code>.
      */
     @Override
-    public void setName(String value) {
+    public AuthorRecord setName(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
      * Setter for <code>public.author.nationality</code>.
      */
     @Override
-    public void setNationality(String value) {
+    public AuthorRecord setNationality(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -78,8 +81,9 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
      * Setter for <code>public.author.birth_date</code>.
      */
     @Override
-    public void setBirth_date(LocalDate value) {
+    public AuthorRecord setBirth_date(LocalDate value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -94,8 +98,9 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
      * Setter for <code>public.author.biography</code>.
      */
     @Override
-    public void setBiography(String value) {
+    public AuthorRecord setBiography(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -163,7 +168,7 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
     /**
      * Create a detached, initialised AuthorRecord
      */
-    public AuthorRecord(org.fk.database2.public_.tables.dtos.Author value) {
+    public AuthorRecord(org.fk.database2.public_.tables.pojos.Author value) {
         super(Author.AUTHOR);
 
         if (value != null) {

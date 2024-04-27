@@ -22,7 +22,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
-    public void setID(Integer value);
+    public IDatabasechangeloglock setID(Integer value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
@@ -33,7 +33,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
-    public void setLOCKED(Byte value);
+    public IDatabasechangeloglock setLOCKED(Byte value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
@@ -44,8 +44,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
-    @Schema(name = "lOCKGRANTED", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-    public void setLOCKGRANTED(LocalDateTime value);
+    public IDatabasechangeloglock setLOCKGRANTED(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
@@ -55,7 +54,7 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
-    public void setLOCKEDBY(String value);
+    public IDatabasechangeloglock setLOCKEDBY(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.

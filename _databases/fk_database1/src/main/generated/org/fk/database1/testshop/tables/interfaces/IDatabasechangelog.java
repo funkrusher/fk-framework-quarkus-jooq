@@ -22,7 +22,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
-    public void setID(String value);
+    public IDatabasechangelog setID(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ID</code>.
@@ -34,7 +34,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
-    public void setAUTHOR(String value);
+    public IDatabasechangelog setAUTHOR(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
@@ -46,7 +46,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
-    public void setFILENAME(String value);
+    public IDatabasechangelog setFILENAME(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
@@ -58,8 +58,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
-    @Schema(name = "dATEEXECUTED", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-    public void setDATEEXECUTED(LocalDateTime value);
+    public IDatabasechangelog setDATEEXECUTED(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
@@ -70,7 +69,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
-    public void setORDEREXECUTED(Integer value);
+    public IDatabasechangelog setORDEREXECUTED(Integer value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
@@ -81,7 +80,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
-    public void setEXECTYPE(String value);
+    public IDatabasechangelog setEXECTYPE(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
@@ -93,7 +92,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
-    public void setMD5SUM(String value);
+    public IDatabasechangelog setMD5SUM(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
@@ -104,7 +103,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
-    public void setDESCRIPTION(String value);
+    public IDatabasechangelog setDESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
@@ -115,7 +114,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
-    public void setCOMMENTS(String value);
+    public IDatabasechangelog setCOMMENTS(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
@@ -126,7 +125,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
-    public void setTAG(String value);
+    public IDatabasechangelog setTAG(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.TAG</code>.
@@ -137,7 +136,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
-    public void setLIQUIBASE(String value);
+    public IDatabasechangelog setLIQUIBASE(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
@@ -148,7 +147,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
-    public void setCONTEXTS(String value);
+    public IDatabasechangelog setCONTEXTS(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
@@ -159,7 +158,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
-    public void setLABELS(String value);
+    public IDatabasechangelog setLABELS(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
@@ -170,7 +169,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
-    public void setDEPLOYMENT_ID(String value);
+    public IDatabasechangelog setDEPLOYMENT_ID(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.

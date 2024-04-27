@@ -21,7 +21,7 @@ public interface ILang extends Serializable {
     /**
      * Setter for <code>testshop.lang.langId</code>.
      */
-    public void setLangId(Integer value);
+    public ILang setLangId(Integer value);
 
     /**
      * Getter for <code>testshop.lang.langId</code>.
@@ -31,7 +31,7 @@ public interface ILang extends Serializable {
     /**
      * Setter for <code>testshop.lang.code</code>.
      */
-    public void setCode(String value);
+    public ILang setCode(String value);
 
     /**
      * Getter for <code>testshop.lang.code</code>.
@@ -43,7 +43,7 @@ public interface ILang extends Serializable {
     /**
      * Setter for <code>testshop.lang.description</code>.
      */
-    public void setDescription(String value);
+    public ILang setDescription(String value);
 
     /**
      * Getter for <code>testshop.lang.description</code>.

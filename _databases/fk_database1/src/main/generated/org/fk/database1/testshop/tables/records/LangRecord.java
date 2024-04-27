@@ -25,8 +25,9 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Setter for <code>testshop.lang.langId</code>.
      */
     @Override
-    public void setLangId(Integer value) {
+    public LangRecord setLangId(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -41,8 +42,9 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Setter for <code>testshop.lang.code</code>.
      */
     @Override
-    public void setCode(String value) {
+    public LangRecord setCode(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -59,8 +61,9 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Setter for <code>testshop.lang.description</code>.
      */
     @Override
-    public void setDescription(String value) {
+    public LangRecord setDescription(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -125,7 +128,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
     /**
      * Create a detached, initialised LangRecord
      */
-    public LangRecord(org.fk.database1.testshop.tables.dtos.Lang value) {
+    public LangRecord(org.fk.database1.testshop.tables.pojos.Lang value) {
         super(Lang.LANG);
 
         if (value != null) {

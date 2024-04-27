@@ -25,8 +25,9 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.userId</code>.
      */
     @Override
-    public void setUserId(Integer value) {
+    public UserRecord setUserId(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -41,8 +42,9 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.clientId</code>.
      */
     @Override
-    public void setClientId(Integer value) {
+    public UserRecord setClientId(Integer value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -58,8 +60,9 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.email</code>.
      */
     @Override
-    public void setEmail(String value) {
+    public UserRecord setEmail(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -76,8 +79,9 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.firstname</code>.
      */
     @Override
-    public void setFirstname(String value) {
+    public UserRecord setFirstname(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -94,8 +98,9 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.lastname</code>.
      */
     @Override
-    public void setLastname(String value) {
+    public UserRecord setLastname(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -165,7 +170,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
     /**
      * Create a detached, initialised UserRecord
      */
-    public UserRecord(org.fk.database1.testshop.tables.dtos.User value) {
+    public UserRecord(org.fk.database1.testshop.tables.pojos.User value) {
         super(User.USER);
 
         if (value != null) {

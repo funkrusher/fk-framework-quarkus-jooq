@@ -21,7 +21,7 @@ public interface IQrtzSchedulerState extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzSchedulerState setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzSchedulerState extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
-    public void setINSTANCE_NAME(String value);
+    public IQrtzSchedulerState setINSTANCE_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzSchedulerState extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
-    public void setLAST_CHECKIN_TIME(Long value);
+    public IQrtzSchedulerState setLAST_CHECKIN_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
@@ -56,7 +56,7 @@ public interface IQrtzSchedulerState extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
-    public void setCHECKIN_INTERVAL(Long value);
+    public IQrtzSchedulerState setCHECKIN_INTERVAL(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.

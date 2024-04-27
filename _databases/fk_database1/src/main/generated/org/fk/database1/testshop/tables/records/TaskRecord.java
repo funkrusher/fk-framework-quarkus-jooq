@@ -24,8 +24,9 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Setter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public void setTaskId(Long value) {
+    public TaskRecord setTaskId(Long value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -40,8 +41,9 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Setter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public void setCreatedAt(LocalDateTime value) {
+    public TaskRecord setCreatedAt(LocalDateTime value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -103,7 +105,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
     /**
      * Create a detached, initialised TaskRecord
      */
-    public TaskRecord(org.fk.database1.testshop.tables.dtos.Task value) {
+    public TaskRecord(org.fk.database1.testshop.tables.pojos.Task value) {
         super(Task.TASK);
 
         if (value != null) {

@@ -21,7 +21,7 @@ public interface IQrtzPausedTriggerGrps extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzPausedTriggerGrps setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzPausedTriggerGrps extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzPausedTriggerGrps setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.

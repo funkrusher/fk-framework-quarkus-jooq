@@ -22,7 +22,7 @@ public interface IBook extends Serializable {
     /**
      * Setter for <code>public.book.book_id</code>.
      */
-    public void setBook_id(Integer value);
+    public IBook setBook_id(Integer value);
 
     /**
      * Getter for <code>public.book.book_id</code>.
@@ -32,7 +32,7 @@ public interface IBook extends Serializable {
     /**
      * Setter for <code>public.book.title</code>.
      */
-    public void setTitle(String value);
+    public IBook setTitle(String value);
 
     /**
      * Getter for <code>public.book.title</code>.
@@ -44,7 +44,7 @@ public interface IBook extends Serializable {
     /**
      * Setter for <code>public.book.author_id</code>.
      */
-    public void setAuthor_id(Integer value);
+    public IBook setAuthor_id(Integer value);
 
     /**
      * Getter for <code>public.book.author_id</code>.
@@ -55,7 +55,7 @@ public interface IBook extends Serializable {
     /**
      * Setter for <code>public.book.genre</code>.
      */
-    public void setGenre(String value);
+    public IBook setGenre(String value);
 
     /**
      * Getter for <code>public.book.genre</code>.
@@ -66,7 +66,7 @@ public interface IBook extends Serializable {
     /**
      * Setter for <code>public.book.publication_date</code>.
      */
-    public void setPublication_date(LocalDate value);
+    public IBook setPublication_date(LocalDate value);
 
     /**
      * Getter for <code>public.book.publication_date</code>.
@@ -76,7 +76,7 @@ public interface IBook extends Serializable {
     /**
      * Setter for <code>public.book.isbn</code>.
      */
-    public void setIsbn(String value);
+    public IBook setIsbn(String value);
 
     /**
      * Getter for <code>public.book.isbn</code>.

@@ -7,20 +7,15 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.media.SchemaProperty;
 
-import org.fk.coreTestDatabase.coretestdatabase.tables.dtos.Product;
 import org.fk.coreTestDatabase.coretestdatabase.tables.interfaces.IProduct;
+import org.fk.coreTestDatabase.coretestdatabase.tables.pojos.ProductDto;
 
 import java.util.List;
 
 /**
  * ProductDTO
  */
-@Schema(name = "Product", description = "Represents a product",
-properties = {
-        @SchemaProperty(name = "createdAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z"),
-        @SchemaProperty(name = "updatedAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-})
-public class ProductDTO extends Product implements IProduct {
+public class ProductDTO extends ProductDto implements IProduct {
 
     @Schema(writeOnly = true)
     private boolean deleteFlag;
@@ -34,14 +29,11 @@ public class ProductDTO extends Product implements IProduct {
         super();
     }
 
-    public ProductDTO(IProduct value) {
-        super(value);
-    }
 
     @JsonIgnore
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-        touch();
+        this.keeper.touch("deleteFlag");
     }
 
     @JsonProperty
@@ -52,7 +44,7 @@ public class ProductDTO extends Product implements IProduct {
     @JsonIgnore
     public void setLang(ProductLangDTO lang) {
         this.lang = lang;
-        touch();
+        this.keeper.touch("lang");
     }
 
     @JsonProperty
@@ -66,6 +58,6 @@ public class ProductDTO extends Product implements IProduct {
 
     public void setLangs(List<ProductLangDTO> langs) {
         this.langs = langs;
-        touch();
+        this.keeper.touch("langs");
     }
 }

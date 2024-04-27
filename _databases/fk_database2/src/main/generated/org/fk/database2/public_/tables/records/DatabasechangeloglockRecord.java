@@ -27,8 +27,9 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>public.databasechangeloglock.id</code>.
      */
     @Override
-    public void setId(Integer value) {
+    public DatabasechangeloglockRecord setId(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -44,8 +45,9 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>public.databasechangeloglock.locked</code>.
      */
     @Override
-    public void setLocked(Boolean value) {
+    public DatabasechangeloglockRecord setLocked(Boolean value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>public.databasechangeloglock.lockgranted</code>.
      */
     @Override
-    public void setLockgranted(LocalDateTime value) {
+    public DatabasechangeloglockRecord setLockgranted(LocalDateTime value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -77,8 +80,9 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>public.databasechangeloglock.lockedby</code>.
      */
     @Override
-    public void setLockedby(String value) {
+    public DatabasechangeloglockRecord setLockedby(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -145,7 +149,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
     /**
      * Create a detached, initialised DatabasechangeloglockRecord
      */
-    public DatabasechangeloglockRecord(org.fk.database2.public_.tables.dtos.Databasechangeloglock value) {
+    public DatabasechangeloglockRecord(org.fk.database2.public_.tables.pojos.Databasechangeloglock value) {
         super(Databasechangeloglock.DATABASECHANGELOGLOCK);
 
         if (value != null) {

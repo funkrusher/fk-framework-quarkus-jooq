@@ -143,25 +143,32 @@ public class ProductManager extends AbstractManager {
     }
 
     public ProductDTO create(DSLContext dsl, final ProductDTO product) throws ValidationException {
-        return dsl.transactionResult(tx1 -> {
-            ProductDAO productRecordDAO = new ProductDAO(dsl);
-            ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
+        try {
+            return dsl.transactionResult(tx1 -> {
+                ProductDAO productRecordDAO = new ProductDAO(dsl);
+                ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
-            // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
-            // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
-            this.validateInsert(product);
-            productRecordDAO.insert(product);
+                // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
+                // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
+                this.validateInsert(product);
+                productRecordDAO.insert(product);
 
-            List<IProductLang> productLangInserts = new ArrayList<>();
-            for (ProductLangDTO xLang : product.getLangs()) {
-                xLang.setProductId(product.getProductId());
-                this.validateInsert(xLang);
-                productLangInserts.add(xLang);
+                List<IProductLang> productLangInserts = new ArrayList<>();
+                for (ProductLangDTO xLang : product.getLangs()) {
+                    xLang.setProductId(product.getProductId());
+                    this.validateInsert(xLang);
+                    productLangInserts.add(xLang);
+                }
+                productLangRecordDAO.insert(productLangInserts);
+
+                return new ProductRepository(dsl).fetchById(product.getProductId());
+            });
+        } catch (Exception e) {
+            if (e.getCause() instanceof ValidationException) {
+                throw (ValidationException) e.getCause();
             }
-            productLangRecordDAO.insert(productLangInserts);
-
-            return new ProductRepository(dsl).fetchById(product.getProductId());
-        });
+            throw e;
+        }
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default

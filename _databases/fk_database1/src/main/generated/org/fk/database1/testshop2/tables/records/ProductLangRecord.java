@@ -25,8 +25,9 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
     @Override
-    public void setProductId(Long value) {
+    public ProductLangRecord setProductId(Long value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -42,8 +43,9 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
     @Override
-    public void setLangId(Integer value) {
+    public ProductLangRecord setLangId(Integer value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -59,8 +61,9 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.name</code>.
      */
     @Override
-    public void setName(String value) {
+    public ProductLangRecord setName(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -77,8 +80,9 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.description</code>.
      */
     @Override
-    public void setDescription(String value) {
+    public ProductLangRecord setDescription(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -146,7 +150,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     /**
      * Create a detached, initialised ProductLangRecord
      */
-    public ProductLangRecord(org.fk.database1.testshop2.tables.dtos.ProductLang value) {
+    public ProductLangRecord(org.fk.database1.testshop2.tables.pojos.ProductLang value) {
         super(ProductLang.PRODUCT_LANG);
 
         if (value != null) {

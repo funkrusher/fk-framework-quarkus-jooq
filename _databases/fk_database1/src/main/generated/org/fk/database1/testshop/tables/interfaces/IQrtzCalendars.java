@@ -21,7 +21,7 @@ public interface IQrtzCalendars extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzCalendars setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzCalendars extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
      */
-    public void setCALENDAR_NAME(String value);
+    public IQrtzCalendars setCALENDAR_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzCalendars extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.
      */
-    public void setCALENDAR(byte[] value);
+    public IQrtzCalendars setCALENDAR(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.

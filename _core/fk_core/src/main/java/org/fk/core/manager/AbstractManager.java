@@ -3,7 +3,7 @@ package org.fk.core.manager;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import org.fk.core.dto.AbstractDTO;
+import org.fk.core.dto.DTO;
 import org.fk.core.exception.ValidationException;
 
 import java.util.HashSet;
@@ -23,17 +23,17 @@ public abstract class AbstractManager {
     @Inject
     Validator validator;
 
-    private void validateModifiedFields(AbstractDTO dto, Set<ConstraintViolation<AbstractDTO>> violations) {
-        for (Map.Entry<String, Object> entry : dto.getModifiedFields().entrySet()) {
+    private void validateModifiedFields(DTO dto, Set<ConstraintViolation<DTO>> violations) {
+        for (Map.Entry<String, Object> entry : dto.getBookKeeper().touched().entrySet()) {
             // we only validate the modified fields.
             String key = entry.getKey();
             Object value = entry.getValue();
-            if (value instanceof AbstractDTO) {
+            if (value instanceof DTO) {
                 // ignore, as we are not validating recursive.
-            } else if (value instanceof List && !((List)value).isEmpty() && ((List)value).get(0) instanceof AbstractDTO) {
+            } else if (value instanceof List && !((List)value).isEmpty() && ((List)value).get(0) instanceof DTO) {
                 // ignore, as we are not validating recursive.
             } else {
-                Set<ConstraintViolation<AbstractDTO>> fieldViolations = validator.validateProperty((AbstractDTO) dto, key);
+                Set<ConstraintViolation<DTO>> fieldViolations = validator.validateProperty((DTO) dto, key);
                 violations.addAll(fieldViolations);
             }
         }
@@ -48,8 +48,8 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException
      */
-    protected void validateInsert(AbstractDTO dto) throws ValidationException {
-        Set<ConstraintViolation<AbstractDTO>> violations = validator.validate(dto);
+    protected void validateInsert(DTO dto) throws ValidationException {
+        Set<ConstraintViolation<DTO>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);
         }
@@ -63,8 +63,8 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException
      */
-    protected void validateUpdate(AbstractDTO dto) throws ValidationException {
-        Set<ConstraintViolation<AbstractDTO>> violations = new HashSet<>();
+    protected void validateUpdate(DTO dto) throws ValidationException {
+        Set<ConstraintViolation<DTO>> violations = new HashSet<>();
         validateModifiedFields(dto, violations);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);

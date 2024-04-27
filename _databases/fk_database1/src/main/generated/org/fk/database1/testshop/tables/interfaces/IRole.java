@@ -21,7 +21,7 @@ public interface IRole extends Serializable {
     /**
      * Setter for <code>testshop.role.roleId</code>.
      */
-    public void setRoleId(String value);
+    public IRole setRoleId(String value);
 
     /**
      * Getter for <code>testshop.role.roleId</code>.

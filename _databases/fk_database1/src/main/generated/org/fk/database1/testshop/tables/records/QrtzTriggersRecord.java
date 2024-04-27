@@ -25,8 +25,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public void setTRIGGER_NAME(String value) {
+    public QrtzTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public void setTRIGGER_GROUP(String value) {
+    public QrtzTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -79,8 +82,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public void setJOB_NAME(String value) {
+    public QrtzTriggersRecord setJOB_NAME(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -97,8 +101,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public void setJOB_GROUP(String value) {
+    public QrtzTriggersRecord setJOB_GROUP(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -115,8 +120,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
      */
     @Override
-    public void setDESCRIPTION(String value) {
+    public QrtzTriggersRecord setDESCRIPTION(String value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -132,8 +138,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
     @Override
-    public void setNEXT_FIRE_TIME(Long value) {
+    public QrtzTriggersRecord setNEXT_FIRE_TIME(Long value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -148,8 +155,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
     @Override
-    public void setPREV_FIRE_TIME(Long value) {
+    public QrtzTriggersRecord setPREV_FIRE_TIME(Long value) {
         set(7, value);
+        return this;
     }
 
     /**
@@ -164,8 +172,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public void setPRIORITY(Integer value) {
+    public QrtzTriggersRecord setPRIORITY(Integer value) {
         set(8, value);
+        return this;
     }
 
     /**
@@ -180,8 +189,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
      */
     @Override
-    public void setTRIGGER_STATE(String value) {
+    public QrtzTriggersRecord setTRIGGER_STATE(String value) {
         set(9, value);
+        return this;
     }
 
     /**
@@ -198,8 +208,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
      */
     @Override
-    public void setTRIGGER_TYPE(String value) {
+    public QrtzTriggersRecord setTRIGGER_TYPE(String value) {
         set(10, value);
+        return this;
     }
 
     /**
@@ -216,8 +227,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
      */
     @Override
-    public void setSTART_TIME(Long value) {
+    public QrtzTriggersRecord setSTART_TIME(Long value) {
         set(11, value);
+        return this;
     }
 
     /**
@@ -233,8 +245,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
     @Override
-    public void setEND_TIME(Long value) {
+    public QrtzTriggersRecord setEND_TIME(Long value) {
         set(12, value);
+        return this;
     }
 
     /**
@@ -249,8 +262,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
      */
     @Override
-    public void setCALENDAR_NAME(String value) {
+    public QrtzTriggersRecord setCALENDAR_NAME(String value) {
         set(13, value);
+        return this;
     }
 
     /**
@@ -266,8 +280,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
     @Override
-    public void setMISFIRE_INSTR(Short value) {
+    public QrtzTriggersRecord setMISFIRE_INSTR(Short value) {
         set(14, value);
+        return this;
     }
 
     /**
@@ -282,8 +297,9 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.
      */
     @Override
-    public void setJOB_DATA(byte[] value) {
+    public QrtzTriggersRecord setJOB_DATA(byte[] value) {
         set(15, value);
+        return this;
     }
 
     /**
@@ -374,7 +390,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     /**
      * Create a detached, initialised QrtzTriggersRecord
      */
-    public QrtzTriggersRecord(org.fk.database1.testshop.tables.dtos.QrtzTriggers value) {
+    public QrtzTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzTriggers value) {
         super(QrtzTriggers.QRTZ_TRIGGERS);
 
         if (value != null) {

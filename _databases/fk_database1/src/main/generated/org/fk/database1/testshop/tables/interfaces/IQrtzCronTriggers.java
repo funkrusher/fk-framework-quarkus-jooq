@@ -21,7 +21,7 @@ public interface IQrtzCronTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzCronTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzCronTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public void setTRIGGER_NAME(String value);
+    public IQrtzCronTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzCronTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzCronTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
@@ -57,7 +57,7 @@ public interface IQrtzCronTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
      */
-    public void setCRON_EXPRESSION(String value);
+    public IQrtzCronTriggers setCRON_EXPRESSION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
@@ -69,7 +69,7 @@ public interface IQrtzCronTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.
      */
-    public void setTIME_ZONE_ID(String value);
+    public IQrtzCronTriggers setTIME_ZONE_ID(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.

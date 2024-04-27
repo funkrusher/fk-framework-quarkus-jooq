@@ -21,7 +21,7 @@ public interface IQrtzBlobTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzBlobTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzBlobTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public void setTRIGGER_NAME(String value);
+    public IQrtzBlobTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzBlobTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzBlobTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP</code>.
@@ -57,7 +57,7 @@ public interface IQrtzBlobTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.BLOB_DATA</code>.
      */
-    public void setBLOB_DATA(byte[] value);
+    public IQrtzBlobTriggers setBLOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.BLOB_DATA</code>.

@@ -25,8 +25,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzJobDetailsRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
     @Override
-    public void setJOB_NAME(String value) {
+    public QrtzJobDetailsRecord setJOB_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
     @Override
-    public void setJOB_GROUP(String value) {
+    public QrtzJobDetailsRecord setJOB_GROUP(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -79,8 +82,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
     @Override
-    public void setDESCRIPTION(String value) {
+    public QrtzJobDetailsRecord setDESCRIPTION(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -96,8 +100,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
     @Override
-    public void setJOB_CLASS_NAME(String value) {
+    public QrtzJobDetailsRecord setJOB_CLASS_NAME(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -114,8 +119,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
     @Override
-    public void setIS_DURABLE(String value) {
+    public QrtzJobDetailsRecord setIS_DURABLE(String value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -132,8 +138,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public void setIS_NONCONCURRENT(String value) {
+    public QrtzJobDetailsRecord setIS_NONCONCURRENT(String value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -150,8 +157,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
     @Override
-    public void setIS_UPDATE_DATA(String value) {
+    public QrtzJobDetailsRecord setIS_UPDATE_DATA(String value) {
         set(7, value);
+        return this;
     }
 
     /**
@@ -168,8 +176,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public void setREQUESTS_RECOVERY(String value) {
+    public QrtzJobDetailsRecord setREQUESTS_RECOVERY(String value) {
         set(8, value);
+        return this;
     }
 
     /**
@@ -186,8 +195,9 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
     @Override
-    public void setJOB_DATA(byte[] value) {
+    public QrtzJobDetailsRecord setJOB_DATA(byte[] value) {
         set(9, value);
+        return this;
     }
 
     /**
@@ -266,7 +276,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     /**
      * Create a detached, initialised QrtzJobDetailsRecord
      */
-    public QrtzJobDetailsRecord(org.fk.database1.testshop.tables.dtos.QrtzJobDetails value) {
+    public QrtzJobDetailsRecord(org.fk.database1.testshop.tables.pojos.QrtzJobDetails value) {
         super(QrtzJobDetails.QRTZ_JOB_DETAILS);
 
         if (value != null) {

@@ -1,6 +1,6 @@
 package org.fk.core.repository;
 
-import org.fk.core.dto.AbstractDTO;
+import org.fk.core.dto.DTO;
 import org.fk.core.jooq.RequestContext;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.*;
@@ -27,7 +27,7 @@ import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
  * and therefore the mapping to the DTO must take this into account.
  * </p>
  */
-public abstract class AbstractRepository<D extends AbstractDTO, T> {
+public abstract class AbstractRepository<D extends DTO, T> {
 
     private final DSLContext dsl;
 

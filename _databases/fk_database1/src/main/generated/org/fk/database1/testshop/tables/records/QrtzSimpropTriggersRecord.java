@@ -27,8 +27,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzSimpropTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -45,8 +46,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public void setTRIGGER_NAME(String value) {
+    public QrtzSimpropTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -63,8 +65,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public void setTRIGGER_GROUP(String value) {
+    public QrtzSimpropTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -81,8 +84,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
      */
     @Override
-    public void setSTR_PROP_1(String value) {
+    public QrtzSimpropTriggersRecord setSTR_PROP_1(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -98,8 +102,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
      */
     @Override
-    public void setSTR_PROP_2(String value) {
+    public QrtzSimpropTriggersRecord setSTR_PROP_2(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -115,8 +120,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
      */
     @Override
-    public void setSTR_PROP_3(String value) {
+    public QrtzSimpropTriggersRecord setSTR_PROP_3(String value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -132,8 +138,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
     @Override
-    public void setINT_PROP_1(Integer value) {
+    public QrtzSimpropTriggersRecord setINT_PROP_1(Integer value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -148,8 +155,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
     @Override
-    public void setINT_PROP_2(Integer value) {
+    public QrtzSimpropTriggersRecord setINT_PROP_2(Integer value) {
         set(7, value);
+        return this;
     }
 
     /**
@@ -164,8 +172,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
     @Override
-    public void setLONG_PROP_1(Long value) {
+    public QrtzSimpropTriggersRecord setLONG_PROP_1(Long value) {
         set(8, value);
+        return this;
     }
 
     /**
@@ -180,8 +189,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
     @Override
-    public void setLONG_PROP_2(Long value) {
+    public QrtzSimpropTriggersRecord setLONG_PROP_2(Long value) {
         set(9, value);
+        return this;
     }
 
     /**
@@ -196,8 +206,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
     @Override
-    public void setDEC_PROP_1(BigDecimal value) {
+    public QrtzSimpropTriggersRecord setDEC_PROP_1(BigDecimal value) {
         set(10, value);
+        return this;
     }
 
     /**
@@ -212,8 +223,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
     @Override
-    public void setDEC_PROP_2(BigDecimal value) {
+    public QrtzSimpropTriggersRecord setDEC_PROP_2(BigDecimal value) {
         set(11, value);
+        return this;
     }
 
     /**
@@ -228,8 +240,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
      */
     @Override
-    public void setBOOL_PROP_1(String value) {
+    public QrtzSimpropTriggersRecord setBOOL_PROP_1(String value) {
         set(12, value);
+        return this;
     }
 
     /**
@@ -245,8 +258,9 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.
      */
     @Override
-    public void setBOOL_PROP_2(String value) {
+    public QrtzSimpropTriggersRecord setBOOL_PROP_2(String value) {
         set(13, value);
+        return this;
     }
 
     /**
@@ -333,7 +347,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
     /**
      * Create a detached, initialised QrtzSimpropTriggersRecord
      */
-    public QrtzSimpropTriggersRecord(org.fk.database1.testshop.tables.dtos.QrtzSimpropTriggers value) {
+    public QrtzSimpropTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzSimpropTriggers value) {
         super(QrtzSimpropTriggers.QRTZ_SIMPROP_TRIGGERS);
 
         if (value != null) {

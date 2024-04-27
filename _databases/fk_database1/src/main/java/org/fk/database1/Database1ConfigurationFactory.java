@@ -52,7 +52,7 @@ public class Database1ConfigurationFactory {
                             .withRenderSchema(true) // make different databases in single db be recognized
                             .withMaxRows(Integer.MAX_VALUE)
                             .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
-                            .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
+                            .withRenderNameCase(RenderNameCase.AS_IS)
                     );
             configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener()));
         }

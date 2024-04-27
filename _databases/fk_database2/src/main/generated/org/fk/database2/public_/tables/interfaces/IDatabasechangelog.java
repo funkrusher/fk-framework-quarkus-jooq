@@ -22,7 +22,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.id</code>.
      */
-    public void setId(String value);
+    public IDatabasechangelog setId(String value);
 
     /**
      * Getter for <code>public.databasechangelog.id</code>.
@@ -34,7 +34,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.author</code>.
      */
-    public void setAuthor(String value);
+    public IDatabasechangelog setAuthor(String value);
 
     /**
      * Getter for <code>public.databasechangelog.author</code>.
@@ -46,7 +46,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.filename</code>.
      */
-    public void setFilename(String value);
+    public IDatabasechangelog setFilename(String value);
 
     /**
      * Getter for <code>public.databasechangelog.filename</code>.
@@ -58,8 +58,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.dateexecuted</code>.
      */
-    @Schema(name = "dateexecuted", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-    public void setDateexecuted(LocalDateTime value);
+    public IDatabasechangelog setDateexecuted(LocalDateTime value);
 
     /**
      * Getter for <code>public.databasechangelog.dateexecuted</code>.
@@ -70,7 +69,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.orderexecuted</code>.
      */
-    public void setOrderexecuted(Integer value);
+    public IDatabasechangelog setOrderexecuted(Integer value);
 
     /**
      * Getter for <code>public.databasechangelog.orderexecuted</code>.
@@ -81,7 +80,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.exectype</code>.
      */
-    public void setExectype(String value);
+    public IDatabasechangelog setExectype(String value);
 
     /**
      * Getter for <code>public.databasechangelog.exectype</code>.
@@ -93,7 +92,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.md5sum</code>.
      */
-    public void setMd5sum(String value);
+    public IDatabasechangelog setMd5sum(String value);
 
     /**
      * Getter for <code>public.databasechangelog.md5sum</code>.
@@ -104,7 +103,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.description</code>.
      */
-    public void setDescription(String value);
+    public IDatabasechangelog setDescription(String value);
 
     /**
      * Getter for <code>public.databasechangelog.description</code>.
@@ -115,7 +114,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.comments</code>.
      */
-    public void setComments(String value);
+    public IDatabasechangelog setComments(String value);
 
     /**
      * Getter for <code>public.databasechangelog.comments</code>.
@@ -126,7 +125,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.tag</code>.
      */
-    public void setTag(String value);
+    public IDatabasechangelog setTag(String value);
 
     /**
      * Getter for <code>public.databasechangelog.tag</code>.
@@ -137,7 +136,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.liquibase</code>.
      */
-    public void setLiquibase(String value);
+    public IDatabasechangelog setLiquibase(String value);
 
     /**
      * Getter for <code>public.databasechangelog.liquibase</code>.
@@ -148,7 +147,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.contexts</code>.
      */
-    public void setContexts(String value);
+    public IDatabasechangelog setContexts(String value);
 
     /**
      * Getter for <code>public.databasechangelog.contexts</code>.
@@ -159,7 +158,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.labels</code>.
      */
-    public void setLabels(String value);
+    public IDatabasechangelog setLabels(String value);
 
     /**
      * Getter for <code>public.databasechangelog.labels</code>.
@@ -170,7 +169,7 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>public.databasechangelog.deployment_id</code>.
      */
-    public void setDeployment_id(String value);
+    public IDatabasechangelog setDeployment_id(String value);
 
     /**
      * Getter for <code>public.databasechangelog.deployment_id</code>.

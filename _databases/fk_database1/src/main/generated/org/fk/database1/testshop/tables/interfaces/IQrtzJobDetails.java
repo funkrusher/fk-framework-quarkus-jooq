@@ -21,7 +21,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzJobDetails setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
-    public void setJOB_NAME(String value);
+    public IQrtzJobDetails setJOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
-    public void setJOB_GROUP(String value);
+    public IQrtzJobDetails setJOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
@@ -57,7 +57,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
-    public void setDESCRIPTION(String value);
+    public IQrtzJobDetails setDESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
@@ -68,7 +68,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
-    public void setJOB_CLASS_NAME(String value);
+    public IQrtzJobDetails setJOB_CLASS_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
@@ -80,7 +80,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
-    public void setIS_DURABLE(String value);
+    public IQrtzJobDetails setIS_DURABLE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
@@ -92,7 +92,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
-    public void setIS_NONCONCURRENT(String value);
+    public IQrtzJobDetails setIS_NONCONCURRENT(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
@@ -104,7 +104,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
-    public void setIS_UPDATE_DATA(String value);
+    public IQrtzJobDetails setIS_UPDATE_DATA(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
@@ -116,7 +116,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
-    public void setREQUESTS_RECOVERY(String value);
+    public IQrtzJobDetails setREQUESTS_RECOVERY(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
@@ -128,7 +128,7 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
-    public void setJOB_DATA(byte[] value);
+    public IQrtzJobDetails setJOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.

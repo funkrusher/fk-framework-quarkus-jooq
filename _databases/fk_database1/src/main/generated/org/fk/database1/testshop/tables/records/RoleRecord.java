@@ -25,8 +25,9 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
      * Setter for <code>testshop.role.roleId</code>.
      */
     @Override
-    public void setRoleId(String value) {
+    public RoleRecord setRoleId(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -88,7 +89,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
     /**
      * Create a detached, initialised RoleRecord
      */
-    public RoleRecord(org.fk.database1.testshop.tables.dtos.Role value) {
+    public RoleRecord(org.fk.database1.testshop.tables.pojos.Role value) {
         super(Role.ROLE);
 
         if (value != null) {

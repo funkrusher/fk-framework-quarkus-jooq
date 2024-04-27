@@ -1,6 +1,6 @@
 package org.fk.core.dao;
 
-import org.fk.core.dto.AbstractDTO;
+import org.fk.core.dto.DTO;
 import org.fk.core.jooq.RequestContext;
 import org.fk.core.ulid.UlidGenerator;
 import org.jetbrains.annotations.Nullable;
@@ -100,22 +100,23 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         } else if (items.getFirst() instanceof UpdatableRecord<?>) {
             //noinspection unchecked
             return (List<R>) items;
-        } else if (items.getFirst() instanceof AbstractDTO) {
+        } else if (items.getFirst() instanceof DTO) {
             final List<R> records = new ArrayList<>();
             for (final Y item : items) {
                 // transform DTO to Record.
-                final AbstractDTO dto = (AbstractDTO) item;
+                final DTO dto = (DTO) item;
                 final R record = dsl().newRecord(table(), dto);
                 record.changed(false);
                 for (Field<?> field : record.fields()) {
                     // we need to transfer the DTO-changed markers to the Record-changed markers.
-                    if (dto.getModifiedFields().containsKey(field.getName())) {
+                    if (dto.getBookKeeper().touched().containsKey(field.getName())) {
                         record.changed(field.getName(), true);
                     }
                 }
                 records.add(record);
             }
             return records;
+
         } else {
             throw new RuntimeException("unexpected implementation of DAO-typed interface!");
         }

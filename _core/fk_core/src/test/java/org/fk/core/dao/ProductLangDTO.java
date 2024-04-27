@@ -4,13 +4,13 @@ package org.fk.core.dao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.fk.coreTestDatabase.coretestdatabase.tables.dtos.ProductLang;
 import org.fk.coreTestDatabase.coretestdatabase.tables.interfaces.IProductLang;
+import org.fk.coreTestDatabase.coretestdatabase.tables.pojos.ProductLangDto;
 
 /**
  * ProductLangDTO
  */
-public class ProductLangDTO extends ProductLang implements IProductLang {
+public class ProductLangDTO extends ProductLangDto implements IProductLang {
 
     private boolean insertFlag;
     private boolean deleteFlag;
@@ -19,14 +19,10 @@ public class ProductLangDTO extends ProductLang implements IProductLang {
         super();
     }
 
-    public ProductLangDTO(IProductLang value) {
-        super(value);
-    }
-
     @JsonProperty
     public void setInsertFlag(boolean insertFlag) {
         this.insertFlag = insertFlag;
-        touch();
+        this.keeper.touch("insertFlag");
     }
 
     @JsonIgnore
@@ -37,7 +33,7 @@ public class ProductLangDTO extends ProductLang implements IProductLang {
     @JsonProperty
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-        touch();
+        this.keeper.touch("deleteFlag");
     }
 
     @JsonIgnore

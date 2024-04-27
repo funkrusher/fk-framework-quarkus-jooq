@@ -22,7 +22,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzSimpropTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
@@ -34,7 +34,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public void setTRIGGER_NAME(String value);
+    public IQrtzSimpropTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
@@ -46,7 +46,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzSimpropTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
@@ -58,7 +58,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
      */
-    public void setSTR_PROP_1(String value);
+    public IQrtzSimpropTriggers setSTR_PROP_1(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
@@ -69,7 +69,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
      */
-    public void setSTR_PROP_2(String value);
+    public IQrtzSimpropTriggers setSTR_PROP_2(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
@@ -80,7 +80,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
      */
-    public void setSTR_PROP_3(String value);
+    public IQrtzSimpropTriggers setSTR_PROP_3(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
@@ -91,7 +91,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
-    public void setINT_PROP_1(Integer value);
+    public IQrtzSimpropTriggers setINT_PROP_1(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
@@ -101,7 +101,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
-    public void setINT_PROP_2(Integer value);
+    public IQrtzSimpropTriggers setINT_PROP_2(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
@@ -111,7 +111,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
-    public void setLONG_PROP_1(Long value);
+    public IQrtzSimpropTriggers setLONG_PROP_1(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
@@ -121,7 +121,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
-    public void setLONG_PROP_2(Long value);
+    public IQrtzSimpropTriggers setLONG_PROP_2(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
@@ -131,7 +131,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
-    public void setDEC_PROP_1(BigDecimal value);
+    public IQrtzSimpropTriggers setDEC_PROP_1(BigDecimal value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
@@ -141,7 +141,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
-    public void setDEC_PROP_2(BigDecimal value);
+    public IQrtzSimpropTriggers setDEC_PROP_2(BigDecimal value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
@@ -151,7 +151,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
      */
-    public void setBOOL_PROP_1(String value);
+    public IQrtzSimpropTriggers setBOOL_PROP_1(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
@@ -162,7 +162,7 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.
      */
-    public void setBOOL_PROP_2(String value);
+    public IQrtzSimpropTriggers setBOOL_PROP_2(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.

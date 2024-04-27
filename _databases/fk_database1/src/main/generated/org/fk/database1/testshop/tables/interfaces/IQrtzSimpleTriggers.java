@@ -21,7 +21,7 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzSimpleTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public void setTRIGGER_NAME(String value);
+    public IQrtzSimpleTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzSimpleTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
@@ -57,7 +57,7 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
      */
-    public void setREPEAT_COUNT(Long value);
+    public IQrtzSimpleTriggers setREPEAT_COUNT(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
@@ -68,7 +68,7 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
      */
-    public void setREPEAT_INTERVAL(Long value);
+    public IQrtzSimpleTriggers setREPEAT_INTERVAL(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
@@ -79,7 +79,7 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.
      */
-    public void setTIMES_TRIGGERED(Long value);
+    public IQrtzSimpleTriggers setTIMES_TRIGGERED(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.

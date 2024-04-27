@@ -25,8 +25,9 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzPausedTriggerGrpsRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.
      */
     @Override
-    public void setTRIGGER_GROUP(String value) {
+    public QrtzPausedTriggerGrpsRecord setTRIGGER_GROUP(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -108,7 +110,7 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
     /**
      * Create a detached, initialised QrtzPausedTriggerGrpsRecord
      */
-    public QrtzPausedTriggerGrpsRecord(org.fk.database1.testshop.tables.dtos.QrtzPausedTriggerGrps value) {
+    public QrtzPausedTriggerGrpsRecord(org.fk.database1.testshop.tables.pojos.QrtzPausedTriggerGrps value) {
         super(QrtzPausedTriggerGrps.QRTZ_PAUSED_TRIGGER_GRPS);
 
         if (value != null) {

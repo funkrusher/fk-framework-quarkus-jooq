@@ -27,8 +27,9 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
      * Setter for <code>public.book.book_id</code>.
      */
     @Override
-    public void setBook_id(Integer value) {
+    public BookRecord setBook_id(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
      * Setter for <code>public.book.title</code>.
      */
     @Override
-    public void setTitle(String value) {
+    public BookRecord setTitle(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
      * Setter for <code>public.book.author_id</code>.
      */
     @Override
-    public void setAuthor_id(Integer value) {
+    public BookRecord setAuthor_id(Integer value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -78,8 +81,9 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
      * Setter for <code>public.book.genre</code>.
      */
     @Override
-    public void setGenre(String value) {
+    public BookRecord setGenre(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -95,8 +99,9 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
      * Setter for <code>public.book.publication_date</code>.
      */
     @Override
-    public void setPublication_date(LocalDate value) {
+    public BookRecord setPublication_date(LocalDate value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -111,8 +116,9 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
      * Setter for <code>public.book.isbn</code>.
      */
     @Override
-    public void setIsbn(String value) {
+    public BookRecord setIsbn(String value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -183,7 +189,7 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
     /**
      * Create a detached, initialised BookRecord
      */
-    public BookRecord(org.fk.database2.public_.tables.dtos.Book value) {
+    public BookRecord(org.fk.database2.public_.tables.pojos.Book value) {
         super(Book.BOOK);
 
         if (value != null) {

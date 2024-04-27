@@ -2,13 +2,12 @@ package org.fk.product.dto;
 
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.fk.core.dto.AbstractDTO;
 
 import java.util.List;
 
 @Schema(name = "ProductPaginate", description = "Represents the pagination result of products")
 
-public class ProductPaginateDTO extends AbstractDTO {
+public class ProductPaginateDTO {
 
     private List<ProductDTO> products;
 
@@ -26,7 +25,6 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     public void setProducts(List<ProductDTO> products) {
         this.products = products;
-        touch();
     }
 
     public Integer getCount() {
@@ -35,7 +33,6 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     public void setCount(Integer count) {
         this.count = count;
-        touch();
     }
 
     public String getLocalizationTest() {
@@ -44,6 +41,5 @@ public class ProductPaginateDTO extends AbstractDTO {
 
     public void setLocalizationTest(String localizationTest) {
         this.localizationTest = localizationTest;
-        touch();
     }
 }

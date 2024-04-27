@@ -1,12 +1,15 @@
 package org.fk.product.dto;
 
 
-import jakarta.validation.Valid;
-import org.fk.database1.testshop.tables.dtos.User;
 import org.fk.database1.testshop.tables.interfaces.IUser;
+import org.fk.database1.testshop.tables.pojos.UserDto;
 
 /**
  * UserDTO
  */
-public class UserDTO extends User implements IUser {
+public class UserDTO extends UserDto implements IUser {
+
+    public UserDTO() {
+        super();
+    }
 }

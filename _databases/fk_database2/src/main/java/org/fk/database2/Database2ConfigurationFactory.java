@@ -50,7 +50,7 @@ public class Database2ConfigurationFactory {
                             .withRenderSchema(false)
                             .withMaxRows(Integer.MAX_VALUE)
                             .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
-                            .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
+                            .withRenderNameCase(RenderNameCase.AS_IS)
                     );
         }
         return configuration;

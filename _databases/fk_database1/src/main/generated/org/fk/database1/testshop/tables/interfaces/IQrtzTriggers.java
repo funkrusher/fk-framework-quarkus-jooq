@@ -21,7 +21,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public void setTRIGGER_NAME(String value);
+    public IQrtzTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
@@ -45,7 +45,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
@@ -57,7 +57,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
      */
-    public void setJOB_NAME(String value);
+    public IQrtzTriggers setJOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
@@ -69,7 +69,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
      */
-    public void setJOB_GROUP(String value);
+    public IQrtzTriggers setJOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
@@ -81,7 +81,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
      */
-    public void setDESCRIPTION(String value);
+    public IQrtzTriggers setDESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
@@ -92,7 +92,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
-    public void setNEXT_FIRE_TIME(Long value);
+    public IQrtzTriggers setNEXT_FIRE_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
@@ -102,7 +102,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
-    public void setPREV_FIRE_TIME(Long value);
+    public IQrtzTriggers setPREV_FIRE_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
@@ -112,7 +112,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
-    public void setPRIORITY(Integer value);
+    public IQrtzTriggers setPRIORITY(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
@@ -122,7 +122,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
      */
-    public void setTRIGGER_STATE(String value);
+    public IQrtzTriggers setTRIGGER_STATE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
@@ -134,7 +134,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
      */
-    public void setTRIGGER_TYPE(String value);
+    public IQrtzTriggers setTRIGGER_TYPE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
@@ -146,7 +146,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
      */
-    public void setSTART_TIME(Long value);
+    public IQrtzTriggers setSTART_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
@@ -157,7 +157,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
-    public void setEND_TIME(Long value);
+    public IQrtzTriggers setEND_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
@@ -167,7 +167,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
      */
-    public void setCALENDAR_NAME(String value);
+    public IQrtzTriggers setCALENDAR_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
@@ -178,7 +178,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
-    public void setMISFIRE_INSTR(Short value);
+    public IQrtzTriggers setMISFIRE_INSTR(Short value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
@@ -188,7 +188,7 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.
      */
-    public void setJOB_DATA(byte[] value);
+    public IQrtzTriggers setJOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.

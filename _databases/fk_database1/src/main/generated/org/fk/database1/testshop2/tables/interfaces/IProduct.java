@@ -23,7 +23,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.productId</code>.
      */
-    public void setProductId(Long value);
+    public IProduct setProductId(Long value);
 
     /**
      * Getter for <code>testshop2.product.productId</code>.
@@ -33,7 +33,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.clientId</code>.
      */
-    public void setClientId(Integer value);
+    public IProduct setClientId(Integer value);
 
     /**
      * Getter for <code>testshop2.product.clientId</code>.
@@ -44,7 +44,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.price</code>.
      */
-    public void setPrice(BigDecimal value);
+    public IProduct setPrice(BigDecimal value);
 
     /**
      * Getter for <code>testshop2.product.price</code>.
@@ -55,7 +55,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.typeId</code>.
      */
-    public void setTypeId(String value);
+    public IProduct setTypeId(String value);
 
     /**
      * Getter for <code>testshop2.product.typeId</code>.
@@ -67,8 +67,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.createdAt</code>.
      */
-    @Schema(name = "createdAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-    public void setCreatedAt(LocalDateTime value);
+    public IProduct setCreatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop2.product.createdAt</code>.
@@ -78,8 +77,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.updatedAt</code>.
      */
-    @Schema(name = "updatedAt", example = "1618312800000", type = SchemaType.STRING, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
-    public void setUpdatedAt(LocalDateTime value);
+    public IProduct setUpdatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop2.product.updatedAt</code>.
@@ -89,7 +87,7 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.deleted</code>.
      */
-    public void setDeleted(Boolean value);
+    public IProduct setDeleted(Boolean value);
 
     /**
      * Getter for <code>testshop2.product.deleted</code>.

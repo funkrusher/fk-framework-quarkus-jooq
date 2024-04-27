@@ -21,7 +21,7 @@ public interface IQrtzLocks extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzLocks setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzLocks extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
-    public void setLOCK_NAME(String value);
+    public IQrtzLocks setLOCK_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.

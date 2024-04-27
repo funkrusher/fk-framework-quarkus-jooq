@@ -22,7 +22,7 @@ public interface IPost extends Serializable {
     /**
      * Setter for <code>testshop.post.id</code>.
      */
-    public void setId(UUID value);
+    public IPost setId(UUID value);
 
     /**
      * Getter for <code>testshop.post.id</code>.
@@ -33,7 +33,7 @@ public interface IPost extends Serializable {
     /**
      * Setter for <code>testshop.post.title</code>.
      */
-    public void setTitle(String value);
+    public IPost setTitle(String value);
 
     /**
      * Getter for <code>testshop.post.title</code>.

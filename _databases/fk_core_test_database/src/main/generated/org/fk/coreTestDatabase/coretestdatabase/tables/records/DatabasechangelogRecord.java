@@ -26,8 +26,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.ID</code>.
      */
     @Override
-    public void setID(String value) {
+    public DatabasechangelogRecord setID(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -44,8 +45,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.AUTHOR</code>.
      */
     @Override
-    public void setAUTHOR(String value) {
+    public DatabasechangelogRecord setAUTHOR(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -62,8 +64,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.FILENAME</code>.
      */
     @Override
-    public void setFILENAME(String value) {
+    public DatabasechangelogRecord setFILENAME(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -80,8 +83,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
     @Override
-    public void setDATEEXECUTED(LocalDateTime value) {
+    public DatabasechangelogRecord setDATEEXECUTED(LocalDateTime value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -97,8 +101,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
     @Override
-    public void setORDEREXECUTED(Integer value) {
+    public DatabasechangelogRecord setORDEREXECUTED(Integer value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -114,8 +119,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.EXECTYPE</code>.
      */
     @Override
-    public void setEXECTYPE(String value) {
+    public DatabasechangelogRecord setEXECTYPE(String value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -132,8 +138,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.MD5SUM</code>.
      */
     @Override
-    public void setMD5SUM(String value) {
+    public DatabasechangelogRecord setMD5SUM(String value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -149,8 +156,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.DESCRIPTION</code>.
      */
     @Override
-    public void setDESCRIPTION(String value) {
+    public DatabasechangelogRecord setDESCRIPTION(String value) {
         set(7, value);
+        return this;
     }
 
     /**
@@ -166,8 +174,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.COMMENTS</code>.
      */
     @Override
-    public void setCOMMENTS(String value) {
+    public DatabasechangelogRecord setCOMMENTS(String value) {
         set(8, value);
+        return this;
     }
 
     /**
@@ -183,8 +192,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.TAG</code>.
      */
     @Override
-    public void setTAG(String value) {
+    public DatabasechangelogRecord setTAG(String value) {
         set(9, value);
+        return this;
     }
 
     /**
@@ -200,8 +210,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.LIQUIBASE</code>.
      */
     @Override
-    public void setLIQUIBASE(String value) {
+    public DatabasechangelogRecord setLIQUIBASE(String value) {
         set(10, value);
+        return this;
     }
 
     /**
@@ -217,8 +228,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.CONTEXTS</code>.
      */
     @Override
-    public void setCONTEXTS(String value) {
+    public DatabasechangelogRecord setCONTEXTS(String value) {
         set(11, value);
+        return this;
     }
 
     /**
@@ -234,8 +246,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.LABELS</code>.
      */
     @Override
-    public void setLABELS(String value) {
+    public DatabasechangelogRecord setLABELS(String value) {
         set(12, value);
+        return this;
     }
 
     /**
@@ -251,8 +264,9 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>coreTestDatabase.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
     @Override
-    public void setDEPLOYMENT_ID(String value) {
+    public DatabasechangelogRecord setDEPLOYMENT_ID(String value) {
         set(13, value);
+        return this;
     }
 
     /**
@@ -330,7 +344,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     /**
      * Create a detached, initialised DatabasechangelogRecord
      */
-    public DatabasechangelogRecord(org.fk.coreTestDatabase.coretestdatabase.tables.dtos.Databasechangelog value) {
+    public DatabasechangelogRecord(org.fk.coreTestDatabase.coretestdatabase.tables.pojos.Databasechangelog value) {
         super(Databasechangelog.DATABASECHANGELOG);
 
         if (value != null) {

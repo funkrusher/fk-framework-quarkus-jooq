@@ -21,7 +21,7 @@ public interface IUserRole extends Serializable {
     /**
      * Setter for <code>testshop.user_role.userId</code>.
      */
-    public void setUserId(Integer value);
+    public IUserRole setUserId(Integer value);
 
     /**
      * Getter for <code>testshop.user_role.userId</code>.
@@ -32,7 +32,7 @@ public interface IUserRole extends Serializable {
     /**
      * Setter for <code>testshop.user_role.roleId</code>.
      */
-    public void setRoleId(String value);
+    public IUserRole setRoleId(String value);
 
     /**
      * Getter for <code>testshop.user_role.roleId</code>.

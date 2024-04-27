@@ -18,7 +18,7 @@ public interface IClient extends Serializable {
     /**
      * Setter for <code>testshop.client.clientId</code>.
      */
-    public void setClientId(Integer value);
+    public IClient setClientId(Integer value);
 
     /**
      * Getter for <code>testshop.client.clientId</code>.

@@ -25,8 +25,9 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzCronTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public void setTRIGGER_NAME(String value) {
+    public QrtzCronTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public void setTRIGGER_GROUP(String value) {
+    public QrtzCronTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -79,8 +82,9 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
      */
     @Override
-    public void setCRON_EXPRESSION(String value) {
+    public QrtzCronTriggersRecord setCRON_EXPRESSION(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -97,8 +101,9 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.
      */
     @Override
-    public void setTIME_ZONE_ID(String value) {
+    public QrtzCronTriggersRecord setTIME_ZONE_ID(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -167,7 +172,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
     /**
      * Create a detached, initialised QrtzCronTriggersRecord
      */
-    public QrtzCronTriggersRecord(org.fk.database1.testshop.tables.dtos.QrtzCronTriggers value) {
+    public QrtzCronTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzCronTriggers value) {
         super(QrtzCronTriggers.QRTZ_CRON_TRIGGERS);
 
         if (value != null) {

@@ -25,8 +25,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzFiredTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
     @Override
-    public void setENTRY_ID(String value) {
+    public QrtzFiredTriggersRecord setENTRY_ID(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public void setTRIGGER_NAME(String value) {
+    public QrtzFiredTriggersRecord setTRIGGER_NAME(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -79,8 +82,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public void setTRIGGER_GROUP(String value) {
+    public QrtzFiredTriggersRecord setTRIGGER_GROUP(String value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -97,8 +101,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
     @Override
-    public void setINSTANCE_NAME(String value) {
+    public QrtzFiredTriggersRecord setINSTANCE_NAME(String value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -115,8 +120,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
     @Override
-    public void setFIRED_TIME(Long value) {
+    public QrtzFiredTriggersRecord setFIRED_TIME(Long value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -132,8 +138,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
     @Override
-    public void setSCHED_TIME(Long value) {
+    public QrtzFiredTriggersRecord setSCHED_TIME(Long value) {
         set(6, value);
+        return this;
     }
 
     /**
@@ -149,8 +156,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public void setPRIORITY(Integer value) {
+    public QrtzFiredTriggersRecord setPRIORITY(Integer value) {
         set(7, value);
+        return this;
     }
 
     /**
@@ -166,8 +174,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
     @Override
-    public void setSTATE(String value) {
+    public QrtzFiredTriggersRecord setSTATE(String value) {
         set(8, value);
+        return this;
     }
 
     /**
@@ -184,8 +193,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public void setJOB_NAME(String value) {
+    public QrtzFiredTriggersRecord setJOB_NAME(String value) {
         set(9, value);
+        return this;
     }
 
     /**
@@ -201,8 +211,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public void setJOB_GROUP(String value) {
+    public QrtzFiredTriggersRecord setJOB_GROUP(String value) {
         set(10, value);
+        return this;
     }
 
     /**
@@ -218,8 +229,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public void setIS_NONCONCURRENT(String value) {
+    public QrtzFiredTriggersRecord setIS_NONCONCURRENT(String value) {
         set(11, value);
+        return this;
     }
 
     /**
@@ -235,8 +247,9 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public void setREQUESTS_RECOVERY(String value) {
+    public QrtzFiredTriggersRecord setREQUESTS_RECOVERY(String value) {
         set(12, value);
+        return this;
     }
 
     /**
@@ -321,7 +334,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     /**
      * Create a detached, initialised QrtzFiredTriggersRecord
      */
-    public QrtzFiredTriggersRecord(org.fk.database1.testshop.tables.dtos.QrtzFiredTriggers value) {
+    public QrtzFiredTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzFiredTriggers value) {
         super(QrtzFiredTriggers.QRTZ_FIRED_TRIGGERS);
 
         if (value != null) {

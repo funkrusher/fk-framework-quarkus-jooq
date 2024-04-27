@@ -21,7 +21,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
-    public void setSCHED_NAME(String value);
+    public IQrtzFiredTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
@@ -33,7 +33,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
-    public void setENTRY_ID(String value);
+    public IQrtzFiredTriggers setENTRY_ID(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
@@ -45,7 +45,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public void setTRIGGER_NAME(String value);
+    public IQrtzFiredTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
@@ -57,7 +57,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public void setTRIGGER_GROUP(String value);
+    public IQrtzFiredTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
@@ -69,7 +69,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
-    public void setINSTANCE_NAME(String value);
+    public IQrtzFiredTriggers setINSTANCE_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
@@ -81,7 +81,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
-    public void setFIRED_TIME(Long value);
+    public IQrtzFiredTriggers setFIRED_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
@@ -92,7 +92,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
-    public void setSCHED_TIME(Long value);
+    public IQrtzFiredTriggers setSCHED_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
@@ -103,7 +103,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
-    public void setPRIORITY(Integer value);
+    public IQrtzFiredTriggers setPRIORITY(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
@@ -114,7 +114,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
-    public void setSTATE(String value);
+    public IQrtzFiredTriggers setSTATE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
@@ -126,7 +126,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
-    public void setJOB_NAME(String value);
+    public IQrtzFiredTriggers setJOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
@@ -137,7 +137,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
-    public void setJOB_GROUP(String value);
+    public IQrtzFiredTriggers setJOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
@@ -148,7 +148,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
-    public void setIS_NONCONCURRENT(String value);
+    public IQrtzFiredTriggers setIS_NONCONCURRENT(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
@@ -159,7 +159,7 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
-    public void setREQUESTS_RECOVERY(String value);
+    public IQrtzFiredTriggers setREQUESTS_RECOVERY(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.

@@ -25,8 +25,9 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      * Setter for <code>testshop.user_role.userId</code>.
      */
     @Override
-    public void setUserId(Integer value) {
+    public UserRoleRecord setUserId(Integer value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -42,8 +43,9 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      * Setter for <code>testshop.user_role.roleId</code>.
      */
     @Override
-    public void setRoleId(String value) {
+    public UserRoleRecord setRoleId(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -107,7 +109,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     /**
      * Create a detached, initialised UserRoleRecord
      */
-    public UserRoleRecord(org.fk.database1.testshop.tables.dtos.UserRole value) {
+    public UserRoleRecord(org.fk.database1.testshop.tables.pojos.UserRole value) {
         super(UserRole.USER_ROLE);
 
         if (value != null) {

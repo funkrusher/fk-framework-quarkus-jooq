@@ -25,8 +25,9 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public void setSCHED_NAME(String value) {
+    public QrtzSimpleTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
+        return this;
     }
 
     /**
@@ -43,8 +44,9 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public void setTRIGGER_NAME(String value) {
+    public QrtzSimpleTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
+        return this;
     }
 
     /**
@@ -61,8 +63,9 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public void setTRIGGER_GROUP(String value) {
+    public QrtzSimpleTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
+        return this;
     }
 
     /**
@@ -79,8 +82,9 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
      */
     @Override
-    public void setREPEAT_COUNT(Long value) {
+    public QrtzSimpleTriggersRecord setREPEAT_COUNT(Long value) {
         set(3, value);
+        return this;
     }
 
     /**
@@ -96,8 +100,9 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
      */
     @Override
-    public void setREPEAT_INTERVAL(Long value) {
+    public QrtzSimpleTriggersRecord setREPEAT_INTERVAL(Long value) {
         set(4, value);
+        return this;
     }
 
     /**
@@ -113,8 +118,9 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.
      */
     @Override
-    public void setTIMES_TRIGGERED(Long value) {
+    public QrtzSimpleTriggersRecord setTIMES_TRIGGERED(Long value) {
         set(5, value);
+        return this;
     }
 
     /**
@@ -185,7 +191,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
     /**
      * Create a detached, initialised QrtzSimpleTriggersRecord
      */
-    public QrtzSimpleTriggersRecord(org.fk.database1.testshop.tables.dtos.QrtzSimpleTriggers value) {
+    public QrtzSimpleTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzSimpleTriggers value) {
         super(QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS);
 
         if (value != null) {
