@@ -24,9 +24,9 @@ public class ProductLangDTO implements IProductLang, DTO {
     private String name;
     private String description;
 
-    private boolean insertFlag;
+    private Boolean insertFlag;
 
-    private boolean deleteFlag;
+    private Boolean deleteFlag;
 
 
     public ProductLangDTO() { this.keeper = new BookKeeper(this); }
@@ -112,24 +112,24 @@ public class ProductLangDTO implements IProductLang, DTO {
 
 
     @JsonProperty
-    public void setInsertFlag(boolean insertFlag) {
+    public void setInsertFlag(Boolean insertFlag) {
         this.insertFlag = insertFlag;
         keeper.touch("insertFlag");
     }
 
     @JsonIgnore
-    public boolean getInsertFlag() {
+    public Boolean getInsertFlag() {
         return insertFlag;
     }
 
     @JsonProperty
-    public void setDeleteFlag(boolean deleteFlag) {
+    public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         keeper.touch("deleteFlag");
     }
 
     @JsonIgnore
-    public boolean getDeleteFlag() {
+    public Boolean getDeleteFlag() {
         return deleteFlag;
     }
 

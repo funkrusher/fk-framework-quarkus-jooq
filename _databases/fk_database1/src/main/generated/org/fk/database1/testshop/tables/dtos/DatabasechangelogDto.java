@@ -61,7 +61,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setID(String ID) {
         this.ID = ID;
-        this.keeper.touch("iD");
+        this.keeper.touch("ID");
         return this;
     }
 
@@ -81,7 +81,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setAUTHOR(String AUTHOR) {
         this.AUTHOR = AUTHOR;
-        this.keeper.touch("aUTHOR");
+        this.keeper.touch("AUTHOR");
         return this;
     }
 
@@ -101,7 +101,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setFILENAME(String FILENAME) {
         this.FILENAME = FILENAME;
-        this.keeper.touch("fILENAME");
+        this.keeper.touch("FILENAME");
         return this;
     }
 
@@ -120,7 +120,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setDATEEXECUTED(LocalDateTime DATEEXECUTED) {
         this.DATEEXECUTED = DATEEXECUTED;
-        this.keeper.touch("dATEEXECUTED");
+        this.keeper.touch("DATEEXECUTED");
         return this;
     }
 
@@ -139,7 +139,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setORDEREXECUTED(Integer ORDEREXECUTED) {
         this.ORDEREXECUTED = ORDEREXECUTED;
-        this.keeper.touch("oRDEREXECUTED");
+        this.keeper.touch("ORDEREXECUTED");
         return this;
     }
 
@@ -159,7 +159,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setEXECTYPE(String EXECTYPE) {
         this.EXECTYPE = EXECTYPE;
-        this.keeper.touch("eXECTYPE");
+        this.keeper.touch("EXECTYPE");
         return this;
     }
 
@@ -178,7 +178,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setMD5SUM(String MD5SUM) {
         this.MD5SUM = MD5SUM;
-        this.keeper.touch("mD5SUM");
+        this.keeper.touch("MD5SUM");
         return this;
     }
 
@@ -197,7 +197,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("dESCRIPTION");
+        this.keeper.touch("DESCRIPTION");
         return this;
     }
 
@@ -216,7 +216,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setCOMMENTS(String COMMENTS) {
         this.COMMENTS = COMMENTS;
-        this.keeper.touch("cOMMENTS");
+        this.keeper.touch("COMMENTS");
         return this;
     }
 
@@ -235,7 +235,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setTAG(String TAG) {
         this.TAG = TAG;
-        this.keeper.touch("tAG");
+        this.keeper.touch("TAG");
         return this;
     }
 
@@ -254,7 +254,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setLIQUIBASE(String LIQUIBASE) {
         this.LIQUIBASE = LIQUIBASE;
-        this.keeper.touch("lIQUIBASE");
+        this.keeper.touch("LIQUIBASE");
         return this;
     }
 
@@ -273,7 +273,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setCONTEXTS(String CONTEXTS) {
         this.CONTEXTS = CONTEXTS;
-        this.keeper.touch("cONTEXTS");
+        this.keeper.touch("CONTEXTS");
         return this;
     }
 
@@ -292,7 +292,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setLABELS(String LABELS) {
         this.LABELS = LABELS;
-        this.keeper.touch("lABELS");
+        this.keeper.touch("LABELS");
         return this;
     }
 
@@ -311,7 +311,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @Override
     public DatabasechangelogDto setDEPLOYMENT_ID(String DEPLOYMENT_ID) {
         this.DEPLOYMENT_ID = DEPLOYMENT_ID;
-        this.keeper.touch("dEPLOYMENT_ID");
+        this.keeper.touch("DEPLOYMENT_ID");
         return this;
     }
 

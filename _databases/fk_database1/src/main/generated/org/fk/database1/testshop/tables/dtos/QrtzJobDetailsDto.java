@@ -54,7 +54,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -74,7 +74,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("jOB_NAME");
+        this.keeper.touch("JOB_NAME");
         return this;
     }
 
@@ -94,7 +94,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("jOB_GROUP");
+        this.keeper.touch("JOB_GROUP");
         return this;
     }
 
@@ -113,7 +113,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("dESCRIPTION");
+        this.keeper.touch("DESCRIPTION");
         return this;
     }
 
@@ -133,7 +133,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setJOB_CLASS_NAME(String JOB_CLASS_NAME) {
         this.JOB_CLASS_NAME = JOB_CLASS_NAME;
-        this.keeper.touch("jOB_CLASS_NAME");
+        this.keeper.touch("JOB_CLASS_NAME");
         return this;
     }
 
@@ -153,7 +153,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setIS_DURABLE(String IS_DURABLE) {
         this.IS_DURABLE = IS_DURABLE;
-        this.keeper.touch("iS_DURABLE");
+        this.keeper.touch("IS_DURABLE");
         return this;
     }
 
@@ -173,7 +173,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.keeper.touch("iS_NONCONCURRENT");
+        this.keeper.touch("IS_NONCONCURRENT");
         return this;
     }
 
@@ -193,7 +193,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setIS_UPDATE_DATA(String IS_UPDATE_DATA) {
         this.IS_UPDATE_DATA = IS_UPDATE_DATA;
-        this.keeper.touch("iS_UPDATE_DATA");
+        this.keeper.touch("IS_UPDATE_DATA");
         return this;
     }
 
@@ -213,7 +213,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.keeper.touch("rEQUESTS_RECOVERY");
+        this.keeper.touch("REQUESTS_RECOVERY");
         return this;
     }
 
@@ -232,7 +232,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @Override
     public QrtzJobDetailsDto setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.keeper.touch("jOB_DATA");
+        this.keeper.touch("JOB_DATA");
         return this;
     }
 

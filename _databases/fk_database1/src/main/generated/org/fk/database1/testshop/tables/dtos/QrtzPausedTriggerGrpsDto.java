@@ -46,7 +46,7 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
     @Override
     public QrtzPausedTriggerGrpsDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -66,7 +66,7 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
     @Override
     public QrtzPausedTriggerGrpsDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 

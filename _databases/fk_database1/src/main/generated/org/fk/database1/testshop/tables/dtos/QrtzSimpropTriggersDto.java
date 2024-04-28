@@ -60,7 +60,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -80,7 +80,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("tRIGGER_NAME");
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -100,7 +100,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -119,7 +119,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setSTR_PROP_1(String STR_PROP_1) {
         this.STR_PROP_1 = STR_PROP_1;
-        this.keeper.touch("sTR_PROP_1");
+        this.keeper.touch("STR_PROP_1");
         return this;
     }
 
@@ -138,7 +138,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setSTR_PROP_2(String STR_PROP_2) {
         this.STR_PROP_2 = STR_PROP_2;
-        this.keeper.touch("sTR_PROP_2");
+        this.keeper.touch("STR_PROP_2");
         return this;
     }
 
@@ -157,7 +157,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setSTR_PROP_3(String STR_PROP_3) {
         this.STR_PROP_3 = STR_PROP_3;
-        this.keeper.touch("sTR_PROP_3");
+        this.keeper.touch("STR_PROP_3");
         return this;
     }
 
@@ -175,7 +175,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setINT_PROP_1(Integer INT_PROP_1) {
         this.INT_PROP_1 = INT_PROP_1;
-        this.keeper.touch("iNT_PROP_1");
+        this.keeper.touch("INT_PROP_1");
         return this;
     }
 
@@ -193,7 +193,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setINT_PROP_2(Integer INT_PROP_2) {
         this.INT_PROP_2 = INT_PROP_2;
-        this.keeper.touch("iNT_PROP_2");
+        this.keeper.touch("INT_PROP_2");
         return this;
     }
 
@@ -211,7 +211,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setLONG_PROP_1(Long LONG_PROP_1) {
         this.LONG_PROP_1 = LONG_PROP_1;
-        this.keeper.touch("lONG_PROP_1");
+        this.keeper.touch("LONG_PROP_1");
         return this;
     }
 
@@ -229,7 +229,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setLONG_PROP_2(Long LONG_PROP_2) {
         this.LONG_PROP_2 = LONG_PROP_2;
-        this.keeper.touch("lONG_PROP_2");
+        this.keeper.touch("LONG_PROP_2");
         return this;
     }
 
@@ -247,7 +247,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setDEC_PROP_1(BigDecimal DEC_PROP_1) {
         this.DEC_PROP_1 = DEC_PROP_1;
-        this.keeper.touch("dEC_PROP_1");
+        this.keeper.touch("DEC_PROP_1");
         return this;
     }
 
@@ -265,7 +265,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setDEC_PROP_2(BigDecimal DEC_PROP_2) {
         this.DEC_PROP_2 = DEC_PROP_2;
-        this.keeper.touch("dEC_PROP_2");
+        this.keeper.touch("DEC_PROP_2");
         return this;
     }
 
@@ -284,7 +284,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setBOOL_PROP_1(String BOOL_PROP_1) {
         this.BOOL_PROP_1 = BOOL_PROP_1;
-        this.keeper.touch("bOOL_PROP_1");
+        this.keeper.touch("BOOL_PROP_1");
         return this;
     }
 
@@ -303,7 +303,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     @Override
     public QrtzSimpropTriggersDto setBOOL_PROP_2(String BOOL_PROP_2) {
         this.BOOL_PROP_2 = BOOL_PROP_2;
-        this.keeper.touch("bOOL_PROP_2");
+        this.keeper.touch("BOOL_PROP_2");
         return this;
     }
 

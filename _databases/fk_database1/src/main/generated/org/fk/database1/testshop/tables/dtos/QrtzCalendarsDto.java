@@ -47,7 +47,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     @Override
     public QrtzCalendarsDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -67,7 +67,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     @Override
     public QrtzCalendarsDto setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
-        this.keeper.touch("cALENDAR_NAME");
+        this.keeper.touch("CALENDAR_NAME");
         return this;
     }
 
@@ -87,7 +87,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     @Override
     public QrtzCalendarsDto setCALENDAR(byte[] CALENDAR) {
         this.CALENDAR = CALENDAR;
-        this.keeper.touch("cALENDAR");
+        this.keeper.touch("CALENDAR");
         return this;
     }
 

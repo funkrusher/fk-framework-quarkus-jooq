@@ -48,7 +48,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
     @Override
     public QrtzBlobTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -68,7 +68,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
     @Override
     public QrtzBlobTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("tRIGGER_NAME");
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -88,7 +88,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
     @Override
     public QrtzBlobTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -107,7 +107,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
     @Override
     public QrtzBlobTriggersDto setBLOB_DATA(byte[] BLOB_DATA) {
         this.BLOB_DATA = BLOB_DATA;
-        this.keeper.touch("bLOB_DATA");
+        this.keeper.touch("BLOB_DATA");
         return this;
     }
 

@@ -49,7 +49,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
     @Override
     public QrtzCronTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -69,7 +69,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
     @Override
     public QrtzCronTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("tRIGGER_NAME");
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -89,7 +89,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
     @Override
     public QrtzCronTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -109,7 +109,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
     @Override
     public QrtzCronTriggersDto setCRON_EXPRESSION(String CRON_EXPRESSION) {
         this.CRON_EXPRESSION = CRON_EXPRESSION;
-        this.keeper.touch("cRON_EXPRESSION");
+        this.keeper.touch("CRON_EXPRESSION");
         return this;
     }
 
@@ -128,7 +128,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
     @Override
     public QrtzCronTriggersDto setTIME_ZONE_ID(String TIME_ZONE_ID) {
         this.TIME_ZONE_ID = TIME_ZONE_ID;
-        this.keeper.touch("tIME_ZONE_ID");
+        this.keeper.touch("TIME_ZONE_ID");
         return this;
     }
 

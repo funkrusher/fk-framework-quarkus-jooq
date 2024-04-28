@@ -57,7 +57,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -77,7 +77,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setENTRY_ID(String ENTRY_ID) {
         this.ENTRY_ID = ENTRY_ID;
-        this.keeper.touch("eNTRY_ID");
+        this.keeper.touch("ENTRY_ID");
         return this;
     }
 
@@ -97,7 +97,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("tRIGGER_NAME");
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -117,7 +117,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -137,7 +137,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.keeper.touch("iNSTANCE_NAME");
+        this.keeper.touch("INSTANCE_NAME");
         return this;
     }
 
@@ -156,7 +156,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setFIRED_TIME(Long FIRED_TIME) {
         this.FIRED_TIME = FIRED_TIME;
-        this.keeper.touch("fIRED_TIME");
+        this.keeper.touch("FIRED_TIME");
         return this;
     }
 
@@ -175,7 +175,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setSCHED_TIME(Long SCHED_TIME) {
         this.SCHED_TIME = SCHED_TIME;
-        this.keeper.touch("sCHED_TIME");
+        this.keeper.touch("SCHED_TIME");
         return this;
     }
 
@@ -194,7 +194,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
-        this.keeper.touch("pRIORITY");
+        this.keeper.touch("PRIORITY");
         return this;
     }
 
@@ -214,7 +214,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setSTATE(String STATE) {
         this.STATE = STATE;
-        this.keeper.touch("sTATE");
+        this.keeper.touch("STATE");
         return this;
     }
 
@@ -233,7 +233,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("jOB_NAME");
+        this.keeper.touch("JOB_NAME");
         return this;
     }
 
@@ -252,7 +252,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("jOB_GROUP");
+        this.keeper.touch("JOB_GROUP");
         return this;
     }
 
@@ -271,7 +271,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.keeper.touch("iS_NONCONCURRENT");
+        this.keeper.touch("IS_NONCONCURRENT");
         return this;
     }
 
@@ -290,7 +290,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @Override
     public QrtzFiredTriggersDto setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.keeper.touch("rEQUESTS_RECOVERY");
+        this.keeper.touch("REQUESTS_RECOVERY");
         return this;
     }
 

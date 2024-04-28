@@ -14,6 +14,7 @@ dependencies {
     api libs.jacksonCsv
     api libs.jacksonJsr310
     api libs.ulid
+    api libs.reflections
 
     testImplementation project(':_databases:fk_core_test_database')
     testImplementation libs.bundles.test.quarkus

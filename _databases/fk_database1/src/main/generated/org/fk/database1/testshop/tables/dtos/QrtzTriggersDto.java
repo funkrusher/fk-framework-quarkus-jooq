@@ -60,7 +60,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -80,7 +80,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("tRIGGER_NAME");
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -100,7 +100,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -120,7 +120,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("jOB_NAME");
+        this.keeper.touch("JOB_NAME");
         return this;
     }
 
@@ -140,7 +140,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("jOB_GROUP");
+        this.keeper.touch("JOB_GROUP");
         return this;
     }
 
@@ -159,7 +159,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("dESCRIPTION");
+        this.keeper.touch("DESCRIPTION");
         return this;
     }
 
@@ -177,7 +177,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setNEXT_FIRE_TIME(Long NEXT_FIRE_TIME) {
         this.NEXT_FIRE_TIME = NEXT_FIRE_TIME;
-        this.keeper.touch("nEXT_FIRE_TIME");
+        this.keeper.touch("NEXT_FIRE_TIME");
         return this;
     }
 
@@ -195,7 +195,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setPREV_FIRE_TIME(Long PREV_FIRE_TIME) {
         this.PREV_FIRE_TIME = PREV_FIRE_TIME;
-        this.keeper.touch("pREV_FIRE_TIME");
+        this.keeper.touch("PREV_FIRE_TIME");
         return this;
     }
 
@@ -213,7 +213,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
-        this.keeper.touch("pRIORITY");
+        this.keeper.touch("PRIORITY");
         return this;
     }
 
@@ -233,7 +233,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setTRIGGER_STATE(String TRIGGER_STATE) {
         this.TRIGGER_STATE = TRIGGER_STATE;
-        this.keeper.touch("tRIGGER_STATE");
+        this.keeper.touch("TRIGGER_STATE");
         return this;
     }
 
@@ -253,7 +253,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setTRIGGER_TYPE(String TRIGGER_TYPE) {
         this.TRIGGER_TYPE = TRIGGER_TYPE;
-        this.keeper.touch("tRIGGER_TYPE");
+        this.keeper.touch("TRIGGER_TYPE");
         return this;
     }
 
@@ -272,7 +272,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setSTART_TIME(Long START_TIME) {
         this.START_TIME = START_TIME;
-        this.keeper.touch("sTART_TIME");
+        this.keeper.touch("START_TIME");
         return this;
     }
 
@@ -290,7 +290,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setEND_TIME(Long END_TIME) {
         this.END_TIME = END_TIME;
-        this.keeper.touch("eND_TIME");
+        this.keeper.touch("END_TIME");
         return this;
     }
 
@@ -309,7 +309,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
-        this.keeper.touch("cALENDAR_NAME");
+        this.keeper.touch("CALENDAR_NAME");
         return this;
     }
 
@@ -327,7 +327,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setMISFIRE_INSTR(Short MISFIRE_INSTR) {
         this.MISFIRE_INSTR = MISFIRE_INSTR;
-        this.keeper.touch("mISFIRE_INSTR");
+        this.keeper.touch("MISFIRE_INSTR");
         return this;
     }
 
@@ -346,7 +346,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     @Override
     public QrtzTriggersDto setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.keeper.touch("jOB_DATA");
+        this.keeper.touch("JOB_DATA");
         return this;
     }
 

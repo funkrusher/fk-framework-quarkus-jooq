@@ -50,7 +50,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     @Override
     public QrtzSimpleTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -70,7 +70,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     @Override
     public QrtzSimpleTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("tRIGGER_NAME");
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -90,7 +90,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     @Override
     public QrtzSimpleTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("tRIGGER_GROUP");
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -109,7 +109,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     @Override
     public QrtzSimpleTriggersDto setREPEAT_COUNT(Long REPEAT_COUNT) {
         this.REPEAT_COUNT = REPEAT_COUNT;
-        this.keeper.touch("rEPEAT_COUNT");
+        this.keeper.touch("REPEAT_COUNT");
         return this;
     }
 
@@ -128,7 +128,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     @Override
     public QrtzSimpleTriggersDto setREPEAT_INTERVAL(Long REPEAT_INTERVAL) {
         this.REPEAT_INTERVAL = REPEAT_INTERVAL;
-        this.keeper.touch("rEPEAT_INTERVAL");
+        this.keeper.touch("REPEAT_INTERVAL");
         return this;
     }
 
@@ -147,7 +147,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     @Override
     public QrtzSimpleTriggersDto setTIMES_TRIGGERED(Long TIMES_TRIGGERED) {
         this.TIMES_TRIGGERED = TIMES_TRIGGERED;
-        this.keeper.touch("tIMES_TRIGGERED");
+        this.keeper.touch("TIMES_TRIGGERED");
         return this;
     }
 

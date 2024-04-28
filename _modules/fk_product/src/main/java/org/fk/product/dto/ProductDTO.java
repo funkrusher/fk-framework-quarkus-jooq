@@ -46,7 +46,7 @@ public class ProductDTO implements IProduct, DTO {
     private Boolean deleted;
 
     @Schema(writeOnly = true)
-    private boolean deleteFlag;
+    private Boolean deleteFlag;
 
     @Schema(readOnly = true)
     private ProductLangDTO lang;
@@ -200,19 +200,19 @@ public class ProductDTO implements IProduct, DTO {
     @JsonIgnore
     public void setProductTypeId(ProductTypeId productTypeId) {
         this.productTypeId = productTypeId;
-        this.typeId = productTypeId.getValue();
+        this.typeId = productTypeId != null ? productTypeId.getValue() : null;
         this.keeper.touch("productTypeId");
         this.keeper.touch("typeId");
     }
 
     @JsonProperty
-    public void setDeleteFlag(boolean deleteFlag) {
+    public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         this.keeper.touch("deleteFlag");
     }
 
     @JsonIgnore
-    public boolean getDeleteFlag() {
+    public Boolean getDeleteFlag() {
         return deleteFlag;
     }
 

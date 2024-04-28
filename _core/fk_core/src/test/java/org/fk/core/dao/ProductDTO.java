@@ -18,7 +18,7 @@ import java.util.List;
 public class ProductDTO extends ProductDto implements IProduct {
 
     @Schema(writeOnly = true)
-    private boolean deleteFlag;
+    private Boolean deleteFlag;
 
     @Schema(readOnly = true)
     private ProductLangDTO lang;
@@ -31,13 +31,13 @@ public class ProductDTO extends ProductDto implements IProduct {
 
 
     @JsonIgnore
-    public void setDeleteFlag(boolean deleteFlag) {
+    public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         this.keeper.touch("deleteFlag");
     }
 
     @JsonProperty
-    public boolean getDeleteFlag() {
+    public Boolean getDeleteFlag() {
         return deleteFlag;
     }
 

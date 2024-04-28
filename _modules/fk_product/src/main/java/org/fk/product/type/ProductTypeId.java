@@ -16,6 +16,9 @@ public enum ProductTypeId {
     }
 
     public static ProductTypeId fromValue(String value) {
+        if (value == null) {
+            return null;
+        }
         for (ProductTypeId type : ProductTypeId.values()) {
             if (type.value.equalsIgnoreCase(value)) {
                 return type;

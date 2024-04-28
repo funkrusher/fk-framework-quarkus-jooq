@@ -31,8 +31,8 @@ public class BookKeeper {
     }
 
     public void touch (final String fieldName) {
+        boolean found = false;
         try {
-            boolean found = false;
             for (Class<?> clazz : clazzHierarchy) {
                 Field field = null;
                 try {
@@ -54,11 +54,11 @@ public class BookKeeper {
                 found = true;
                 break;
             }
-            if (!found) {
-                throw new Exception("unable to find field!");
-            }
         } catch (Exception e){
-            throw new RuntimeException("unable to find field!");
+            throw new RuntimeException("Error while searching field in DTO: " + fieldName);
+        }
+        if (!found) {
+            throw new RuntimeException("Field not found in DTO: " + fieldName);
         }
     }
 

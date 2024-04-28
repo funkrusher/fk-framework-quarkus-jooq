@@ -48,7 +48,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     @Override
     public QrtzSchedulerStateDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -68,7 +68,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     @Override
     public QrtzSchedulerStateDto setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.keeper.touch("iNSTANCE_NAME");
+        this.keeper.touch("INSTANCE_NAME");
         return this;
     }
 
@@ -87,7 +87,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     @Override
     public QrtzSchedulerStateDto setLAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
         this.LAST_CHECKIN_TIME = LAST_CHECKIN_TIME;
-        this.keeper.touch("lAST_CHECKIN_TIME");
+        this.keeper.touch("LAST_CHECKIN_TIME");
         return this;
     }
 
@@ -106,7 +106,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     @Override
     public QrtzSchedulerStateDto setCHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
         this.CHECKIN_INTERVAL = CHECKIN_INTERVAL;
-        this.keeper.touch("cHECKIN_INTERVAL");
+        this.keeper.touch("CHECKIN_INTERVAL");
         return this;
     }
 

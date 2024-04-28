@@ -50,7 +50,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
     @Override
     public DatabasechangeloglockDto setID(Integer ID) {
         this.ID = ID;
-        this.keeper.touch("iD");
+        this.keeper.touch("ID");
         return this;
     }
 
@@ -69,7 +69,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
     @Override
     public DatabasechangeloglockDto setLOCKED(Byte LOCKED) {
         this.LOCKED = LOCKED;
-        this.keeper.touch("lOCKED");
+        this.keeper.touch("LOCKED");
         return this;
     }
 
@@ -87,7 +87,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
     @Override
     public DatabasechangeloglockDto setLOCKGRANTED(LocalDateTime LOCKGRANTED) {
         this.LOCKGRANTED = LOCKGRANTED;
-        this.keeper.touch("lOCKGRANTED");
+        this.keeper.touch("LOCKGRANTED");
         return this;
     }
 
@@ -106,7 +106,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
     @Override
     public DatabasechangeloglockDto setLOCKEDBY(String LOCKEDBY) {
         this.LOCKEDBY = LOCKEDBY;
-        this.keeper.touch("lOCKEDBY");
+        this.keeper.touch("LOCKEDBY");
         return this;
     }
 

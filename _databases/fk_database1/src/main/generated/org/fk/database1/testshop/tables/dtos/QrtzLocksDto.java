@@ -46,7 +46,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
     @Override
     public QrtzLocksDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("sCHED_NAME");
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -66,7 +66,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
     @Override
     public QrtzLocksDto setLOCK_NAME(String LOCK_NAME) {
         this.LOCK_NAME = LOCK_NAME;
-        this.keeper.touch("lOCK_NAME");
+        this.keeper.touch("LOCK_NAME");
         return this;
     }
 

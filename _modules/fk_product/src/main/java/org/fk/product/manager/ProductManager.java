@@ -187,9 +187,9 @@ public class ProductManager extends AbstractManager {
         List<IProductLang> deleteXLangs = new ArrayList<>();
         for (ProductLangDTO xLang : product.getLangs()) {
             xLang.setProductId(product.getProductId());
-            if (xLang.getDeleteFlag()) {
+            if (xLang.getDeleteFlag() != null && xLang.getDeleteFlag()) {
                 deleteXLangs.add(xLang);
-            } else if (xLang.getInsertFlag()) {
+            } else if (xLang.getInsertFlag() != null && xLang.getInsertFlag()) {
                 insertXLangs.add(xLang);
             } else {
                 updateXLangs.add(xLang);

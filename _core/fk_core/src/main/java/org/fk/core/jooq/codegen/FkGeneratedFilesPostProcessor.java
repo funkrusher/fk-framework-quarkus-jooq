@@ -133,7 +133,12 @@ public class FkGeneratedFilesPostProcessor {
                                     String capitalFieldName = setterMatcher.group(2);
                                     String setterParameterType = setterMatcher.group(3);
 
-                                    setterFieldName = Character.toLowerCase(capitalFieldName.charAt(0)) + capitalFieldName.substring(1);
+                                    boolean isAllUppercase = capitalFieldName.chars().noneMatch(Character::isLowerCase);
+                                    if (isAllUppercase) {
+                                        setterFieldName = capitalFieldName;
+                                    } else {
+                                        setterFieldName = Character.toLowerCase(capitalFieldName.charAt(0)) + capitalFieldName.substring(1);
+                                    }
                                     inSetter = true;
                                     line = "    public " + fluentSetterReturnType + DTO_NAME + " set" + capitalFieldName + "(" + setterParameterType + ") {";
                                 }

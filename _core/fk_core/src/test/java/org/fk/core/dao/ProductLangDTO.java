@@ -12,32 +12,32 @@ import org.fk.coreTestDatabase.coretestdatabase.tables.pojos.ProductLangDto;
  */
 public class ProductLangDTO extends ProductLangDto implements IProductLang {
 
-    private boolean insertFlag;
-    private boolean deleteFlag;
+    private Boolean insertFlag;
+    private Boolean deleteFlag;
 
     public ProductLangDTO() {
         super();
     }
 
     @JsonProperty
-    public void setInsertFlag(boolean insertFlag) {
+    public void setInsertFlag(Boolean insertFlag) {
         this.insertFlag = insertFlag;
         this.keeper.touch("insertFlag");
     }
 
     @JsonIgnore
-    public boolean getInsertFlag() {
+    public Boolean getInsertFlag() {
         return insertFlag;
     }
 
     @JsonProperty
-    public void setDeleteFlag(boolean deleteFlag) {
+    public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         this.keeper.touch("deleteFlag");
     }
 
     @JsonIgnore
-    public boolean getDeleteFlag() {
+    public Boolean getDeleteFlag() {
         return deleteFlag;
     }
 }

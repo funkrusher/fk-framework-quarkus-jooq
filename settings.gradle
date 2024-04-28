@@ -25,6 +25,7 @@ dependencyResolutionManagement {
             version('jackson', '2.17.0')
             version('awssdk', '2.25.11')
             version('ulid', '5.2.3')
+            version('reflections', '0.10.2')
 
             // fk-framework self-dependencies (sticky versions)
             // this should mostly be stable core-libraries / shared modules that don't change often.
@@ -32,6 +33,9 @@ dependencyResolutionManagement {
 
             // ulid identifiers
             library('ulid', 'com.github.f4b6a3', 'ulid-creator').versionRef('ulid')
+
+            // reflections
+            library('reflections', 'org.reflections', 'reflections').versionRef('reflections')
 
             // aws-sdk2
             library('awssdk', 'software.amazon.awssdk', 'bom').versionRef('awssdk')
