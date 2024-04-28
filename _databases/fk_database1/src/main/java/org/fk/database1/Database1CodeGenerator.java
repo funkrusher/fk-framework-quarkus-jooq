@@ -1,6 +1,6 @@
 package org.fk.database1;
 
-import org.fk.core.jooq.codegen.FkGeneratedFilesPostProcessor;
+import org.fk.core.jooq.postProcessor.FkGeneratedFilesPostProcessor;
 import org.fk.core.jooq.codegen.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
@@ -42,9 +42,7 @@ public class Database1CodeGenerator {
                                     .withPackageName("org.fk.database1")
                                     .withDirectory("src/main/generated"))));
 
-            FkGeneratedFilesPostProcessor processor = new FkGeneratedFilesPostProcessor();
-            processor.processPojoFiles("src/main/generated");
-            processor.processInterfaceFiles("src/main/generated");
+            new FkGeneratedFilesPostProcessor().processFiles("src/main/generated");
         };
     }
 }
