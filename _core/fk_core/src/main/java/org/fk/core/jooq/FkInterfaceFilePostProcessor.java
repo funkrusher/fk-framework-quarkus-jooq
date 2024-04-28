@@ -1,4 +1,4 @@
-package org.fk.core.jooq.postProcessor;
+package org.fk.core.jooq;
 
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.fk.core.jooq.postProcessor.FkInterfaceFilePostProcessor.InterfaceProcessingEvent.AT_START_OF_PACKAGE_DEFINITION;
-import static org.fk.core.jooq.postProcessor.FkInterfaceFilePostProcessor.InterfaceProcessingEvent.AT_START_OF_SETTER_DEFINITION;
-import static org.fk.core.jooq.postProcessor.FkInterfaceFilePostProcessor.InterfaceProcessingParam.*;
+import static org.fk.core.jooq.FkInterfaceFilePostProcessor.InterfaceProcessingEvent.AT_START_OF_PACKAGE_DEFINITION;
+import static org.fk.core.jooq.FkInterfaceFilePostProcessor.InterfaceProcessingEvent.AT_START_OF_SETTER_DEFINITION;
+import static org.fk.core.jooq.FkInterfaceFilePostProcessor.InterfaceProcessingParam.*;
 
 public class FkInterfaceFilePostProcessor {
     private static final Pattern INTERFACE_SETTERN_PATTERN = Pattern.compile("public\\s+(\\w+)\\s+set(\\w+)\\(([^)]+)\\);");

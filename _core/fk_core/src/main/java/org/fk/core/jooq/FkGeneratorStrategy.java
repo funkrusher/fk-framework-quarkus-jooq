@@ -1,4 +1,4 @@
-package org.fk.core.jooq.codegen;
+package org.fk.core.jooq;
 
 import org.jooq.codegen.DefaultGeneratorStrategy;
 import org.jooq.meta.Definition;

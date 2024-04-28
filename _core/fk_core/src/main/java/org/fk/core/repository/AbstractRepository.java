@@ -1,7 +1,7 @@
 package org.fk.core.repository;
 
 import org.fk.core.dto.DTO;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.*;
 import org.jooq.*;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
-import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
+import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 
 /**
  * A common base-class for Repositories

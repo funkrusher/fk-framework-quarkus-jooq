@@ -15,7 +15,7 @@ import org.fk.database1.Database1;
 import org.fk.product.dto.ProductDTO;
 import org.fk.core.jackson.TransferJsonMapper;
 import org.fk.product.manager.ProductManager;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.jooq.DSLContext;
 
 import java.util.*;

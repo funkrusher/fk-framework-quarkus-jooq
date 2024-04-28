@@ -2,7 +2,7 @@ package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.Filter;
@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
+import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 import static org.jooq.impl.DSL.*;
 
 /**

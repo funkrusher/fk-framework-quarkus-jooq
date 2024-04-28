@@ -16,7 +16,7 @@ import org.fk.database1.testshop2.tables.records.ProductLangRecord;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.jackson.TransferCsvMapper;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 

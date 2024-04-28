@@ -3,7 +3,7 @@ package org.fk.product.quartz;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.product.dao.TaskDAO;
 import org.fk.product.dto.TaskDTO;

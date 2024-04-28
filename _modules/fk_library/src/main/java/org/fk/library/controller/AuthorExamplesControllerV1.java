@@ -5,7 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.fk.database2.Database2;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.QueryParameters;

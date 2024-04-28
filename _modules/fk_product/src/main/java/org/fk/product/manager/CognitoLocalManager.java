@@ -13,7 +13,7 @@ import org.fk.product.dao.UserRoleDAO;
 import org.fk.product.dto.UserDTO;
 import org.fk.product.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;

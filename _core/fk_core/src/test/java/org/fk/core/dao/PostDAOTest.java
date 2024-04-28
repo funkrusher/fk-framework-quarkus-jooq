@@ -4,7 +4,7 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.fk.core.test.CoreTestLifecycleManager;
 import org.fk.core.test.CoreTestProfile;
 import org.fk.core.test.CoreTestUtil;

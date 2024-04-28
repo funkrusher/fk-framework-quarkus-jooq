@@ -2,12 +2,12 @@ package org.fk.coreTestDatabase;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
+import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 
 /**
  * DSLFactory to create request-specific instances of jooq dsl-context.

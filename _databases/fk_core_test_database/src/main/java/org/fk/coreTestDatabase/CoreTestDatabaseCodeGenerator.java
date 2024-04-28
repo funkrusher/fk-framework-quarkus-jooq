@@ -1,7 +1,7 @@
 package org.fk.coreTestDatabase;
 
-import org.fk.core.jooq.postProcessor.FkGeneratedFilesPostProcessor;
-import org.fk.core.jooq.codegen.FkGeneratorStrategy;
+import org.fk.core.jooq.FkGeneratedFilesPostProcessor;
+import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;

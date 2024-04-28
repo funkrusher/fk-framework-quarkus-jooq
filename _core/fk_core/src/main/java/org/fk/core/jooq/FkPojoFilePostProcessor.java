@@ -1,4 +1,4 @@
-package org.fk.core.jooq.postProcessor;
+package org.fk.core.jooq;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlTransient;
@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.fk.core.jooq.postProcessor.FkPojoFilePostProcessor.PojoProcessingEvent.*;
-import static org.fk.core.jooq.postProcessor.FkPojoFilePostProcessor.PojoProcessingParam.*;
+import static org.fk.core.jooq.FkPojoFilePostProcessor.PojoProcessingEvent.*;
+import static org.fk.core.jooq.FkPojoFilePostProcessor.PojoProcessingParam.*;
 
 public class FkPojoFilePostProcessor {
     private static final Pattern DTO_CLAZZ_PATTERN = Pattern.compile("public class\\s+(\\w+)\\s+implements\\s+(\\w+)\\s*\\{");

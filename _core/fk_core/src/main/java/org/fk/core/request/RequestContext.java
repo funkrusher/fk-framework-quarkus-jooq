@@ -1,4 +1,4 @@
-package org.fk.core.jooq;
+package org.fk.core.request;
 
 import org.fk.core.auth.FkSecurityIdentity;
 

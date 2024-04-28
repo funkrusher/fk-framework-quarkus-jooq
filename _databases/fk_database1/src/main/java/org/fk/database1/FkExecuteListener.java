@@ -1,11 +1,11 @@
 package org.fk.database1;
 
-import org.fk.core.jooq.RequestContext;
+import org.fk.core.request.RequestContext;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 
-import static org.fk.core.jooq.RequestContext.DSL_DATA_KEY;
+import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 
 /**
  * FkExecuteListener

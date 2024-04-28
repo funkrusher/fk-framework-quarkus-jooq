@@ -1,4 +1,4 @@
-package org.fk.core.jooq.postProcessor;
+package org.fk.core.jooq;
 
 import java.io.*;
 import java.nio.file.*;
