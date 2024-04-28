@@ -68,7 +68,7 @@ public class Testshop extends SchemaImpl {
     public final Init INIT = Init.INIT;
 
     /**
-     * The table <code>testshop.lang</code>.
+     * Lang contains available languages of the app
      */
     public final Lang LANG = Lang.LANG;
 

@@ -15,7 +15,7 @@ import org.fk.database1.testshop2.tables.ProductLang;
 public class Tables {
 
     /**
-     * The table <code>testshop2.product</code>.
+     * Client-specific Products
      */
     public static final Product PRODUCT = Product.PRODUCT;
 

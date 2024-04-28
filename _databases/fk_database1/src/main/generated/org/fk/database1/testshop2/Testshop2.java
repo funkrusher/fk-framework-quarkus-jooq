@@ -29,7 +29,7 @@ public class Testshop2 extends SchemaImpl {
     public static final Testshop2 TESTSHOP2 = new Testshop2();
 
     /**
-     * The table <code>testshop2.product</code>.
+     * Client-specific Products
      */
     public final Product PRODUCT = Product.PRODUCT;
 

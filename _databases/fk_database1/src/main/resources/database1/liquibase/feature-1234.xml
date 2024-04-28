@@ -9,11 +9,11 @@
         <sql>
             CREATE TABLE testshop.lang
             (
-                langId      INT     NOT NULL AUTO_INCREMENT,
-                code        CHAR(2) NOT NULL,
-                description VARCHAR(50),
+                langId      INT     NOT NULL AUTO_INCREMENT COMMENT "langId",
+                code        CHAR(2) NOT NULL                COMMENT "ISO-639 language code",
+                description VARCHAR(50)                     COMMENT "internal description of language",
                 PRIMARY KEY (langId)
-            );
+            ) COMMENT = "Lang contains available languages of the app";
 
             CREATE TABLE testshop.client
             (
@@ -23,16 +23,16 @@
 
             CREATE TABLE testshop2.product
             (
-                productId BIGINT(20) NOT NULL AUTO_INCREMENT,
-                clientId  INT            NOT NULL,
-                price     DECIMAL(10, 2) NOT NULL,
-                typeId    VARCHAR(255)   NOT NULL,
+                productId BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT "productId",
+                clientId  INT            NOT NULL             COMMENT "clientId",
+                price     DECIMAL(10, 2) NOT NULL             COMMENT "price of the product in Euro",
+                typeId    VARCHAR(255)   NOT NULL             COMMENT "typeId, enumeration - one of: books,...",
                 createdAt DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                deleted   tinyint(1) NOT NULL DEFAULT 0,
+                deleted   tinyint(1) NOT NULL DEFAULT 0       COMMENT "if this product is marked as deleted",
                 PRIMARY KEY (productId),
                 CONSTRAINT fk_product_clientId FOREIGN KEY (clientId) REFERENCES testshop.client (clientId) ON DELETE CASCADE
-            );
+            ) COMMENT = "Client-specific Products";
 
             CREATE TABLE testshop2.product_lang
             (
