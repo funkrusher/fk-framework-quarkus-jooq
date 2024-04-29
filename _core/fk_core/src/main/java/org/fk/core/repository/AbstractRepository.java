@@ -1,5 +1,6 @@
 package org.fk.core.repository;
 
+import jakarta.annotation.Nullable;
 import org.fk.core.dto.DTO;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.InvalidDataException;
@@ -60,7 +61,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Repository API
     // -------------------------------------------------------------------------
 
-    public D fetchById(T productId) {
+    public @Nullable D fetchById(T productId) {
         List<D> result = fetch(singletonList(productId));
         if (!result.isEmpty()) {
             return result.getFirst();
@@ -115,7 +116,6 @@ public abstract class AbstractRepository<D extends DTO, T> {
         }
         return null;
     }
-
 
     protected Collection<SortField<?>> getSorters(QueryParameters queryParameters, List<Field<?>> availableFields, Table<?> defaultTable) throws InvalidDataException {
         Collection<SortField<?>> sortFields = new ArrayList<>();
@@ -177,7 +177,4 @@ public abstract class AbstractRepository<D extends DTO, T> {
         }
         return filterFields;
     }
-
-
-
 }

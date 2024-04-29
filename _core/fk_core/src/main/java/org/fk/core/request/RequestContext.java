@@ -13,9 +13,9 @@ public class RequestContext {
 
     public static final String DSL_DATA_KEY = "request";
 
-    private Integer clientId;
+    private final Integer clientId;
 
-    private Integer langId;
+    private final Integer langId;
 
     public RequestContext(Integer clientId, Integer langId) {
         this.clientId = clientId;

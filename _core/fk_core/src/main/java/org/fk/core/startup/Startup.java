@@ -9,7 +9,7 @@ import org.jboss.logging.Logger;
 
 /**
  * Startup
- *
+ * <p>
  * Central place for core startup-handling,
  * which is common for all our services/modules.
  */

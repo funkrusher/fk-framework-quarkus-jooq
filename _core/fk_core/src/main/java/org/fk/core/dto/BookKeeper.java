@@ -22,14 +22,6 @@ public class BookKeeper {
         }
     }
 
-    private List<Field> getAllFields(Class<?> type) {
-        List<Field> fields = new ArrayList<Field>();
-        for (Class<?> c = type; c != null; c = c.getSuperclass()) {
-            fields.addAll(Arrays.asList(c.getDeclaredFields()));
-        }
-        return fields;
-    }
-
     public void touch (final String fieldName) {
         boolean found = false;
         try {
@@ -69,7 +61,6 @@ public class BookKeeper {
     public Map<String, Object> touched() {
         return this.touchedFields;
     }
-
 
     public boolean touchedEquals(DTO other) {
         // Get the touched fields map from the other BookKeeper instance

@@ -13,12 +13,13 @@ import java.util.Map;
 
 public class FkMariaDb implements AutoCloseable {
 
-    private MariaDBContainer<?> container;
+    private final MariaDBContainer<?> container;
 
     public FkMariaDb(final String databaseName) {
         // Start the MariaDB test container
         // Speed up the execution with help of tempfs (it still starts up slow, but runs statements very fast)
         // see: https://vladmihalcea.com/how-to-run-integration-tests-at-warp-speed-with-docker-and-tmpfs/
+        //noinspection resource
         container = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
                 //.withReuse(true) // need to delete database where reuse=true (could boost performance)
                 .withDatabaseName(databaseName)

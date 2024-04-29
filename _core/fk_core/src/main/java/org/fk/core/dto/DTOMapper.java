@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Help serializing a pojo, without the hassle of the JsonIgnore-Annotations that would normally make problems
  * with the unit-test and lead to wrong json, that always contains the full pojo, and not only the allowed stuff.
- *
+ * <p>
  * We use the bookKeepingMap of the pojos recursively and only use this, as the source of our data that we serialize,
  * as it contains only the set data of the pojo and not the data that has never been set.
  */
@@ -28,27 +28,22 @@ public class DTOMapper {
         return objectMapper.readValue(value, valueType);
     }
 
-
     public String serializePojo(DTO pojo) throws IOException {
-        // ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         StringWriter writer = new StringWriter();
         JsonGenerator gen = objectMapper.getFactory().createGenerator(writer);
         serializePojo(pojo, gen, objectMapper);
         gen.flush();
-        String json = writer.toString();
-        return json;
+        return writer.toString();
     }
-
 
     private void serializePojo(DTO value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
         if (value == null) {
             gen.writeNull();
             return;
         }
-
         gen.writeStartObject();
         for (Map.Entry<String, Object> entry : value.getBookKeeper().touched().entrySet()) {
-            gen.writeFieldName(entry.getKey().toString());
+            gen.writeFieldName(entry.getKey());
             if (entry.getValue() instanceof DTO) {
                 serializePojo((DTO) entry.getValue(), gen, mapper);
             } else {

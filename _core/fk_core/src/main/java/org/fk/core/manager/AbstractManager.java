@@ -46,7 +46,7 @@ public abstract class AbstractManager {
      * and are only available after the parent has been inserted into the database (does not come from the frontend).
      *
      * @param dto dto
-     * @throws ValidationException
+     * @throws ValidationException invalid dto
      */
     protected void validateInsert(DTO dto) throws ValidationException {
         Set<ConstraintViolation<DTO>> violations = validator.validate(dto);
@@ -61,7 +61,7 @@ public abstract class AbstractManager {
      * - we do not validate sub-items / sub-lists because of the reasons mentioned in validateInsert.
      *
      * @param dto dto
-     * @throws ValidationException
+     * @throws ValidationException invalid dto
      */
     protected void validateUpdate(DTO dto) throws ValidationException {
         Set<ConstraintViolation<DTO>> violations = new HashSet<>();

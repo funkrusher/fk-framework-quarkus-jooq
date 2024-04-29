@@ -9,5 +9,5 @@ import java.io.Serializable;
 public interface DTO extends Serializable {
     @JsonIgnore
     @XmlTransient
-    public BookKeeper getBookKeeper();
+    BookKeeper getBookKeeper();
 }

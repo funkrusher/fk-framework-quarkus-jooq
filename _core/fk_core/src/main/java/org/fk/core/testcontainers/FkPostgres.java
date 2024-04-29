@@ -12,12 +12,13 @@ import java.util.Map;
 
 public class FkPostgres implements AutoCloseable {
 
-    private PostgreSQLContainer<?> container;
+    private final PostgreSQLContainer<?> container;
 
     public FkPostgres() {
         // Start the MariaDB test container
         // Speed up the execution with help of tempfs (it still starts up slow, but runs statements very fast)
         // see: https://vladmihalcea.com/how-to-run-integration-tests-at-warp-speed-with-docker-and-tmpfs/
+        //noinspection resource
         container = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.2"))
                 //.withReuse(true) // need to delete database where reuse=true (could boost performance)
                 .withDatabaseName("testlibrary")

@@ -1,7 +1,6 @@
 package org.fk.core.dto;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.fk.core.startup.Startup;
 import org.jboss.logging.Logger;
 import org.reflections.Reflections;
 
@@ -16,10 +15,10 @@ import static io.vertx.core.cli.impl.ReflectionUtils.isSetter;
 
 /**
  * DTOValidityScanner
- *
+ * <p>
  * We need to fail-fast, if the definition of one of our DTOs is not as expected,
  * because we use non-typesafe strings for our bookKeeper.
- *
+ * <p>
  * Expectations:
  * - All Setter-Calls need to cope with NULL-Value and all fields need to be of Object-Type
  * - All Setter-Calls need to set the field into the bookKeeper (touched)
