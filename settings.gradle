@@ -5,7 +5,7 @@ pluginManagement {
         mavenLocal()
     }
     plugins {
-        id "io.quarkus" version '3.8.2'
+        id "io.quarkus" version '3.9.5'
         id "org.liquibase.gradle" version "2.0.2"
     }
 }
@@ -15,15 +15,15 @@ dependencyResolutionManagement {
         libs {
             // versions
             version('fk-core', '1.0.0-SNAPSHOT')
-            version('quarkus', '3.8.2')
+            version('quarkus', '3.9.5')
             version('mariadb-java-client', '3.3.3')
             version('postgres-java-client', '42.7.3')
             version('testcontainers', '1.19.7')
             version('rest-assured', '5.4.0')
             version('awaitility', '4.2.1')
-            version('jooq', '3.19.6')
+            version('jooq', '3.19.7')
             version('jackson', '2.17.0')
-            version('awssdk', '2.25.11')
+            version('awssdk', '2.25.40')
             version('ulid', '5.2.3')
             version('reflections', '0.10.2')
 
@@ -51,7 +51,7 @@ dependencyResolutionManagement {
             library('quarkusArc', 'io.quarkus', 'quarkus-arc').versionRef('quarkus')
             library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')
             library('quarkusJdbcPostgres', 'io.quarkus', 'quarkus-jdbc-postgresql').versionRef('quarkus')
-            library('quarkusResteasyReactiveJackson', 'io.quarkus', 'quarkus-resteasy-reactive-jackson').versionRef('quarkus')
+            library('quarkusRestJackson', 'io.quarkus', 'quarkus-rest-jackson').versionRef('quarkus')
             library('quarkusSmallryeOpenapi', 'io.quarkus', 'quarkus-smallrye-openapi').versionRef('quarkus')
             library('quarkusSmallryeMetrics', 'io.quarkus', 'quarkus-smallrye-metrics').versionRef('quarkus')
             library('quarkusJunit5', 'io.quarkus', 'quarkus-junit5').versionRef('quarkus')
@@ -88,13 +88,13 @@ dependencyResolutionManagement {
             library('testcontainersJunitJupiter', 'org.testcontainers', 'junit-jupiter').versionRef('testcontainers')
 
             // bundles
-            bundle('quarkus', ['quarkusJdbcMariadb', 'quarkusJdbcPostgres', 'quarkusResteasyReactiveJackson', 'quarkusLiquibase', 'quarkusSmallryeOpenapi', 'quarkusSmallryeMetrics', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc', 'quarkusReactiveMysqlClient', 'quarkusQuartz'])
+            bundle('quarkus', ['quarkusJdbcMariadb', 'quarkusJdbcPostgres', 'quarkusRestJackson', 'quarkusLiquibase', 'quarkusSmallryeOpenapi', 'quarkusSmallryeMetrics', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc', 'quarkusReactiveMysqlClient', 'quarkusQuartz'])
             bundle('testcontainers', ['testcontainers', 'testcontainersMariadb', 'testcontainersPostgres'])
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])
             bundle('aws', ['awssdk', 'awssdkCognitoIdentityProvider'])
 
             // test-bundles
-            bundle('test.quarkus', ['quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusResteasyReactiveJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
+            bundle('test.quarkus', ['quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
             bundle('test.testcontainers', ['testcontainers', 'testcontainersMariadb', 'testcontainersJunitJupiter'])
         }
     }
