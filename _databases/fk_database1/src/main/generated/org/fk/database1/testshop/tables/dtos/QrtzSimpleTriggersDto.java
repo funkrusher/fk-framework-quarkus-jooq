@@ -217,7 +217,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

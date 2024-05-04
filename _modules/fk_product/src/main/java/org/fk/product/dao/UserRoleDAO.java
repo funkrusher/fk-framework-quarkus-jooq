@@ -8,7 +8,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record2;
 
 /**
- * UserRoleRecordDAO
+ * UserRoleDAO
  */
 public class UserRoleDAO extends AbstractDAO<UserRoleRecord, IUserRole, Record2<Integer, String>> {
 

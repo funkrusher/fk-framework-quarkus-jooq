@@ -1,5 +1,7 @@
 package org.fk.core.jooq;
 
+import org.fk.core.exception.MappingException;
+
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -8,6 +10,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 public class FkGeneratedFilesPostProcessor {
     private final FkInterfaceFilePostProcessor fkInterfaceFilePostProcessor = new FkInterfaceFilePostProcessor();
     private final FkPojoFilePostProcessor fkPojoFilePostProcessor= new FkPojoFilePostProcessor();
+    private static final String JAVA_FILE_ENDING = ".java";
 
     public void processFiles(String targetDirectory) throws IOException {
         Files.walkFileTree(Paths.get(targetDirectory), new SimpleFileVisitor<Path>() {
@@ -17,7 +20,7 @@ public class FkGeneratedFilesPostProcessor {
                 if (file.toString().contains(File.separator + "interfaces" + File.separator)) {
                     // Process files within "interfaces" folders
                     try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
-                        File tempFile = File.createTempFile("temp", ".java", inputFile.getParentFile());
+                        File tempFile = File.createTempFile("temp", JAVA_FILE_ENDING, inputFile.getParentFile());
                         try (FileWriter writer = new FileWriter(tempFile)) {
                             fkInterfaceFilePostProcessor.processInterfaceFile(reader, writer);
                         }
@@ -25,7 +28,7 @@ public class FkGeneratedFilesPostProcessor {
                         Files.move(tempFile.toPath(), inputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw new MappingException(e);
                     }
 
                 } else if (file.toString().contains(File.separator + "pojos" + File.separator)) {
@@ -36,7 +39,7 @@ public class FkGeneratedFilesPostProcessor {
                         targetFolder.mkdirs(); // Ensure the target folder exists
 
                         String outputFileName = targetFolder.getAbsolutePath() + File.separator +
-                                inputFile.getName().replace(".java", FkPojoFilePostProcessor.DTO_NAME + ".java");
+                                inputFile.getName().replace(JAVA_FILE_ENDING, FkPojoFilePostProcessor.DTO_NAME + JAVA_FILE_ENDING);
 
                         try (FileWriter writer = new FileWriter(outputFileName)) {
                             fkPojoFilePostProcessor.processPojoFile(reader, writer);

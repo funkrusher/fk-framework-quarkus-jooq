@@ -15,10 +15,11 @@ import java.util.Set;
  * </p>
  */
 public class ValidationException extends MappingException {
-    private Set<? extends ConstraintViolation<?>> violations;
+    private final transient Set<? extends ConstraintViolation<?>> violations;
 
     public ValidationException(String message) {
         super(message);
+        this.violations = null;
     }
 
     public <T> ValidationException(Set<? extends ConstraintViolation<?>> violations) {

@@ -7,6 +7,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
+import org.fk.core.exception.MappingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +36,18 @@ public class QueryParameters {
     @QueryParam("filter")
     @Schema(description = "Filter criteria (e.g. name:John,age:gt:30)", defaultValue = "productId:=:1,price:>=:10")
     private String filter;
+    private Sorter sorter;
+    private List<Filter> filters = new ArrayList<>();
 
     @Context
     protected UriInfo uriInfo;
 
-    private Sorter sorter;
-    private List<Filter> filters = new ArrayList<>();
-
+    public QueryParameters() {
+    }
+    public QueryParameters(UriInfo uriInfo) {
+        // Only used for Unit-Test, as uriInfo is injected by quarkus in runtime via @Context.
+        this.uriInfo = uriInfo;
+    }
 
     public void setPage(int page) {
         this.page = page;
@@ -53,6 +59,9 @@ public class QueryParameters {
 
     @PostConstruct
     void init() {
+        if (uriInfo == null) {
+            throw new MappingException("init called without uriInfo available!");
+        }
         MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
         this.page = Integer.parseInt(queryParams.getFirst("page"));
         this.pageSize = Integer.parseInt(queryParams.getFirst("pageSize"));

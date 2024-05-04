@@ -23,8 +23,7 @@ public class Database1Testcontainer implements AutoCloseable {
         }
         // execute liquibase-update
         try (Connection connection = fkMariaDb.createConnection()) {
-            FkLiquibase fkLiquibase = new FkLiquibase(
-                    "database1/liquibase/changelog.xml", "database1/liquibase/changelog.xml");
+            FkLiquibase fkLiquibase = new FkLiquibase("database1/liquibase/changelog.xml");
             fkLiquibase.executeUpdate(connection);
         }
     }

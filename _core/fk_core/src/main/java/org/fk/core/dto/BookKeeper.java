@@ -1,6 +1,8 @@
 package org.fk.core.dto;
 
+import org.fk.core.exception.MappingException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -23,35 +25,39 @@ public class BookKeeper {
     }
 
     public void touch (final String fieldName) {
-        boolean found = false;
+        boolean found;
         try {
-            for (Class<?> clazz : clazzHierarchy) {
-                Field field = null;
-                try {
-                    field = clazz.getDeclaredField(fieldName);
-                } catch (Exception e) {
-                    // not found in this clazz, go up to next hierarchy.
-                    continue;
-                }
-                String getterName = "get"
-                        + Character.toUpperCase(field.getName().charAt(0))
-                        + field.getName().substring(1);
-
-                Method getterMethod = clazz.getMethod(getterName);
-
-                Object value = getterMethod.invoke(this.trackingObj);
-
-                this.touchedFields.put(field.getName(), value);
-
-                found = true;
-                break;
-            }
+            found = touch0(fieldName);
         } catch (Exception e){
-            throw new RuntimeException("Error while searching field in DTO: " + fieldName);
+            throw new MappingException("Error while searching field in DTO: " + fieldName);
         }
         if (!found) {
-            throw new RuntimeException("Field not found in DTO: " + fieldName);
+            throw new MappingException("Field not found in DTO: " + fieldName);
         }
+    }
+
+    private boolean touch0 (final String fieldName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        for (Class<?> clazz : clazzHierarchy) {
+            Field field = null;
+            try {
+                field = clazz.getDeclaredField(fieldName);
+            } catch (Exception e) {
+                // not found in this clazz, go up to next hierarchy.
+                continue;
+            }
+            String getterName = "get"
+                    + Character.toUpperCase(field.getName().charAt(0))
+                    + field.getName().substring(1);
+
+            Method getterMethod = clazz.getMethod(getterName);
+
+            Object value = getterMethod.invoke(this.trackingObj);
+
+            this.touchedFields.put(field.getName(), value);
+
+            return true;
+        }
+        return false;
     }
 
     public void resetTouched() {
@@ -102,7 +108,6 @@ public class BookKeeper {
 
         // Iterate over the touchedFields map
         for (Map.Entry<String, Object> entry : this.touchedFields.entrySet()) {
-            String fieldName = entry.getKey();
             Object value = entry.getValue();
 
             // Calculate hash code for each field name and value pair
@@ -133,8 +138,8 @@ public class BookKeeper {
                 sb.append("[\n");
                 List<Object> list = (List<Object>) value;
                 for (Object obj : list) {
-                    if (obj instanceof DTO) {
-                        ((DTO) obj).getBookKeeper().toStringHelper(sb, ((DTO) obj).getBookKeeper().touchedFields, level + 1);
+                    if (obj instanceof DTO dto) {
+                        dto.getBookKeeper().toStringHelper(sb, dto.getBookKeeper().touchedFields, level + 1);
                     } else {
                         sb.append(indentation).append("    ").append(obj).append(",\n");
                     }

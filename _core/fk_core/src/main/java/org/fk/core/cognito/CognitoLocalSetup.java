@@ -45,9 +45,7 @@ public class CognitoLocalSetup {
                                 .developerOnlyAttribute(false)
                                 .mutable(true)
                                 .required(false)
-                                .stringAttributeConstraints(StringAttributeConstraintsType.builder()
-                                        .maxLength("2048")
-                                        .build())
+                                .stringAttributeConstraints(d -> d.maxLength("2048"))
                                 .build())
                 .build();
         CreateUserPoolResponse poolResponse = cognitoClient.createUserPool(poolRequest);
@@ -66,8 +64,8 @@ public class CognitoLocalSetup {
         String userPoolClientSecret = clientResponse.userPoolClient().clientSecret();
 
         // print all relevant information to the console, so the user can copy them.
-        System.out.println("cognitolocal.userpoolid=" + userPoolId);
-        System.out.println("cognitolocal.userpoolclientid=" + userPoolClientId);
-        System.out.println("cognitolocal.userpoolclientsecret=" + userPoolClientSecret);
+        LOGGER.info("cognitolocal.userpoolid=" + userPoolId);
+        LOGGER.info("cognitolocal.userpoolclientid=" + userPoolClientId);
+        LOGGER.info("cognitolocal.userpoolclientsecret=" + userPoolClientSecret);
     }
 }

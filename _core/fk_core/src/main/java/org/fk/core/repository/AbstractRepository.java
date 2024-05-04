@@ -21,7 +21,7 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  * A common base-class for Repositories
  * <p>
  * This type is implemented by Repository classes.
- *
+ * <p>
  * A repository will be responsible to provide paginate, stream and query operations on a specific joined-view and also
  * map the resulting database records to the DTO representing this view on the related tables that are part of this view.
  * Such a view on related tables is often producing a 'Kartesisches Produkt' of N->M relationships in its result,
@@ -48,13 +48,13 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    abstract public List<D> fetch(List<T> productIds);
+    public abstract List<D> fetch(List<T> productIds);
 
-    abstract protected SelectSeekStepN<Record1<T>> getQuery(QueryParameters queryParameters) throws InvalidDataException;
+    protected abstract SelectSeekStepN<Record1<T>> getQuery(QueryParameters queryParameters) throws InvalidDataException;
 
-    abstract public List<T> paginate(QueryParameters queryParameters) throws InvalidDataException;
+    public abstract List<T> paginate(QueryParameters queryParameters) throws InvalidDataException;
 
-    abstract public int count(QueryParameters queryParameters) throws InvalidDataException;
+    public abstract int count(QueryParameters queryParameters) throws InvalidDataException;
 
 
     // -------------------------------------------------------------------------

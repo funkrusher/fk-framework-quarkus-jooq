@@ -4,8 +4,8 @@ package org.fk.core.dao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.fk.coreTestDatabase.coretestdatabase.tables.interfaces.IProductLang;
-import org.fk.coreTestDatabase.coretestdatabase.tables.pojos.ProductLangDto;
+import org.fk.core.test.database.coretestdatabase.tables.interfaces.IProductLang;
+import org.fk.core.test.database.coretestdatabase.tables.dtos.ProductLangDto;
 
 /**
  * ProductLangDTO

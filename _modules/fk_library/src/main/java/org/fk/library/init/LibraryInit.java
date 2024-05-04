@@ -11,15 +11,11 @@ import org.jooq.impl.DSL;
 
 import org.fk.database2.public_.tables.records.InitRecord;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.fk.database2.public_.Tables.BOOK;
 import static org.fk.database2.public_.tables.Author.AUTHOR;
 import static org.fk.database2.public_.tables.Init.INIT;
-
-
-import java.math.BigDecimal;
 
 @ApplicationScoped
 public class LibraryInit {
@@ -30,7 +26,7 @@ public class LibraryInit {
     @Inject
     Database2ConfigurationFactory configurationFactory;
 
-    void startup(@Observes StartupEvent event) {
+    void startup(@SuppressWarnings("java:S1172") @Observes StartupEvent event) {
         if (initLibrary) {
             DSLContext dsl = DSL.using(configurationFactory.getConfiguration());
             init(dsl);

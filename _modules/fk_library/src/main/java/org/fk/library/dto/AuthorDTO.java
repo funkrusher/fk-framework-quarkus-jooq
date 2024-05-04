@@ -2,7 +2,7 @@ package org.fk.library.dto;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.database2.public_.tables.interfaces.IAuthor;
-import org.fk.database2.public_.tables.pojos.AuthorDto;
+import org.fk.database2.public_.tables.dtos.AuthorDto;
 
 import java.util.List;
 

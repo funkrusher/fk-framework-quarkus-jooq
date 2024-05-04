@@ -381,7 +381,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

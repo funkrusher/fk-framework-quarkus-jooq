@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.f4b6a3.ulid.Ulid;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.database1.testshop.tables.interfaces.IPost;
-import org.fk.database1.testshop.tables.pojos.PostDto;
+import org.fk.database1.testshop.tables.dtos.PostDto;
 
 /**
  * PostDTO

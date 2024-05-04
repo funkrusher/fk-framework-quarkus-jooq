@@ -30,10 +30,10 @@ public abstract class AbstractManager {
             Object value = entry.getValue();
             if (value instanceof DTO) {
                 // ignore, as we are not validating recursive.
-            } else if (value instanceof List && !((List)value).isEmpty() && ((List)value).get(0) instanceof DTO) {
+            } else if (value instanceof List<?> list && !list.isEmpty() && list.getFirst() instanceof DTO) {
                 // ignore, as we are not validating recursive.
             } else {
-                Set<ConstraintViolation<DTO>> fieldViolations = validator.validateProperty((DTO) dto, key);
+                Set<ConstraintViolation<DTO>> fieldViolations = validator.validateProperty(dto, key);
                 violations.addAll(fieldViolations);
             }
         }

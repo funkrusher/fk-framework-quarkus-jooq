@@ -7,7 +7,7 @@ import org.jooq.DSLContext;
 import org.fk.core.dao.AbstractDAO;
 
 /**
- * UserRecordDAO
+ * UserDAO
  */
 public class UserDAO extends AbstractDAO<UserRecord, IUser, Integer> {
 

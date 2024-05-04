@@ -132,7 +132,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

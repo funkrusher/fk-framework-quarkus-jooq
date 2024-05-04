@@ -131,7 +131,7 @@ public class UserRoleDto implements IUserRole, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

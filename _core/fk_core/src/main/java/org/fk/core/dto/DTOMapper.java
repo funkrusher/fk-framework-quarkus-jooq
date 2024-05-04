@@ -44,8 +44,8 @@ public class DTOMapper {
         gen.writeStartObject();
         for (Map.Entry<String, Object> entry : value.getBookKeeper().touched().entrySet()) {
             gen.writeFieldName(entry.getKey());
-            if (entry.getValue() instanceof DTO) {
-                serializePojo((DTO) entry.getValue(), gen, mapper);
+            if (entry.getValue() instanceof DTO dto) {
+                serializePojo(dto, gen, mapper);
             } else {
                 serializeValue(entry.getValue(), gen, mapper);
             }
@@ -68,8 +68,8 @@ public class DTOMapper {
         } else if (value instanceof List) {
             gen.writeStartArray();
             for (Object item : (List<?>) value) {
-                if (item instanceof DTO) {
-                    serializePojo((DTO) item, gen, mapper);
+                if (item instanceof DTO dto) {
+                    serializePojo(dto, gen, mapper);
                 } else {
                     serializeValue(item, gen, mapper);
                 }
@@ -78,8 +78,8 @@ public class DTOMapper {
         } else if (value instanceof Iterable) {
             gen.writeStartArray();
             for (Object item : (Iterable<?>) value) {
-                if (item instanceof DTO) {
-                    serializePojo((DTO) item, gen, mapper);
+                if (item instanceof DTO dto) {
+                    serializePojo(dto, gen, mapper);
                 } else {
                     serializeValue(item, gen, mapper);
                 }

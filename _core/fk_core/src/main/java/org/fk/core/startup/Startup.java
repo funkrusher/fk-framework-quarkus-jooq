@@ -5,6 +5,7 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.fk.core.dto.DTOValidityScanner;
+import org.fk.core.exception.MappingException;
 import org.jboss.logging.Logger;
 
 /**
@@ -21,7 +22,7 @@ public class Startup {
     @Inject
     DTOValidityScanner dtoValidityScanner;
 
-    public void handleCoreStartup(@Observes StartupEvent startupEvent) {
+    public void handleCoreStartup(@SuppressWarnings("java:S1172") @Observes StartupEvent startupEvent) {
         // ---------------------------
         // System-Properties Overrides
         // ---------------------------
@@ -38,7 +39,7 @@ public class Startup {
         boolean dtosAreValid = dtoValidityScanner.scanValidity();
 
         if (!dtosAreValid) {
-            throw new RuntimeException("startup failed!");
+            throw new MappingException("startup failed!");
         }
     }
 }

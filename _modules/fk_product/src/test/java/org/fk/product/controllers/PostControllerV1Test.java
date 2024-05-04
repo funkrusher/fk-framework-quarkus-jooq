@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestProfile(ProductTestProfile.class)
 @QuarkusTestResource(ProductTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PostControllerV1Test {
+class PostControllerV1Test {
 
     @InjectProductTestUtil
     static ProductTestUtil testDbUtil;
@@ -58,7 +58,7 @@ public class PostControllerV1Test {
     @Test
     @TestSecurity(authorizationEnabled = false)
     @Order(1)
-    public void testCreate() throws IOException {
+    void testCreate() throws IOException {
         given()
                 .when().get("/api/v1/posts")
                 .then()

@@ -1,8 +1,8 @@
 package org.fk.core.dao;
 
-import org.fk.coreTestDatabase.coretestdatabase.tables.Post;
-import org.fk.coreTestDatabase.coretestdatabase.tables.interfaces.IPost;
-import org.fk.coreTestDatabase.coretestdatabase.tables.records.PostRecord;
+import org.fk.core.test.database.coretestdatabase.tables.Post;
+import org.fk.core.test.database.coretestdatabase.tables.interfaces.IPost;
+import org.fk.core.test.database.coretestdatabase.tables.records.PostRecord;
 import org.jooq.DSLContext;
 
 import java.util.UUID;

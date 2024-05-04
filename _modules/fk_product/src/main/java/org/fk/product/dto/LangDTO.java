@@ -1,9 +1,7 @@
 package org.fk.product.dto;
 
-
-import jakarta.validation.Valid;
 import org.fk.database1.testshop.tables.interfaces.ILang;
-import org.fk.database1.testshop.tables.pojos.LangDto;
+import org.fk.database1.testshop.tables.dtos.LangDto;
 
 /**
  * LangDTO

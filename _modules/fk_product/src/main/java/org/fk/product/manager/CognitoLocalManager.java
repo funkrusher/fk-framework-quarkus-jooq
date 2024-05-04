@@ -14,7 +14,6 @@ import org.fk.product.dto.UserDTO;
 import org.fk.product.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
 import org.fk.core.request.RequestContext;
-import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.*;
@@ -29,7 +28,6 @@ import java.util.Map;
  */
 @ApplicationScoped
 public class CognitoLocalManager extends AbstractManager {
-    private static final Logger LOGGER = Logger.getLogger(CognitoLocalManager.class);
 
     // set a default-value, so the unit-tests don't crash
     @ConfigProperty(name = "cognitolocal.userpoolid", defaultValue = "[missing]")
@@ -112,7 +110,7 @@ public class CognitoLocalManager extends AbstractManager {
                     .userPoolId(userPoolId)
                     .username(email)
                     .build();
-            AdminConfirmSignUpResponse confirmResponse = cognitoIpc.adminConfirmSignUp(confirmRequest);
+            cognitoIpc.adminConfirmSignUp(confirmRequest);
 
         } catch (Exception e) {
             // delete database entries in case of error (manual rollback)

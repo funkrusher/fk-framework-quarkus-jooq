@@ -3,8 +3,8 @@ package org.fk.core.test;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jooq.DSLContext;
 
-import static org.fk.coreTestDatabase.coretestdatabase.Tables.CLIENT;
-import static org.fk.coreTestDatabase.coretestdatabase.Tables.LANG;
+import static org.fk.core.test.database.coretestdatabase.Tables.CLIENT;
+import static org.fk.core.test.database.coretestdatabase.Tables.LANG;
 
 @ApplicationScoped
 public class CoreInit {

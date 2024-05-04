@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestProfile(ProductTestProfile.class)
 @QuarkusTestResource(ProductTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProductControllerV1Test {
+class ProductControllerV1Test {
 
     @InjectProductTestUtil
     static ProductTestUtil testDbUtil;
@@ -60,7 +60,7 @@ public class ProductControllerV1Test {
     DTOMapper serializer;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         Set<String> roles = new HashSet<>();
         String adminRole = ADMIN;
         roles.add(adminRole);
@@ -78,7 +78,7 @@ public class ProductControllerV1Test {
     @Test
     @TestSecurity(authorizationEnabled = false)
     @Order(1)
-    public void testCreate() throws IOException {
+    void testCreate() throws IOException {
         List<ProductLangDTO> xLangs = new ArrayList<>();
         ProductLangDTO xLangDTO = new ProductLangDTO();
         xLangDTO.setLangId(1);
@@ -132,7 +132,7 @@ public class ProductControllerV1Test {
     @Test
     @TestSecurity(authorizationEnabled = false)
     @Order(2)
-    public void testUpdate() throws IOException {
+    void testUpdate() throws IOException {
         List<ProductLangDTO> xLangs = new ArrayList<>();
 
         ProductLangDTO xLangDTO = new ProductLangDTO();
@@ -195,7 +195,7 @@ public class ProductControllerV1Test {
     @Test
     @TestSecurity(authorizationEnabled = false)
     @Order(3)
-    public void testRead() {
+    void testRead() {
         given()
                 .when().get("/api/v1/products/1")
                 .then()
@@ -205,13 +205,13 @@ public class ProductControllerV1Test {
         DSLContext dslContext = testDbUtil.createDSLContext();
         ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(1L)).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), 1L);
+        assertEquals(1L, record.getProductId());
     }
 
     @Test
     @TestSecurity(authorizationEnabled = false)
     @Order(4)
-    public void testDelete() throws IOException {
+    void testDelete() throws IOException {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductId(1L);
         productDTO.setClientId(1);

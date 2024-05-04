@@ -19,7 +19,6 @@ import java.util.List;
 /**
  * Client-specific Products
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class ProductDTO implements IProduct, DTO {
 
     private static final long serialVersionUID = 1L;
@@ -303,7 +302,7 @@ public class ProductDTO implements IProduct, DTO {
 
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
 
     @JsonIgnore
     @XmlTransient

@@ -37,7 +37,7 @@ idea {
 task generateCoreTestDatabaseJooqCode(type: JavaExec) {
     group = 'application'
     description = 'Runs JooqCodeGenerator Java Application'
-    mainClass = 'org.fk.coreTestDatabase.CoreTestDatabaseCodeGenerator'
+    mainClass = 'org.fk.core.test.database.CoreTestDatabaseCodeGenerator'
     classpath = sourceSets.main.runtimeClasspath
 }
 

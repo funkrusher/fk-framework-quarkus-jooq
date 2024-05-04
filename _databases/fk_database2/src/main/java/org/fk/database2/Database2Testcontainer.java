@@ -1,7 +1,6 @@
 package org.fk.database2;
 
 import org.fk.core.liquibase.FkLiquibase;
-import org.fk.core.testcontainers.FkMariaDb;
 import org.fk.core.testcontainers.FkPostgres;
 
 import java.sql.Connection;
@@ -23,8 +22,7 @@ public class Database2Testcontainer implements AutoCloseable {
         }
         // execute liquibase-update
         try (Connection connection = fkPostgres.createConnection()) {
-            FkLiquibase fkLiquibase = new FkLiquibase(
-                    "database2/liquibase/changelog.xml", "database2/liquibase/changelog.xml");
+            FkLiquibase fkLiquibase = new FkLiquibase("database2/liquibase/changelog.xml");
             fkLiquibase.executeUpdate(connection);
         }
     }

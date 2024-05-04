@@ -2,7 +2,6 @@ package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import org.fk.core.request.RequestContext;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.Filter;
@@ -30,7 +29,6 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 import static org.jooq.impl.DSL.*;
 
 /**
@@ -43,8 +41,6 @@ public class ProductManager extends AbstractManager {
 
 
     public List<ProductDTO> testMultiset(DSLContext dsl) {
-        ProductDAO productViewDAO = new ProductDAO(dsl);
-
         List<Field<?>> fields = new ArrayList<>();
         fields.addAll(List.of(table().fields()));
 
@@ -74,7 +70,6 @@ public class ProductManager extends AbstractManager {
         paginate.setCount(count);
 
         // test localization here.
-        RequestContext request = (RequestContext) dsl.data(DSL_DATA_KEY);
         Locale locale = Locale.of("en");
         String localizationTest = ResourceBundle.getBundle("messages", locale).getString("product.paginate.localizationTest");
         paginate.setLocalizationTest(localizationTest);
@@ -131,14 +126,13 @@ public class ProductManager extends AbstractManager {
                         // transaction3
                         ProductDAO bProductRecordDAO = new ProductDAO(tx3.dsl());
                         bProductRecordDAO.insert(inserts);
-                        // Integer x = Integer.valueOf("test");
                     });
                 } catch (Exception e) {
                     LOGGER.info(e);
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
     }
 
@@ -164,8 +158,8 @@ public class ProductManager extends AbstractManager {
                 return new ProductRepository(dsl).fetchById(product.getProductId());
             });
         } catch (Exception e) {
-            if (e.getCause() instanceof ValidationException) {
-                throw (ValidationException) e.getCause();
+            if (e.getCause() instanceof ValidationException ve) {
+                throw ve;
             }
             throw e;
         }
@@ -221,8 +215,6 @@ public class ProductManager extends AbstractManager {
      * @return stream
      */
     public Stream<ProductDTO> streamAll(DSLContext dsl) throws InvalidDataException {
-        ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
-
         QueryParameters queryParameters = new QueryParameters();
         queryParameters.setPage(0);
         queryParameters.setPageSize(100000);

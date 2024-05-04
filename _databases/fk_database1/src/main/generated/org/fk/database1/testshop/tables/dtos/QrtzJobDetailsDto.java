@@ -306,7 +306,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

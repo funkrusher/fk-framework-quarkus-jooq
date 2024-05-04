@@ -367,7 +367,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

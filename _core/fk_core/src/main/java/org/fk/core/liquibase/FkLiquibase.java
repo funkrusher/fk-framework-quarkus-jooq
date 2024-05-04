@@ -18,7 +18,7 @@ public class FkLiquibase {
 
     private final String changeLogFilename;
 
-    public FkLiquibase(String liquibaseFolder, String changeLogFilename) {
+    public FkLiquibase(String changeLogFilename) {
         this.changeLogFilename = changeLogFilename;
     }
 

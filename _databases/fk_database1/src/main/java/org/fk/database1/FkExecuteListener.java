@@ -16,9 +16,8 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  */
 public class FkExecuteListener extends DefaultExecuteListener {
 
-
     public FkExecuteListener() {
-
+        super();
     }
 
     @Override
@@ -50,8 +49,6 @@ public class FkExecuteListener extends DefaultExecuteListener {
                 // - Implicit join
                 // - Policies on parent tables should affect child tables as well
                 // - And probably a lot more, all of which the policies will do for you
-
-                String sql = ctx.query().getSQL();
                 Select<?> s =  select;
                 Table<?> table = s.asTable();
 

@@ -2,7 +2,7 @@ package org.fk.product.dto;
 
 
 import org.fk.database1.testshop.tables.interfaces.IUserRole;
-import org.fk.database1.testshop.tables.pojos.UserRoleDto;
+import org.fk.database1.testshop.tables.dtos.UserRoleDto;
 
 /**
  * UserRoleDTO

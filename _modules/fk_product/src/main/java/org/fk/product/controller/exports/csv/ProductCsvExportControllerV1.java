@@ -63,11 +63,11 @@ public class ProductCsvExportControllerV1 {
             SequenceWriter sequenceWriter = csvMapper.writer(schema).writeValues(outputStream);
             while (it.hasNext()) {
                 ProductDTO product = it.next();
-                ProductRecord record = product.into(new ProductRecord());
+                ProductRecord rec = product.into(new ProductRecord());
 
                 Map<String, String> map = new LinkedHashMap<>();
                 for (String fieldName: fieldNames) {
-                    map.put(fieldName, record.getValue(fieldName).toString());
+                    map.put(fieldName, rec.getValue(fieldName).toString());
                 }
                 sequenceWriter.write(map);
             }
@@ -105,11 +105,11 @@ public class ProductCsvExportControllerV1 {
             while (it.hasNext()) {
                 ProductDTO product = it.next();
                 for (ProductLangDTO productLangDTO : product.getLangs()) {
-                    ProductLangRecord record = productLangDTO.into(new ProductLangRecord());
+                    ProductLangRecord rec = productLangDTO.into(new ProductLangRecord());
 
                     Map<String, String> map = new LinkedHashMap<>();
                     for (String fieldName: fieldNames) {
-                        map.put(fieldName, record.getValue(fieldName).toString());
+                        map.put(fieldName, rec.getValue(fieldName).toString());
                     }
                     sequenceWriter.write(map);
                 }

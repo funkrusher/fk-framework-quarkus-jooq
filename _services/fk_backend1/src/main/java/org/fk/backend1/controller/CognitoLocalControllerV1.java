@@ -101,8 +101,7 @@ public class CognitoLocalControllerV1 {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, String> find(@FormParam("email") String email) throws UserNotFoundException {
-        Map<String, String> attributes = cognitoLocalService.find(email);
-        return attributes;
+        return cognitoLocalService.find(email);
     }
 
 

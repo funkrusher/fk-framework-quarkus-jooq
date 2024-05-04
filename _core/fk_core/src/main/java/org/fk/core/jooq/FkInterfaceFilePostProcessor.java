@@ -6,10 +6,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +19,6 @@ public class FkInterfaceFilePostProcessor {
 
     private static final String PACKAGE = "package";
     private static final String PUBLIC = "public";
-    private static final String LOCAL_DATE_TIME = "LocalDateTime";
     private static final String EMPTY_STRING = "";
     private static final String EOL = "\n";
 
@@ -42,7 +38,7 @@ public class FkInterfaceFilePostProcessor {
         FLUENT_SETTER_PARAMETER_TYPE,
     }
 
-    private void rewriteAtStartOfPackageDefinition(final List<String> linesCollected, final FileWriter writer,  final Map<InterfaceProcessingParam, String> params) throws IOException {
+    private void rewriteAtStartOfPackageDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
         }
@@ -51,11 +47,7 @@ public class FkInterfaceFilePostProcessor {
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(SchemaType.class.getName()));
     }
 
-    private void rewriteAtStartOfSetterDefinition(final List<String> linesCollected, final FileWriter writer,  final Map<InterfaceProcessingParam, String> params) throws IOException {
-        String fluentSetterParameterType = params.get(FLUENT_SETTER_PARAMETER_TYPE);
-        // if (fluentSetterParameterType.contains(LOCAL_DATE_TIME)) {
-        // writer.write("    @Schema(name = \"" + fieldName + "\", example = \"1618312800000\", type = SchemaType.NUMBER, format = \"date-time\", description = \"Timestamp in milliseconds since 1970-01-01T00:00:00Z\")\n");
-        // }
+    private void rewriteAtStartOfSetterDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
         }
@@ -68,8 +60,8 @@ public class FkInterfaceFilePostProcessor {
         // Event-Processing
         // (we collect parts of the file to process it in a bundled way)
         InterfaceProcessingEvent currentEvent = null;
-        List<String> linesCollected = new ArrayList<String>();
-        Map<InterfaceProcessingParam, String> params = new HashMap<>();
+        List<String> linesCollected = new ArrayList<>();
+        EnumMap<InterfaceProcessingParam, String> params = new EnumMap<>(InterfaceProcessingParam.class);
 
         while ((line = reader.readLine()) != null) {
             if (currentEvent == null) {
@@ -101,10 +93,10 @@ public class FkInterfaceFilePostProcessor {
                 linesCollected.add(line + EOL);
                 boolean eventFinished = false;
                 if (currentEvent == AT_START_OF_PACKAGE_DEFINITION) {
-                    rewriteAtStartOfPackageDefinition(linesCollected, writer, params);
+                    rewriteAtStartOfPackageDefinition(linesCollected, writer);
                     eventFinished = true;
                 } else if (currentEvent == AT_START_OF_SETTER_DEFINITION) {
-                    rewriteAtStartOfSetterDefinition(linesCollected, writer, params);
+                    rewriteAtStartOfSetterDefinition(linesCollected, writer);
                     eventFinished = true;
                 }
                 if (eventFinished) {

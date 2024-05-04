@@ -1,7 +1,7 @@
 package org.fk.core.test;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
-import org.fk.coreTestDatabase.CoreTestDatabaseTestcontainer;
+import org.fk.core.test.database.CoreTestDatabaseTestcontainer;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.testcontainers.containers.MariaDBContainer;

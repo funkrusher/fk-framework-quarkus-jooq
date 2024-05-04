@@ -6,7 +6,6 @@ import org.fk.core.manager.AbstractManager;
 import org.fk.core.exception.ValidationException;
 import org.fk.product.dao.PostDAO;
 import org.fk.product.dto.PostDTO;
-import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 
 /**
@@ -14,8 +13,6 @@ import org.jooq.DSLContext;
  */
 @ApplicationScoped
 public class PostManager extends AbstractManager {
-
-    private static final Logger LOGGER = Logger.getLogger(PostManager.class);
 
     @Transactional(rollbackOn = Exception.class)
     public PostDTO create(DSLContext dsl) throws ValidationException {

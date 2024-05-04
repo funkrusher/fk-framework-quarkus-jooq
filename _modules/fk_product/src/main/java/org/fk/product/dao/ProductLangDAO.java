@@ -1,18 +1,10 @@
 package org.fk.product.dao;
 
-import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.interfaces.IProductLang;
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
 import org.fk.core.dao.AbstractDAO;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.jooq.*;
-import org.jooq.Record;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.jooq.impl.DSL.*;
-import static org.jooq.impl.DSL.asterisk;
 
 /**
  * ProductLangRecordDAO

@@ -154,7 +154,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

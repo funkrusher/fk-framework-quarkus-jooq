@@ -9,9 +9,9 @@ import org.fk.core.test.CoreTestLifecycleManager;
 import org.fk.core.test.CoreTestProfile;
 import org.fk.core.test.CoreTestUtil;
 import org.fk.core.test.InjectCoreTestUtil;
-import org.fk.coreTestDatabase.CoreTestDatabase;
-import org.fk.coreTestDatabase.coretestdatabase.tables.Product;
-import org.fk.coreTestDatabase.coretestdatabase.tables.records.ProductRecord;
+import org.fk.core.test.database.CoreTestDatabase;
+import org.fk.core.test.database.coretestdatabase.tables.Product;
+import org.fk.core.test.database.coretestdatabase.tables.records.ProductRecord;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.*;
 
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestProfile(CoreTestProfile.class)
 @QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProductDAOTest {
+class ProductDAOTest {
 
     @InjectCoreTestUtil
     static CoreTestUtil testDbUtil;
@@ -42,7 +42,7 @@ public class ProductDAOTest {
     private DSLContext dsl;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         RequestContext request = new RequestContext(1, 1);
         this.dsl = database.dsl(request);
     }
@@ -96,12 +96,12 @@ public class ProductDAOTest {
 
     @Test
     @Order(1)
-    public void testInsertRecordFixedId() throws IOException {
+    void testInsertRecordFixedId() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord = createTestRecord(Optional.of(60000L));
         int result = productDAO.insert(productRecord);
-        assertEquals(result, 1);
+        assertEquals(1, result);
 
         ProductRecord existingRecord = resolveRecordsFromDb(productRecord.getProductId()).getFirst();
         validateRecordEqual(productRecord, existingRecord);
@@ -111,7 +111,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(2)
-    public void testInsertRecordsFixedId() throws IOException {
+    void testInsertRecordsFixedId() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord1 = createTestRecord(Optional.of(60001L));
@@ -119,10 +119,10 @@ public class ProductDAOTest {
         ProductRecord productRecord3 = createTestRecord(Optional.of(60003L));
 
         int result = productDAO.insert(List.of(productRecord1, productRecord2, productRecord3));
-        assertEquals(result, 3);
+        assertEquals(3, result);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60001L, 60002L, 60003L);
-        assertEquals(existingRecords.size(), 3);
+        assertEquals(3, existingRecords.size());
         validateRecordEqual(productRecord1, existingRecords.get(0));
         validateRecordEqual(productRecord2, existingRecords.get(1));
         validateRecordEqual(productRecord3, existingRecords.get(2));
@@ -133,12 +133,12 @@ public class ProductDAOTest {
 
     @Test
     @Order(3)
-    public void testInsertRecordAutoInc() throws IOException {
+    void testInsertRecordAutoInc() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord = createTestRecord(empty());
         int result = productDAO.insert(productRecord);
-        assertEquals(result, 1);
+        assertEquals(1, result);
 
         ProductRecord existingRecord = resolveRecordsFromDb(productRecord.getProductId()).getFirst();
         validateRecordEqual(productRecord, existingRecord);
@@ -148,7 +148,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(4)
-    public void testInsertRecordsAutoInc() throws IOException {
+    void testInsertRecordsAutoInc() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord1 = createTestRecord(empty());
@@ -156,10 +156,10 @@ public class ProductDAOTest {
         ProductRecord productRecord3 = createTestRecord(empty());
 
         int result = productDAO.insert(List.of(productRecord1, productRecord2, productRecord3));
-        assertEquals(result, 3);
+        assertEquals(3, result);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(productRecord1.getProductId(), productRecord2.getProductId(), productRecord3.getProductId());
-        assertEquals(existingRecords.size(), 3);
+        assertEquals(3, existingRecords.size());
         validateRecordEqual(productRecord1, existingRecords.get(0));
         validateRecordEqual(productRecord2, existingRecords.get(1));
         validateRecordEqual(productRecord3, existingRecords.get(2));
@@ -169,12 +169,12 @@ public class ProductDAOTest {
 
     @Test
     @Order(5)
-    public void testInsertDTOFixedId() throws IOException {
+    void testInsertDTOFixedId() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO = createTestDTO(Optional.of(60008L));
         int result = productDAO.insert(productDTO);
-        assertEquals(result, 1);
+        assertEquals(1, result);
 
         ProductRecord existingRecord = resolveRecordsFromDb(productDTO.getProductId()).getFirst();
         validateDTOEqual(productDTO, existingRecord);
@@ -184,7 +184,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(6)
-    public void testInsertDTOsFixedId() throws IOException {
+    void testInsertDTOsFixedId() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO1 = createTestDTO(Optional.of(60009L));
@@ -192,10 +192,10 @@ public class ProductDAOTest {
         ProductDTO productDTO3 = createTestDTO(Optional.of(60011L));
 
         int result = productDAO.insert(List.of(productDTO1, productDTO2, productDTO3));
-        assertEquals(result, 3);
+        assertEquals(3, result);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60009L, 60010L, 60011L);
-        assertEquals(existingRecords.size(), 3);
+        assertEquals(3, existingRecords.size());
         validateDTOEqual(productDTO1, existingRecords.get(0));
         validateDTOEqual(productDTO2, existingRecords.get(1));
         validateDTOEqual(productDTO3, existingRecords.get(2));
@@ -205,12 +205,12 @@ public class ProductDAOTest {
 
     @Test
     @Order(7)
-    public void testInsertDTOAutoInc() throws IOException {
+    void testInsertDTOAutoInc() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO = createTestDTO(empty());
         int result = productDAO.insert(productDTO);
-        assertEquals(result, 1);
+        assertEquals(1, result);
 
         ProductRecord existingRecord = resolveRecordsFromDb(productDTO.getProductId()).getFirst();
         validateDTOEqual(productDTO, existingRecord);
@@ -220,7 +220,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(8)
-    public void testInsertDTOsAutoInc() throws IOException {
+    void testInsertDTOsAutoInc() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO1 = createTestDTO(empty());
@@ -228,10 +228,10 @@ public class ProductDAOTest {
         ProductDTO productDTO3 = createTestDTO(empty());
 
         int result = productDAO.insert(List.of(productDTO1, productDTO2, productDTO3));
-        assertEquals(result, 3);
+        assertEquals(3, result);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(productDTO1.getProductId(), productDTO2.getProductId(), productDTO3.getProductId());
-        assertEquals(existingRecords.size(), 3);
+        assertEquals(3, existingRecords.size());
         validateDTOEqual(productDTO1, existingRecords.get(0));
         validateDTOEqual(productDTO2, existingRecords.get(1));
         validateDTOEqual(productDTO3, existingRecords.get(2));
@@ -241,7 +241,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(9)
-    public void testUpdateRecord() throws IOException {
+    void testUpdateRecord() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord = createTestRecord(Optional.of(60000L));
@@ -256,7 +256,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(10)
-    public void testUpdateRecords() throws IOException {
+    void testUpdateRecords() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord1 = createTestRecord(Optional.of(60001L));
@@ -270,7 +270,7 @@ public class ProductDAOTest {
         productDAO.update(List.of(productRecord1, productRecord2, productRecord3));
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60001L, 60002L, 60003L);
-        assertEquals(existingRecords.size(), 3);
+        assertEquals(3, existingRecords.size());
         validateRecordEqual(productRecord1, existingRecords.get(0));
         validateRecordEqual(productRecord2, existingRecords.get(1));
         validateRecordEqual(productRecord3, existingRecords.get(2));
@@ -280,7 +280,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(11)
-    public void testUpdateDTO() throws IOException {
+    void testUpdateDTO() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO = createTestDTO(Optional.of(60000L));
@@ -295,7 +295,7 @@ public class ProductDAOTest {
 
     @Test
     @Order(12)
-    public void testUpdateDTOs() throws IOException {
+    void testUpdateDTOs() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO1 = createTestDTO(Optional.of(60009L));
@@ -309,7 +309,7 @@ public class ProductDAOTest {
         productDAO.update(List.of(productDTO1, productDTO2, productDTO3));
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60009L, 60010L, 60011L);
-        assertEquals(existingRecords.size(), 3);
+        assertEquals(3, existingRecords.size());
         validateDTOEqual(productDTO1, existingRecords.get(0));
         validateDTOEqual(productDTO2, existingRecords.get(1));
         validateDTOEqual(productDTO3, existingRecords.get(2));
@@ -319,21 +319,21 @@ public class ProductDAOTest {
 
     @Test
     @Order(13)
-    public void testDeleteRecord() throws IOException {
+    void testDeleteRecord() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord = createTestRecord(Optional.of(60000L));
         productDAO.delete(productRecord);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(productRecord.getProductId());
-        assertEquals(existingRecords.size(), 0);
+        assertEquals(0, existingRecords.size());
 
         assertCount(15);
     }
 
     @Test
     @Order(14)
-    public void testDeleteRecords() throws IOException {
+    void testDeleteRecords() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord1 = createTestRecord(Optional.of(60001L));
@@ -343,28 +343,28 @@ public class ProductDAOTest {
         productDAO.delete(List.of(productRecord1, productRecord2, productRecord3));
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60001L, 60002L, 60003L);
-        assertEquals(existingRecords.size(), 0);
+        assertEquals(0, existingRecords.size());
 
         assertCount(12);
     }
 
     @Test
     @Order(15)
-    public void testDeleteDTO() throws IOException {
+    void testDeleteDTO() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO = createTestDTO(Optional.of(60004L));
         productDAO.delete(productDTO);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(productDTO.getProductId());
-        assertEquals(existingRecords.size(), 0);
+        assertEquals(0, existingRecords.size());
 
         assertCount(11);
     }
 
     @Test
     @Order(16)
-    public void testDeleteDTOs() throws IOException {
+    void testDeleteDTOs() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductDTO productDTO1 = createTestDTO(Optional.of(60005L));
@@ -374,14 +374,14 @@ public class ProductDAOTest {
         productDAO.delete(List.of(productDTO1, productDTO2, productDTO3));
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60005L, 60006L, 60007L);
-        assertEquals(existingRecords.size(), 0);
+        assertEquals(0, existingRecords.size());
 
         assertCount(8);
     }
 
     @Test
     @Order(17)
-    public void testExistsById() throws IOException {
+    void testExistsById() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         boolean shouldExist = productDAO.existsById(60008L);
@@ -395,18 +395,18 @@ public class ProductDAOTest {
 
     @Test
     @Order(18)
-    public void testCountAll() throws IOException {
+    void testCountAll() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         int count = productDAO.countAll();
 
-        assertEquals(count, 8);
+        assertEquals(8, count);
         assertCount(8);
     }
 
     @Test
     @Order(19)
-    public void testFindById() throws IOException {
+    void testFindById() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         ProductRecord productRecord1 = productDAO.findById(60008L);
@@ -420,26 +420,26 @@ public class ProductDAOTest {
 
     @Test
     @Order(20)
-    public void deleteById() throws IOException {
+    void deleteById() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         productDAO.deleteById(60008L);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60008L);
-        assertEquals(existingRecords.size(), 0);
+        assertEquals(0, existingRecords.size());
 
         assertCount(7);
     }
 
     @Test
     @Order(21)
-    public void deleteByIds() throws IOException {
+    void deleteByIds() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
         productDAO.deleteById(60009L, 60010L);
 
         List<ProductRecord> existingRecords = resolveRecordsFromDb(60009L, 60010L);
-        assertEquals(existingRecords.size(), 0);
+        assertEquals(0, existingRecords.size());
 
         assertCount(5);
     }

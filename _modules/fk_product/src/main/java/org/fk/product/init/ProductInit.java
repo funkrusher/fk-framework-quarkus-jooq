@@ -8,7 +8,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.database1.Database1ConfigurationFactory;
 import org.fk.database1.testshop.tables.records.InitRecord;
 import org.fk.product.type.ProductTypeId;
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
@@ -31,7 +30,7 @@ public class ProductInit {
     @Inject
     Database1ConfigurationFactory configurationFactory;
 
-    void startup(@Observes StartupEvent event) {
+    void startup(@SuppressWarnings("java:S1172") @Observes StartupEvent event) {
         if (initProduct) {
             DSLContext dsl = DSL.using(configurationFactory.getConfiguration());
             init(dsl);
@@ -62,7 +61,7 @@ public class ProductInit {
 
                 tx1.dsl().insertInto(PRODUCT_LANG, PRODUCT_LANG.PRODUCTID, PRODUCT_LANG.LANGID, PRODUCT_LANG.NAME, PRODUCT_LANG.DESCRIPTION)
                         .values(1L, 1, "Isotherm-Tasche fÃ¼r Lebensmittel", "Halten Sie Ihr Picknick schÃ¶n kÃ¼hl oder warm! Schicke, isolierte Tasche fÃ¼r den BÃ¼ro-Lunch oder AusflÃ¼ge. Innen mit Aluminium-Folie. Oberes Abteil 25 x 16 x H 15 cm. Unteres Abteil 25 x 16 x H 7 cm. H total 24 cm. OberflÃ¤che wasserabperlend. Leicht glÃ¤nzendes Perl ...")
-                        .values(1L, 3, "Sac Ã  repas isotherme", "Gardez votre lunch bien chaud ou bien frais avec un sac isotherme chic pour le bureau ou les excursions ! DoublÃ© avec de la feuille d''aluminium. Compartiment du dessus 25 x 16 x H 15 cm. Compartiment du dessous 25 x 16 x H 7 cm. H totale 24 cm. RevÃªtement dÃ©perlant. Gris perle, lÃ©gÃ¨rement brillant.")
+                        .values(1L, 3, "Sac repas isotherme", "Gardez votre lunch bien chaud ou bien frais avec un sac isotherme chic pour le bureau ou les excursions ! DoublÃ© avec de la feuille d''aluminium. Compartiment du dessus 25 x 16 x H 15 cm. Compartiment du dessous 25 x 16 x H 7 cm. H totale 24 cm. RevÃªtement dÃ©perlant. Gris perle, lÃ©gÃ¨rement brillant.")
                         .values(2L, 1, "Mira Eck Glas USB A", "Eck-Steckdosenelement, 2-fach und Doppel USB Charger (Ladestation). Frontseite in bedrucktem und kratzfestem Glas, fÃ¼r 90Â° Ecke.")
                         .values(2L, 2, "Mira corner111 glass USB A", "Corner socket element, 2-fold and double USB charger (charging station). Front printed and scratch-resistant glass. for 90Â° corner.")
                         .execute();

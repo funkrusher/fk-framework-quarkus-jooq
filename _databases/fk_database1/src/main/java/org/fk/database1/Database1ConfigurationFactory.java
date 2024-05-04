@@ -2,8 +2,8 @@ package org.fk.database1;
 
 import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+import org.fk.core.exception.MappingException;
 import org.jboss.logging.Logger;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
@@ -39,7 +39,7 @@ public class Database1ConfigurationFactory {
                     sqlDialect = DSL.using(connection).configuration().dialect();
                 } catch (Exception e) {
                     LOGGER.error("unable to resolve SQLDialect from database!", e);
-                    throw new RuntimeException(e);
+                    throw new MappingException(e);
                 }
             }
             configuration = new DefaultConfiguration()

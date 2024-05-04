@@ -43,6 +43,6 @@ public class Database1CodeGenerator {
                                     .withDirectory("src/main/generated"))));
 
             new FkGeneratedFilesPostProcessor().processFiles("src/main/generated");
-        };
+        }
     }
 }

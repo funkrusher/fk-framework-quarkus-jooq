@@ -7,8 +7,8 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.media.SchemaProperty;
 
-import org.fk.coreTestDatabase.coretestdatabase.tables.interfaces.IProduct;
-import org.fk.coreTestDatabase.coretestdatabase.tables.pojos.ProductDto;
+import org.fk.core.test.database.coretestdatabase.tables.interfaces.IProduct;
+import org.fk.core.test.database.coretestdatabase.tables.dtos.ProductDto;
 
 import java.util.List;
 

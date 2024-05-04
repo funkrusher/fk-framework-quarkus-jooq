@@ -132,7 +132,7 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected BookKeeper keeper;
+    protected transient BookKeeper keeper;
  
     @JsonIgnore
     @XmlTransient

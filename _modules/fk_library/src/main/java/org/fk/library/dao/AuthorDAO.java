@@ -5,7 +5,6 @@ import org.fk.database2.public_.tables.Author;
 import org.fk.database2.public_.tables.interfaces.IAuthor;
 import org.fk.database2.public_.tables.records.AuthorRecord;
 import org.jooq.DSLContext;
-import org.fk.library.dto.AuthorDTO;
 
 /**
  * AuthorDAO

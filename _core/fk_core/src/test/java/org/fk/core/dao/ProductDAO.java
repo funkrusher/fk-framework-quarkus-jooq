@@ -1,8 +1,8 @@
 package org.fk.core.dao;
 
-import org.fk.coreTestDatabase.coretestdatabase.tables.Product;
-import org.fk.coreTestDatabase.coretestdatabase.tables.interfaces.IProduct;
-import org.fk.coreTestDatabase.coretestdatabase.tables.records.ProductRecord;
+import org.fk.core.test.database.coretestdatabase.tables.Product;
+import org.fk.core.test.database.coretestdatabase.tables.interfaces.IProduct;
+import org.fk.core.test.database.coretestdatabase.tables.records.ProductRecord;
 import org.jooq.DSLContext;
 
 /**

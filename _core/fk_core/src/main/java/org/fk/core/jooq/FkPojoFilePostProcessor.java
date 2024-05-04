@@ -10,10 +10,7 @@ import org.fk.core.dto.DTO;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,7 +108,7 @@ public class FkPojoFilePostProcessor {
     private static final String BLOCK_BOOK_KEEPER = """
             \s   @JsonIgnore
             \s   @XmlTransient
-            \s   protected BookKeeper keeper;
+            \s   protected transient BookKeeper keeper;
             \s   
             \s   @JsonIgnore
             \s   @XmlTransient
@@ -161,7 +158,7 @@ public class FkPojoFilePostProcessor {
         SETTER_FIELD_NAME
     }
 
-    private void rewriteAtStartOfPackageDefinition(final List<String> linesCollected, final FileWriter writer,  final Map<PojoProcessingParam, String> params) throws IOException {
+    private void rewriteAtStartOfPackageDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine.replaceAll(".pojos", ".dtos"));
         }
@@ -174,7 +171,7 @@ public class FkPojoFilePostProcessor {
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonIgnore.class.getName()));
     }
 
-    private void rewriteAtStartOfClassDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
+    private void rewriteAtStartOfClassDefinition(final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
         String clazzName = params.get(CLASS_NAME);
         String interfaceName = params.get(INTERFACE_NAME);
         writer.write(BLOCK_CLAZZ_DEFINITION.formatted(
@@ -185,7 +182,7 @@ public class FkPojoFilePostProcessor {
         writer.write(EOL);
     }
 
-    private void rewriteAtStartOfSerialVersionUid(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
+    private void rewriteAtStartOfSerialVersionUid(final List<String> linesCollected, final FileWriter writer) throws IOException {
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
         }
@@ -195,7 +192,6 @@ public class FkPojoFilePostProcessor {
     }
 
     private void rewriteAtStartOfFieldDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
-        String fieldName = params.get(FIELD_NAME);
         String fieldType = params.get(FIELD_TYPE);
         if (fieldType.contains(LOCAL_DATE_TIME)) {
             writer.write(ANNOTATION_SCHEMA_LOCALDATETIME);
@@ -207,7 +203,7 @@ public class FkPojoFilePostProcessor {
         params.put(FIELD_TYPE, null);
     }
 
-    private void rewriteAtEndOfClassDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
+    private void rewriteAtEndOfClassDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         writer.write(EOL);
         writer.write(HEADER_BOOK_KEEPER);
         writer.write("    " + EOL);
@@ -301,8 +297,8 @@ public class FkPojoFilePostProcessor {
         // Event-Processing
         // (we collect parts of the file to process it in a bundled way)
         PojoProcessingEvent currentEvent = null;
-        List<String> linesCollected = new ArrayList<String>();
-        Map<PojoProcessingParam, String> params = new HashMap<>();
+        List<String> linesCollected = new ArrayList<>();
+        EnumMap<PojoProcessingParam, String> params = new EnumMap<>(PojoProcessingParam.class);
 
         while ((line = reader.readLine()) != null) {
             if (currentEvent == null) {
@@ -338,12 +334,10 @@ public class FkPojoFilePostProcessor {
                     }
                 } else if (line.equals(CURLY_CLOSE)) {
                     currentEvent = AT_END_OF_CLASS_DEFINITION;
-                } else if (writeEnabled) {
-                    if (lastLine == null || !(lastLine.equals(EMPTY_STRING) && line.equals(EMPTY_STRING))) {
-                        // ignore double empty lines, but write everything else.
-                        writer.write(line + EOL);
-                        lastLine = line;
-                    }
+                } else if (writeEnabled && (lastLine == null || !(lastLine.equals(EMPTY_STRING) && line.equals(EMPTY_STRING)))) {
+                    // ignore double empty lines, but write everything else.
+                    writer.write(line + EOL);
+                    lastLine = line;
                 }
             }
 
@@ -351,19 +345,19 @@ public class FkPojoFilePostProcessor {
                 linesCollected.add(line + EOL);
                 boolean eventFinished = false;
                 if (currentEvent == AT_START_OF_PACKAGE_DEFINITION) {
-                    rewriteAtStartOfPackageDefinition(linesCollected, writer, params);
+                    rewriteAtStartOfPackageDefinition(linesCollected, writer);
                     eventFinished = true;
                 } else if (currentEvent == AT_START_OF_CLASS_DEFINITION) {
-                    rewriteAtStartOfClassDefinition(linesCollected, writer, params);
+                    rewriteAtStartOfClassDefinition(writer, params);
                     eventFinished = true;
                 } else if (currentEvent == AT_START_OF_SERIAL_VERSION_UID) {
-                    rewriteAtStartOfSerialVersionUid(linesCollected, writer, params);
+                    rewriteAtStartOfSerialVersionUid(linesCollected, writer);
                     eventFinished = true;
                 } else if (currentEvent == AT_START_OF_FIELD_DEFINITION) {
                     rewriteAtStartOfFieldDefinition(linesCollected, writer, params);
                     eventFinished = true;
                 } else if (currentEvent == AT_END_OF_CLASS_DEFINITION) {
-                    rewriteAtEndOfClassDefinition(linesCollected, writer, params);
+                    rewriteAtEndOfClassDefinition(linesCollected, writer);
                     eventFinished = true;
                 } else if (currentEvent == COLLECTED_CONSTRUCTOR_BLOCK && line.contains(CURLY_CLOSE)) {
                     rewriteCollectedConstructorBlock(linesCollected, writer, params);

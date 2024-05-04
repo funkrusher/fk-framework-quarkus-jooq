@@ -10,9 +10,9 @@ import org.fk.core.test.CoreTestProfile;
 import org.fk.core.test.CoreTestUtil;
 import org.fk.core.test.InjectCoreTestUtil;
 import org.fk.core.ulid.UlidGenerator;
-import org.fk.coreTestDatabase.CoreTestDatabase;
-import org.fk.coreTestDatabase.coretestdatabase.tables.Post;
-import org.fk.coreTestDatabase.coretestdatabase.tables.records.PostRecord;
+import org.fk.core.test.database.CoreTestDatabase;
+import org.fk.core.test.database.coretestdatabase.tables.Post;
+import org.fk.core.test.database.coretestdatabase.tables.records.PostRecord;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.*;
 
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestProfile(CoreTestProfile.class)
 @QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PostDAOTest {
+class PostDAOTest {
 
     @InjectCoreTestUtil
     static CoreTestUtil testDbUtil;
@@ -43,7 +43,7 @@ public class PostDAOTest {
     private DSLContext dsl;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         RequestContext request = new RequestContext(1, 1);
         this.dsl = database.dsl(request);
     }
@@ -91,12 +91,12 @@ public class PostDAOTest {
 
     @Test
     @Order(1)
-    public void testInsertRecordFixedId() throws IOException {
+    void testInsertRecordFixedId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         PostRecord postRecord = createTestRecord(Optional.of(UlidGenerator.createMariadbUuid()));
         int result = postDAO.insert(postRecord);
-        assertEquals(result, 1);
+        assertEquals( 1, result);
 
         PostRecord existingRecord = resolveRecordsFromDb(postRecord.getId()).getFirst();
         validateRecordEqual(postRecord, existingRecord);
@@ -106,7 +106,7 @@ public class PostDAOTest {
 
     @Test
     @Order(2)
-    public void testInsertRecordsFixedId() throws IOException {
+    void testInsertRecordsFixedId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         UUID id1 = UlidGenerator.createMariadbUuid();
@@ -118,10 +118,10 @@ public class PostDAOTest {
         PostRecord postRecord3 = createTestRecord(Optional.of(id3));
 
         int result = postDAO.insert(List.of(postRecord1, postRecord2, postRecord3));
-        assertEquals(result, 3);
+        assertEquals( 3, result);
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(id1, id2, id3);
-        assertEquals(existingRecords.size(), 3);
+        assertEquals( 3, existingRecords.size());
         validateRecordEqual(postRecord1, existingRecords.get(0));
         validateRecordEqual(postRecord2, existingRecords.get(1));
         validateRecordEqual(postRecord3, existingRecords.get(2));
@@ -132,12 +132,12 @@ public class PostDAOTest {
 
     @Test
     @Order(3)
-    public void testInsertRecordGenId() throws IOException {
+    void testInsertRecordGenId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         PostRecord postRecord = createTestRecord(empty());
         int result = postDAO.insert(postRecord);
-        assertEquals(result, 1);
+        assertEquals( 1, result);
 
         PostRecord existingRecord = resolveRecordsFromDb(postRecord.getId()).getFirst();
         validateRecordEqual(postRecord, existingRecord);
@@ -147,7 +147,7 @@ public class PostDAOTest {
 
     @Test
     @Order(4)
-    public void testInsertRecordsGenId() throws IOException {
+    void testInsertRecordsGenId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         PostRecord postRecord1 = createTestRecord(empty());
@@ -155,10 +155,10 @@ public class PostDAOTest {
         PostRecord postRecord3 = createTestRecord(empty());
 
         int result = postDAO.insert(List.of(postRecord1, postRecord2, postRecord3));
-        assertEquals(result, 3);
+        assertEquals( 3, result);
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(postRecord1.getId(), postRecord2.getId(), postRecord3.getId());
-        assertEquals(existingRecords.size(), 3);
+        assertEquals( 3, existingRecords.size());
         validateRecordEqual(postRecord1, existingRecords.get(0));
         validateRecordEqual(postRecord2, existingRecords.get(1));
         validateRecordEqual(postRecord3, existingRecords.get(2));
@@ -168,12 +168,12 @@ public class PostDAOTest {
 
     @Test
     @Order(5)
-    public void testInsertDTOFixedId() throws IOException {
+    void testInsertDTOFixedId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         PostDTO postDTO = createTestDTO(Optional.of(UlidGenerator.createMariadbUuid()));
         int result = postDAO.insert(postDTO);
-        assertEquals(result, 1);
+        assertEquals( 1, result);
 
         PostRecord existingRecord = resolveRecordsFromDb(postDTO.getId()).getFirst();
         validateDTOEqual(postDTO, existingRecord);
@@ -183,7 +183,7 @@ public class PostDAOTest {
 
     @Test
     @Order(6)
-    public void testInsertDTOsFixedId() throws IOException {
+    void testInsertDTOsFixedId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         UUID id1 = UlidGenerator.createMariadbUuid();
@@ -195,10 +195,10 @@ public class PostDAOTest {
         PostDTO postDTO3 = createTestDTO(Optional.of(id3));
 
         int result = postDAO.insert(List.of(postDTO1, postDTO2, postDTO3));
-        assertEquals(result, 3);
+        assertEquals( 3, result);
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(id1, id2, id3);
-        assertEquals(existingRecords.size(), 3);
+        assertEquals( 3, existingRecords.size());
         validateDTOEqual(postDTO1, existingRecords.get(0));
         validateDTOEqual(postDTO2, existingRecords.get(1));
         validateDTOEqual(postDTO3, existingRecords.get(2));
@@ -208,12 +208,12 @@ public class PostDAOTest {
 
     @Test
     @Order(7)
-    public void testInsertDTOGenId() throws IOException {
+    void testInsertDTOGenId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         PostDTO postDTO = createTestDTO(empty());
         int result = postDAO.insert(postDTO);
-        assertEquals(result, 1);
+        assertEquals( 1, result);
 
         PostRecord existingRecord = resolveRecordsFromDb(postDTO.getId()).getFirst();
         validateDTOEqual(postDTO, existingRecord);
@@ -223,7 +223,7 @@ public class PostDAOTest {
 
     @Test
     @Order(8)
-    public void testInsertDTOsGenId() throws IOException {
+    void testInsertDTOsGenId() throws IOException {
         PostDAO postDAO = new PostDAO(dsl);
 
         PostDTO postDTO1 = createTestDTO(empty());
@@ -231,10 +231,10 @@ public class PostDAOTest {
         PostDTO postDTO3 = createTestDTO(empty());
 
         int result = postDAO.insert(List.of(postDTO1, postDTO2, postDTO3));
-        assertEquals(result, 3);
+        assertEquals( 3, result);
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(postDTO1.getId(), postDTO2.getId(), postDTO3.getId());
-        assertEquals(existingRecords.size(), 3);
+        assertEquals( 3, existingRecords.size());
         validateDTOEqual(postDTO1, existingRecords.stream().filter(x -> x.getId().equals(postDTO1.getId())).toList().getFirst());
         validateDTOEqual(postDTO2, existingRecords.stream().filter(x -> x.getId().equals(postDTO2.getId())).toList().getFirst());
         validateDTOEqual(postDTO3, existingRecords.stream().filter(x -> x.getId().equals(postDTO3.getId())).toList().getFirst());
