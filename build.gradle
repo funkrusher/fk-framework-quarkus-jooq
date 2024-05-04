@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'maven-publish'
+    id "org.sonarqube" version "5.0.0.4638"
 }
 
 // dependencies-resolvement
