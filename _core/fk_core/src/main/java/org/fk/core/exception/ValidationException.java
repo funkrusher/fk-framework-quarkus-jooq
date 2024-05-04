@@ -9,10 +9,10 @@ import java.util.Set;
  *
  * <p>This exception typically represents errors related to input validation or domain-specific validation rules.
  * It is often thrown in the business logic layer (e.g., service or manager layer) when validating data
- * before performing an operation. These errors are usually not related to HTTP-specific concerns
- * and are better handled in lower layers.</p>
- *
- * <p>For our application those are: DAO, Manager</p>
+ * before performing an operation.</p>
+ * <p>
+ * Related HTTP-Status-Code: 422
+ * </p>
  */
 public class ValidationException extends MappingException {
     private Set<? extends ConstraintViolation<?>> violations;

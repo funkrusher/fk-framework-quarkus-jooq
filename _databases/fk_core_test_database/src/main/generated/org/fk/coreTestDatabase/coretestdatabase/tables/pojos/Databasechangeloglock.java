@@ -21,7 +21,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
     private static final long serialVersionUID = 1L;
 
     private Integer ID;
-    private Byte LOCKED;
+    private Boolean LOCKED;
     private LocalDateTime LOCKGRANTED;
     private String LOCKEDBY;
 
@@ -36,7 +36,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
 
     public Databasechangeloglock(
         Integer ID,
-        Byte LOCKED,
+        Boolean LOCKED,
         LocalDateTime LOCKGRANTED,
         String LOCKEDBY
     ) {
@@ -69,7 +69,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      */
     @NotNull
     @Override
-    public Byte getLOCKED() {
+    public Boolean getLOCKED() {
         return this.LOCKED;
     }
 
@@ -77,7 +77,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      * Setter for <code>coreTestDatabase.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public Databasechangeloglock setLOCKED(Byte LOCKED) {
+    public Databasechangeloglock setLOCKED(Boolean LOCKED) {
         this.LOCKED = LOCKED;
         return this;
     }

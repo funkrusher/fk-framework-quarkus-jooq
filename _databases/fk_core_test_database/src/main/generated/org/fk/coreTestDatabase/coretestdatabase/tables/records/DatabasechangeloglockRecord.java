@@ -45,7 +45,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>coreTestDatabase.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public DatabasechangeloglockRecord setLOCKED(Byte value) {
+    public DatabasechangeloglockRecord setLOCKED(Boolean value) {
         set(1, value);
         return this;
     }
@@ -55,8 +55,8 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @NotNull
     @Override
-    public Byte getLOCKED() {
-        return (Byte) get(1);
+    public Boolean getLOCKED() {
+        return (Boolean) get(1);
     }
 
     /**
@@ -138,7 +138,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
     /**
      * Create a detached, initialised DatabasechangeloglockRecord
      */
-    public DatabasechangeloglockRecord(Integer ID, Byte LOCKED, LocalDateTime LOCKGRANTED, String LOCKEDBY) {
+    public DatabasechangeloglockRecord(Integer ID, Boolean LOCKED, LocalDateTime LOCKGRANTED, String LOCKEDBY) {
         super(Databasechangeloglock.DATABASECHANGELOGLOCK);
 
         setID(ID);

@@ -1,4 +1,4 @@
-package org.fk.database1.testshop.tables.pojos;
+package org.fk.database1.testshop.tables.dtos;
 
 import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;
@@ -27,7 +27,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
     // -------------------------------------------------------------------------
  
     private Integer ID;
-    private Byte LOCKED;
+    private Boolean LOCKED;
     @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
     private LocalDateTime LOCKGRANTED;
     private String LOCKEDBY;
@@ -70,7 +70,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      */
     @NotNull
     @Override
-    public Byte getLOCKED() {
+    public Boolean getLOCKED() {
         return this.LOCKED;
     }
 
@@ -78,7 +78,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public DatabasechangeloglockDto setLOCKED(Byte LOCKED) {
+    public DatabasechangeloglockDto setLOCKED(Boolean LOCKED) {
         this.LOCKED = LOCKED;
         this.keeper.touch("LOCKED");
         return this;

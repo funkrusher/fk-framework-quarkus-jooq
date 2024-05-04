@@ -10,13 +10,14 @@ import io.smallrye.mutiny.Uni;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
-import java.security.Principal;
+import org.fk.core.exception.NotFoundException;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class CredentialsAugmentor implements SecurityIdentityAugmentor {
 
-    private static final String FK_CLAIM = "custom:fk";
+    public static final Logger LOGGER = Logger.getLogger(CredentialsAugmentor.class);
+    public static final String FK_CLAIM = "custom:fk";
 
     @Inject
     ObjectMapper objectMapper;
@@ -25,30 +26,24 @@ public class CredentialsAugmentor implements SecurityIdentityAugmentor {
     public Uni<SecurityIdentity> augment(SecurityIdentity identity, AuthenticationRequestContext context) {
         if (identity.isAnonymous()) {
             return Uni.createFrom().item(identity);
-        } else {
-            QuarkusSecurityIdentity.Builder builder = QuarkusSecurityIdentity.builder(identity);
-            Principal principal = identity.getPrincipal();
-            if (principal instanceof JWTCallerPrincipal) {
-                JWTCallerPrincipal jwtPrincipal = (JWTCallerPrincipal) principal;
-                String fkClaimStr = jwtPrincipal.getClaim(FK_CLAIM);
-                if (fkClaimStr != null) {
-                    try {
-                        FkClaim fkClaim = objectMapper.readValue(fkClaimStr, FkClaim.class);
-                        if (fkClaim.getClientId() != null) {
-                            builder.addCredential(new TenantCredential(fkClaim.getClientId()));
-                        }
-                        if (fkClaim.getRoles() != null) {
-                            for (String role : fkClaim.getRoles()) {
-                                builder.addRole(role);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+        }
+        try {
+            // we only support JWTCallerPrincipal at this point (authentication)
+            final QuarkusSecurityIdentity.Builder builder = QuarkusSecurityIdentity.builder(identity);
+            final JWTCallerPrincipal jwtPrincipal = (JWTCallerPrincipal) identity.getPrincipal();
+
+            String fkClaimStr = jwtPrincipal.getClaim(FK_CLAIM);
+            FkClaim fkClaim = objectMapper.readValue(fkClaimStr, FkClaim.class);
+            builder.addCredential(new TenantCredential(fkClaim.getClientId()));
+            for (String role : fkClaim.getRoles()) {
+                builder.addRole(role);
             }
             return context.runBlocking(builder::build);
+
+        } catch (Exception e) {
+            // security by obscurity, we should return a 404 page-not-found.
+            LOGGER.debug("Unable to process fk_claim!", e);
+            throw new NotFoundException();
         }
     }
-
 }

@@ -9,6 +9,8 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.*;
 import java.net.URI;
 import java.util.Arrays;
 
+import static org.fk.core.auth.CredentialsAugmentor.FK_CLAIM;
+
 public class CognitoLocalSetup {
 
     public static final Logger LOGGER = Logger.getLogger(CognitoLocalSetup.class);
@@ -38,7 +40,7 @@ public class CognitoLocalSetup {
                 .poolName(POOLNAME)
                 .schema(
                         SchemaAttributeType.builder()
-                                .name("custom:fk")
+                                .name(FK_CLAIM)
                                 .attributeDataType(AttributeDataType.STRING)
                                 .developerOnlyAttribute(false)
                                 .mutable(true)
@@ -56,8 +58,8 @@ public class CognitoLocalSetup {
                 .userPoolId(userPoolId)
                 .clientName(CLIENTNAME)
                 .generateSecret(true)
-                .readAttributes(Arrays.asList("custom:fk")) //Add this line to set the read attributes
-                .writeAttributes(Arrays.asList("custom:fk")) //Add this line to set the write attributes
+                .readAttributes(Arrays.asList(FK_CLAIM)) //Add this line to set the read attributes
+                .writeAttributes(Arrays.asList(FK_CLAIM)) //Add this line to set the write attributes
                 .build();
         CreateUserPoolClientResponse clientResponse = cognitoClient.createUserPoolClient(clientRequest);
         String userPoolClientId = clientResponse.userPoolClient().clientId();

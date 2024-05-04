@@ -163,7 +163,7 @@ public class FkPojoFilePostProcessor {
 
     private void rewriteAtStartOfPackageDefinition(final List<String> linesCollected, final FileWriter writer,  final Map<PojoProcessingParam, String> params) throws IOException {
         for (String collectedLine : linesCollected) {
-            writer.write(collectedLine);
+            writer.write(collectedLine.replaceAll(".pojos", ".dtos"));
         }
         writer.write(EOL);
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(DTO.class.getName()));

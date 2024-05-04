@@ -9,6 +9,10 @@ package org.fk.core.exception;
  *
  * <p>Usage: InvalidDataException is used when there are issues with the quality or validity of the data,
  * making it unsuitable for mapping.</p>
+ *
+ * <p>
+ * Related HTTP-Status-Code: 400
+ * </p>
  */
 public class InvalidDataException extends MappingException {
     public InvalidDataException(String message) {

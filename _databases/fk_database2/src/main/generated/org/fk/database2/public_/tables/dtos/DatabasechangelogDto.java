@@ -1,4 +1,4 @@
-package org.fk.database2.public_.tables.pojos;
+package org.fk.database2.public_.tables.dtos;
 
 import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;

@@ -1,4 +1,4 @@
-package org.fk.coreTestDatabase.coretestdatabase.tables.pojos;
+package org.fk.coreTestDatabase.coretestdatabase.tables.dtos;
 
 import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;

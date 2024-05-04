@@ -32,13 +32,13 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
-    public IDatabasechangeloglock setLOCKED(Byte value);
+    public IDatabasechangeloglock setLOCKED(Boolean value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @NotNull
-    public Byte getLOCKED();
+    public Boolean getLOCKED();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.

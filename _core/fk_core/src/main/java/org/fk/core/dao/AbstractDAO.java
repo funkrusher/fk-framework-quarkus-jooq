@@ -1,6 +1,7 @@
 package org.fk.core.dao;
 
 import org.fk.core.dto.DTO;
+import org.fk.core.exception.MappingException;
 import org.fk.core.request.RequestContext;
 import org.fk.core.ulid.UlidGenerator;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +20,7 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  * <p>
  * This type is implemented by DAO classes to provide a common context-scoped API for common actions
  * </p>
- * @param <R> The generic record type. This must be a jOOQ generated Record.
+ * @param <R> The generic rec type. This must be a jOOQ generated Record.
  * @param <Y> The generic interface that R needs to implement. This must be a jOOQ generated Interface
  * @param <T> The generic primary key type. Either a regular type for single-column keys,
  *          or a {@link Record} subtype for composite keys.
@@ -50,7 +51,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         Field<Object> autoIncGeneratingField0 = null;
         Field<UUID> uuidGeneratingField0 = null;
         if (this.pk != null) {
-            for (Field<?> primaryKeyField : this.pk.getFields()) {
+            for (TableField<?, ?> primaryKeyField : this.pk.getFields()) {
                 boolean isFk = false;
                 for (ForeignKey<?, ?> foreignKey : table.getReferences()) {
                     if (foreignKey.getFields().getFirst().getName().equals(primaryKeyField.getName())) {
@@ -78,7 +79,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         this.clientIdField = this.table.field(field);
         if (this.clientIdField != null && this.request == null) {
             // fail-fast if we expect a clientId in any case!
-            throw new RuntimeException("DAO table contains field clientId but request is missing!");
+            throw new MappingException("DAO table contains field clientId but request is missing!");
         }
     }
 
@@ -92,7 +93,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * of the DTO-classes to the Record-classes.
      *
      * @param items items (Records of DTOs)
-     * @return records
+     * @return recs
      */
     private List<R> prepareRecords(final List<? extends Y> items) {
         if (items.isEmpty()) {
@@ -101,92 +102,90 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             //noinspection unchecked
             return (List<R>) items;
         } else if (items.getFirst() instanceof DTO) {
-            final List<R> records = new ArrayList<>();
+            final List<R> recs = new ArrayList<>();
             for (final Y item : items) {
                 // transform DTO to Record.
                 final DTO dto = (DTO) item;
-                final R record = dsl().newRecord(table(), dto);
-                record.changed(false);
-                for (Field<?> field : record.fields()) {
+                final R rec= dsl().newRecord(table(), dto);
+                rec.changed(false);
+                for (Field<?> field : rec.fields()) {
                     // we need to transfer the DTO-changed markers to the Record-changed markers.
                     if (dto.getBookKeeper().touched().containsKey(field.getName())) {
-                        record.changed(field.getName(), true);
+                        rec.changed(field.getName(), true);
                     }
                 }
-                records.add(record);
+                recs.add(rec);
             }
-            return records;
+            return recs;
 
         } else {
-            throw new RuntimeException("unexpected implementation of DAO-typed interface!");
+            throw new MappingException("unexpected implementation of DAO-typed interface!");
         }
     }
 
     /**
      * The given Records will be prepared for an Insert-Statement.
-     * - enforces the correct clientId into the record.
+     * - enforces the correct clientId into the rec.
      * - touches primary-key fields
      * - populates the generating primary-key uuid-field, if it does not already have a value given by the caller.
      *
-     * @param records records
-     * @return records prepared for insert
+     * @param recs recs
+     * @return recs prepared for insert
      */
-    private List<R> prepareInserts(final List<R> records) {
+    private List<R> prepareInserts(final List<R> recs) {
         final List<R> results = new ArrayList<>();
-        for (final R record : records) {
+        for (final R rec: recs) {
             if (this.clientIdField != null && request != null) {
                 // enforce expected clientId!
-                record.set(this.clientIdField, request.getClientId());
+                rec.set(this.clientIdField, request.getClientId());
             }
             if (this.pk != null) {
                 for (final Field<?> field : pk.getFieldsArray()) {
                     // we need to 'touch' all fields of the primary-key,
                     // so jooq recognizes them as always relevant for the insert.
-                    record.changed(field, true);
+                    rec.changed(field, true);
                 }
-                if (uuidGeneratingField != null) {
-                    if (record.get(uuidGeneratingField) == null) {
-                        // uuid field in pk is empty, we need to generate it now.
-                        if (dsl().dialect() == SQLDialect.MARIADB) {
-                            if (record.get(uuidGeneratingField) == null) {
-                                // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
-                                record.set(uuidGeneratingField, UlidGenerator.createMariadbUuid());
-                            }
-                        } else {
-                            // should be changed for additional db-types.
-                            throw new RuntimeException("unexpected dialect for ulid generator!");
+                if (uuidGeneratingField != null && rec.get(uuidGeneratingField) == null) {
+                    // uuid field in pk is empty, we need to generate it now.
+                    if (dsl().dialect() == SQLDialect.MARIADB) {
+                        if (rec.get(uuidGeneratingField) == null) {
+                            // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
+                            rec.set(uuidGeneratingField, UlidGenerator.createMariadbUuid());
                         }
+                    } else {
+                        // should be changed for additional db-types.
+                        throw new MappingException("unexpected dialect for ulid generator!");
                     }
                 }
             }
-            results.add(record);
+            results.add(rec);
         }
         return results;
     }
 
     /**
      * The given Records will be prepared for an Update-Statement.
-     * - enforces the correct clientId into the record.
+     * - enforces the correct clientId into the rec.
      * - sets primary-key fields to 'unchanged', because in update pk-fields must never change.
      *
-     * @param records records
-     * @return records prepared for update
+     * @param recs recs
+     * @return recs prepared for update
      */
-    private List<R> prepareUpdates(final List<R> records) {
+    private List<R> prepareUpdates(final List<R> recs) {
         final List<R> results = new ArrayList<>();
-        for (final R record : records) {
+        for (final R rec: recs) {
             if (this.clientIdField != null && request != null) {
                 // enforce expected clientId!
-                record.set(this.clientIdField, request.getClientId());
+                rec.set(this.clientIdField, request.getClientId());
             }
             if (this.pk != null) {
                 for (final Field<?> field : pk.getFieldsArray()) {
                     // primary key values are never allowed to be changed for an update!
                     // the database will give an error, if we try to change them in an update clause
-                    record.changed(field, false);
+                    rec.changed(field, false);
                 }
             }
-            results.add(record);
+            results.add(rec);
         }
         return results;
     }
@@ -197,11 +196,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * - enforces the correct clientId into the WHERE-Criteria.
      * - enforces the correct primary-key criteria into the WHERE-Criteria.
      *
-     * @param record record
-     * @return condition that must be used for all common Update and Delete Statements on this record.
+     * @param rec rec
+     * @return condition that must be used for all common Update and Delete Statements on this rec.
      */
-    private Condition getRecordCondition(final R record) {
-        Condition condition = getPrimaryKeyCondition(getId(record));
+    private Condition getRecordCondition(final R rec) {
+        Condition condition = getPrimaryKeyCondition(getId(rec));
         if (this.clientIdField != null && request != null) {
             condition = condition.and(this.clientIdField.eq(request.getClientId()));
         }
@@ -217,7 +216,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     private Condition getPrimaryKeyCondition(final T value) {
         if (this.pk == null) {
-            throw new RuntimeException("internal-error: DTO table has no primary-key, but expected.");
+            throw new MappingException("internal-error: DTO table has no primary-key, but expected.");
         }
         // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
         //noinspection unchecked
@@ -238,7 +237,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     private Condition getPrimaryKeyCondition(final Collection<T> values) {
         if (this.pk == null) {
-            throw new RuntimeException("internal-error: DTO table has no primary-key, but expected.");
+            throw new MappingException("internal-error: DTO table has no primary-key, but expected.");
         }
         // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
         //noinspection unchecked
@@ -259,13 +258,13 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     // ------------------------------------------------------------------------
 
     /**
-     * Extract the ID value of the given record
+     * Extract the ID value of the given rec
      * You need to provide this function in your DTO, and define the correct mapping.
      *
-     * @param record record of the table
-     * @return value of the id field(s) of the given record.
+     * @param rec rec of the table
+     * @return value of the id field(s) of the given rec.
      */
-    protected abstract T getId(final R record);
+    protected abstract T getId(final R rec);
 
 
     // ------------------------------------------------------------------------
@@ -274,7 +273,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
     /**
      * Helper-function needed to be used together with {@link #getId(UpdatableRecord)} in your DTO implementation,
-     * if your getId implementation needs to provide the record for a primary-key that consists of more than one field.
+     * if your getId implementation needs to provide the rec for a primary-key that consists of more than one field.
      *
      * @param values values that must be mappable to the T-class.
      * @return instance of T (combined primary-key)
@@ -406,18 +405,18 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         if (updates.size() > 1) {
             // batch update (performance gain)
             final List<UpdateConditionStep<R>> conditions = new ArrayList<>();
-            for (R record : updates) {
+            for (R rec : updates) {
                 conditions.add(dsl().update(table())
-                        .set(record)
-                        .where(getRecordCondition(record)));
+                        .set(rec)
+                        .where(getRecordCondition(rec)));
             }
             dsl().batch(conditions).execute();
         } else if (updates.size() == 1) {
             // single update
-            final R record = updates.getFirst();
+            final R rec = updates.getFirst();
             dsl().update(table())
-                    .set(record)
-                    .where(getRecordCondition(record))
+                    .set(rec)
+                    .where(getRecordCondition(rec))
                     .execute();
         }
     }
@@ -444,20 +443,20 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         if (deletes.size() > 1) {
             // batch delete (performance gain)
             final List<DeleteConditionStep<R>> conditions = new ArrayList<>();
-            for (R record : deletes) {
-                Condition deleteCondition = getRecordCondition(record);
+            for (R rec : deletes) {
+                Condition deleteCondition = getRecordCondition(rec);
                 if (this.pk != null) {
-                    deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(record)));
+                    deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(rec)));
                 }
                 conditions.add(dsl().delete(table()).where(deleteCondition));
             }
             dsl().batch(conditions).execute();
         } else if (deletes.size() == 1) {
             // single delete
-            final R record = deletes.getFirst();
-            Condition deleteCondition = getRecordCondition(record);
+            final R rec = deletes.getFirst();
+            Condition deleteCondition = getRecordCondition(rec);
             if (this.pk != null) {
-                deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(record)));
+                deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(rec)));
             }
             dsl().delete(table()).where(deleteCondition).execute();
         }
@@ -505,9 +504,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
     /**
-     * Count all records of the underlying table.
+     * Count all recs of the underlying table.
      *
-     * @return The number of records of the underlying table
+     * @return The number of recs of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
     public int countAll() throws DataAccessException {
@@ -515,11 +514,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
     /**
-     * Find a record of the underlying table by ID.
+     * Find a rec of the underlying table by ID.
      *
-     * @param id The ID of a record in the underlying table
-     * @return A record of the underlying table given its ID, or
-     * <code>null</code> if no record was found.
+     * @param id The ID of a rec in the underlying table
+     * @return A rec of the underlying table given its ID, or
+     * <code>null</code> if no rec was found.
      * @throws DataAccessException if something went wrong executing the query
      */
     public @Nullable R findById(final T id) throws DataAccessException {
