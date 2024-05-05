@@ -2,18 +2,16 @@ package org.fk.core.repository;
 
 import jakarta.annotation.Nullable;
 import org.fk.core.dto.DTO;
+import org.fk.core.query.model.*;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.*;
 import org.jooq.*;
-import org.jooq.impl.DSL;
+import org.jooq.exception.DataAccessException;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 
@@ -29,9 +27,7 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  * </p>
  */
 public abstract class AbstractRepository<D extends DTO, T> {
-
     private final DSLContext dsl;
-
     private final RequestContext request;
 
     // -------------------------------------------------------------------------
@@ -43,39 +39,71 @@ public abstract class AbstractRepository<D extends DTO, T> {
         this.request = (RequestContext) dsl.data(DSL_DATA_KEY);
     }
 
-
     // ------------------------------------------------------------------------
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    public abstract List<D> fetch(List<T> productIds);
+    /**
+     * <p>
+     * Maps the given @{@link FkQuery} to an execution-ready jooq-query
+     * that processes the Tables-Relationship defined in the subclass.
+     * </p>
+     *
+     * @param query query
+     * @return execution-ready jooq-query
+     * @throws InvalidDataException invalid data in the given queryParameters
+     *
+     */
+    protected abstract SelectSeekStepN<Record1<T>> mapQuery(FkQuery query) throws InvalidDataException;
 
-    protected abstract SelectSeekStepN<Record1<T>> getQuery(QueryParameters queryParameters) throws InvalidDataException;
+    /**
+     * Paginate the given @{@link FkQuery} and return
+     * a list of sorted, filtered, page-sized Ids that match all criteria defined in the given query-parameters.
+     * This will be a list that is only as large as the page-size defined in the given query-parameters.
+     *
+     * @param query query
+     * @return list of sorted, filtered, page-sized Ids
+     * @throws InvalidDataException invalid data in the given queryParameters
+     */
+    public abstract List<T> paginateQuery(FkQuery query) throws InvalidDataException;
 
-    public abstract List<T> paginate(QueryParameters queryParameters) throws InvalidDataException;
+    /**
+     * Count the given @{@link FkQuery} and return
+     * the total count of all items that would match the filters of the given query-parameters
+     * (ignoring any page-size criteria, as we return the total count.
+     *
+     * @param query query
+     * @return total count of items, matching the filters of the given query-parameters.
+     * @throws InvalidDataException invalid data in the given queryParameters
+     */
+    public abstract int countQuery(FkQuery query) throws InvalidDataException;
 
-    public abstract int count(QueryParameters queryParameters) throws InvalidDataException;
+    /**
+     * Streams the given @{@link FkQuery} and return
+     * a stream of sorted, filtered Ids that match all criteria defined in the given query-parameters.
+     * The page-size settings of the query-parameters will be ignored here.
+     *
+     * @param query query
+     * @return stream of sorted, filtered Ids
+     * @throws InvalidDataException invalid data in the given queryParameters
+     */
+    public abstract Stream<T> streamQuery(FkQuery query) throws InvalidDataException;
+
+    /**
+     * Fetches the DTOs for the given Ids
+     * <p>
+     * This function needs to execute a jooq-query (MULTISET is recommended here!),
+     * which selects all data from the different tables that are needed for producing the DTO.
+     *
+     * @param ids ids
+     * @return dtos dtos for given ids
+     */
+    public abstract List<D> fetch(List<T> ids);
 
 
     // -------------------------------------------------------------------------
     // Repository API
     // -------------------------------------------------------------------------
-
-    public @Nullable D fetchById(T productId) {
-        List<D> result = fetch(singletonList(productId));
-        if (!result.isEmpty()) {
-            return result.getFirst();
-        }
-        return null;
-    }
-
-    public Optional<D> fetchOptionalById(T productId) {
-        D result = fetchById(productId);
-        if (result == null) {
-            return Optional.empty();
-        }
-        return Optional.of(result);
-    }
 
     /**
      * Expose the dslContext this <code>DAO</code> is operating.
@@ -95,86 +123,31 @@ public abstract class AbstractRepository<D extends DTO, T> {
         return this.request;
     }
 
-
-    private Name getNameForQueryParamKey(String queryParamKey, Table<?> defaultTable) {
-        final String[] tableAndField = queryParamKey.split("\\.");
-        if (tableAndField.length > 1) {
-            // we have table and field
-            return DSL.name(tableAndField[0], tableAndField[1]);
-        } else {
-            // we only have field, use table() as default.
-            return DSL.name(defaultTable.getName(), tableAndField[0]);
-        }
-    }
-
-    private Field<?> findViewFieldByName(Name name, List<Field<?>> availableFields) {
-        for (Field<?> viewField : availableFields) {
-            Name viewFieldName = viewField.getQualifiedName();
-            if (viewFieldName.equals(name)) {
-                return viewField;
-            }
+    /**
+     * Fetch DTO by ID.
+     *
+     * @param id The ID of a rec in the underlying table
+     * @return A dto with all children resolved, given its ID, or
+     * <code>null</code> if no dto was found.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    public @Nullable D fetch(final T id) {
+        List<D> result = fetch(singletonList(id));
+        if (!result.isEmpty()) {
+            return result.getFirst();
         }
         return null;
     }
 
-    protected Collection<SortField<?>> getSorters(QueryParameters queryParameters, List<Field<?>> availableFields, Table<?> defaultTable) throws InvalidDataException {
-        Collection<SortField<?>> sortFields = new ArrayList<>();
-        if (queryParameters.getSorter() != null) {
-            Sorter sorter = queryParameters.getSorter();
-            Name fieldName = getNameForQueryParamKey(sorter.getField(), defaultTable);
-            Field<?> field = findViewFieldByName(fieldName, availableFields);
-            if (field == null) {
-                throw new InvalidDataException("invalid sorter-field in query: " + sorter.getField());
-            }
-            if (sorter.getOperator() == SorterOperator.ASC) {
-                sortFields.add(field.sort(SortOrder.ASC));
-            } else if (sorter.getOperator() == SorterOperator.DESC) {
-                sortFields.add(field.sort(SortOrder.DESC));
-            }
-        }
-        return sortFields;
-    }
 
-    protected Collection<Condition> getFilters(QueryParameters queryParameters, List<Field<?>> availableFields, Table<?> defaultTable) throws InvalidDataException {
-        Collection<Condition> filterFields = new ArrayList<>();
-        if (!queryParameters.getFilters().isEmpty()) {
-            for (Filter filter : queryParameters.getFilters()) {
-                Name fieldName = getNameForQueryParamKey(filter.getField(), defaultTable);
-                Field<?> field = findViewFieldByName(fieldName, availableFields);
-                if (field == null) {
-                    throw new InvalidDataException("invalid filter-field in query: " + filter.getField());
-                }
-
-                final Class<?> type = field.getType();
-                if (String.class.isAssignableFrom(type)) {
-                    String value = filter.getValues().getFirst();
-                    Field<String> field0 = (Field<String>) field;
-                    filterFields.add(field0.eq(value));
-                } else if (Integer.class.isAssignableFrom(type)) {
-                    Integer value = Integer.parseInt(filter.getValues().getFirst());
-                    Field<Integer> field0 = (Field<Integer>) field;
-                    filterFields.add(field0.eq(value));
-                } else if (Long.class.isAssignableFrom(type)) {
-                    Long value = Long.parseLong(filter.getValues().getFirst());
-                    Field<Long> field0 = (Field<Long>) field;
-                    if (filter.getOperator() == FilterOperator.EQUALS) {
-                        filterFields.add(field0.eq(value));
-                    } else if (filter.getOperator() == FilterOperator.GREATER_THAN_OR_EQUALS) {
-                        filterFields.add(field0.ge(value));
-                    } else if (filter.getOperator() == FilterOperator.LESS_THAN_OR_EQUALS) {
-                        filterFields.add(field0.le(value));
-                    }
-                } else if (BigDecimal.class.isAssignableFrom(type)) {
-                    BigDecimal value = new BigDecimal(filter.getValues().getFirst());
-                    Field<BigDecimal> field0 = (Field<BigDecimal>) field;
-                    if (filter.getOperator() == FilterOperator.EQUALS) {
-                        filterFields.add(field0.eq(value));
-                    } else if (filter.getOperator() == FilterOperator.GREATER_THAN_OR_EQUALS) {
-                        filterFields.add(field0.ge(value));
-                    }
-                }
-            }
-        }
-        return filterFields;
+    /**
+     * Fetches the DTOs for the given Ids
+     *
+     * @param ids ids
+     * @return dtos dtos for given ids
+     */
+    @SafeVarargs
+    public final List<D> fetch(final T... ids) {
+        return fetch(asList(ids));
     }
 }

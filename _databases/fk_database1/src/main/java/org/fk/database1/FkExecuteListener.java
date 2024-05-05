@@ -3,7 +3,6 @@ package org.fk.database1;
 import org.fk.core.request.RequestContext;
 import org.jooq.*;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultExecuteListener;
 
 import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 
@@ -14,7 +13,7 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  * is used to append a clientId=X criteria to all possible SQL-statements of our queries for safe multi-tenancy
  * </p>
  */
-public class FkExecuteListener extends DefaultExecuteListener {
+public class FkExecuteListener implements ExecuteListener {
 
     public FkExecuteListener() {
         super();

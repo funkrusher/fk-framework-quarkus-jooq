@@ -1,6 +1,7 @@
 package org.fk.core.exception;
 
 import jakarta.validation.ConstraintViolation;
+import org.fk.core.dto.DTO;
 
 import java.util.Set;
 
@@ -15,19 +16,19 @@ import java.util.Set;
  * </p>
  */
 public class ValidationException extends MappingException {
-    private final transient Set<? extends ConstraintViolation<?>> violations;
+    private final transient Set<ConstraintViolation<DTO>> violations;
 
     public ValidationException(String message) {
         super(message);
         this.violations = null;
     }
 
-    public <T> ValidationException(Set<? extends ConstraintViolation<?>> violations) {
+    public <T> ValidationException(Set<ConstraintViolation<DTO>> violations) {
         super("");
         this.violations = violations;
     }
 
-    public Set<? extends ConstraintViolation<?>> getViolations() {
+    public Set<ConstraintViolation<DTO>> getViolations() {
         return violations;
     }
 }

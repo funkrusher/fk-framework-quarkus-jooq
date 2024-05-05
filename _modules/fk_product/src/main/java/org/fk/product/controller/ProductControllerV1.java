@@ -10,7 +10,7 @@ import org.fk.database1.DSLContext1;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkQuery;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -38,8 +38,8 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateDTO query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
-        return productManager.query(dsl, queryParameters);
+    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+        return productManager.query(dsl, fkQuery);
     }
 
     @GET

@@ -4,9 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.Filter;
-import org.fk.core.query.FilterOperator;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkFilter;
+import org.fk.core.query.model.FkFilterOperator;
+import org.fk.core.query.model.FkQuery;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.database1.testshop2.tables.interfaces.IProductLang;
@@ -58,11 +58,11 @@ public class ProductManager extends AbstractManager {
                 .fetchInto(ProductDTO.class);
     }
 
-    public ProductPaginateDTO query(DSLContext dsl, final QueryParameters queryParameters) throws InvalidDataException {
+    public ProductPaginateDTO query(DSLContext dsl, final FkQuery fkQuery) throws InvalidDataException {
         final ProductRepository productRepository = new ProductRepository(dsl);
 
-        int count = productRepository.count(queryParameters);
-        List<Long> productIds = productRepository.paginate(queryParameters);
+        int count = productRepository.countQuery(fkQuery);
+        List<Long> productIds = productRepository.paginateQuery(fkQuery);
         List<ProductDTO> products = productRepository.fetch(productIds);
 
         ProductPaginateDTO paginate = new ProductPaginateDTO();
@@ -103,17 +103,17 @@ public class ProductManager extends AbstractManager {
         try {
             dsl.transaction(tx1 -> {
                 // transaction1
-                Filter filter1 = new Filter("productId", FilterOperator.GREATER_THAN_OR_EQUALS, List.of("90000000"));
-                Filter filter2 = new Filter("productId", FilterOperator.LESS_THAN_OR_EQUALS, List.of("90050000"));
+                FkFilter filter1 = new FkFilter("productId", FkFilterOperator.GREATER_THAN_OR_EQUALS, List.of("90000000"));
+                FkFilter filter2 = new FkFilter("productId", FkFilterOperator.LESS_THAN_OR_EQUALS, List.of("90050000"));
 
-                QueryParameters queryParameters = new QueryParameters();
-                queryParameters.setPage(0);
-                queryParameters.setPageSize(1000);
-                queryParameters.getFilters().add(filter1);
-                queryParameters.getFilters().add(filter2);
+                FkQuery fkQuery = new FkQuery();
+                fkQuery.setPage(0);
+                fkQuery.setPageSize(1000);
+                fkQuery.getFilters().add(filter1);
+                fkQuery.getFilters().add(filter2);
 
                 final ProductRepository productRepository = new ProductRepository(tx1.dsl());
-                List<Long> productIds = productRepository.paginate(queryParameters);
+                List<Long> productIds = productRepository.paginateQuery(fkQuery);
 
                 tx1.dsl().transaction(tx2 -> {
                     // transaction2
@@ -155,7 +155,7 @@ public class ProductManager extends AbstractManager {
                 }
                 productLangRecordDAO.insert(productLangInserts);
 
-                return new ProductRepository(dsl).fetchById(product.getProductId());
+                return new ProductRepository(dsl).fetch(product.getProductId());
             });
         } catch (Exception e) {
             if (e.getCause() instanceof ValidationException ve) {
@@ -194,7 +194,7 @@ public class ProductManager extends AbstractManager {
         productLangRecordDAO.insert(insertXLangs);
         productLangRecordDAO.update(updateXLangs);
 
-        return new ProductRepository(dsl).fetchById(product.getProductId());
+        return new ProductRepository(dsl).fetch(product.getProductId());
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
@@ -215,12 +215,12 @@ public class ProductManager extends AbstractManager {
      * @return stream
      */
     public Stream<ProductDTO> streamAll(DSLContext dsl) throws InvalidDataException {
-        QueryParameters queryParameters = new QueryParameters();
-        queryParameters.setPage(0);
-        queryParameters.setPageSize(100000);
+        FkQuery fkQuery = new FkQuery();
+        fkQuery.setPage(0);
+        fkQuery.setPageSize(100000);
 
         final ProductRepository productRepository = new ProductRepository(dsl);
-        Stream<Long> stream1 = productRepository.stream(queryParameters);
+        Stream<Long> stream1 = productRepository.streamQuery(fkQuery);
         Stream<List<Long>> chunkStream = chunk(stream1, 250);
 
         // the "parallel" is important here, as it really pushes performance.

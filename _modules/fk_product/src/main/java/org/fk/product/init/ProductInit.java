@@ -25,7 +25,7 @@ import static org.fk.database1.testshop.tables.Role.ROLE;
 public class ProductInit {
 
     @ConfigProperty(name = "init.product", defaultValue = "false")
-    Boolean initProduct;
+    boolean initProduct;
 
     @Inject
     Database1ConfigurationFactory configurationFactory;

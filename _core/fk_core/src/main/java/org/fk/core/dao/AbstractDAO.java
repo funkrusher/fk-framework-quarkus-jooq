@@ -48,31 +48,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         // most tables have such a 'generating' field. Currently supported: either an auto-inc or uuid field.
         // some tables (like N:M tables, don't have such a field, which is also supported)
         // we will use this, to automatically generate and return those ids to the caller.
-        Field<Object> autoIncGeneratingField0 = null;
-        Field<UUID> uuidGeneratingField0 = null;
-        if (this.pk != null) {
-            for (TableField<?, ?> primaryKeyField : this.pk.getFields()) {
-                boolean isFk = false;
-                for (ForeignKey<?, ?> foreignKey : table.getReferences()) {
-                    if (foreignKey.getFields().getFirst().getName().equals(primaryKeyField.getName())) {
-                        isFk = true;
-                        break;
-                    }
-                }
-                if (!isFk) {
-                    if (primaryKeyField.getDataType().identity()) {
-                        //noinspection unchecked
-                        autoIncGeneratingField0 = (Field<Object>) primaryKeyField;
-                    } else if (primaryKeyField.getDataType().isUUID()) {
-                        //noinspection unchecked
-                        uuidGeneratingField0 = (Field<UUID>) primaryKeyField;
-                    }
-                    break;
-                }
-            }
-        }
-        this.autoIncGeneratingField = autoIncGeneratingField0;
-        this.uuidGeneratingField = uuidGeneratingField0;
+        this.autoIncGeneratingField = AbstractDAO.findAutoIncGeneratingField(table);
+        this.uuidGeneratingField = AbstractDAO.findUuidGeneratingField(table);
 
         // if table has a field clientId, we must match it always with request-context clientId.
         final Field<Integer> field = DSL.field(DSL.name("clientId"), Integer.class);
@@ -86,6 +63,56 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     // ------------------------------------------------------------------------
     // Internal/Private Helper methods
     // ------------------------------------------------------------------------
+
+    /**
+     * Checks if the given primary-key field is not also a foreign-key
+     * Only Primary-Keys that are not foreign-keys can be 'generating' primary-keys,
+     * that we can create via autoinc or uuid generator.
+     *
+     * @param primaryKeyField primaryKeyField
+     * @return true/false
+     */
+    private static boolean isGeneratingPk(TableField<?, ?> primaryKeyField) {
+        return Objects.requireNonNull(primaryKeyField.getTable())
+                .getReferences().stream()
+                .noneMatch(fk -> fk.getFields().getFirst().getName().equals(primaryKeyField.getName()));
+    }
+
+    /**
+     * Finds the Non-FK AutoInc Primary-Key in the given table (we only expect one or none)
+     *
+     * @param table table
+     * @return autoinc pk field
+     * @param <Q> table-type
+     */
+    private static <Q extends UpdatableRecord<Q>> @Nullable Field<Object> findAutoIncGeneratingField(final Table<Q> table) {
+        if (table.getPrimaryKey() != null) {
+            //noinspection unchecked
+            return (Field<Object>) table.getPrimaryKey().getFields().stream()
+                    .filter(field -> isGeneratingPk(field) && field.getDataType().identity())
+                    .findFirst()
+                    .orElse(null);
+        }
+        return null;
+    }
+
+    /**
+     * Finds the Non-FK UUID Primary-Key in the given table (we only expect one or none)
+     *
+     * @param table table
+     * @return uuid pk field
+     * @param <Q> table-type
+     */
+    private static <Q extends UpdatableRecord<Q>> @Nullable Field<UUID> findUuidGeneratingField(final Table<Q> table) {
+        if (table.getPrimaryKey() != null) {
+            //noinspection unchecked
+            return (Field<UUID>) table.getPrimaryKey().getFields().stream()
+                    .filter(field -> isGeneratingPk(field) && field.getDataType().isUUID())
+                    .findFirst()
+                    .orElse(null);
+        }
+        return null;
+    }
 
     /**
      * The main-purpose of this function is, to convert the DTO-classes to the Record-Classes, because
@@ -124,6 +151,47 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
     /**
+     * Enforce the expected clientId into the given record.
+     * @param rec rec
+     */
+    private void enforceExpectedClientId(R rec) {
+        if (this.clientIdField != null && request != null) {
+            rec.set(this.clientIdField, request.getClientId());
+        }
+    }
+
+    /**
+     * Enforces the expected change-status for the primary-key fields in the given record.
+     * @param rec rec
+     * @param changed change-status
+     */
+    private void enforcePrimaryKeysChangeStatus(R rec, boolean changed) {
+        if (this.pk != null) {
+            for (final Field<?> field : pk.getFieldsArray()) {
+                rec.changed(field, changed);
+            }
+        }
+    }
+
+    /**
+     * Enforces that the given record has a generating id, and if not generated id and set it.
+     * @param rec rec
+     */
+    private void enforceGeneratingIdExists(R rec) {
+        if (this.pk != null && (uuidGeneratingField != null && rec.get(uuidGeneratingField) == null)) {
+            // uuid field in pk is empty, we need to generate it now.
+            if (dsl().dialect() == SQLDialect.MARIADB) {
+                // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
+                rec.set(uuidGeneratingField, UlidGenerator.createMariadbUuid());
+            } else {
+                // should be changed for additional db-types.
+                throw new MappingException("unexpected dialect for ulid generator!");
+            }
+        }
+    }
+
+
+    /**
      * The given Records will be prepared for an Insert-Statement.
      * - enforces the correct clientId into the rec.
      * - touches primary-key fields
@@ -133,34 +201,15 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return recs prepared for insert
      */
     private List<R> prepareInserts(final List<R> recs) {
-        final List<R> results = new ArrayList<>();
         for (final R rec: recs) {
-            if (this.clientIdField != null && request != null) {
-                // enforce expected clientId!
-                rec.set(this.clientIdField, request.getClientId());
-            }
-            if (this.pk != null) {
-                for (final Field<?> field : pk.getFieldsArray()) {
-                    // we need to 'touch' all fields of the primary-key,
-                    // so jooq recognizes them as always relevant for the insert.
-                    rec.changed(field, true);
-                }
-                if (uuidGeneratingField != null && rec.get(uuidGeneratingField) == null) {
-                    // uuid field in pk is empty, we need to generate it now.
-                    if (dsl().dialect() == SQLDialect.MARIADB) {
-                        if (rec.get(uuidGeneratingField) == null) {
-                            // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
-                            rec.set(uuidGeneratingField, UlidGenerator.createMariadbUuid());
-                        }
-                    } else {
-                        // should be changed for additional db-types.
-                        throw new MappingException("unexpected dialect for ulid generator!");
-                    }
-                }
-            }
-            results.add(rec);
+            this.enforceExpectedClientId(rec);
+            this.enforceGeneratingIdExists(rec);
+
+            // we need to 'touch' all fields of the primary-key,
+            // so jooq recognizes them as always relevant for the insert.
+            this.enforcePrimaryKeysChangeStatus(rec, true);
         }
-        return results;
+        return recs;
     }
 
     /**
@@ -172,22 +221,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return recs prepared for update
      */
     private List<R> prepareUpdates(final List<R> recs) {
-        final List<R> results = new ArrayList<>();
         for (final R rec: recs) {
-            if (this.clientIdField != null && request != null) {
-                // enforce expected clientId!
-                rec.set(this.clientIdField, request.getClientId());
-            }
-            if (this.pk != null) {
-                for (final Field<?> field : pk.getFieldsArray()) {
-                    // primary key values are never allowed to be changed for an update!
-                    // the database will give an error, if we try to change them in an update clause
-                    rec.changed(field, false);
-                }
-            }
-            results.add(rec);
+            this.enforceExpectedClientId(rec);
+
+            // primary key values are never allowed to be changed for an update!
+            // the database will give an error, if we try to change them in an update clause
+            this.enforcePrimaryKeysChangeStatus(rec, false);
         }
-        return results;
+        return recs;
     }
 
     /**
@@ -514,14 +555,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
     /**
-     * Find a rec of the underlying table by ID.
+     * Fetch a rec of the underlying table by ID.
      *
      * @param id The ID of a rec in the underlying table
      * @return A rec of the underlying table given its ID, or
      * <code>null</code> if no rec was found.
      * @throws DataAccessException if something went wrong executing the query
      */
-    public @Nullable R findById(final T id) throws DataAccessException {
+    public @Nullable R fetch(final T id) throws DataAccessException {
         if (pk != null)
             return dsl().selectFrom(table())
                     .where(getPrimaryKeyCondition(id))

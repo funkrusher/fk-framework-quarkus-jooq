@@ -1,13 +1,13 @@
-package org.fk.core.query;
+package org.fk.core.query.model;
 
-public enum SorterOperator {
+public enum FkSorterOperator {
 
     ASC("asc"),
     DESC("desc");
 
     private final String symbol;
 
-    SorterOperator(String symbol)    {
+    FkSorterOperator(String symbol)    {
         this.symbol = symbol;
     }
 
@@ -15,8 +15,8 @@ public enum SorterOperator {
         return symbol;
     }
 
-    public static SorterOperator fromString(String symbol) {
-        for (SorterOperator operator : SorterOperator.values()) {
+    public static FkSorterOperator fromString(String symbol) {
+        for (FkSorterOperator operator : FkSorterOperator.values()) {
             if (operator.getSymbol().equals(symbol)) {
                 return operator;
             }

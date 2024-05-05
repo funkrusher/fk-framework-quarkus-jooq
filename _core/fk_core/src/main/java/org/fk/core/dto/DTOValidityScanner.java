@@ -38,46 +38,56 @@ public class DTOValidityScanner {
     public boolean scanValidity() {
         LOGGER.debug("validating all DTOs...");
 
-        boolean areValid = true;
-
         Reflections reflections = new Reflections("org.fk"); // base package to look in
         Set<Class<? extends DTO>> dtoClasses = reflections.getSubTypesOf(DTO.class);
-        for (Class<? extends DTO> dtoClazz : dtoClasses) {
-            try {
-                LOGGER.debug("validating: " + dtoClazz.getName());
-                DTO dtoInstance = dtoClazz.getDeclaredConstructor().newInstance();
-                Method[] methods = dtoClazz.getDeclaredMethods();
 
-                List<Method> setterMethods = new ArrayList<>();
-                Set<String> uniqueSetterMethodNames = new HashSet<>();
-                for (Method method : methods) {
-                    if (isSetter(method)) {
-                        // we only look at direct setter-methods, defined directly on the dto (not on superclasses)
-                        setterMethods.add(method);
-                        uniqueSetterMethodNames.add(method.getName());
-                    }
+        List<Boolean> dtoValids = dtoClasses.stream().map(this::isDTOValid).toList();
+        return !dtoValids.contains(false);
+    }
+
+    private boolean isDTOValid(Class<? extends DTO> dtoClazz) {
+        boolean isDTOValid = true;
+        try {
+            LOGGER.debug("validating: " + dtoClazz.getName());
+            DTO dtoInstance = dtoClazz.getDeclaredConstructor().newInstance();
+            Method[] methods = dtoClazz.getDeclaredMethods();
+
+            List<Method> setterMethods = new ArrayList<>();
+            Set<String> uniqueSetterMethodNames = new HashSet<>();
+            for (Method method : methods) {
+                if (isSetter(method)) {
+                    // we only look at direct setter-methods, defined directly on the dto (not on superclasses)
+                    setterMethods.add(method);
+                    uniqueSetterMethodNames.add(method.getName());
                 }
-                for (Method setterMethod : setterMethods) {
-                    // Invoke the setter method
-                    try {
-                        setterMethod.invoke(dtoInstance, (Object) null);
-                    } catch (InvocationTargetException e) {
-                        LOGGER.error(setterMethod.getName(), e.getTargetException());
-                        areValid = false;
-                    } catch (Exception e) {
-                        LOGGER.error(setterMethod.getName(), e);
-                        areValid = false;
-                    }
-                }
-                if (dtoInstance.getBookKeeper().touched().size() != uniqueSetterMethodNames.size()) {
-                    LOGGER.error("missing field in bookKeeper! maybe a touch() call was forgotten in the DTO! " + dtoClazz.getName());
-                    areValid = false;
-                }
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                LOGGER.error("constructor not found!", e);
-                areValid = false;
             }
+            List<Boolean> setterValids = setterMethods.stream().map(setterMethod -> isSetterValid(dtoInstance, setterMethod)).toList();
+            if (setterValids.contains(false)) {
+                isDTOValid = false;
+            }
+            if (dtoInstance.getBookKeeper().touched().size() != uniqueSetterMethodNames.size()) {
+                LOGGER.error("missing field in bookKeeper! maybe a touch() call was forgotten in the DTO! " + dtoClazz.getName());
+                isDTOValid = false;
+            }
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.error("constructor not found!", e);
+            isDTOValid = false;
         }
-        return areValid;
+        return isDTOValid;
+    }
+
+    private boolean isSetterValid(DTO dtoInstance, Method setterMethod) {
+        try {
+            setterMethod.invoke(dtoInstance, (Object) null);
+        } catch (InvocationTargetException e) {
+            LOGGER.error(setterMethod.getName(), e.getTargetException());
+            return false;
+        } catch (Exception e) {
+            LOGGER.error(setterMethod.getName(), e);
+            return false;
+        }
+        return true;
     }
 }
+
+

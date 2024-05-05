@@ -35,6 +35,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     private String REQUESTS_RECOVERY;
     private byte[] JOB_DATA;
 
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
     // -------------------------------------------------------------------------

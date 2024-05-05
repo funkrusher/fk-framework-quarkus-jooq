@@ -8,7 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.fk.core.request.RequestContext;
 import org.fk.database2.Database2;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkQuery;
 import org.fk.library.manager.AuthorManager;
 import org.jooq.DSLContext;
 import org.fk.library.dto.AuthorPaginateDTO;
@@ -28,8 +28,8 @@ public class AuthorExamplesControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public AuthorPaginateDTO query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
+    public AuthorPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         DSLContext dsl = database2.dsl(new RequestContext(1, 1));
-        return authorManager.query(dsl, queryParameters);
+        return authorManager.query(dsl, fkQuery);
     }
 }

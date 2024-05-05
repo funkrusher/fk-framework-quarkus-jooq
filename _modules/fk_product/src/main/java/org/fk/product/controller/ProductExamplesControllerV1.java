@@ -14,7 +14,7 @@ import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.exception.ValidationException;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkQuery;
 import org.jooq.DSLContext;
 
 import java.util.List;
@@ -38,9 +38,9 @@ public class ProductExamplesControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateDTO query(@BeanParam QueryParameters queryParameters) throws InvalidDataException {
+    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         DSLContext dsl = database1.dsl(new RequestContext(1, 1));
-        return productManager.query(dsl, queryParameters);
+        return productManager.query(dsl, fkQuery);
     }
 
     @POST

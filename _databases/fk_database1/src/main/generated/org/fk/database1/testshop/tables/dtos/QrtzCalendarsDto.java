@@ -28,6 +28,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     private String CALENDAR_NAME;
     private byte[] CALENDAR;
 
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
     // -------------------------------------------------------------------------

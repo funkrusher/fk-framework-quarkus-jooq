@@ -1,11 +1,11 @@
-package org.fk.core.query;
+package org.fk.core.query.model;
 
 
-public class Sorter {
+public class FkSorter {
     private final String field;
-    private final SorterOperator operator;
+    private final FkSorterOperator operator;
 
-    public Sorter(String field, SorterOperator operator) {
+    public FkSorter(String field, FkSorterOperator operator) {
         this.field = field;
         this.operator = operator;
     }
@@ -14,21 +14,21 @@ public class Sorter {
         return field;
     }
 
-    public SorterOperator getOperator() {
+    public FkSorterOperator getOperator() {
         return operator;
     }
 
 
-    public static Sorter parseSorterString(String filterString) {
+    public static FkSorter parseSorterString(String filterString) {
         if (filterString == null || filterString.isEmpty()) {
             return null;
         }
         String[] parts = filterString.split(":");
         if (parts.length >= 1) {
             String field = parts[0];
-            SorterOperator operator = SorterOperator.fromString(parts[1]);
+            FkSorterOperator operator = FkSorterOperator.fromString(parts[1]);
             if (operator != null) {
-                return new Sorter(field, operator);
+                return new FkSorter(field, operator);
             }
         }
         return null;

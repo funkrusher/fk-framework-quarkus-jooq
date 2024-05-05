@@ -29,6 +29,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
     private String TRIGGER_GROUP;
     private byte[] BLOB_DATA;
 
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
     // -------------------------------------------------------------------------

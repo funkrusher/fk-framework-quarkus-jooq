@@ -21,7 +21,7 @@ import static org.fk.database2.public_.tables.Init.INIT;
 public class LibraryInit {
 
     @ConfigProperty(name = "init.library", defaultValue = "false")
-    Boolean initLibrary;
+    boolean initLibrary;
 
     @Inject
     Database2ConfigurationFactory configurationFactory;

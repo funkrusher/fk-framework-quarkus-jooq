@@ -54,39 +54,48 @@ public class DTOMapper {
     }
 
     private void serializeValue(Object value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
-        if (value instanceof Map) {
-            gen.writeStartObject();
-            for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
-                gen.writeFieldName(entry.getKey().toString());
-                if (entry.getValue() instanceof DTO) {
-                    serializePojo((DTO) entry.getValue(), gen, mapper);
-                } else {
-                    serializeValue(entry.getValue(), gen, mapper);
-                }
-            }
-            gen.writeEndObject();
-        } else if (value instanceof List) {
-            gen.writeStartArray();
-            for (Object item : (List<?>) value) {
-                if (item instanceof DTO dto) {
-                    serializePojo(dto, gen, mapper);
-                } else {
-                    serializeValue(item, gen, mapper);
-                }
-            }
-            gen.writeEndArray();
-        } else if (value instanceof Iterable) {
-            gen.writeStartArray();
-            for (Object item : (Iterable<?>) value) {
-                if (item instanceof DTO dto) {
-                    serializePojo(dto, gen, mapper);
-                } else {
-                    serializeValue(item, gen, mapper);
-                }
-            }
-            gen.writeEndArray();
-        } else {
-            mapper.writeValue(gen, value);
+        switch (value) {
+            case Map<?, ?> map -> serializeMap(map, gen, mapper);
+            case List<?> list -> serializeList(list, gen, mapper);
+            case Iterable<?> iterable -> serializeIterable(iterable, gen, mapper);
+            case null, default -> mapper.writeValue(gen, value);
         }
+    }
+
+    private void serializeMap(Map<?, ?> map, JsonGenerator gen, ObjectMapper mapper) throws IOException {
+        gen.writeStartObject();
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            gen.writeFieldName(entry.getKey().toString());
+            if (entry.getValue() instanceof DTO) {
+                serializePojo((DTO) entry.getValue(), gen, mapper);
+            } else {
+                serializeValue(entry.getValue(), gen, mapper);
+            }
+        }
+        gen.writeEndObject();
+    }
+
+    private void serializeList(List<?> list, JsonGenerator gen, ObjectMapper mapper) throws IOException {
+        gen.writeStartArray();
+        for (Object item : list) {
+            if (item instanceof DTO dto) {
+                serializePojo(dto, gen, mapper);
+            } else {
+                serializeValue(item, gen, mapper);
+            }
+        }
+        gen.writeEndArray();
+    }
+
+    private void serializeIterable(Iterable<?> iterable, JsonGenerator gen, ObjectMapper mapper) throws IOException {
+        gen.writeStartArray();
+        for (Object item : iterable) {
+            if (item instanceof DTO dto) {
+                serializePojo(dto, gen, mapper);
+            } else {
+                serializeValue(item, gen, mapper);
+            }
+        }
+        gen.writeEndArray();
     }
 }

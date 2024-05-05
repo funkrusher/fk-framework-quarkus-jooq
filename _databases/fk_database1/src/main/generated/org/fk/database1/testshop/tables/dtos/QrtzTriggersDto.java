@@ -41,6 +41,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     private Short MISFIRE_INSTR;
     private byte[] JOB_DATA;
 
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
     // -------------------------------------------------------------------------

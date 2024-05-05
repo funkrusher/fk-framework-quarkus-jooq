@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
+import org.fk.core.dto.DTO;
 import org.fk.core.exception.ValidationException;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class ValidationExceptionMapper implements ExceptionMapper<ValidationExce
     @Override
     public Response toResponse(ValidationException exception) {
         Map<String, String> violations = new HashMap<>();
-        for (ConstraintViolation<?> violation : exception.getViolations()) {
+        for (ConstraintViolation<DTO> violation : exception.getViolations()) {
             String property = violation.getPropertyPath().toString();
             String message = violation.getMessage();
             violations.put(property, message);

@@ -1,6 +1,6 @@
-package org.fk.core.query;
+package org.fk.core.query.model;
 
-public enum FilterOperator {
+public enum FkFilterOperator {
     EQUALS("="),
     NOT_EQUALS("!="),
     GREATER_THAN(">"),
@@ -11,7 +11,7 @@ public enum FilterOperator {
 
     private final String symbol;
 
-    FilterOperator(String symbol) {
+    FkFilterOperator(String symbol) {
         this.symbol = symbol;
     }
 
@@ -19,8 +19,8 @@ public enum FilterOperator {
         return symbol;
     }
 
-    public static FilterOperator fromString(String symbol) {
-        for (FilterOperator operator : FilterOperator.values()) {
+    public static FkFilterOperator fromString(String symbol) {
+        for (FkFilterOperator operator : FkFilterOperator.values()) {
             if (operator.getSymbol().equals(symbol)) {
                 return operator;
             }

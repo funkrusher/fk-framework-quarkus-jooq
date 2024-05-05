@@ -64,8 +64,9 @@ public class FkMariaDb implements AutoCloseable {
                 .until(initContainer::isRunning);
     }
 
+    @SuppressWarnings("java:S1452")
     public MariaDBContainer<?> getContainer() {
-        // Testcontainers-API is producing Wildcards, which Sonarlint does not like.
+        // TODO: Testcontainers-API is producing Wildcards, which Sonarlint does not like.
         // We need to cope with this Wildcard-Warning until Testcontainers V2 gets a better API.
         // see: https://github.com/testcontainers/testcontainers-java/issues/318#issuecomment-290692749
         return container;

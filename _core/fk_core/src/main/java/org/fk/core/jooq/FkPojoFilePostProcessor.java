@@ -15,8 +15,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.fk.core.jooq.FkPojoFilePostProcessor.PojoProcessingEvent.*;
-import static org.fk.core.jooq.FkPojoFilePostProcessor.PojoProcessingParam.*;
+import static org.fk.core.jooq.FkPojoFilePostProcessor.PojoProcessingConfig.*;
 
+/**
+ * FkPojoFileProcessor
+ * <p>
+ * Helper-class that post-processes the pojo files that the jooq code-generator has created,
+ * and makes some modifications that make the pojos ready to be used (as templates) for our DTOs.
+ */
 public class FkPojoFilePostProcessor {
     private static final Pattern DTO_CLAZZ_PATTERN = Pattern.compile("public class\\s+(\\w+)\\s+implements\\s+(\\w+)\\s*\\{");
     private static final Pattern DTO_FIELD_PATTERN = Pattern.compile("private\\s+(\\w+)\\s+(\\w+)\\s*;");
@@ -150,7 +156,7 @@ public class FkPojoFilePostProcessor {
         AT_END_OF_CLASS_DEFINITION
     }
 
-    public enum PojoProcessingParam {
+    public enum PojoProcessingConfig {
         CLASS_NAME,
         INTERFACE_NAME,
         FIELD_NAME,
@@ -158,10 +164,21 @@ public class FkPojoFilePostProcessor {
         SETTER_FIELD_NAME
     }
 
+    /**
+     * Rewrite the At Start Of Package Definition
+     * <p>
+     * - add Packages we may need
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @throws IOException internal-error during io.
+     */
     private void rewriteAtStartOfPackageDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine.replaceAll(".pojos", ".dtos"));
         }
+        // TODO: try to resolve only those packages, that are really! needed in the DTO (unused-imports problem)
+        // TODO: afterwards remove the SuppressWarnings Annotation, as we want to have Warnings when we copy the DTOs into our project.
         writer.write(EOL);
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(DTO.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(BookKeeper.class.getName()));
@@ -171,9 +188,18 @@ public class FkPojoFilePostProcessor {
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonIgnore.class.getName()));
     }
 
-    private void rewriteAtStartOfClassDefinition(final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
-        String clazzName = params.get(CLASS_NAME);
-        String interfaceName = params.get(INTERFACE_NAME);
+    /**
+     * Rewrite the At Start Of Class Definition
+     * <p>
+     * - add DTO interface to Class-Implements.
+     *
+     * @param writer writer
+     * @param configs configs
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteAtStartOfClassDefinition(final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        String clazzName = configs.get(CLASS_NAME);
+        String interfaceName = configs.get(INTERFACE_NAME);
         writer.write(BLOCK_CLAZZ_DEFINITION.formatted(
                 clazzName + DTO_NAME,
                 interfaceName,
@@ -182,6 +208,15 @@ public class FkPojoFilePostProcessor {
         writer.write(EOL);
     }
 
+    /**
+     * Rewrite the At Start Of SerialVersionUuid Definition
+     * <p>
+     * - add comment
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @throws IOException internal-error during io.
+     */
     private void rewriteAtStartOfSerialVersionUid(final List<String> linesCollected, final FileWriter writer) throws IOException {
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
@@ -191,18 +226,39 @@ public class FkPojoFilePostProcessor {
         writer.write(EOL);
     }
 
-    private void rewriteAtStartOfFieldDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
-        String fieldType = params.get(FIELD_TYPE);
+
+    /**
+     * Rewrite the At Start Of Field Definition
+     * <p>
+     * - add LocalDateTime Annotations
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @param configs configs
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteAtStartOfFieldDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        String fieldType = configs.get(FIELD_TYPE);
         if (fieldType.contains(LOCAL_DATE_TIME)) {
             writer.write(ANNOTATION_SCHEMA_LOCALDATETIME);
         }
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
         }
-        params.put(FIELD_NAME, null);
-        params.put(FIELD_TYPE, null);
+        configs.put(FIELD_NAME, null);
+        configs.put(FIELD_TYPE, null);
     }
 
+
+    /**
+     * Add Code to the End Of The Class.
+     * <p>
+     * - add bookkeeper support
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @throws IOException internal-error during io.
+     */
     private void rewriteAtEndOfClassDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         writer.write(EOL);
         writer.write(HEADER_BOOK_KEEPER);
@@ -214,162 +270,236 @@ public class FkPojoFilePostProcessor {
     }
 
 
-    private void rewriteCollectedConstructorBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
-        boolean isDefaultConstructor = linesCollected
-                .stream()
-                .anyMatch(x -> x.contains("() {}"));
-        if (isDefaultConstructor) {
-            // we dont need the other jOOQ generated constructors, just swallow them.
-            // we only overwrite the default constructor here.
-            String clazzName = params.get(CLASS_NAME);
-
-            // we override the default constructor generated by jOOQ.
-            writer.write(EOL);
-            writer.write(HEADER_NON_DATABASE_FIELDS);
-            writer.write(EOL);
-            writer.write(HEADER_CONSTRUCTOR);
-            writer.write(EOL);
-            writer.write(BLOCK_CONSTRUCTOR_DEFINITION.formatted(clazzName + DTO_NAME));
-            writer.write(EOL);
-            writer.write(HEADER_DATABASE_FIELDS_GETTERS_SETTERS);
-            writer.write(EOL);
-        }
+    /**
+     * Rewrite the Default Constructor
+     *
+     * @param writer writer
+     * @param configs configs
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteCollectedDefaultConstructorBlock(final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        // we override the default constructor generated by jOOQ.
+        String clazzName = configs.get(CLASS_NAME);
+        writer.write(EOL);
+        writer.write(HEADER_NON_DATABASE_FIELDS);
+        writer.write(EOL);
+        writer.write(HEADER_CONSTRUCTOR);
+        writer.write(EOL);
+        writer.write(BLOCK_CONSTRUCTOR_DEFINITION.formatted(clazzName + DTO_NAME));
+        writer.write(EOL);
+        writer.write(HEADER_DATABASE_FIELDS_GETTERS_SETTERS);
+        writer.write(EOL);
     }
 
-    private void rewriteCollectedOverrideBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingParam, String> params) throws IOException {
-        boolean isToStringMethod = linesCollected
-                .stream()
-                .anyMatch(x -> x.contains("public String toString() {"));
+    /**
+     * Rewrite the toString() function
+     *
+     * @param writer writer
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteCollectedToStringBlock(final FileWriter writer) throws IOException {
+        // we override the default toString method generated by jOOQ,
+        // and also add an equals and hashCode method in this place.
+        writer.write(HEADER_NON_DATABASE_FIELDS_GETTERS_SETTERS);
+        writer.write(EOL);
+        writer.write(HEADER_TOSTRING_EQUALS_HASHCODE);
+        writer.write(EOL);
+        writer.write(BLOCK_TOSTRING);
+        writer.write(EOL);
+        writer.write(BLOCK_EQUALS);
+        writer.write(EOL);
+        writer.write(BLOCK_HASHCODE);
+        writer.write(EOL);
+    }
 
-        if (isToStringMethod) {
-            // we override the default toString method generated by jOOQ,
-            // and also add an equals and hashCode method in this place.
-            writer.write(HEADER_NON_DATABASE_FIELDS_GETTERS_SETTERS);
-            writer.write(EOL);
-            writer.write(HEADER_TOSTRING_EQUALS_HASHCODE);
-            writer.write(EOL);
-            writer.write(BLOCK_TOSTRING);
-            writer.write(EOL);
-            writer.write(BLOCK_EQUALS);
-            writer.write(EOL);
-            writer.write(BLOCK_HASHCODE);
-            writer.write(EOL);
-        } else {
-            for (String collectedLine : linesCollected) {
-                String setterFieldName = params.get(SETTER_FIELD_NAME);
-                if (setterFieldName != null && collectedLine.contains("return ")) {
-                    writer.write(BLOCK_TOUCH.formatted(setterFieldName));
-                    writer.write(collectedLine);
-                    params.put(SETTER_FIELD_NAME, null);
-                } else {
-                    Matcher setterMatcher = DTO_SETTER_PATTERN.matcher(collectedLine);
-                    if (setterMatcher.find()) {
-                        // we arrived at a setter-method.
-                        String fluentSetterReturnType = setterMatcher.group(1);
-                        String capitalFieldName = setterMatcher.group(2);
-                        String setterParameterType = setterMatcher.group(3);
+    /**
+     * Rewrite the Setter
+     * <p>
+     * - add touch() functionally for bookkeeping support
+     * - fluent-setters
+     * - correct setter-name for all cases (even when field-name is UPPERCASE)
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @param configs configs
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteCollectedSetterBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        for (String collectedLine : linesCollected) {
+            String setterFieldName = configs.get(SETTER_FIELD_NAME);
+            if (setterFieldName != null && collectedLine.contains("return ")) {
+                // add touch() call for book-keeping support.
+                writer.write(BLOCK_TOUCH.formatted(setterFieldName));
+                writer.write(collectedLine);
+                configs.put(SETTER_FIELD_NAME, null);
+            } else {
+                Matcher setterMatcher = DTO_SETTER_PATTERN.matcher(collectedLine);
+                if (setterMatcher.find()) {
+                    // we arrived at a setter-method.
+                    String fluentSetterReturnType = setterMatcher.group(1);
+                    String capitalFieldName = setterMatcher.group(2);
+                    String setterParameterType = setterMatcher.group(3);
 
-                        boolean isAllUppercase = capitalFieldName.chars().noneMatch(Character::isLowerCase);
-                        if (isAllUppercase) {
-                            params.put(SETTER_FIELD_NAME, capitalFieldName);
-                        } else {
-                            params.put(SETTER_FIELD_NAME, Character.toLowerCase(capitalFieldName.charAt(0)) + capitalFieldName.substring(1));
-                        }
-                        writer.write(BLOCK_SETTER_DEFINITION.formatted(
-                                fluentSetterReturnType + DTO_NAME,
-                                capitalFieldName,
-                                setterParameterType
-                        ));
+                    boolean isAllUppercase = capitalFieldName.chars().noneMatch(Character::isLowerCase);
+                    if (isAllUppercase) {
+                        configs.put(SETTER_FIELD_NAME, capitalFieldName);
                     } else {
-                        writer.write(collectedLine);
+                        configs.put(SETTER_FIELD_NAME, Character.toLowerCase(capitalFieldName.charAt(0)) + capitalFieldName.substring(1));
                     }
+                    writer.write(BLOCK_SETTER_DEFINITION.formatted(
+                            fluentSetterReturnType + DTO_NAME,
+                            capitalFieldName,
+                            setterParameterType
+                    ));
+                } else {
+                    writer.write(collectedLine);
                 }
             }
         }
     }
 
+    /**
+     * Check the given line and configs and resolve the next-event that we can match for those criteria.
+     * We also set configs here by analyzing the line/configs and save some infos into our configs,
+     * that we can use later on during processing of the events.
+     *
+     * @param line line
+     * @param configs configs
+     * @return next event
+     */
+    private PojoProcessingEvent getNextEvent(final String line, final Map<PojoProcessingConfig, String> configs) {
+        if (line.startsWith(PACKAGE)) {
+            // we ignore everything before the package starts (which is: the jooq-generated info)
+            return AT_START_OF_PACKAGE_DEFINITION;
+        } else if (line.startsWith(PUBLIC)) {
+            Matcher clazzMatcher = DTO_CLAZZ_PATTERN.matcher(line);
+            if (clazzMatcher.find()) {
+                String interfaceName = clazzMatcher.group(2);
+                configs.put(CLASS_NAME, clazzMatcher.group(1));
+                configs.put(INTERFACE_NAME, interfaceName);
+                return AT_START_OF_CLASS_DEFINITION;
+            }
+        } else if (line.contains(OVERRIDE)) {
+            return COLLECTED_OVERRIDE_BLOCK;
+        } else if (line.contains("public " + configs.get(CLASS_NAME) + "(")) {
+            return COLLECTED_CONSTRUCTOR_BLOCK;
+        } else if (line.contains(PRIVATE)) {
+            if (line.contains(SERIAL_VERSION_UID)) {
+                return AT_START_OF_SERIAL_VERSION_UID;
+            } else {
+                Matcher privateVarMatcher = DTO_FIELD_PATTERN.matcher(line);
+                if (privateVarMatcher.find()) {
+                    configs.put(FIELD_NAME, privateVarMatcher.group(2));
+                    configs.put(FIELD_TYPE, privateVarMatcher.group(1));
+                    return AT_START_OF_FIELD_DEFINITION;
+                }
+            }
+        } else if (line.equals(CURLY_CLOSE)) {
+            return AT_END_OF_CLASS_DEFINITION;
+        }
+        return null;
+    }
+
+    /**
+     * Process given ongoing event.
+     * <p>
+     * As soon as an event is processed here, it is finished.
+     * Some events may not be processed here, as they are still ongoing, they will only be processed when a specific
+     * criteria is also true
+     *
+     * @param event event
+     * @param line line
+     * @param linesCollected linesCollected during ongoing event
+     * @param writer writer
+     * @param configs configs
+     * @return current-event (if still ongoing) or NULL if event finished here.
+     * @throws IOException internal-error during io
+     */
+    private PojoProcessingEvent processOngoingEvent(final PojoProcessingEvent event, final String line, final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+
+        linesCollected.add(line + EOL);
+
+        boolean eventFinished = false;
+        if (event == AT_START_OF_PACKAGE_DEFINITION) {
+            rewriteAtStartOfPackageDefinition(linesCollected, writer);
+            eventFinished = true;
+        } else if (event == AT_START_OF_CLASS_DEFINITION) {
+            rewriteAtStartOfClassDefinition(writer, configs);
+            eventFinished = true;
+        } else if (event == AT_START_OF_SERIAL_VERSION_UID) {
+            rewriteAtStartOfSerialVersionUid(linesCollected, writer);
+            eventFinished = true;
+        } else if (event == AT_START_OF_FIELD_DEFINITION) {
+            rewriteAtStartOfFieldDefinition(linesCollected, writer, configs);
+            eventFinished = true;
+        } else if (event == AT_END_OF_CLASS_DEFINITION) {
+            rewriteAtEndOfClassDefinition(linesCollected, writer);
+            eventFinished = true;
+        } else if (event == COLLECTED_CONSTRUCTOR_BLOCK && line.contains(CURLY_CLOSE)) {
+            boolean isDefaultConstructor = linesCollected
+                    .stream()
+                    .anyMatch(x -> x.contains("() {}"));
+            if (isDefaultConstructor) {
+                // we dont need the other jOOQ generated constructors, just swallow them.
+                // we only overwrite the default constructor here.
+                rewriteCollectedDefaultConstructorBlock(writer, configs);
+            }
+            eventFinished = true;
+        } else if (event == COLLECTED_OVERRIDE_BLOCK && line.contains(CURLY_CLOSE)) {
+            boolean isToStringMethod = linesCollected
+                    .stream()
+                    .anyMatch(x -> x.contains("public String toString() {"));
+            if (isToStringMethod) {
+                rewriteCollectedToStringBlock(writer);
+            } else {
+                // we assume that the other case here is the setter-block.
+                rewriteCollectedSetterBlock(linesCollected, writer, configs);
+            }
+            eventFinished = true;
+        }
+        if (eventFinished) {
+            linesCollected.clear();
+            return null;
+        }
+        return event;
+    }
+
+
+    /**
+     * Process the given pojo file, and convert it into a DTO-file.
+     * The resulting DTO-file can be used as-is, but it is recommended to use this resulting DTO-file
+     * like a Template for copying it into your project and manually adding additional non-database fields if needed.
+     *
+     * @param reader reader for pojo-file (source)
+     * @param writer writer for dto-file (target)
+     * @throws IOException internal-error during io
+     */
     public void processPojoFile(final BufferedReader reader, final FileWriter writer) throws IOException {
         String line;
         String lastLine = null;
-        String clazzName = null;
         boolean writeEnabled = false;
-
-        // Event-Processing
-        // (we collect parts of the file to process it in a bundled way)
-        PojoProcessingEvent currentEvent = null;
+        PojoProcessingEvent event = null;
         List<String> linesCollected = new ArrayList<>();
-        EnumMap<PojoProcessingParam, String> params = new EnumMap<>(PojoProcessingParam.class);
+        EnumMap<PojoProcessingConfig, String> configs = new EnumMap<>(PojoProcessingConfig.class);
 
         while ((line = reader.readLine()) != null) {
-            if (currentEvent == null) {
-                if (line.startsWith(PACKAGE)) {
-                    // we ignore everything before the package starts (which is: the jooq-generated info)
-                    writeEnabled = true;
-                    currentEvent = AT_START_OF_PACKAGE_DEFINITION;
-                } else if (line.startsWith(PUBLIC)) {
-                    Matcher clazzMatcher = DTO_CLAZZ_PATTERN.matcher(line);
-                    if (clazzMatcher.find()) {
-                        currentEvent = AT_START_OF_CLASS_DEFINITION;
-                        clazzName = clazzMatcher.group(1);
-                        String interfaceName = clazzMatcher.group(2);
-                        params.put(CLASS_NAME, clazzName);
-                        params.put(INTERFACE_NAME, interfaceName);
-                    }
-                } else if (line.contains(OVERRIDE)) {
-                    currentEvent = COLLECTED_OVERRIDE_BLOCK;
-                } else if (line.contains("public " + clazzName + "(")) {
-                    currentEvent = COLLECTED_CONSTRUCTOR_BLOCK;
-                } else if (line.contains(PRIVATE)) {
-                    if (line.contains(SERIAL_VERSION_UID)) {
-                        currentEvent = AT_START_OF_SERIAL_VERSION_UID;
-                    } else {
-                        Matcher privateVarMatcher = DTO_FIELD_PATTERN.matcher(line);
-                        if (privateVarMatcher.find()) {
-                            currentEvent = AT_START_OF_FIELD_DEFINITION;
-                            params.put(FIELD_NAME, privateVarMatcher.group(2));
-                            params.put(FIELD_TYPE, privateVarMatcher.group(1));
-                        } else {
-                            writer.write(line + EOL);
-                        }
-                    }
-                } else if (line.equals(CURLY_CLOSE)) {
-                    currentEvent = AT_END_OF_CLASS_DEFINITION;
-                } else if (writeEnabled && (lastLine == null || !(lastLine.equals(EMPTY_STRING) && line.equals(EMPTY_STRING)))) {
+            if (!writeEnabled && line.startsWith(PACKAGE)) {
+                // we ignore everything before the package starts (which is: the jooq-generated info)
+                writeEnabled = true;
+            }
+            if (event == null) {
+                event = getNextEvent(line, configs);
+            }
+            if (event == null) {
+                // no event, just use the regular write-logic.
+                if (writeEnabled && (lastLine == null || !(lastLine.equals(EMPTY_STRING) && line.equals(EMPTY_STRING)))) {
                     // ignore double empty lines, but write everything else.
                     writer.write(line + EOL);
                     lastLine = line;
                 }
-            }
-
-            if (currentEvent != null) {
-                linesCollected.add(line + EOL);
-                boolean eventFinished = false;
-                if (currentEvent == AT_START_OF_PACKAGE_DEFINITION) {
-                    rewriteAtStartOfPackageDefinition(linesCollected, writer);
-                    eventFinished = true;
-                } else if (currentEvent == AT_START_OF_CLASS_DEFINITION) {
-                    rewriteAtStartOfClassDefinition(writer, params);
-                    eventFinished = true;
-                } else if (currentEvent == AT_START_OF_SERIAL_VERSION_UID) {
-                    rewriteAtStartOfSerialVersionUid(linesCollected, writer);
-                    eventFinished = true;
-                } else if (currentEvent == AT_START_OF_FIELD_DEFINITION) {
-                    rewriteAtStartOfFieldDefinition(linesCollected, writer, params);
-                    eventFinished = true;
-                } else if (currentEvent == AT_END_OF_CLASS_DEFINITION) {
-                    rewriteAtEndOfClassDefinition(linesCollected, writer);
-                    eventFinished = true;
-                } else if (currentEvent == COLLECTED_CONSTRUCTOR_BLOCK && line.contains(CURLY_CLOSE)) {
-                    rewriteCollectedConstructorBlock(linesCollected, writer, params);
-                    eventFinished = true;
-                } else if (currentEvent == COLLECTED_OVERRIDE_BLOCK && line.contains(CURLY_CLOSE)) {
-                    rewriteCollectedOverrideBlock(linesCollected, writer, params);
-                    eventFinished = true;
-                }
-                if (eventFinished) {
-                    currentEvent = null;
-                    linesCollected = new ArrayList<>();
-                }
+            } else {
+                // event given, use the custom write-logic.
+                event = processOngoingEvent(event, line, linesCollected, writer, configs);
             }
         }
     }

@@ -1,10 +1,11 @@
-package org.fk.core.query;
+package org.fk.core.query.model;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
+import org.fk.core.query.model.FkQuery;
 import org.fk.core.test.CoreTestProfile;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.mock;
 @QuarkusTest
 @TestProfile(CoreTestProfile.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class QueryParametersTest {
+class FkQueryTest {
 
     @BeforeEach
     public void setup() {
@@ -40,7 +41,7 @@ class QueryParametersTest {
         UriInfo mockUriInfo = mock(UriInfo.class);
         Mockito.when(mockUriInfo.getQueryParameters()).thenReturn(map);
 
-        QueryParameters qp = new QueryParameters(mockUriInfo);
+        FkQuery qp = new FkQuery(mockUriInfo);
         qp.init(); // normally called by quarkus-framework in PostContruct.
 
         Assertions.assertEquals(0, qp.getPage());

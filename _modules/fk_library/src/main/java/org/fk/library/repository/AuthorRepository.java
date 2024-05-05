@@ -1,9 +1,10 @@
 package org.fk.library.repository;
 
 
+import org.fk.core.query.jooq.FkQueryJooqMapper;
 import org.fk.core.repository.AbstractRepository;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkQuery;
 import org.fk.database2.public_.tables.Book;
 import org.fk.database2.public_.tables.Author;
 import org.fk.library.dto.AuthorDTO;
@@ -18,8 +19,15 @@ import static org.jooq.impl.DSL.*;
 
 public class AuthorRepository extends AbstractRepository<AuthorDTO, Integer> {
 
+    private final FkQueryJooqMapper queryJooqMapper;
+
     public AuthorRepository(DSLContext dsl) {
         super(dsl);
+
+        final List<Field<?>> mappableFields = new ArrayList<>();
+        mappableFields.addAll(List.of(Author.AUTHOR.fields()));
+        mappableFields.addAll(List.of(Book.BOOK.fields()));
+        this.queryJooqMapper = new FkQueryJooqMapper(Author.AUTHOR, mappableFields);
     }
 
     @Override
@@ -38,37 +46,34 @@ public class AuthorRepository extends AbstractRepository<AuthorDTO, Integer> {
     }
 
     @Override
-    public SelectSeekStepN<Record1<Integer>> getQuery(QueryParameters queryParameters) throws InvalidDataException {
-        final List<Field<?>> availableFields = new ArrayList<>();
-        availableFields.addAll(List.of(Author.AUTHOR.fields()));
-        availableFields.addAll(List.of(Book.BOOK.fields()));
-
+    public SelectSeekStepN<Record1<Integer>> mapQuery(FkQuery query) throws InvalidDataException {
         return dsl()
                 .select(Author.AUTHOR.AUTHOR_ID)
                 .from(Author.AUTHOR
                         .leftJoin(Book.BOOK)
                         .on(Book.BOOK.AUTHOR_ID
                                 .eq(Author.AUTHOR.AUTHOR_ID)))
-                .where(DSL.and(getFilters(queryParameters, availableFields, Author.AUTHOR)))
+                .where(DSL.and(queryJooqMapper.getFilters(query)))
                 .groupBy(Author.AUTHOR.AUTHOR_ID)
-                .orderBy(getSorters(queryParameters, availableFields, Author.AUTHOR));
+                .orderBy(queryJooqMapper.getSorter(query));
     }
 
     @Override
-    public List<Integer> paginate(QueryParameters queryParameters) throws InvalidDataException {
-        return getQuery(queryParameters)
-                .offset(queryParameters.getPage())
-                .limit(queryParameters.getPageSize())
+    public List<Integer> paginateQuery(FkQuery query) throws InvalidDataException {
+        return mapQuery(query)
+                .offset(query.getPage())
+                .limit(query.getPageSize())
                 .fetch(Author.AUTHOR.AUTHOR_ID);
     }
 
     @Override
-    public int count(QueryParameters queryParameters) throws InvalidDataException {
-        return dsl().fetchCount(getQuery(queryParameters));
+    public int countQuery(FkQuery query) throws InvalidDataException {
+        return dsl().fetchCount(mapQuery(query));
     }
 
-    public Stream<Integer> stream(QueryParameters queryParameters) throws InvalidDataException {
-        return getQuery(queryParameters)
+    @Override
+    public Stream<Integer> streamQuery(FkQuery query) throws InvalidDataException {
+        return mapQuery(query)
                 .fetchSize(250)
                 .fetchStream()
                 .map(Record1::value1);

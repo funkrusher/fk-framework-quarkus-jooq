@@ -2,7 +2,7 @@ package org.fk.library.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkQuery;
 import org.fk.library.dto.AuthorDTO;
 import org.fk.library.dto.AuthorPaginateDTO;
 import org.fk.library.repository.AuthorRepository;
@@ -17,11 +17,11 @@ import java.util.*;
 @ApplicationScoped
 public class AuthorManager extends AbstractManager {
 
-    public AuthorPaginateDTO query(DSLContext dsl, final QueryParameters queryParameters) throws InvalidDataException {
+    public AuthorPaginateDTO query(DSLContext dsl, final FkQuery query) throws InvalidDataException {
         final AuthorRepository authorRepository = new AuthorRepository(dsl);
 
-        int count = authorRepository.count(queryParameters);
-        List<Integer> authorIds = authorRepository.paginate(queryParameters);
+        int count = authorRepository.countQuery(query);
+        List<Integer> authorIds = authorRepository.paginateQuery(query);
         List<AuthorDTO> authors = authorRepository.fetch(authorIds);
 
         AuthorPaginateDTO paginate = new AuthorPaginateDTO();

@@ -1,11 +1,12 @@
 package org.fk.product.repository;
 
 
+import org.fk.core.query.jooq.FkQueryJooqMapper;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.repository.AbstractRepository;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.QueryParameters;
+import org.fk.core.query.model.FkQuery;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.jooq.*;
@@ -19,8 +20,15 @@ import static org.jooq.impl.DSL.*;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
 
+    private final FkQueryJooqMapper queryJooqMapper;
+
     public ProductRepository(DSLContext dsl) {
         super(dsl);
+
+        final List<Field<?>> mappableFields = new ArrayList<>();
+        mappableFields.addAll(List.of(Product.PRODUCT.fields()));
+        mappableFields.addAll(List.of(ProductLang.PRODUCT_LANG.fields()));
+        this.queryJooqMapper = new FkQueryJooqMapper(Product.PRODUCT, mappableFields);
     }
 
     @Override
@@ -50,38 +58,34 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
     }
 
     @Override
-    public SelectSeekStepN<Record1<Long>> getQuery(QueryParameters queryParameters) throws InvalidDataException {
-        final List<Field<?>> availableFields = new ArrayList<>();
-        availableFields.addAll(List.of(Product.PRODUCT.fields()));
-        availableFields.addAll(List.of(ProductLang.PRODUCT_LANG.fields()));
-
+    public SelectSeekStepN<Record1<Long>> mapQuery(FkQuery query) throws InvalidDataException {
         return dsl()
                 .select(Product.PRODUCT.PRODUCTID)
                 .from(Product.PRODUCT
                         .leftJoin(ProductLang.PRODUCT_LANG)
                         .on(ProductLang.PRODUCT_LANG.PRODUCTID
                                 .eq(Product.PRODUCT.PRODUCTID)))
-                .where(DSL.and(getFilters(queryParameters, availableFields, Product.PRODUCT)))
+                .where(DSL.and(queryJooqMapper.getFilters(query)))
                 .and(Product.PRODUCT.CLIENTID.eq(request().getClientId()))
                 .groupBy(Product.PRODUCT.PRODUCTID)
-                .orderBy(getSorters(queryParameters, availableFields, Product.PRODUCT));
+                .orderBy(queryJooqMapper.getSorter(query));
     }
 
     @Override
-    public List<Long> paginate(QueryParameters queryParameters) throws InvalidDataException {
-        return getQuery(queryParameters)
-                .offset(queryParameters.getPage())
-                .limit(queryParameters.getPageSize())
+    public List<Long> paginateQuery(FkQuery query) throws InvalidDataException {
+        return mapQuery(query)
+                .offset(query.getPage())
+                .limit(query.getPageSize())
                 .fetch(Product.PRODUCT.PRODUCTID);
     }
 
     @Override
-    public int count(QueryParameters queryParameters) throws InvalidDataException {
-        return dsl().fetchCount(getQuery(queryParameters));
+    public int countQuery(FkQuery query) throws InvalidDataException {
+        return dsl().fetchCount(mapQuery(query));
     }
 
-    public Stream<Long> stream(QueryParameters queryParameters) throws InvalidDataException {
-        return getQuery(queryParameters)
+    public Stream<Long> streamQuery(FkQuery query) throws InvalidDataException {
+        return mapQuery(query)
                 .fetchSize(250)
                 .fetchStream()
                 .map(Record1::value1);

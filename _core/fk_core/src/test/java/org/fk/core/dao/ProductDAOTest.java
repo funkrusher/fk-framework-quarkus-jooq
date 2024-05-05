@@ -409,8 +409,8 @@ class ProductDAOTest {
     void testFindById() throws IOException {
         ProductDAO productDAO = new ProductDAO(dsl);
 
-        ProductRecord productRecord1 = productDAO.findById(60008L);
-        ProductRecord productRecord2 = productDAO.findById(90000L);
+        ProductRecord productRecord1 = productDAO.fetch(60008L);
+        ProductRecord productRecord2 = productDAO.fetch(90000L);
 
         assertNotNull(productRecord1);
         Assertions.assertNull(productRecord2);
