@@ -289,8 +289,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             else
                 return fields[0].in(fields[0].getDataType().convert(values));
         } else {
-            // TODO: test this code-part a bit more for the case of multi-pk
-            return DSL.row(fields).in(values.toArray(new Record[]{}));
+            // because fields.length > 1, we can be sure at this point that the T-value is a
+            // collection of "Record" Tuple instances, therefore we can safely cast it to a Record-Array.
+            //noinspection unchecked
+            final Collection<Record> recs = (Collection<Record>) values;
+            return DSL.row(fields).in(recs.toArray(new Record[]{}));
         }
     }
 
@@ -319,7 +322,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param values values that must be mappable to the T-class.
      * @return instance of T (combined primary-key)
      */
-    protected T compositeKeyRecord(final Object... values) {
+    public T compositeKeyRecord(final Object... values) {
         if (this.pk == null) {
             return null;
         }

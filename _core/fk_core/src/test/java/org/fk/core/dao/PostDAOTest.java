@@ -122,9 +122,9 @@ class PostDAOTest {
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(id1, id2, id3);
         assertEquals( 3, existingRecords.size());
-        validateRecordEqual(postRecord1, existingRecords.get(0));
-        validateRecordEqual(postRecord2, existingRecords.get(1));
-        validateRecordEqual(postRecord3, existingRecords.get(2));
+        validateRecordEqual(postRecord1, existingRecords.stream().filter(x -> x.getId().equals(postRecord1.getId())).toList().getFirst());
+        validateRecordEqual(postRecord2, existingRecords.stream().filter(x -> x.getId().equals(postRecord2.getId())).toList().getFirst());
+        validateRecordEqual(postRecord3, existingRecords.stream().filter(x -> x.getId().equals(postRecord3.getId())).toList().getFirst());
 
         assertCount(4);
     }
@@ -159,9 +159,9 @@ class PostDAOTest {
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(postRecord1.getId(), postRecord2.getId(), postRecord3.getId());
         assertEquals( 3, existingRecords.size());
-        validateRecordEqual(postRecord1, existingRecords.get(0));
-        validateRecordEqual(postRecord2, existingRecords.get(1));
-        validateRecordEqual(postRecord3, existingRecords.get(2));
+        validateRecordEqual(postRecord1, existingRecords.stream().filter(x -> x.getId().equals(postRecord1.getId())).toList().getFirst());
+        validateRecordEqual(postRecord2, existingRecords.stream().filter(x -> x.getId().equals(postRecord2.getId())).toList().getFirst());
+        validateRecordEqual(postRecord3, existingRecords.stream().filter(x -> x.getId().equals(postRecord3.getId())).toList().getFirst());
 
         assertCount(8);
     }
@@ -199,9 +199,9 @@ class PostDAOTest {
 
         List<PostRecord> existingRecords = resolveRecordsFromDb(id1, id2, id3);
         assertEquals( 3, existingRecords.size());
-        validateDTOEqual(postDTO1, existingRecords.get(0));
-        validateDTOEqual(postDTO2, existingRecords.get(1));
-        validateDTOEqual(postDTO3, existingRecords.get(2));
+        validateDTOEqual(postDTO1, existingRecords.stream().filter(x -> x.getId().equals(postDTO1.getId())).toList().getFirst());
+        validateDTOEqual(postDTO2, existingRecords.stream().filter(x -> x.getId().equals(postDTO2.getId())).toList().getFirst());
+        validateDTOEqual(postDTO3, existingRecords.stream().filter(x -> x.getId().equals(postDTO3.getId())).toList().getFirst());
 
         assertCount(12);
     }

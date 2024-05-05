@@ -84,6 +84,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
         return dsl().fetchCount(mapQuery(query));
     }
 
+    @Override
     public Stream<Long> streamQuery(FkQuery query) throws InvalidDataException {
         return mapQuery(query)
                 .fetchSize(250)
