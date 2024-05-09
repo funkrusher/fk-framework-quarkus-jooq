@@ -1,5 +1,6 @@
 package org.fk.core.query.jooq.filter;
 
+import org.fk.core.exception.InvalidDataException;
 import org.jooq.Condition;
 import org.jooq.Field;
 
@@ -17,33 +18,33 @@ public class StringFilterConditionProvider implements FilterConditionProvider {
     }
 
     @Override
-    public Condition eqCondition(String value) {
+    public Condition eqCondition(String value) throws InvalidDataException {
         return field.eq(value);
     }
 
     @Override
-    public Condition neCondition(String value) {
+    public Condition neCondition(String value) throws InvalidDataException {
         return field.ne(value);
     }
 
     @Override
-    public Condition geCondition(String value) {
-        throw new UnsupportedOperationException("ge not applicable!");
+    public Condition geCondition(String value) throws InvalidDataException {
+        throw new InvalidDataException("ge not applicable!");
     }
 
     @Override
-    public Condition gtCondition(String value) {
-        throw new UnsupportedOperationException("gt not applicable!");
+    public Condition gtCondition(String value) throws InvalidDataException {
+        throw new InvalidDataException("gt not applicable!");
     }
 
     @Override
-    public Condition leCondition(String value) {
-        throw new UnsupportedOperationException("le not applicable!");
+    public Condition leCondition(String value) throws InvalidDataException {
+        throw new InvalidDataException("le not applicable!");
     }
 
     @Override
-    public Condition ltCondition(String value) {
-        throw new UnsupportedOperationException("lt not applicable!");
+    public Condition ltCondition(String value) throws InvalidDataException {
+        throw new InvalidDataException("lt not applicable!");
     }
 
 }

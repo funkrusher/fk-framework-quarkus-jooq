@@ -7,6 +7,8 @@ package org.fk.core.test.database.coretestdatabase.tables.records;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.fk.core.test.database.coretestdatabase.tables.Nested1;
@@ -95,6 +97,74 @@ public class Nested1Record extends UpdatableRecordImpl<Nested1Record> implements
         return (String) get(3);
     }
 
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    @Override
+    public Nested1Record setInteger1(Integer value) {
+        set(4, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    @Override
+    public Integer getInteger1() {
+        return (Integer) get(4);
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    @Override
+    public Nested1Record setLong1(Long value) {
+        set(5, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    @Override
+    public Long getLong1() {
+        return (Long) get(5);
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    @Override
+    public Nested1Record setDecimal1(BigDecimal value) {
+        set(6, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    @Override
+    public BigDecimal getDecimal1() {
+        return (BigDecimal) get(6);
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    @Override
+    public Nested1Record setDateTime1(LocalDateTime value) {
+        set(7, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    @Override
+    public LocalDateTime getDateTime1() {
+        return (LocalDateTime) get(7);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -114,6 +184,10 @@ public class Nested1Record extends UpdatableRecordImpl<Nested1Record> implements
         setUuidId(from.getUuidId());
         setString1(from.getString1());
         setString2(from.getString2());
+        setInteger1(from.getInteger1());
+        setLong1(from.getLong1());
+        setDecimal1(from.getDecimal1());
+        setDateTime1(from.getDateTime1());
         resetChangedOnNotNull();
     }
 
@@ -137,13 +211,17 @@ public class Nested1Record extends UpdatableRecordImpl<Nested1Record> implements
     /**
      * Create a detached, initialised Nested1Record
      */
-    public Nested1Record(Integer autoIncId, UUID uuidId, String string1, String string2) {
+    public Nested1Record(Integer autoIncId, UUID uuidId, String string1, String string2, Integer integer1, Long long1, BigDecimal decimal1, LocalDateTime dateTime1) {
         super(Nested1.NESTED1);
 
         setAutoIncId(autoIncId);
         setUuidId(uuidId);
         setString1(string1);
         setString2(string2);
+        setInteger1(integer1);
+        setLong1(long1);
+        setDecimal1(decimal1);
+        setDateTime1(dateTime1);
         resetChangedOnNotNull();
     }
 
@@ -158,6 +236,10 @@ public class Nested1Record extends UpdatableRecordImpl<Nested1Record> implements
             setUuidId(value.getUuidId());
             setString1(value.getString1());
             setString2(value.getString2());
+            setInteger1(value.getInteger1());
+            setLong1(value.getLong1());
+            setDecimal1(value.getDecimal1());
+            setDateTime1(value.getDateTime1());
             resetChangedOnNotNull();
         }
     }

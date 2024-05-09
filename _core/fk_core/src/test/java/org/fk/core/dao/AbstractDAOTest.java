@@ -771,7 +771,7 @@ public class AbstractDAOTest {
     }
 
     /**
-     * Basic2DTO
+     * Nested1DTO
      */
     public static class Nested1DTO extends Nested1Dto implements INested1 {
     }

@@ -4,6 +4,8 @@
 package org.fk.core.test.database.coretestdatabase.tables;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import org.fk.core.test.database.coretestdatabase.Coretestdatabase;
@@ -63,6 +65,26 @@ public class Basic1 extends TableImpl<Basic1Record> {
      * The column <code>coreTestDatabase.Basic1.string2</code>.
      */
     public final TableField<Basic1Record, String> STRING2 = createField(DSL.name("string2"), SQLDataType.VARCHAR(50).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.VARCHAR)), this, "");
+
+    /**
+     * The column <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    public final TableField<Basic1Record, Integer> INTEGER1 = createField(DSL.name("integer1"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    public final TableField<Basic1Record, Long> LONG1 = createField(DSL.name("long1"), SQLDataType.BIGINT.defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.BIGINT)), this, "");
+
+    /**
+     * The column <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    public final TableField<Basic1Record, BigDecimal> DECIMAL1 = createField(DSL.name("decimal1"), SQLDataType.DECIMAL(10, 2).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.DECIMAL)), this, "");
+
+    /**
+     * The column <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    public final TableField<Basic1Record, LocalDateTime> DATETIME1 = createField(DSL.name("dateTime1"), SQLDataType.LOCALDATETIME(0).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>coreTestDatabase.Basic1.clientId</code>.

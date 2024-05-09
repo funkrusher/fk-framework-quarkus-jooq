@@ -18,4 +18,7 @@ public class InvalidDataException extends MappingException {
     public InvalidDataException(String message) {
         super(message);
     }
+    public InvalidDataException(String message, Exception e) {
+        super(message, e);
+    }
 }

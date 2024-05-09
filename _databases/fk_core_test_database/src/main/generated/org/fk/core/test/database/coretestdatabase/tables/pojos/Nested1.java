@@ -7,6 +7,8 @@ package org.fk.core.test.database.coretestdatabase.tables.pojos;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.INested1;
@@ -24,6 +26,10 @@ public class Nested1 implements INested1 {
     private UUID uuidId;
     private String string1;
     private String string2;
+    private Integer integer1;
+    private Long long1;
+    private BigDecimal decimal1;
+    private LocalDateTime dateTime1;
 
     public Nested1() {}
 
@@ -32,18 +38,30 @@ public class Nested1 implements INested1 {
         this.uuidId = value.getUuidId();
         this.string1 = value.getString1();
         this.string2 = value.getString2();
+        this.integer1 = value.getInteger1();
+        this.long1 = value.getLong1();
+        this.decimal1 = value.getDecimal1();
+        this.dateTime1 = value.getDateTime1();
     }
 
     public Nested1(
         Integer autoIncId,
         UUID uuidId,
         String string1,
-        String string2
+        String string2,
+        Integer integer1,
+        Long long1,
+        BigDecimal decimal1,
+        LocalDateTime dateTime1
     ) {
         this.autoIncId = autoIncId;
         this.uuidId = uuidId;
         this.string1 = string1;
         this.string2 = string2;
+        this.integer1 = integer1;
+        this.long1 = long1;
+        this.decimal1 = decimal1;
+        this.dateTime1 = dateTime1;
     }
 
     /**
@@ -118,6 +136,74 @@ public class Nested1 implements INested1 {
         return this;
     }
 
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    @Override
+    public Integer getInteger1() {
+        return this.integer1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    @Override
+    public Nested1 setInteger1(Integer integer1) {
+        this.integer1 = integer1;
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    @Override
+    public Long getLong1() {
+        return this.long1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    @Override
+    public Nested1 setLong1(Long long1) {
+        this.long1 = long1;
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    @Override
+    public BigDecimal getDecimal1() {
+        return this.decimal1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    @Override
+    public Nested1 setDecimal1(BigDecimal decimal1) {
+        this.decimal1 = decimal1;
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    @Override
+    public LocalDateTime getDateTime1() {
+        return this.dateTime1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    @Override
+    public Nested1 setDateTime1(LocalDateTime dateTime1) {
+        this.dateTime1 = dateTime1;
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Nested1 (");
@@ -126,6 +212,10 @@ public class Nested1 implements INested1 {
         sb.append(", ").append(uuidId);
         sb.append(", ").append(string1);
         sb.append(", ").append(string2);
+        sb.append(", ").append(integer1);
+        sb.append(", ").append(long1);
+        sb.append(", ").append(decimal1);
+        sb.append(", ").append(dateTime1);
 
         sb.append(")");
         return sb.toString();
@@ -141,6 +231,10 @@ public class Nested1 implements INested1 {
         setUuidId(from.getUuidId());
         setString1(from.getString1());
         setString2(from.getString2());
+        setInteger1(from.getInteger1());
+        setLong1(from.getLong1());
+        setDecimal1(from.getDecimal1());
+        setDateTime1(from.getDateTime1());
     }
 
     @Override

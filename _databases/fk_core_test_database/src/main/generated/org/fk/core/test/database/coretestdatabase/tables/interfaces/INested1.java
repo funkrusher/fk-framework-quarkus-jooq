@@ -10,6 +10,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -61,6 +63,46 @@ public interface INested1 extends Serializable {
      */
     @Size(max = 50)
     public String getString2();
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    public INested1 setInteger1(Integer value);
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    public Integer getInteger1();
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    public INested1 setLong1(Long value);
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    public Long getLong1();
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    public INested1 setDecimal1(BigDecimal value);
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    public BigDecimal getDecimal1();
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    public INested1 setDateTime1(LocalDateTime value);
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    public LocalDateTime getDateTime1();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

@@ -10,53 +10,47 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 /**
- * BigDecimalFilterConditionProvider
+ * LocalDateTimeFilterConditionProvider
  * <p>
- * Creates all supported Jooq {@link Condition}s for given String values.
+ * Creates all supported Jooq {@link Condition}s for given LocalDateTime values.
  */
-public class BigDecimalFilterConditionProvider implements FilterConditionProvider {
+public class LocalDateTimeFilterConditionProvider implements FilterConditionProvider {
 
-    private final Field<BigDecimal> field;
+    private final Field<LocalDateTime> field;
 
-    public BigDecimalFilterConditionProvider(final Field<BigDecimal> field) {
+    public LocalDateTimeFilterConditionProvider(final Field<LocalDateTime> field) {
         this.field = field;
     }
 
-    private BigDecimal getBigDecimal(String value) {
+    private LocalDateTime getLocalDateTime(String value) {
         try {
-            return new BigDecimal(value);
+            return LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(value)), ZoneOffset.UTC);
         } catch (Exception e) {
-            throw new InvalidDataException("unsupported big decimal format", e);
+            throw new InvalidDataException("unsupported local date time format", e);
         }
     }
-
     @Override
     public Condition eqCondition(String value) throws InvalidDataException {
-        return field.eq(getBigDecimal(value));
+        return field.eq(getLocalDateTime(value));
     }
-
     @Override
     public Condition neCondition(String value) throws InvalidDataException {
-        return field.ne(getBigDecimal(value));
+        return field.ne(getLocalDateTime(value));
     }
-
     @Override
     public Condition geCondition(String value) throws InvalidDataException {
-        return field.ge(getBigDecimal(value));
+        return field.ge(getLocalDateTime(value));
     }
-
     @Override
     public Condition gtCondition(String value) throws InvalidDataException {
-        return field.gt(getBigDecimal(value));
+        return field.gt(getLocalDateTime(value));
     }
-
     @Override
     public Condition leCondition(String value) throws InvalidDataException {
-        return field.le(getBigDecimal(value));
+        return field.le(getLocalDateTime(value));
     }
-
     @Override
     public Condition ltCondition(String value) throws InvalidDataException {
-        return field.lt(getBigDecimal(value));
+        return field.lt(getLocalDateTime(value));
     }
 }

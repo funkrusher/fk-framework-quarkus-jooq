@@ -7,6 +7,9 @@ package org.fk.core.test.database.coretestdatabase.tables.records;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.fk.core.test.database.coretestdatabase.tables.Basic1;
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
 import org.jooq.Record1;
@@ -75,11 +78,79 @@ public class Basic1Record extends UpdatableRecordImpl<Basic1Record> implements I
     }
 
     /**
+     * Setter for <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    @Override
+    public Basic1Record setInteger1(Integer value) {
+        set(3, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    @Override
+    public Integer getInteger1() {
+        return (Integer) get(3);
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    @Override
+    public Basic1Record setLong1(Long value) {
+        set(4, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    @Override
+    public Long getLong1() {
+        return (Long) get(4);
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    @Override
+    public Basic1Record setDecimal1(BigDecimal value) {
+        set(5, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    @Override
+    public BigDecimal getDecimal1() {
+        return (BigDecimal) get(5);
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    @Override
+    public Basic1Record setDateTime1(LocalDateTime value) {
+        set(6, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    @Override
+    public LocalDateTime getDateTime1() {
+        return (LocalDateTime) get(6);
+    }
+
+    /**
      * Setter for <code>coreTestDatabase.Basic1.clientId</code>.
      */
     @Override
     public Basic1Record setClientId(Integer value) {
-        set(3, value);
+        set(7, value);
         return this;
     }
 
@@ -89,7 +160,7 @@ public class Basic1Record extends UpdatableRecordImpl<Basic1Record> implements I
     @NotNull
     @Override
     public Integer getClientId() {
-        return (Integer) get(3);
+        return (Integer) get(7);
     }
 
     // -------------------------------------------------------------------------
@@ -110,6 +181,10 @@ public class Basic1Record extends UpdatableRecordImpl<Basic1Record> implements I
         setAutoIncId(from.getAutoIncId());
         setString1(from.getString1());
         setString2(from.getString2());
+        setInteger1(from.getInteger1());
+        setLong1(from.getLong1());
+        setDecimal1(from.getDecimal1());
+        setDateTime1(from.getDateTime1());
         setClientId(from.getClientId());
         resetChangedOnNotNull();
     }
@@ -134,12 +209,16 @@ public class Basic1Record extends UpdatableRecordImpl<Basic1Record> implements I
     /**
      * Create a detached, initialised Basic1Record
      */
-    public Basic1Record(Integer autoIncId, String string1, String string2, Integer clientId) {
+    public Basic1Record(Integer autoIncId, String string1, String string2, Integer integer1, Long long1, BigDecimal decimal1, LocalDateTime dateTime1, Integer clientId) {
         super(Basic1.BASIC1);
 
         setAutoIncId(autoIncId);
         setString1(string1);
         setString2(string2);
+        setInteger1(integer1);
+        setLong1(long1);
+        setDecimal1(decimal1);
+        setDateTime1(dateTime1);
         setClientId(clientId);
         resetChangedOnNotNull();
     }
@@ -154,6 +233,10 @@ public class Basic1Record extends UpdatableRecordImpl<Basic1Record> implements I
             setAutoIncId(value.getAutoIncId());
             setString1(value.getString1());
             setString2(value.getString2());
+            setInteger1(value.getInteger1());
+            setLong1(value.getLong1());
+            setDecimal1(value.getDecimal1());
+            setDateTime1(value.getDateTime1());
             setClientId(value.getClientId());
             resetChangedOnNotNull();
         }

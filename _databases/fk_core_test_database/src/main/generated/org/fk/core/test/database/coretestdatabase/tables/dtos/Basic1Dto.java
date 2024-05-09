@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
 
 /**
@@ -27,6 +30,11 @@ public class Basic1Dto implements IBasic1, DTO {
     private Integer autoIncId;
     private String string1;
     private String string2;
+    private Integer integer1;
+    private Long long1;
+    private BigDecimal decimal1;
+    @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
+    private LocalDateTime dateTime1;
     private Integer clientId;
 
     // -------------------------------------------------------------------------
@@ -100,6 +108,78 @@ public class Basic1Dto implements IBasic1, DTO {
     }
 
     /**
+     * Getter for <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    @Override
+    public Integer getInteger1() {
+        return this.integer1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    @Override
+    public Basic1Dto setInteger1(Integer integer1) {
+        this.integer1 = integer1;
+        this.keeper.touch("integer1");
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    @Override
+    public Long getLong1() {
+        return this.long1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    @Override
+    public Basic1Dto setLong1(Long long1) {
+        this.long1 = long1;
+        this.keeper.touch("long1");
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    @Override
+    public BigDecimal getDecimal1() {
+        return this.decimal1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    @Override
+    public Basic1Dto setDecimal1(BigDecimal decimal1) {
+        this.decimal1 = decimal1;
+        this.keeper.touch("decimal1");
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    @Override
+    public LocalDateTime getDateTime1() {
+        return this.dateTime1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    @Override
+    public Basic1Dto setDateTime1(LocalDateTime dateTime1) {
+        this.dateTime1 = dateTime1;
+        this.keeper.touch("dateTime1");
+        return this;
+    }
+
+    /**
      * Getter for <code>coreTestDatabase.Basic1.clientId</code>.
      */
     @NotNull
@@ -157,6 +237,10 @@ public class Basic1Dto implements IBasic1, DTO {
         setAutoIncId(from.getAutoIncId());
         setString1(from.getString1());
         setString2(from.getString2());
+        setInteger1(from.getInteger1());
+        setLong1(from.getLong1());
+        setDecimal1(from.getDecimal1());
+        setDateTime1(from.getDateTime1());
         setClientId(from.getClientId());
     }
     @Override

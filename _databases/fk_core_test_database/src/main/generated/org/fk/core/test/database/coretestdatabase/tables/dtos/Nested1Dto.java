@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.INested1;
@@ -30,6 +32,11 @@ public class Nested1Dto implements INested1, DTO {
     private UUID uuidId;
     private String string1;
     private String string2;
+    private Integer integer1;
+    private Long long1;
+    private BigDecimal decimal1;
+    @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
+    private LocalDateTime dateTime1;
 
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
@@ -121,6 +128,78 @@ public class Nested1Dto implements INested1, DTO {
         return this;
     }
 
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    @Override
+    public Integer getInteger1() {
+        return this.integer1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.integer1</code>.
+     */
+    @Override
+    public Nested1Dto setInteger1(Integer integer1) {
+        this.integer1 = integer1;
+        this.keeper.touch("integer1");
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    @Override
+    public Long getLong1() {
+        return this.long1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.long1</code>.
+     */
+    @Override
+    public Nested1Dto setLong1(Long long1) {
+        this.long1 = long1;
+        this.keeper.touch("long1");
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    @Override
+    public BigDecimal getDecimal1() {
+        return this.decimal1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.decimal1</code>.
+     */
+    @Override
+    public Nested1Dto setDecimal1(BigDecimal decimal1) {
+        this.decimal1 = decimal1;
+        this.keeper.touch("decimal1");
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    @Override
+    public LocalDateTime getDateTime1() {
+        return this.dateTime1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Nested1.dateTime1</code>.
+     */
+    @Override
+    public Nested1Dto setDateTime1(LocalDateTime dateTime1) {
+        this.dateTime1 = dateTime1;
+        this.keeper.touch("dateTime1");
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields Setters/Getters (please define here)
     // -------------------------------------------------------------------------
@@ -161,6 +240,10 @@ public class Nested1Dto implements INested1, DTO {
         setUuidId(from.getUuidId());
         setString1(from.getString1());
         setString2(from.getString2());
+        setInteger1(from.getInteger1());
+        setLong1(from.getLong1());
+        setDecimal1(from.getDecimal1());
+        setDateTime1(from.getDateTime1());
     }
     @Override
     public <E extends INested1> E into(E into) {

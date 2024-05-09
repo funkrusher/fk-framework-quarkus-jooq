@@ -4,6 +4,7 @@ import org.fk.core.exception.MappingException;
 import org.jooq.Field;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * FilterConditionProviderFactory
@@ -41,6 +42,10 @@ public class FilterConditionProviderFactory {
             @SuppressWarnings("unchecked")
             Field<BigDecimal> field0 = (Field<BigDecimal>) field;
             return new BigDecimalFilterConditionProvider(field0);
+        } else if (LocalDateTime.class.isAssignableFrom(type)) {
+            @SuppressWarnings("unchecked")
+            Field<LocalDateTime> field0 = (Field<LocalDateTime>) field;
+            return new LocalDateTimeFilterConditionProvider(field0);
         } else {
             return new UnsupportedFilterConditionProvider();
         }

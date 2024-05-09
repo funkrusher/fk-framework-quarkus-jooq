@@ -1,5 +1,6 @@
 package org.fk.core.query.jooq.filter;
 
+import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.model.FkFilter;
 import org.jooq.Condition;
 
@@ -10,15 +11,15 @@ import org.jooq.Condition;
  * and its value, to a @{@link Condition}
  */
 public interface FilterConditionProvider {
-    public Condition eqCondition(String value);
+    public Condition eqCondition(String value) throws InvalidDataException;
 
-    public Condition neCondition(String value);
+    public Condition neCondition(String value) throws InvalidDataException;
 
-    public Condition geCondition(String value);
+    public Condition geCondition(String value) throws InvalidDataException;
 
-    public Condition gtCondition(String value);
+    public Condition gtCondition(String value) throws InvalidDataException;
 
-    public Condition leCondition(String value);
+    public Condition leCondition(String value) throws InvalidDataException;
 
-    public Condition ltCondition(String value);
+    public Condition ltCondition(String value) throws InvalidDataException;
 }

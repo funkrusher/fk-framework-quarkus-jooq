@@ -1,7 +1,11 @@
 package org.fk.core.query.jooq.filter;
 
+import org.fk.core.exception.InvalidDataException;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.impl.QOM;
+
+import java.math.BigDecimal;
 
 /**
  * IntegerFilterConditionProvider
@@ -16,34 +20,42 @@ public class IntegerFilterConditionProvider implements FilterConditionProvider {
         this.field = field;
     }
 
-    @Override
-    public Condition eqCondition(String value) {
-        return field.eq(Integer.parseInt(value));
+    private Integer getInteger(String value) throws InvalidDataException {
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            throw new InvalidDataException("unsupported integer format", e);
+        }
     }
 
     @Override
-    public Condition neCondition(String value) {
-        return field.ne(Integer.parseInt(value));
+    public Condition eqCondition(String value) throws InvalidDataException {
+        return field.eq(getInteger(value));
     }
 
     @Override
-    public Condition geCondition(String value) {
-        return field.ge(Integer.parseInt(value));
+    public Condition neCondition(String value) throws InvalidDataException {
+        return field.ne(getInteger(value));
     }
 
     @Override
-    public Condition gtCondition(String value) {
-        return field.gt(Integer.parseInt(value));
+    public Condition geCondition(String value) throws InvalidDataException {
+        return field.ge(getInteger(value));
     }
 
     @Override
-    public Condition leCondition(String value) {
-        return field.le(Integer.parseInt(value));
+    public Condition gtCondition(String value) throws InvalidDataException {
+        return field.gt(getInteger(value));
     }
 
     @Override
-    public Condition ltCondition(String value) {
-        return field.lt(Integer.parseInt(value));
+    public Condition leCondition(String value) throws InvalidDataException {
+        return field.le(getInteger(value));
+    }
+
+    @Override
+    public Condition ltCondition(String value) throws InvalidDataException {
+        return field.lt(getInteger(value));
     }
 
 }

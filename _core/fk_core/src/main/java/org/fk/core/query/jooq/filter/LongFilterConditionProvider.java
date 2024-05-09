@@ -1,7 +1,12 @@
 package org.fk.core.query.jooq.filter;
 
+import org.fk.core.exception.InvalidDataException;
 import org.jooq.Condition;
 import org.jooq.Field;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * LongFilterConditionProvider
@@ -15,33 +20,41 @@ public class LongFilterConditionProvider implements FilterConditionProvider {
         this.field = field;
     }
 
-    @Override
-    public Condition eqCondition(String value) {
-        return field.eq(Long.parseLong(value));
+    private Long getLong(String value) {
+        try {
+            return Long.parseLong(value);
+        } catch (Exception e) {
+            throw new InvalidDataException("unsupported long format", e);
+        }
     }
 
     @Override
-    public Condition neCondition(String value) {
-        return field.ne(Long.parseLong(value));
+    public Condition eqCondition(String value) throws InvalidDataException {
+        return field.eq(getLong(value));
     }
 
     @Override
-    public Condition geCondition(String value) {
-        return field.ge(Long.parseLong(value));
+    public Condition neCondition(String value) throws InvalidDataException {
+        return field.ne(getLong(value));
     }
 
     @Override
-    public Condition gtCondition(String value) {
-        return field.gt(Long.parseLong(value));
+    public Condition geCondition(String value) throws InvalidDataException {
+        return field.ge(getLong(value));
     }
 
     @Override
-    public Condition leCondition(String value) {
-        return field.le(Long.parseLong(value));
+    public Condition gtCondition(String value) throws InvalidDataException {
+        return field.gt(getLong(value));
     }
 
     @Override
-    public Condition ltCondition(String value) {
-        return field.lt(Long.parseLong(value));
+    public Condition leCondition(String value) throws InvalidDataException {
+        return field.le(getLong(value));
+    }
+
+    @Override
+    public Condition ltCondition(String value) throws InvalidDataException {
+        return field.lt(getLong(value));
     }
 }

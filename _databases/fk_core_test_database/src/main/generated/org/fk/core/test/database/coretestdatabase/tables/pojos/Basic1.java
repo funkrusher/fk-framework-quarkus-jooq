@@ -7,6 +7,9 @@ package org.fk.core.test.database.coretestdatabase.tables.pojos;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
 
 
@@ -21,6 +24,10 @@ public class Basic1 implements IBasic1 {
     private Integer autoIncId;
     private String string1;
     private String string2;
+    private Integer integer1;
+    private Long long1;
+    private BigDecimal decimal1;
+    private LocalDateTime dateTime1;
     private Integer clientId;
 
     public Basic1() {}
@@ -29,6 +36,10 @@ public class Basic1 implements IBasic1 {
         this.autoIncId = value.getAutoIncId();
         this.string1 = value.getString1();
         this.string2 = value.getString2();
+        this.integer1 = value.getInteger1();
+        this.long1 = value.getLong1();
+        this.decimal1 = value.getDecimal1();
+        this.dateTime1 = value.getDateTime1();
         this.clientId = value.getClientId();
     }
 
@@ -36,11 +47,19 @@ public class Basic1 implements IBasic1 {
         Integer autoIncId,
         String string1,
         String string2,
+        Integer integer1,
+        Long long1,
+        BigDecimal decimal1,
+        LocalDateTime dateTime1,
         Integer clientId
     ) {
         this.autoIncId = autoIncId;
         this.string1 = string1;
         this.string2 = string2;
+        this.integer1 = integer1;
+        this.long1 = long1;
+        this.decimal1 = decimal1;
+        this.dateTime1 = dateTime1;
         this.clientId = clientId;
     }
 
@@ -98,6 +117,74 @@ public class Basic1 implements IBasic1 {
     }
 
     /**
+     * Getter for <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    @Override
+    public Integer getInteger1() {
+        return this.integer1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.integer1</code>.
+     */
+    @Override
+    public Basic1 setInteger1(Integer integer1) {
+        this.integer1 = integer1;
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    @Override
+    public Long getLong1() {
+        return this.long1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.long1</code>.
+     */
+    @Override
+    public Basic1 setLong1(Long long1) {
+        this.long1 = long1;
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    @Override
+    public BigDecimal getDecimal1() {
+        return this.decimal1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.decimal1</code>.
+     */
+    @Override
+    public Basic1 setDecimal1(BigDecimal decimal1) {
+        this.decimal1 = decimal1;
+        return this;
+    }
+
+    /**
+     * Getter for <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    @Override
+    public LocalDateTime getDateTime1() {
+        return this.dateTime1;
+    }
+
+    /**
+     * Setter for <code>coreTestDatabase.Basic1.dateTime1</code>.
+     */
+    @Override
+    public Basic1 setDateTime1(LocalDateTime dateTime1) {
+        this.dateTime1 = dateTime1;
+        return this;
+    }
+
+    /**
      * Getter for <code>coreTestDatabase.Basic1.clientId</code>.
      */
     @NotNull
@@ -122,6 +209,10 @@ public class Basic1 implements IBasic1 {
         sb.append(autoIncId);
         sb.append(", ").append(string1);
         sb.append(", ").append(string2);
+        sb.append(", ").append(integer1);
+        sb.append(", ").append(long1);
+        sb.append(", ").append(decimal1);
+        sb.append(", ").append(dateTime1);
         sb.append(", ").append(clientId);
 
         sb.append(")");
@@ -137,6 +228,10 @@ public class Basic1 implements IBasic1 {
         setAutoIncId(from.getAutoIncId());
         setString1(from.getString1());
         setString2(from.getString2());
+        setInteger1(from.getInteger1());
+        setLong1(from.getLong1());
+        setDecimal1(from.getDecimal1());
+        setDateTime1(from.getDateTime1());
         setClientId(from.getClientId());
     }
 
