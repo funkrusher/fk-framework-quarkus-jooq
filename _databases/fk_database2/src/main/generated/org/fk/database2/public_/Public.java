@@ -12,7 +12,7 @@ import org.fk.database2.public_.tables.Author;
 import org.fk.database2.public_.tables.Book;
 import org.fk.database2.public_.tables.Databasechangelog;
 import org.fk.database2.public_.tables.Databasechangeloglock;
-import org.fk.database2.public_.tables.Init;
+import org.fk.database2.public_.tables.Datainit;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -52,9 +52,9 @@ public class Public extends SchemaImpl {
     public final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
 
     /**
-     * The table <code>public.init</code>.
+     * The table <code>public.datainit</code>.
      */
-    public final Init INIT = Init.INIT;
+    public final Datainit DATAINIT = Datainit.DATAINIT;
 
     /**
      * No further instances allowed
@@ -76,7 +76,7 @@ public class Public extends SchemaImpl {
             Book.BOOK,
             Databasechangelog.DATABASECHANGELOG,
             Databasechangeloglock.DATABASECHANGELOGLOCK,
-            Init.INIT
+            Datainit.DATAINIT
         );
     }
 }

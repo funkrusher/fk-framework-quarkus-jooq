@@ -1,8 +1,12 @@
 package org.fk.product.test;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
+import org.fk.core.init.DataInitPlan;
 import org.fk.database1.Database1Testcontainer;
-import org.fk.product.init.ProductInit;
+import org.fk.product.init.ProductBasicDataInit;
+import org.fk.product.init.ProductTestDataInit;
+import org.fk.root.init.RootBasicDataInit;
+import org.fk.root.init.RootTestDataInit;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.testcontainers.containers.MariaDBContainer;
@@ -27,10 +31,14 @@ public class ProductTestLifecycleManager implements QuarkusTestResourceLifecycle
             this.databaseTestcontainer = new Database1Testcontainer();
             MariaDBContainer<?> container = databaseTestcontainer.getFkMariadb().getContainer();
 
-            // populate the db with the basis-data for each product, and set them initialized!
+            // execute the data-init plan for this modules test-suite.
             DSLContext dsl = DSL.using(container.getJdbcUrl(), container.getUsername(), container.getPassword());
-            ProductInit productInit = new ProductInit();
-            productInit.init(dsl);
+            new DataInitPlan()
+                    .add(new RootBasicDataInit())
+                    .add(new RootTestDataInit())
+                    .add(new ProductBasicDataInit())
+                    .add(new ProductTestDataInit())
+                    .execute(dsl);
 
             return databaseTestcontainer.getLifecycleManagerStartResult();
 

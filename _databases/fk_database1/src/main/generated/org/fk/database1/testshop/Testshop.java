@@ -11,7 +11,7 @@ import org.fk.database1.DefaultCatalog;
 import org.fk.database1.testshop.tables.Client;
 import org.fk.database1.testshop.tables.Databasechangelog;
 import org.fk.database1.testshop.tables.Databasechangeloglock;
-import org.fk.database1.testshop.tables.Init;
+import org.fk.database1.testshop.tables.Datainit;
 import org.fk.database1.testshop.tables.Lang;
 import org.fk.database1.testshop.tables.Post;
 import org.fk.database1.testshop.tables.QrtzBlobTriggers;
@@ -63,9 +63,9 @@ public class Testshop extends SchemaImpl {
     public final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
 
     /**
-     * The table <code>testshop.init</code>.
+     * The table <code>testshop.DataInit</code>.
      */
-    public final Init INIT = Init.INIT;
+    public final Datainit DATAINIT = Datainit.DATAINIT;
 
     /**
      * Lang contains available languages of the app
@@ -171,7 +171,7 @@ public class Testshop extends SchemaImpl {
             Client.CLIENT,
             Databasechangelog.DATABASECHANGELOG,
             Databasechangeloglock.DATABASECHANGELOGLOCK,
-            Init.INIT,
+            Datainit.DATAINIT,
             Lang.LANG,
             Post.POST,
             QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS,
