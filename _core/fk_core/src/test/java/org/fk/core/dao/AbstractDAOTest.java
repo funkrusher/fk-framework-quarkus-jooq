@@ -625,8 +625,6 @@ public class AbstractDAOTest {
         assertTrue(exception.getMessage().contains("contains field clientId"));
     }
 
-
-
     // -------------------------------------------------------------------------
     // Helper-functions and classes
     // -------------------------------------------------------------------------

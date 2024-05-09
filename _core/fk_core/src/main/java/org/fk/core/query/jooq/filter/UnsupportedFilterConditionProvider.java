@@ -15,13 +15,28 @@ public class UnsupportedFilterConditionProvider implements FilterConditionProvid
     }
 
     @Override
+    public Condition neCondition(String value) {
+        throw new UnsupportedOperationException("ne not applicable!");
+    }
+
+    @Override
     public Condition geCondition(String value) {
         throw new UnsupportedOperationException("ge not applicable!");
     }
 
     @Override
+    public Condition gtCondition(String value) {
+        throw new UnsupportedOperationException("gt not applicable!");
+    }
+
+    @Override
     public Condition leCondition(String value) {
         throw new UnsupportedOperationException("le not applicable!");
+    }
+
+    @Override
+    public Condition ltCondition(String value) {
+        throw new UnsupportedOperationException("lt not applicable!");
     }
 
 }

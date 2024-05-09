@@ -49,14 +49,6 @@ public class FkQuery {
         this.uriInfo = uriInfo;
     }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
     @PostConstruct
     void init() {
         if (uriInfo == null) {
@@ -76,16 +68,36 @@ public class FkQuery {
 
     }
 
+    public FkQuery setPage(int page) {
+        this.page = page;
+        return this;
+    }
+
     public int getPage() {
         return page;
+    }
+
+    public FkQuery setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+        return this;
     }
 
     public int getPageSize() {
         return pageSize;
     }
 
+    public FkQuery setFilters(List<FkFilter> filters) {
+        this.filters = filters;
+        return this;
+    }
+
     public List<FkFilter> getFilters() {
         return filters;
+    }
+
+    public FkQuery setSorter(FkSorter sorter) {
+        this.sorter = sorter;
+        return this;
     }
 
     public FkSorter getSorter() {

@@ -119,8 +119,14 @@ public class FkQueryJooqMapper {
                 String value = filter.getValues().getFirst();
                 if (filter.getOperator() == FkFilterOperator.EQUALS) {
                     filterFields.add(conditionProvider.eqCondition(value));
+                } else if (filter.getOperator() == FkFilterOperator.NOT_EQUALS) {
+                    filterFields.add(conditionProvider.neCondition(value));
+                } else if (filter.getOperator() == FkFilterOperator.GREATER_THAN) {
+                    filterFields.add(conditionProvider.gtCondition(value));
                 } else if (filter.getOperator() == FkFilterOperator.GREATER_THAN_OR_EQUALS) {
                     filterFields.add(conditionProvider.geCondition(value));
+                } else if (filter.getOperator() == FkFilterOperator.LESS_THAN) {
+                    filterFields.add(conditionProvider.ltCondition(value));
                 } else if (filter.getOperator() == FkFilterOperator.LESS_THAN_OR_EQUALS) {
                     filterFields.add(conditionProvider.leCondition(value));
                 }

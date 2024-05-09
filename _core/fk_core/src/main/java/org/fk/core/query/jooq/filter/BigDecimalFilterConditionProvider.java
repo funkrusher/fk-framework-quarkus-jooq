@@ -24,12 +24,27 @@ public class BigDecimalFilterConditionProvider implements FilterConditionProvide
     }
 
     @Override
+    public Condition neCondition(String value) {
+        return field.ne(new BigDecimal(value));
+    }
+
+    @Override
     public Condition geCondition(String value) {
         return field.ge(new BigDecimal(value));
     }
 
     @Override
+    public Condition gtCondition(String value) {
+        return field.gt(new BigDecimal(value));
+    }
+
+    @Override
     public Condition leCondition(String value) {
         return field.le(new BigDecimal(value));
+    }
+
+    @Override
+    public Condition ltCondition(String value) {
+        return field.lt(new BigDecimal(value));
     }
 }

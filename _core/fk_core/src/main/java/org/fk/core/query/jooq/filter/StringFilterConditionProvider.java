@@ -22,13 +22,28 @@ public class StringFilterConditionProvider implements FilterConditionProvider {
     }
 
     @Override
+    public Condition neCondition(String value) {
+        return field.ne(value);
+    }
+
+    @Override
     public Condition geCondition(String value) {
         throw new UnsupportedOperationException("ge not applicable!");
     }
 
     @Override
+    public Condition gtCondition(String value) {
+        throw new UnsupportedOperationException("gt not applicable!");
+    }
+
+    @Override
     public Condition leCondition(String value) {
         throw new UnsupportedOperationException("le not applicable!");
+    }
+
+    @Override
+    public Condition ltCondition(String value) {
+        throw new UnsupportedOperationException("lt not applicable!");
     }
 
 }

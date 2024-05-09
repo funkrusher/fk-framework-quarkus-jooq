@@ -22,13 +22,28 @@ public class IntegerFilterConditionProvider implements FilterConditionProvider {
     }
 
     @Override
+    public Condition neCondition(String value) {
+        return field.ne(Integer.parseInt(value));
+    }
+
+    @Override
     public Condition geCondition(String value) {
         return field.ge(Integer.parseInt(value));
     }
 
     @Override
+    public Condition gtCondition(String value) {
+        return field.gt(Integer.parseInt(value));
+    }
+
+    @Override
     public Condition leCondition(String value) {
         return field.le(Integer.parseInt(value));
+    }
+
+    @Override
+    public Condition ltCondition(String value) {
+        return field.lt(Integer.parseInt(value));
     }
 
 }

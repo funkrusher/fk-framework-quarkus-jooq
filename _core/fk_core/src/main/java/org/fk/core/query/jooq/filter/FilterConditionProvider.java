@@ -12,7 +12,13 @@ import org.jooq.Condition;
 public interface FilterConditionProvider {
     public Condition eqCondition(String value);
 
+    public Condition neCondition(String value);
+
     public Condition geCondition(String value);
 
+    public Condition gtCondition(String value);
+
     public Condition leCondition(String value);
+
+    public Condition ltCondition(String value);
 }
