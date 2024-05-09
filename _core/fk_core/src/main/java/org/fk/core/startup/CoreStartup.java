@@ -1,6 +1,9 @@
 package org.fk.core.startup;
 
+import io.quarkus.runtime.Startup;
 import io.quarkus.runtime.StartupEvent;
+import io.smallrye.config.Priorities;
+import jakarta.annotation.Priority;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -9,20 +12,22 @@ import org.fk.core.exception.MappingException;
 import org.jboss.logging.Logger;
 
 /**
- * Startup
+ * CoreStartup
  * <p>
  * Central place for core startup-handling,
  * which is common for all our services/modules.
  */
 @Singleton
-public class Startup {
+public class CoreStartup {
 
-    public static final Logger LOGGER = Logger.getLogger(Startup.class);
+    public static final Logger LOGGER = Logger.getLogger(CoreStartup.class);
 
     @Inject
     DTOValidityScanner dtoValidityScanner;
 
-    public void handleCoreStartup(@SuppressWarnings("java:S1172") @Observes StartupEvent startupEvent) {
+    @Startup
+    @Priority(Priorities.PLATFORM)
+    public void startup() {
         // ---------------------------
         // System-Properties Overrides
         // ---------------------------

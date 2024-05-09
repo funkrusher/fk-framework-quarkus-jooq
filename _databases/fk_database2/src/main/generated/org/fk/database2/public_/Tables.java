@@ -8,7 +8,7 @@ import org.fk.database2.public_.tables.Author;
 import org.fk.database2.public_.tables.Book;
 import org.fk.database2.public_.tables.Databasechangelog;
 import org.fk.database2.public_.tables.Databasechangeloglock;
-import org.fk.database2.public_.tables.Init;
+import org.fk.database2.public_.tables.Datainit;
 
 
 /**
@@ -38,7 +38,7 @@ public class Tables {
     public static final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
 
     /**
-     * The table <code>public.init</code>.
+     * The table <code>public.datainit</code>.
      */
-    public static final Init INIT = Init.INIT;
+    public static final Datainit DATAINIT = Datainit.DATAINIT;
 }

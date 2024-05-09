@@ -7,7 +7,7 @@ package org.fk.database1.testshop;
 import org.fk.database1.testshop.tables.Client;
 import org.fk.database1.testshop.tables.Databasechangelog;
 import org.fk.database1.testshop.tables.Databasechangeloglock;
-import org.fk.database1.testshop.tables.Init;
+import org.fk.database1.testshop.tables.Datainit;
 import org.fk.database1.testshop.tables.Lang;
 import org.fk.database1.testshop.tables.Post;
 import org.fk.database1.testshop.tables.QrtzBlobTriggers;
@@ -49,9 +49,9 @@ public class Tables {
     public static final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
 
     /**
-     * The table <code>testshop.init</code>.
+     * The table <code>testshop.DataInit</code>.
      */
-    public static final Init INIT = Init.INIT;
+    public static final Datainit DATAINIT = Datainit.DATAINIT;
 
     /**
      * Lang contains available languages of the app
