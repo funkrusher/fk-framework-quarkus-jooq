@@ -28,8 +28,8 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     private final DSLContext dsl;
     private final Table<R> table;
-    private final @Nullable RequestContext request;
-    private final @Nullable UniqueKey<R> pk;
+    private final RequestContext request;
+    private final UniqueKey<R> pk;
     private final @Nullable Field<Object> autoIncGeneratingField;
     private final @Nullable Field<UUID> uuidGeneratingField;
     private final @Nullable Field<Integer> clientIdField;
@@ -42,19 +42,25 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         this.dsl = dsl;
         this.table = table;
         this.request = (RequestContext) dsl.data(DSL_DATA_KEY);
+        if (this.request == null) {
+            throw new MappingException("request is missing!");
+        }
+        if (table.getPrimaryKey() == null) {
+            throw new MappingException("table must have a primary-key");
+        }
         this.pk = table.getPrimaryKey();
 
         // search the 'generating' field in the primary-key
         // most tables have such a 'generating' field. Currently supported: either an auto-inc or uuid field.
         // some tables (like N:M tables, don't have such a field, which is also supported)
         // we will use this, to automatically generate and return those ids to the caller.
-        this.autoIncGeneratingField = AbstractDAO.findAutoIncGeneratingField(table);
-        this.uuidGeneratingField = AbstractDAO.findUuidGeneratingField(table);
+        this.autoIncGeneratingField = AbstractDAO.findAutoIncGeneratingField(pk);
+        this.uuidGeneratingField = AbstractDAO.findUuidGeneratingField(pk);
 
         // if table has a field clientId, we must match it always with request-context clientId.
         final Field<Integer> field = DSL.field(DSL.name("clientId"), Integer.class);
         this.clientIdField = this.table.field(field);
-        if (this.clientIdField != null && this.request == null) {
+        if (this.clientIdField != null && this.request.getClientId() == null) {
             // fail-fast if we expect a clientId in any case!
             throw new MappingException("DAO table contains field clientId but request is missing!");
         }
@@ -81,37 +87,31 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     /**
      * Finds the Non-FK AutoInc Primary-Key in the given table (we only expect one or none)
      *
-     * @param table table
+     * @param pk pk
      * @return autoinc pk field
      * @param <Q> table-type
      */
-    private static <Q extends UpdatableRecord<Q>> @Nullable Field<Object> findAutoIncGeneratingField(final Table<Q> table) {
-        if (table.getPrimaryKey() != null) {
-            //noinspection unchecked
-            return (Field<Object>) table.getPrimaryKey().getFields().stream()
-                    .filter(field -> isGeneratingPk(field) && field.getDataType().identity())
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
+    private static <Q extends UpdatableRecord<Q>> @Nullable Field<Object> findAutoIncGeneratingField(final UniqueKey<Q> pk) {
+        //noinspection unchecked
+        return (Field<Object>) pk.getFields().stream()
+                .filter(field -> isGeneratingPk(field) && field.getDataType().identity())
+                .findFirst()
+                .orElse(null);
     }
 
     /**
      * Finds the Non-FK UUID Primary-Key in the given table (we only expect one or none)
      *
-     * @param table table
+     * @param pk pk
      * @return uuid pk field
      * @param <Q> table-type
      */
-    private static <Q extends UpdatableRecord<Q>> @Nullable Field<UUID> findUuidGeneratingField(final Table<Q> table) {
-        if (table.getPrimaryKey() != null) {
-            //noinspection unchecked
-            return (Field<UUID>) table.getPrimaryKey().getFields().stream()
-                    .filter(field -> isGeneratingPk(field) && field.getDataType().isUUID())
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
+    private static <Q extends UpdatableRecord<Q>> @Nullable Field<UUID> findUuidGeneratingField(final UniqueKey<Q> pk) {
+        //noinspection unchecked
+        return (Field<UUID>) pk.getFields().stream()
+                .filter(field -> isGeneratingPk(field) && field.getDataType().isUUID())
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -144,8 +144,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                 recs.add(rec);
             }
             return recs;
-
         } else {
+            // should be unreachable
             throw new MappingException("unexpected implementation of DAO-typed interface!");
         }
     }
@@ -166,10 +166,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param changed change-status
      */
     private void enforcePrimaryKeysChangeStatus(R rec, boolean changed) {
-        if (this.pk != null) {
-            for (final Field<?> field : pk.getFieldsArray()) {
-                rec.changed(field, changed);
-            }
+        for (final Field<?> field : pk.getFieldsArray()) {
+            rec.changed(field, changed);
         }
     }
 
@@ -178,7 +176,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param rec rec
      */
     private void enforceGeneratingIdExists(R rec) {
-        if (this.pk != null && (uuidGeneratingField != null && rec.get(uuidGeneratingField) == null)) {
+        if (uuidGeneratingField != null && rec.get(uuidGeneratingField) == null) {
             // uuid field in pk is empty, we need to generate it now.
             if (dsl().dialect() == SQLDialect.MARIADB) {
                 // mariadb uses RFC4122 UUID, we must use it here, or we get an error in insert.
@@ -256,9 +254,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return Condition for the given id
      */
     private Condition getPrimaryKeyCondition(final T value) {
-        if (this.pk == null) {
-            throw new MappingException("internal-error: DTO table has no primary-key, but expected.");
-        }
         // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
         //noinspection unchecked
         final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
@@ -277,9 +272,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return Condition for the given values
      */
     private Condition getPrimaryKeyCondition(final Collection<T> values) {
-        if (this.pk == null) {
-            throw new MappingException("internal-error: DTO table has no primary-key, but expected.");
-        }
         // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
         //noinspection unchecked
         final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
@@ -323,9 +315,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return instance of T (combined primary-key)
      */
     public T compositeKeyRecord(final Object... values) {
-        if (this.pk == null) {
-            return null;
-        }
         // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
         //noinspection unchecked
         final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
@@ -385,6 +374,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public int insert(final List<Y> items) throws DataAccessException {
         final List<R> inserts = prepareInserts(prepareRecords(items));
+        if (inserts.isEmpty()) {
+            return 0;
+        }
         int insertCount = 0;
 
         if (autoIncGeneratingField != null) {
@@ -446,6 +438,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public void update(final List<Y> items) throws DataAccessException {
         final List<R> updates = prepareUpdates(prepareRecords(items));
+        if (updates.isEmpty()) {
+            return;
+        }
         if (updates.size() > 1) {
             // batch update (performance gain)
             final List<UpdateConditionStep<R>> conditions = new ArrayList<>();
@@ -455,7 +450,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                         .where(getRecordCondition(rec)));
             }
             dsl().batch(conditions).execute();
-        } else if (updates.size() == 1) {
+        } else {
             // single update
             final R rec = updates.getFirst();
             dsl().update(table())
@@ -484,24 +479,21 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public void delete(final List<Y> items) throws DataAccessException {
         final List<R> deletes = prepareRecords(items);
+        if (deletes.isEmpty()) {
+            return;
+        }
         if (deletes.size() > 1) {
             // batch delete (performance gain)
             final List<DeleteConditionStep<R>> conditions = new ArrayList<>();
             for (R rec : deletes) {
-                Condition deleteCondition = getRecordCondition(rec);
-                if (this.pk != null) {
-                    deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(rec)));
-                }
+                final Condition deleteCondition = getRecordCondition(rec).and(getPrimaryKeyCondition(getId(rec)));
                 conditions.add(dsl().delete(table()).where(deleteCondition));
             }
             dsl().batch(conditions).execute();
-        } else if (deletes.size() == 1) {
+        } else {
             // single delete
             final R rec = deletes.getFirst();
-            Condition deleteCondition = getRecordCondition(rec);
-            if (this.pk != null) {
-                deleteCondition = deleteCondition.and(getPrimaryKeyCondition(getId(rec)));
-            }
+            final Condition deleteCondition = getRecordCondition(rec).and(getPrimaryKeyCondition(getId(rec)));
             dsl().delete(table()).where(deleteCondition).execute();
         }
     }
@@ -539,12 +531,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     public boolean existsById(final T id) throws DataAccessException {
-        if (pk == null) {
-            return false;
-        } else {
-            final SelectConditionStep<R> selectStep = dsl.selectFrom(table()).where(getPrimaryKeyCondition(id));
-            return dsl().fetchCount(selectStep) > 0;
-        }
+        final SelectConditionStep<R> selectStep = dsl.selectFrom(table()).where(getPrimaryKeyCondition(id));
+        return dsl().fetchCount(selectStep) > 0;
     }
 
     /**
@@ -566,10 +554,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     public @Nullable R fetch(final T id) throws DataAccessException {
-        if (pk != null)
-            return dsl().selectFrom(table())
-                    .where(getPrimaryKeyCondition(id))
-                    .fetchOne();
-        return null;
+        return dsl().selectFrom(table())
+                .where(getPrimaryKeyCondition(id))
+                .fetchOne();
     }
 }

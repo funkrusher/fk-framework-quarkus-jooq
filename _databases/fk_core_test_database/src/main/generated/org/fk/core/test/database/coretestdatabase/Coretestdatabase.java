@@ -8,13 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.fk.core.test.database.DefaultCatalog;
-import org.fk.core.test.database.coretestdatabase.tables.Client;
+import org.fk.core.test.database.coretestdatabase.tables.Basic1;
+import org.fk.core.test.database.coretestdatabase.tables.Basic2;
 import org.fk.core.test.database.coretestdatabase.tables.Databasechangelog;
 import org.fk.core.test.database.coretestdatabase.tables.Databasechangeloglock;
-import org.fk.core.test.database.coretestdatabase.tables.Lang;
-import org.fk.core.test.database.coretestdatabase.tables.Post;
-import org.fk.core.test.database.coretestdatabase.tables.Product;
-import org.fk.core.test.database.coretestdatabase.tables.ProductLang;
+import org.fk.core.test.database.coretestdatabase.tables.Nested1;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -34,9 +32,14 @@ public class Coretestdatabase extends SchemaImpl {
     public static final Coretestdatabase CORETESTDATABASE = new Coretestdatabase();
 
     /**
-     * The table <code>coreTestDatabase.client</code>.
+     * The table <code>coreTestDatabase.Basic1</code>.
      */
-    public final Client CLIENT = Client.CLIENT;
+    public final Basic1 BASIC1 = Basic1.BASIC1;
+
+    /**
+     * The table <code>coreTestDatabase.Basic2</code>.
+     */
+    public final Basic2 BASIC2 = Basic2.BASIC2;
 
     /**
      * The table <code>coreTestDatabase.DATABASECHANGELOG</code>.
@@ -49,24 +52,9 @@ public class Coretestdatabase extends SchemaImpl {
     public final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
 
     /**
-     * The table <code>coreTestDatabase.lang</code>.
+     * The table <code>coreTestDatabase.Nested1</code>.
      */
-    public final Lang LANG = Lang.LANG;
-
-    /**
-     * The table <code>coreTestDatabase.post</code>.
-     */
-    public final Post POST = Post.POST;
-
-    /**
-     * The table <code>coreTestDatabase.product</code>.
-     */
-    public final Product PRODUCT = Product.PRODUCT;
-
-    /**
-     * The table <code>coreTestDatabase.product_lang</code>.
-     */
-    public final ProductLang PRODUCT_LANG = ProductLang.PRODUCT_LANG;
+    public final Nested1 NESTED1 = Nested1.NESTED1;
 
     /**
      * No further instances allowed
@@ -84,13 +72,11 @@ public class Coretestdatabase extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Client.CLIENT,
+            Basic1.BASIC1,
+            Basic2.BASIC2,
             Databasechangelog.DATABASECHANGELOG,
             Databasechangeloglock.DATABASECHANGELOGLOCK,
-            Lang.LANG,
-            Post.POST,
-            Product.PRODUCT,
-            ProductLang.PRODUCT_LANG
+            Nested1.NESTED1
         );
     }
 }

@@ -4,13 +4,11 @@
 package org.fk.core.test.database.coretestdatabase;
 
 
-import org.fk.core.test.database.coretestdatabase.tables.Client;
+import org.fk.core.test.database.coretestdatabase.tables.Basic1;
+import org.fk.core.test.database.coretestdatabase.tables.Basic2;
 import org.fk.core.test.database.coretestdatabase.tables.Databasechangelog;
 import org.fk.core.test.database.coretestdatabase.tables.Databasechangeloglock;
-import org.fk.core.test.database.coretestdatabase.tables.Lang;
-import org.fk.core.test.database.coretestdatabase.tables.Post;
-import org.fk.core.test.database.coretestdatabase.tables.Product;
-import org.fk.core.test.database.coretestdatabase.tables.ProductLang;
+import org.fk.core.test.database.coretestdatabase.tables.Nested1;
 
 
 /**
@@ -20,9 +18,14 @@ import org.fk.core.test.database.coretestdatabase.tables.ProductLang;
 public class Tables {
 
     /**
-     * The table <code>coreTestDatabase.client</code>.
+     * The table <code>coreTestDatabase.Basic1</code>.
      */
-    public static final Client CLIENT = Client.CLIENT;
+    public static final Basic1 BASIC1 = Basic1.BASIC1;
+
+    /**
+     * The table <code>coreTestDatabase.Basic2</code>.
+     */
+    public static final Basic2 BASIC2 = Basic2.BASIC2;
 
     /**
      * The table <code>coreTestDatabase.DATABASECHANGELOG</code>.
@@ -35,22 +38,7 @@ public class Tables {
     public static final Databasechangeloglock DATABASECHANGELOGLOCK = Databasechangeloglock.DATABASECHANGELOGLOCK;
 
     /**
-     * The table <code>coreTestDatabase.lang</code>.
+     * The table <code>coreTestDatabase.Nested1</code>.
      */
-    public static final Lang LANG = Lang.LANG;
-
-    /**
-     * The table <code>coreTestDatabase.post</code>.
-     */
-    public static final Post POST = Post.POST;
-
-    /**
-     * The table <code>coreTestDatabase.product</code>.
-     */
-    public static final Product PRODUCT = Product.PRODUCT;
-
-    /**
-     * The table <code>coreTestDatabase.product_lang</code>.
-     */
-    public static final ProductLang PRODUCT_LANG = ProductLang.PRODUCT_LANG;
+    public static final Nested1 NESTED1 = Nested1.NESTED1;
 }
