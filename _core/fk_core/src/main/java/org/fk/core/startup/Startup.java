@@ -1,6 +1,8 @@
 package org.fk.core.startup;
 
 import io.quarkus.runtime.StartupEvent;
+import io.smallrye.config.Priorities;
+import jakarta.annotation.Priority;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -22,7 +24,7 @@ public class Startup {
     @Inject
     DTOValidityScanner dtoValidityScanner;
 
-    public void handleCoreStartup(@SuppressWarnings("java:S1172") @Observes StartupEvent startupEvent) {
+    public void handleCoreStartup(@SuppressWarnings("java:S1172") @Observes @Priority(Priorities.PLATFORM) StartupEvent startupEvent) {
         // ---------------------------
         // System-Properties Overrides
         // ---------------------------

@@ -13,8 +13,6 @@ dependencies {
     api project(':_core:fk_core')
     // api libs.fkCore
 
-    api project(':_modules:fk_root')
-
     testImplementation libs.bundles.test.quarkus
     testImplementation libs.restAssured
     testImplementation project(':_databases:fk_database1')
@@ -25,7 +23,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = theGroup
-            artifactId = "fk-product"
+            artifactId = "fk-root"
             version = theVersion
             from components.java
         }

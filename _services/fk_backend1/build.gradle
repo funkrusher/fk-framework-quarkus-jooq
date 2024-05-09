@@ -10,6 +10,7 @@ dependencies {
     implementation enforcedPlatform(libs.quarkusPlatform)
     implementation project(':_databases:fk_database1')
     implementation project(':_databases:fk_database2')
+    implementation project(':_modules:fk_root')
     implementation project(':_modules:fk_product')
     implementation project(':_modules:fk_library')
 }

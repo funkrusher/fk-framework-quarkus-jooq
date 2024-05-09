@@ -7,13 +7,14 @@
     </changeSet>
     <changeSet author="bernd" id="feature-3823-sql">
         <sql>
-            CREATE TABLE init
+            CREATE TABLE ModuleInit
             (
-                initialized  VARCHAR(255) NOT NULL
+                initialized  VARCHAR(255) NOT NULL,
+                createdAt TIMESTAMP DEFAULT now()
             );
         </sql>
         <rollback>
-            DROP TABLE init;
+            DROP TABLE ModuleInit;
         </rollback>
     </changeSet>
 </databaseChangeLog>
