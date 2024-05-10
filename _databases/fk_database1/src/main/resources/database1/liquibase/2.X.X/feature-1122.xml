@@ -40,7 +40,7 @@
         </rollback>
     </changeSet>
     <changeSet author="bernd" id="feature-1122-dml" context="dml">
-        <preConditions onFail="MARK_RAN"><not><changeLogPropertyDefined property="mark_dml" value="true"/></not></preConditions>
+        <preConditions onFail="MARK_RAN"><not><changeLogPropertyDefined property="no_dml" value="true"/></not></preConditions>
         <sql>
             INSERT INTO testshop.role (roleId) VALUES ('ADMIN');
             INSERT INTO testshop.role (roleId) VALUES ('EDITOR');

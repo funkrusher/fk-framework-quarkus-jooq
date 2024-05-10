@@ -4,7 +4,7 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <!-- we only mark the dml changesets as executed, but we do not execute them! !-->
-    <property name="mark_dml" value="true" />
+    <property name="no_dml" value="true" />
 
     <include file="changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
