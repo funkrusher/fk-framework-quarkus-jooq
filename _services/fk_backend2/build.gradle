@@ -13,23 +13,12 @@ dependencies {
     implementation project(':_modules:fk_library')
 }
 
-// liquibase command, needed to apply rollbacks in local-dev.
-def properties = new Properties()
-if (file('src/main/resources/application.properties').exists()) {
-    file('src/main/resources/application.properties').withInputStream {
-        stream -> properties.load(stream)
-    }
-}
-
-task backend2Database2Rollback(type: JavaExec) {
+task backend2Database2Liquibase(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
-    mainClass = 'liquibase.integration.commandline.Main'
-    args '--changeLogFile=database2/liquibase/changelog.xml',
-            '--driver=org.postgresql.Driver',
-            '--url=' + properties.getProperty('quarkus.datasource.database2.jdbc.url'),
-            '--username=' + properties.getProperty('quarkus.datasource.database2.username'),
-            '--password=' + properties.getProperty('quarkus.datasource.database2.password'),
-            'rollback',
+    mainClass = 'org.fk.core.liquibase.FkLiquibase'
+    args '--databaseId', 'database2',
+            '--changeLogFilename', 'database2/liquibase/changelog.xml',
+            '--mode',  project.properties['rollbackTag'] ? 'rollback' : 'update',
             project.properties['rollbackTag'] ? project.properties['rollbackTag'] : ''
 }
 

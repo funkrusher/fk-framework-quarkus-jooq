@@ -329,8 +329,8 @@ It is often convenient in local-dev, to be able to rollback to a specific tag, i
 For this use-case a gradle-task is provided, that helps you to rollback your database to a specific changeset. 
 This will automatically execute all rollbacks of already applied changesets until the tag-changeset is reached.
 ```code
-./gradlew backend1Database1Rollback -ProllbackTag=feature-1122-ddl
-./gradlew backend2Database2Rollback -ProllbackTag=feature-3823-ddl
+./gradlew backend1Database1Liquibase -ProllbackTag=feature-1122-ddl
+./gradlew backend2Database2Liquibase -ProllbackTag=feature-3823-ddl
 ```
 This example would rollback all migrations that followed after the file `feature-1122.sql` in database1 (mariadb) and all migrations that
 followed after `feature-3823` in database (postgresql).
