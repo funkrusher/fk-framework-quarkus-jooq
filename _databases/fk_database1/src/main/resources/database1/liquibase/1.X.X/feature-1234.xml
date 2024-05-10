@@ -53,6 +53,7 @@
         </rollback>
     </changeSet>
     <changeSet author="bernd" id="feature-1234-dml" context="dml">
+        <preConditions onFail="MARK_RAN"><not><changeLogPropertyDefined property="mark_dml" value="true"/></not></preConditions>
         <sql>
             INSERT INTO testshop.client (clientId) VALUES (1);
             INSERT INTO testshop.client (clientId) VALUES (2);
