@@ -2,10 +2,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet author="bernd" id="feature-1122">
-        <tagDatabase tag="feature-1122" />
+    <changeSet author="bernd" id="feature-1000">
+        <tagDatabase tag="feature-1000" />
     </changeSet>
-    <changeSet author="bernd" id="feature-1122-sql">
+    <changeSet author="bernd" id="feature-1000-ddl" context="ddl">
         <sql>
             -- Create Author table
             CREATE TABLE Author (
@@ -30,6 +30,16 @@
         <rollback>
             DROP TABLE book;
             DROP TABLE author;
+        </rollback>
+    </changeSet>
+    <changeSet author="bernd" id="feature-1000-dml" context="dml">
+        <sql>
+            INSERT INTO Author (author_id, name) VALUES (1, 'Fjodor Dostojewski');
+            INSERT INTO Book (author_id, title) VALUES (1, 'Crime and Punishment');
+        </sql>
+        <rollback>
+            DELETE FROM Book WHERE author_id = 1;
+            DELETE FROM Author WHERE author_id = 1;
         </rollback>
     </changeSet>
 </databaseChangeLog>

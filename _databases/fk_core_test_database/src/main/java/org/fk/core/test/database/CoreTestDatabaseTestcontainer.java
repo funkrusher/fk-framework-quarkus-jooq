@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.fk.core.liquibase.FkLiquibase.FkLiquibaseChangesetContext.DDL_CONTEXT;
+
 public class CoreTestDatabaseTestcontainer implements AutoCloseable {
 
     private final FkMariaDb fkMariaDb;
@@ -22,7 +24,7 @@ public class CoreTestDatabaseTestcontainer implements AutoCloseable {
         }
         // execute liquibase-update
         try (Connection connection = fkMariaDb.createConnection()) {
-            FkLiquibase fkLiquibase = new FkLiquibase("coreTestDatabase/liquibase/changelog.xml");
+            FkLiquibase fkLiquibase = new FkLiquibase("coreTestDatabase/liquibase/changelog.xml", DDL_CONTEXT);
             fkLiquibase.executeUpdate(connection);
         }
     }

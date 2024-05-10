@@ -2,11 +2,12 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet author="bernd" id="feature-quartz">
-        <tagDatabase tag="feature-quartz" />
+    <changeSet author="bernd" id="feature-7321">
+        <tagDatabase tag="feature-7321" />
     </changeSet>
-    <changeSet author="bernd" id="feature-quartz-sql">
+    <changeSet author="bernd" id="feature-7321-ddl" context="ddl">
         <sql>
+
             DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;
             DROP TABLE IF EXISTS QRTZ_PAUSED_TRIGGER_GRPS;
             DROP TABLE IF EXISTS QRTZ_SCHEDULER_STATE;
@@ -176,7 +177,6 @@
             CREATE INDEX IDX_QRTZ_FT_JG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,JOB_GROUP);
             CREATE INDEX IDX_QRTZ_FT_T_G ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
             CREATE INDEX IDX_QRTZ_FT_TG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_GROUP);
-
         </sql>
         <rollback>
             DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;

@@ -2,10 +2,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet author="bernd" id="feature-tsid">
-        <tagDatabase tag="feature-tsid" />
+    <changeSet author="bernd" id="feature-3721">
+        <tagDatabase tag="feature-3721" />
     </changeSet>
-    <changeSet author="bernd" id="feature-tsid-sql">
+    <changeSet author="bernd" id="feature-3721-ddl" context="ddl">
         <sql>
             DROP TABLE IF EXISTS post;
             CREATE TABLE post (

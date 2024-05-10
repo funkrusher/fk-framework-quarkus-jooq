@@ -5,7 +5,7 @@
     <changeSet author="bernd" id="feature-3823">
         <tagDatabase tag="feature-3823" />
     </changeSet>
-    <changeSet author="bernd" id="feature-3823-sql">
+    <changeSet author="bernd" id="feature-3823-ddl" context="ddl">
         <sql>
             CREATE TABLE DataInit
             (

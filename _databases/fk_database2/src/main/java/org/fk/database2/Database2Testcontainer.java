@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.fk.core.liquibase.FkLiquibase.FkLiquibaseChangesetContext.DDL_CONTEXT;
+
 public class Database2Testcontainer implements AutoCloseable {
 
     private final FkPostgres fkPostgres;
@@ -22,7 +24,7 @@ public class Database2Testcontainer implements AutoCloseable {
         }
         // execute liquibase-update
         try (Connection connection = fkPostgres.createConnection()) {
-            FkLiquibase fkLiquibase = new FkLiquibase("database2/liquibase/changelog.xml");
+            FkLiquibase fkLiquibase = new FkLiquibase("database2/liquibase/changelog.xml", DDL_CONTEXT);
             fkLiquibase.executeUpdate(connection);
         }
     }

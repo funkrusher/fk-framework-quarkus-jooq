@@ -5,7 +5,7 @@
     <changeSet author="bernd" id="feature-1234">
         <tagDatabase tag="feature-1234" />
     </changeSet>
-    <changeSet author="bernd" id="feature-1234-sql">
+    <changeSet author="bernd" id="feature-1234-ddl" context="ddl">
         <sql>
             CREATE TABLE testshop.lang
             (
@@ -50,6 +50,22 @@
             DROP TABLE testshop2.product;
             DROP TABLE testshop.client;
             DROP TABLE testshop.lang;
+        </rollback>
+    </changeSet>
+    <changeSet author="bernd" id="feature-1234-dml" context="dml">
+        <sql>
+            INSERT INTO testshop.client (clientId) VALUES (1);
+            INSERT INTO testshop.client (clientId) VALUES (2);
+            INSERT INTO testshop.client (clientId) VALUES (3);
+
+            INSERT INTO testshop.lang (langId, code, description) VALUES (1, 'de', 'Deutsch');
+            INSERT INTO testshop.lang (langId, code, description) VALUES (2, 'en', 'English');
+            INSERT INTO testshop.lang (langId, code, description) VALUES (3, 'fr', 'FranÃ§ais');
+            INSERT INTO testshop.lang (langId, code, description) VALUES (4, 'pt', 'PortuguÃªs');
+        </sql>
+        <rollback>
+            DELETE FROM testshop.lang;
+            DELETE FROM testshop.client;
         </rollback>
     </changeSet>
 </databaseChangeLog>
