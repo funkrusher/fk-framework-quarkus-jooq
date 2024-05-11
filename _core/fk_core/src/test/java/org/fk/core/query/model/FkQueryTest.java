@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 /**
- * QueryParametersTest
+ * FkQueryTest
  */
 @QuarkusTest
 @TestProfile(CoreTestProfile.class)
@@ -42,7 +42,7 @@ class FkQueryTest {
         Mockito.when(mockUriInfo.getQueryParameters()).thenReturn(map);
 
         FkQuery qp = new FkQuery(mockUriInfo);
-        qp.init(); // normally called by quarkus-framework in PostContruct.
+        qp.init(); // normally called by quarkus-framework in PostConstruct.
 
         Assertions.assertEquals(0, qp.getPage());
         Assertions.assertEquals(10, qp.getPageSize());
