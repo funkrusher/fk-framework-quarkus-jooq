@@ -230,7 +230,7 @@ class AbstractRepositoryTest {
         }
 
         @Override
-        public SelectLimitPercentAfterOffsetStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
+        public SelectFinalStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
             final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Basic1.BASIC1)
                     .addMappableFields(Basic1.BASIC1.fields())
                     .addMappableFields(Basic2.BASIC2.fields())

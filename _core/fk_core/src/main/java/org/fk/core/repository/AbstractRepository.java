@@ -48,7 +48,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    protected abstract SelectLimitPercentAfterOffsetStep<Record> prepareQuery(FkQuery query) throws InvalidDataException;
+    protected abstract SelectFinalStep<Record> prepareQuery(FkQuery query) throws InvalidDataException;
 
     /**
      * You can override this method if specific result mappings are needed / different from the default.

@@ -30,7 +30,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
     }
 
     @Override
-    public SelectLimitPercentAfterOffsetStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
+    public SelectFinalStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
         final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Product.PRODUCT)
                 .addMappableFields(Product.PRODUCT.fields())
                 .addMappableFields(ProductLang.PRODUCT_LANG.fields());

@@ -25,7 +25,7 @@ public class AuthorRepository extends AbstractRepository<AuthorDTO, Integer> {
     }
 
     @Override
-    public SelectLimitPercentAfterOffsetStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
+    public SelectFinalStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
         final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Author.AUTHOR)
                 .addMappableFields(Author.AUTHOR.fields())
                 .addMappableFields(Book.BOOK.fields());
