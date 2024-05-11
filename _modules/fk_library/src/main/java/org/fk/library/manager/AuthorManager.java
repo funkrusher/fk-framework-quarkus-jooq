@@ -20,9 +20,8 @@ public class AuthorManager extends AbstractManager {
     public AuthorPaginateDTO query(DSLContext dsl, final FkQuery query) throws InvalidDataException {
         final AuthorRepository authorRepository = new AuthorRepository(dsl);
 
-        int count = authorRepository.countQuery(query);
-        List<Integer> authorIds = authorRepository.paginateQuery(query);
-        List<AuthorDTO> authors = authorRepository.fetch(authorIds);
+        int count = authorRepository.count(query.getFilters());
+        List<AuthorDTO> authors = authorRepository.query(query);
 
         AuthorPaginateDTO paginate = new AuthorPaginateDTO();
         paginate.setAuthors(authors);

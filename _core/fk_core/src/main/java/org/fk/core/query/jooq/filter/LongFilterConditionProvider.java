@@ -7,6 +7,7 @@ import org.jooq.Field;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 /**
  * LongFilterConditionProvider
@@ -56,5 +57,10 @@ public class LongFilterConditionProvider implements FilterConditionProvider {
     @Override
     public Condition ltCondition(String value) throws InvalidDataException {
         return field.lt(getLong(value));
+    }
+
+    @Override
+    public Condition inCondition(List<String> value) throws InvalidDataException {
+        return field.in(value.stream().map(this::getLong).toList());
     }
 }

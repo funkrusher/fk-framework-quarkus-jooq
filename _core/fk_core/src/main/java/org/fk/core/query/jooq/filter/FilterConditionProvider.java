@@ -4,6 +4,8 @@ import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.model.FkFilter;
 import org.jooq.Condition;
 
+import java.util.List;
+
 /**
  * FilterConditionProvider
  * <p>
@@ -22,4 +24,6 @@ public interface FilterConditionProvider {
     public Condition leCondition(String value) throws InvalidDataException;
 
     public Condition ltCondition(String value) throws InvalidDataException;
+
+    public Condition inCondition(List<String> value) throws InvalidDataException;
 }

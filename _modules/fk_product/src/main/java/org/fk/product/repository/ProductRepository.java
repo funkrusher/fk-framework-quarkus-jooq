@@ -1,7 +1,7 @@
 package org.fk.product.repository;
 
-
 import org.fk.core.query.jooq.FkQueryJooqMapper;
+import org.fk.database1.testshop.tables.Lang;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.repository.AbstractRepository;
@@ -10,85 +10,60 @@ import org.fk.core.query.model.FkQuery;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.jooq.*;
-import org.jooq.impl.DSL;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
+import org.jooq.Record;
+import java.util.Arrays;
 import static org.jooq.impl.DSL.*;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
-
-    private final FkQueryJooqMapper queryJooqMapper;
-
     public ProductRepository(DSLContext dsl) {
-        super(dsl);
-
-        final List<Field<?>> mappableFields = new ArrayList<>();
-        mappableFields.addAll(List.of(Product.PRODUCT.fields()));
-        mappableFields.addAll(List.of(ProductLang.PRODUCT_LANG.fields()));
-        this.queryJooqMapper = new FkQueryJooqMapper(Product.PRODUCT, mappableFields);
+        super(dsl, ProductDTO.class, Product.PRODUCT.PRODUCTID);
     }
 
     @Override
-    public List<ProductDTO> fetch(List<Long> productIds) {
-        // use multiset to let the database and jooq do all the work of joining the tables and mapping to dto.
-        List<ProductDTO> products = dsl().select(
-                        asterisk(),
-                        multiset(
-                                selectDistinct(asterisk())
-                                        .from(ProductLang.PRODUCT_LANG)
-                                        .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
-                        ).as("langs")
-                ).from(Product.PRODUCT)
-                .where(Product.PRODUCT.PRODUCTID.in(productIds))
-                .and(Product.PRODUCT.CLIENTID.eq(request().getClientId()))
-                .fetchInto(ProductDTO.class);
-
-        // append and change some data that is still missing after our fetch.
-        for (ProductDTO product : products) {
-            for (ProductLangDTO productLang : product.getLangs()) {
-                if (productLang.getLangId().equals(request().getLangId())) {
-                    product.setLang(productLang);
-                }
+    protected ProductDTO mapResult(ProductDTO dto) {
+        for (ProductLangDTO productLang : dto.getLangs()) {
+            if (productLang.getLangId().equals(request().getLangId())) {
+                dto.setLang(productLang);
             }
         }
-        return products;
+        return dto;
     }
 
     @Override
-    public SelectSeekStepN<Record1<Long>> mapQuery(FkQuery query) throws InvalidDataException {
+    public SelectLimitPercentAfterOffsetStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
+        final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Product.PRODUCT)
+                .addMappableFields(Product.PRODUCT.fields())
+                .addMappableFields(ProductLang.PRODUCT_LANG.fields());
+
         return dsl()
-                .select(Product.PRODUCT.PRODUCTID)
+                .select(
+                        asterisk(),
+                        multiset(
+                                selectDistinct(
+                                        asterisk(),
+                                        jsonObject(
+                                                Arrays
+                                                        .stream(Lang.LANG.fields())
+                                                        .map(f -> key(f.getName()).value(f))
+                                                        .toList()
+                                        ).as("lang")
+                                )
+                                        .from(ProductLang.PRODUCT_LANG)
+                                        .join(Lang.LANG).on(Lang.LANG.LANGID.eq(ProductLang.PRODUCT_LANG.LANGID))
+                                        .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
+                        ).as("langs"))
                 .from(Product.PRODUCT
                         .leftJoin(ProductLang.PRODUCT_LANG)
                         .on(ProductLang.PRODUCT_LANG.PRODUCTID
-                                .eq(Product.PRODUCT.PRODUCTID)))
-                .where(DSL.and(queryJooqMapper.getFilters(query)))
+                                .eq(Product.PRODUCT.PRODUCTID))
+                        .leftJoin(Lang.LANG)
+                        .on(Lang.LANG.LANGID
+                                .eq(ProductLang.PRODUCT_LANG.LANGID)))
+                .where(queryJooqMapper.getFilters())
                 .and(Product.PRODUCT.CLIENTID.eq(request().getClientId()))
                 .groupBy(Product.PRODUCT.PRODUCTID)
-                .orderBy(queryJooqMapper.getSorter(query));
-    }
-
-    @Override
-    public List<Long> paginateQuery(FkQuery query) throws InvalidDataException {
-        return mapQuery(query)
-                .offset(query.getPage())
-                .limit(query.getPageSize())
-                .fetch(Product.PRODUCT.PRODUCTID);
-    }
-
-    @Override
-    public int countQuery(FkQuery query) throws InvalidDataException {
-        return dsl().fetchCount(mapQuery(query));
-    }
-
-    @Override
-    public Stream<Long> streamQuery(FkQuery query) throws InvalidDataException {
-        return mapQuery(query)
-                .fetchSize(250)
-                .fetchStream()
-                .map(Record1::value1);
+                .orderBy(queryJooqMapper.getSorter())
+                .offset(queryJooqMapper.getOffset())
+                .limit(queryJooqMapper.getLimit());
     }
 }

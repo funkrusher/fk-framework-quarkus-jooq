@@ -3,6 +3,8 @@ package org.fk.core.query.jooq.filter;
 import org.fk.core.exception.InvalidDataException;
 import org.jooq.Condition;
 
+import java.util.List;
+
 /**
  * UnsupportedFilterConditionProvider
  * <p>
@@ -38,5 +40,10 @@ public class UnsupportedFilterConditionProvider implements FilterConditionProvid
     @Override
     public Condition ltCondition(String value) throws InvalidDataException {
         throw new UnsupportedOperationException("lt not applicable!");
+    }
+
+    @Override
+    public Condition inCondition(List<String> value) throws InvalidDataException {
+        throw new UnsupportedOperationException("in not applicable!");
     }
 }

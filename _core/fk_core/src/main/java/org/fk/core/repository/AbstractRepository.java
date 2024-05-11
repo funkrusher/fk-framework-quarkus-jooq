@@ -1,11 +1,12 @@
 package org.fk.core.repository;
 
-import jakarta.annotation.Nullable;
 import org.fk.core.dto.DTO;
 import org.fk.core.query.model.*;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.InvalidDataException;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
+import org.jooq.Record;
 import org.jooq.exception.DataAccessException;
 
 import java.util.*;
@@ -28,14 +29,18 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  */
 public abstract class AbstractRepository<D extends DTO, T> {
     private final DSLContext dsl;
+    private final Class<D> dtoClazz;
+    private final Field<T> idField;
     private final RequestContext request;
 
     // -------------------------------------------------------------------------
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    protected AbstractRepository(DSLContext dsl) {
+    protected AbstractRepository(DSLContext dsl, Class<D> dtoClazz, Field<T> idField) {
         this.dsl = dsl;
+        this.dtoClazz = dtoClazz;
+        this.idField = idField;
         this.request = (RequestContext) dsl.data(DSL_DATA_KEY);
     }
 
@@ -43,63 +48,18 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    /**
-     * <p>
-     * Maps the given @{@link FkQuery} to an execution-ready jooq-query
-     * that processes the Tables-Relationship defined in the subclass.
-     * </p>
-     *
-     * @param query query
-     * @return execution-ready jooq-query
-     * @throws InvalidDataException invalid data in the given queryParameters
-     *
-     */
-    protected abstract SelectSeekStepN<Record1<T>> mapQuery(FkQuery query) throws InvalidDataException;
+    protected abstract SelectLimitPercentAfterOffsetStep<Record> prepareQuery(FkQuery query) throws InvalidDataException;
 
     /**
-     * Paginate the given @{@link FkQuery} and return
-     * a list of sorted, filtered, page-sized Ids that match all criteria defined in the given query-parameters.
-     * This will be a list that is only as large as the page-size defined in the given query-parameters.
+     * You can override this method if specific result mappings are needed / different from the default.
+     * But only do this, if you really need it.
      *
-     * @param query query
-     * @return list of sorted, filtered, page-sized Ids
-     * @throws InvalidDataException invalid data in the given queryParameters
+     * @param dto dto
+     * @return dto
      */
-    public abstract List<T> paginateQuery(FkQuery query) throws InvalidDataException;
-
-    /**
-     * Count the given @{@link FkQuery} and return
-     * the total count of all items that would match the filters of the given query-parameters
-     * (ignoring any page-size criteria, as we return the total count.
-     *
-     * @param query query
-     * @return total count of items, matching the filters of the given query-parameters.
-     * @throws InvalidDataException invalid data in the given queryParameters
-     */
-    public abstract int countQuery(FkQuery query) throws InvalidDataException;
-
-    /**
-     * Streams the given @{@link FkQuery} and return
-     * a stream of sorted, filtered Ids that match all criteria defined in the given query-parameters.
-     * The page-size settings of the query-parameters will be ignored here.
-     *
-     * @param query query
-     * @return stream of sorted, filtered Ids
-     * @throws InvalidDataException invalid data in the given queryParameters
-     */
-    public abstract Stream<T> streamQuery(FkQuery query) throws InvalidDataException;
-
-    /**
-     * Fetches the DTOs for the given Ids
-     * <p>
-     * This function needs to execute a jooq-query (MULTISET is recommended here!),
-     * which selects all data from the different tables that are needed for producing the DTO.
-     *
-     * @param ids ids
-     * @return dtos dtos for given ids
-     */
-    public abstract List<D> fetch(List<T> ids);
-
+    protected D mapResult(D dto) {
+        return dto;
+    }
 
     // -------------------------------------------------------------------------
     // Repository API
@@ -121,6 +81,59 @@ public abstract class AbstractRepository<D extends DTO, T> {
      */
     public RequestContext request() {
         return this.request;
+    }
+
+    /**
+     * Paginate the given @{@link FkQuery} and return
+     * a list of sorted, filtered, page-sized DTOs that match all criteria defined in the given query-parameters.
+     * This will be a list that is only as large as the page-size defined in the given query-parameters.
+     *
+     * @param query query
+     * @return list of sorted, filtered, page-sized DTOs
+     * @throws InvalidDataException invalid data in the given queryParameters
+     */
+    public List<D> query(FkQuery query) throws InvalidDataException {
+        return prepareQuery(query)
+                .fetchInto(dtoClazz)
+                .stream().map(this::mapResult).toList();
+    }
+
+    /**
+     * Count the given @{@link FkFilter}s and return
+     * the total count of all items that would match the filters of the given query-parameters
+     *
+     * @param filters filters
+     * @return total count of items, matching the given filters
+     * @throws InvalidDataException invalid data in the given filters
+     */
+    public int count(@Nullable List<FkFilter> filters) throws InvalidDataException {
+        return dsl().fetchCount(prepareQuery(new FkQuery().setFilters(filters == null ? new ArrayList<>() : filters)));
+    }
+
+    /**
+     * Streams the given @{@link FkQuery} and return
+     * a stream of sorted, filtered DTOs that match all criteria defined in the given query-parameters.
+     *
+     * @param query query
+     * @return stream of sorted, filtered Ids
+     * @throws InvalidDataException invalid data in the given queryParameters
+     */
+    public Stream<D> stream(FkQuery query) throws InvalidDataException {
+        return prepareQuery(query)
+                .fetchSize(250)
+                .fetchStreamInto(dtoClazz)
+                .map(this::mapResult);
+    }
+
+    /**
+     * Fetches the DTOs for the given Ids
+     *
+     * @param ids ids
+     * @return dtos dtos for given ids
+     */
+    public final List<D> fetch(final List<T> ids) {
+        final FkFilter filter = new FkFilter(idField.getName(), FkFilterOperator.IN, ids.stream().map(Object::toString).toList());
+        return query(new FkQuery().setFilters(List.of(filter)));
     }
 
     /**

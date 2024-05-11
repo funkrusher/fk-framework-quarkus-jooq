@@ -6,6 +6,7 @@ import org.jooq.Field;
 import org.jooq.impl.QOM;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * IntegerFilterConditionProvider
@@ -58,4 +59,8 @@ public class IntegerFilterConditionProvider implements FilterConditionProvider {
         return field.lt(getInteger(value));
     }
 
+    @Override
+    public Condition inCondition(List<String> value) throws InvalidDataException {
+        return field.in(value.stream().map(this::getInteger).toList());
+    }
 }

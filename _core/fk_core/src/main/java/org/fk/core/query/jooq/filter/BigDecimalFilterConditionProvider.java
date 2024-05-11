@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 /**
  * BigDecimalFilterConditionProvider
@@ -58,5 +59,10 @@ public class BigDecimalFilterConditionProvider implements FilterConditionProvide
     @Override
     public Condition ltCondition(String value) throws InvalidDataException {
         return field.lt(getBigDecimal(value));
+    }
+
+    @Override
+    public Condition inCondition(List<String> value) throws InvalidDataException {
+        return field.in(value.stream().map(this::getBigDecimal).toList());
     }
 }

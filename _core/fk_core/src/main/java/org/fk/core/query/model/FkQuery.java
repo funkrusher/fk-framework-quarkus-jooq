@@ -23,11 +23,11 @@ public class FkQuery {
 
     @QueryParam("page")
     @Schema(description = "Page number (starting from 0)", defaultValue = "0")
-    private int page;
+    private Integer page;
 
     @QueryParam("pageSize")
     @Schema(description = "Number of items per page", defaultValue = "10")
-    private int pageSize;
+    private Integer pageSize;
 
     @QueryParam("sort")
     @Schema(description = "Sort order (e.g. name:asc)", defaultValue = "productId:asc")
@@ -68,21 +68,21 @@ public class FkQuery {
 
     }
 
-    public FkQuery setPage(int page) {
+    public FkQuery setPage(Integer page) {
         this.page = page;
         return this;
     }
 
-    public int getPage() {
+    public Integer getPage() {
         return page;
     }
 
-    public FkQuery setPageSize(int pageSize) {
+    public FkQuery setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
         return this;
     }
 
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 

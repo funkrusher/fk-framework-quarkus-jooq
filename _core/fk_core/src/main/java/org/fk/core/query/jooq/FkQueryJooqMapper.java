@@ -5,10 +5,14 @@ import org.fk.core.query.jooq.filter.FilterConditionProvider;
 import org.fk.core.query.jooq.filter.FilterConditionProviderFactory;
 import org.fk.core.query.jooq.sorter.SortFieldFactory;
 import org.fk.core.query.model.*;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 
 import java.util.*;
+
+import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.*;
 
 /**
  * QueryJooqMapper
@@ -20,18 +24,17 @@ import java.util.*;
  * As the name states it maps the {@link FkQuery} object to Jooq-Usable Statements.
  */
 public class FkQueryJooqMapper {
+    private final FkQuery fkQuery;
     private final Table<?> defaultTable;
-    private final List<Field<?>> mappableFields;
-    private final Map<Name, FilterConditionProvider> filterConditionProviders;
+    private final List<Field<?>> mappableFields = new ArrayList<>();
 
     // -------------------------------------------------------------------------
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    public FkQueryJooqMapper(Table<?> defaultTable, List<Field<?>> mappableFields) {
+    public FkQueryJooqMapper(FkQuery fkQuery, Table<?> defaultTable) {
+        this.fkQuery = fkQuery;
         this.defaultTable = defaultTable;
-        this.mappableFields = mappableFields;
-        this.filterConditionProviders = resolveFilterConditionProviders(mappableFields);
     }
 
     // ------------------------------------------------------------------------
@@ -76,16 +79,31 @@ public class FkQueryJooqMapper {
     // -------------------------------------------------------------------------
 
     /**
+     * Add mappable fields, that are supported for query to jooq mapping.
+     *
+     * @param mappableFields mappableFields
+     * @return this
+     */
+    public FkQueryJooqMapper addMappableFields(List<Field<?>> mappableFields) {
+        this.mappableFields.addAll(mappableFields);
+        return this;
+    }
+
+    public FkQueryJooqMapper addMappableFields(Field<?>... mappableFields) {
+        return addMappableFields(asList(mappableFields));
+    }
+
+
+    /**
      * Maps the given @{@link FkSorter} contained in the queryParameters to Jooq @{@link SortField}s
      * for use in Jooq-Queries.
      * <p>
      * Note: this function returns a list for convenience reasons. It will always return 1 result, or empty list.
      *
-     * @param fkQuery queryParameters
      * @return list with one sort-field or empty-list
      * @throws InvalidDataException queryParameters contains invalid data.
      */
-    public Collection<SortField<Object>> getSorter(FkQuery fkQuery) throws InvalidDataException {
+    public Collection<SortField<Object>> getSorter() throws InvalidDataException {
         if (fkQuery.getSorter() != null) {
             FkSorter sorter = fkQuery.getSorter();
             Name fieldName = getNameForQueryParamKey(sorter.getField());
@@ -103,12 +121,12 @@ public class FkQueryJooqMapper {
      * Maps the given @{@link FkFilter}s contained in the queryParameters to Jooq @{@link Condition}s
      * for use in Jooq-Queries.
      *
-     * @param fkQuery queryParameters
      * @return filter-conditions
      * @throws InvalidDataException queryParameters contains invalid data.
      */
-    public Collection<Condition> getFilters(FkQuery fkQuery) throws InvalidDataException {
+    public Collection<Condition> getFilters() throws InvalidDataException {
         Collection<Condition> filterFields = new ArrayList<>();
+        final Map<Name, FilterConditionProvider> filterConditionProviders = resolveFilterConditionProviders(mappableFields);
         if (!fkQuery.getFilters().isEmpty()) {
             for (FkFilter filter : fkQuery.getFilters()) {
                 Name fieldName = getNameForQueryParamKey(filter.getField());
@@ -129,9 +147,27 @@ public class FkQueryJooqMapper {
                     filterFields.add(conditionProvider.ltCondition(value));
                 } else if (filter.getOperator() == FkFilterOperator.LESS_THAN_OR_EQUALS) {
                     filterFields.add(conditionProvider.leCondition(value));
+                } else if (filter.getOperator() == FkFilterOperator.IN) {
+                    filterFields.add(conditionProvider.inCondition(filter.getValues()));
                 }
             }
         }
         return filterFields;
+    }
+
+    public Field<Integer> getLimit() {
+        if (fkQuery.getPageSize() != null) {
+            return val(fkQuery.getPageSize());
+        } else {
+            return noField(Integer.class);
+        }
+    }
+
+    public Field<Integer> getOffset() {
+        if (fkQuery.getPageSize() != null) {
+            return val(fkQuery.getPage());
+        } else {
+            return noField(Integer.class);
+        }
     }
 }

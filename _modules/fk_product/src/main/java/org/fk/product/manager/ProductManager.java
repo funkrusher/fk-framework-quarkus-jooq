@@ -61,9 +61,8 @@ public class ProductManager extends AbstractManager {
     public ProductPaginateDTO query(DSLContext dsl, final FkQuery fkQuery) throws InvalidDataException {
         final ProductRepository productRepository = new ProductRepository(dsl);
 
-        int count = productRepository.countQuery(fkQuery);
-        List<Long> productIds = productRepository.paginateQuery(fkQuery);
-        List<ProductDTO> products = productRepository.fetch(productIds);
+        int count = productRepository.count(fkQuery.getFilters());
+        List<ProductDTO> products = productRepository.query(fkQuery);
 
         ProductPaginateDTO paginate = new ProductPaginateDTO();
         paginate.setProducts(products);
@@ -113,12 +112,12 @@ public class ProductManager extends AbstractManager {
                 fkQuery.getFilters().add(filter2);
 
                 final ProductRepository productRepository = new ProductRepository(tx1.dsl());
-                List<Long> productIds = productRepository.paginateQuery(fkQuery);
+                List<ProductDTO> products = productRepository.query(fkQuery);
 
                 tx1.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tx2.dsl());
-                    aProductRecordDAO.deleteById(productIds);
+                    aProductRecordDAO.deleteById(products.stream().map(ProductDTO::getProductId).toList());
                 });
 
                 try {
@@ -220,11 +219,11 @@ public class ProductManager extends AbstractManager {
         fkQuery.setPageSize(100000);
 
         final ProductRepository productRepository = new ProductRepository(dsl);
-        Stream<Long> stream1 = productRepository.streamQuery(fkQuery);
-        Stream<List<Long>> chunkStream = chunk(stream1, 250);
+        Stream<ProductDTO> stream1 = productRepository.stream(fkQuery);
+        Stream<List<ProductDTO>> chunkStream = chunk(stream1, 250);
 
         // the "parallel" is important here, as it really pushes performance.
-        return chunkStream.parallel().map(productRepository::fetch).flatMap(List::stream);
+        return chunkStream.parallel().flatMap(List::stream);
     }
 
     /**
@@ -234,23 +233,23 @@ public class ProductManager extends AbstractManager {
      * @param size chunk-size of each chunk
      * @return stream of list of items.
      */
-    Stream<List<Long>> chunk(Stream<Long> stream, int size) {
-        Iterator<Long> iterator = stream.iterator();
-        Iterator<List<Long>> listIterator = new Iterator<>() {
+    Stream<List<ProductDTO>> chunk(Stream<ProductDTO> stream, int size) {
+        Iterator<ProductDTO> iterator = stream.iterator();
+        Iterator<List<ProductDTO>> listIterator = new Iterator<>() {
 
             public boolean hasNext() {
                 return iterator.hasNext();
             }
 
-            public List<Long> next() {
-                List<Long> result = new ArrayList<>(size);
+            public List<ProductDTO> next() {
+                List<ProductDTO> result = new ArrayList<>(size);
                 for (int i = 0; i < size && iterator.hasNext(); i++) {
                     result.add(iterator.next());
                 }
                 return result;
             }
         };
-        return StreamSupport.stream(((Iterable<List<Long>>) () -> listIterator).spliterator(), false);
+        return StreamSupport.stream(((Iterable<List<ProductDTO>>) () -> listIterator).spliterator(), false);
     }
 
 }

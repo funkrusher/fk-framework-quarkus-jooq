@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 /**
  * LocalDateTimeFilterConditionProvider
@@ -52,5 +53,10 @@ public class LocalDateTimeFilterConditionProvider implements FilterConditionProv
     @Override
     public Condition ltCondition(String value) throws InvalidDataException {
         return field.lt(getLocalDateTime(value));
+    }
+
+    @Override
+    public Condition inCondition(List<String> value) throws InvalidDataException {
+        return field.in(value.stream().map(this::getLocalDateTime).toList());
     }
 }

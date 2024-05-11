@@ -67,8 +67,9 @@ public class FkQueryJooqMapperTest {
         FkSorter fkSorter6 = new FkSorter("Nested1.string1", FkSorterOperator.DESC);
 
         // single sorter
-        assertEquals(getSorterSql(new FkQueryJooqMapper(Basic1.BASIC1, mappableFields)
-                        .getSorter(new FkQuery()).stream().toList()),
+        assertEquals(getSorterSql(new FkQueryJooqMapper(new FkQuery(), Basic1.BASIC1)
+                        .addMappableFields(mappableFields)
+                        .getSorter().stream().toList()),
                 "select * from xyz");
         validateSorter(BASIC1, fkSorter1,"select * from xyz order by `coreTestDatabase`.`Basic1`.`string1` asc");
         validateSorter(BASIC1, fkSorter2,"select * from xyz order by `coreTestDatabase`.`Basic1`.`string1` desc");
@@ -139,8 +140,9 @@ public class FkQueryJooqMapperTest {
         validateFilter(BASIC1, fkFilter6, "select * from xyz where `coreTestDatabase`.`Basic1`.`integer1` <= ?");
 
         // multiple filters
-        assertEquals(getFiltersSql(new FkQueryJooqMapper(Basic1.BASIC1, mappableFields)
-                        .getFilters(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2))).stream().toList()),
+        assertEquals(getFiltersSql(new FkQueryJooqMapper(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2)), Basic1.BASIC1)
+                        .addMappableFields(mappableFields)
+                        .getFilters().stream().toList()),
                 "select * from xyz where (`coreTestDatabase`.`Basic1`.`integer1` = ? and `coreTestDatabase`.`Basic1`.`integer1` <> ?)");
 
         // invalid value filters
@@ -177,8 +179,9 @@ public class FkQueryJooqMapperTest {
         validateFilter(BASIC1, fkFilter6, "select * from xyz where `coreTestDatabase`.`Basic1`.`long1` <= ?");
 
         // multiple filters
-        assertEquals(getFiltersSql(new FkQueryJooqMapper(Basic1.BASIC1, mappableFields)
-                        .getFilters(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2))).stream().toList()),
+        assertEquals(getFiltersSql(new FkQueryJooqMapper(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2)), Basic1.BASIC1)
+                        .addMappableFields(mappableFields)
+                        .getFilters().stream().toList()),
                 "select * from xyz where (`coreTestDatabase`.`Basic1`.`long1` = ? and `coreTestDatabase`.`Basic1`.`long1` <> ?)");
 
         // invalid value filters
@@ -215,8 +218,9 @@ public class FkQueryJooqMapperTest {
         validateFilter(BASIC1, fkFilter6, "select * from xyz where `coreTestDatabase`.`Basic1`.`decimal1` <= ?");
 
         // multiple filters
-        assertEquals(getFiltersSql(new FkQueryJooqMapper(Basic1.BASIC1, mappableFields)
-                        .getFilters(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2))).stream().toList()),
+        assertEquals(getFiltersSql(new FkQueryJooqMapper(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2)), Basic1.BASIC1)
+                        .addMappableFields(mappableFields)
+                        .getFilters().stream().toList()),
                 "select * from xyz where (`coreTestDatabase`.`Basic1`.`decimal1` = ? and `coreTestDatabase`.`Basic1`.`decimal1` <> ?)");
 
         // invalid value filters
@@ -253,8 +257,9 @@ public class FkQueryJooqMapperTest {
         validateFilter(BASIC1, fkFilter6, "select * from xyz where `coreTestDatabase`.`Basic1`.`dateTime1` <= ?");
 
         // multiple filters
-        assertEquals(getFiltersSql(new FkQueryJooqMapper(Basic1.BASIC1, mappableFields)
-                        .getFilters(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2))).stream().toList()),
+        assertEquals(getFiltersSql(new FkQueryJooqMapper(new FkQuery().setFilters(List.of(fkFilter1, fkFilter2)), Basic1.BASIC1)
+                        .addMappableFields(mappableFields)
+                        .getFilters().stream().toList()),
                 "select * from xyz where (`coreTestDatabase`.`Basic1`.`dateTime1` = ? and `coreTestDatabase`.`Basic1`.`dateTime1` <> ?)");
 
         // invalid value filters
@@ -279,25 +284,29 @@ public class FkQueryJooqMapperTest {
     // -------------------------------------------------------------------------
 
     void validateSorter(Table<?> table, FkSorter sorter, String sql) {
-        assertEquals(getSorterSql(new FkQueryJooqMapper(table, mappableFields)
-                        .getSorter(new FkQuery().setSorter(sorter)).stream().toList()),
+        assertEquals(getSorterSql(new FkQueryJooqMapper(new FkQuery().setSorter(sorter), table)
+                        .addMappableFields(mappableFields)
+                        .getSorter().stream().toList()),
                 sql);
     }
     void assertInvalidSorter(Table<?> table, FkSorter invalidSorter) {
         assertThrows(InvalidDataException.class, () -> {
-            new FkQueryJooqMapper(table, mappableFields)
-                    .getSorter(new FkQuery().setSorter(invalidSorter)).stream().toList();
+            new FkQueryJooqMapper(new FkQuery().setSorter(invalidSorter), table)
+                    .addMappableFields(mappableFields)
+                    .getSorter().stream().toList();
         });
     }
     void validateFilter(Table<?> table, FkFilter filter, String sql) {
-        assertEquals(getFiltersSql(new FkQueryJooqMapper(table, mappableFields)
-                        .getFilters(new FkQuery().setFilters(List.of(filter))).stream().toList()),
+        assertEquals(getFiltersSql(new FkQueryJooqMapper(new FkQuery().setFilters(List.of(filter)), table)
+                        .addMappableFields(mappableFields)
+                        .getFilters().stream().toList()),
                 sql);
     }
     void assertInvalidFilter(Table<?> table, FkFilter invalidValueFilter) {
         assertThrows(InvalidDataException.class, () -> {
-            new FkQueryJooqMapper(table, mappableFields)
-                    .getFilters(new FkQuery().setFilters(List.of(invalidValueFilter))).stream().toList();
+            new FkQueryJooqMapper(new FkQuery().setFilters(List.of(invalidValueFilter)), table)
+                    .addMappableFields(mappableFields)
+                    .getFilters().stream().toList();
         });
     }
 

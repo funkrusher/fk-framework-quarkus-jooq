@@ -4,6 +4,8 @@ import org.fk.core.exception.InvalidDataException;
 import org.jooq.Condition;
 import org.jooq.Field;
 
+import java.util.List;
+
 /**
  * StringFilterConditionProvider
  * <p>
@@ -45,6 +47,11 @@ public class StringFilterConditionProvider implements FilterConditionProvider {
     @Override
     public Condition ltCondition(String value) throws InvalidDataException {
         throw new InvalidDataException("lt not applicable!");
+    }
+
+    @Override
+    public Condition inCondition(List<String> value) throws InvalidDataException {
+        return field.in(value);
     }
 
 }
