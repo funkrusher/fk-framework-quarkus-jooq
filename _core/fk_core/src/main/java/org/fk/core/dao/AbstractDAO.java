@@ -474,6 +474,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
                 multiValueInserts.add(insertQuery);
             }
+
             if (multiValueInserts.size() > 1) {
                 // multi-value batch insert (huge performance boost)
                 final int[] batchResult = dsl().batch(multiValueInserts).execute();
@@ -485,6 +486,15 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             } else {
                 // single insert
                 insertCount = multiValueInserts.getFirst().execute();
+            }
+
+            if (insertType == INSERT_ON_DUPLICATE_UPDATE) {
+                // For INSERT ... ON DUPLICATE KEY UPDATE statements,
+                // the affected-rows value per row is 1 if the row is inserted as a new row,
+                // 2 if an existing row is updated, and 0 if an existing row is set to its current values.
+                // see: https://stackoverflow.com/questions/14611680/pdo-on-duplicate-key-update-rowcount-in-mysql-table-returns-double-amount-of
+                // TODO: for now we just return the inserts-count in this case...
+                insertCount = inserts.size();
             }
         }
 
