@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestProfile(CoreTestProfile.class)
 @QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AbstractDAOTest {
+class AbstractDAOTest {
     @InjectCoreTestUtil
     static CoreTestUtil testDbUtil;
 
@@ -175,8 +175,8 @@ public class AbstractDAOTest {
         final Basic2DTO basic2DTO3 = createBasic2DTO(empty()); // uuid by abstraction
         final List<IBasic2> basic2Dtos = List.of(basic2DTO1, basic2DTO2, basic2DTO3);
 
-        assertEquals(3, basic2DAO.insert(basic2Recs));
-        assertEquals(3, basic2DAO.insert(basic2Dtos));
+        assertEquals(3, basic2DAO.upsert(basic2Recs));
+        assertEquals(3, basic2DAO.upsert(basic2Dtos));
 
         validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(IBasic2::getUuidId).toList()));
         validateBasic2Equal(basic2Dtos, resolveBasic2sFromDb(basic2Dtos.stream().map(IBasic2::getUuidId).toList()));
@@ -218,6 +218,79 @@ public class AbstractDAOTest {
 
     @Test
     @Order(3)
+    void testUpserts() throws IOException {
+        // ------
+        // basic1
+        // ------
+        final Basic1Record basic1Record1 = createBasic1Record(Optional.of(1)); // update!
+        final Basic1Record basic1Record2 = createBasic1Record(Optional.of(12)); // insert!
+        final Basic1Record basic1Record3 = createBasic1Record(empty()); // insert!
+        final List<IBasic1> basic1Recs = List.of(basic1Record1, basic1Record2, basic1Record3);
+
+        final Basic1DTO basic1DTO1 = createBasic1DTO(Optional.of(3)); // update!
+        final Basic1DTO basic1DTO2 = createBasic1DTO(Optional.of(14)); // insert!
+        final Basic1DTO basic1DTO3 = createBasic1DTO(empty()); // insert!
+        final List<IBasic1> basic1Dtos = List.of(basic1DTO1, basic1DTO2, basic1DTO3);
+
+        assertEquals(3, basic1DAO.upsert(basic1Recs));
+        assertEquals(3, basic1DAO.upsert(basic1Dtos));
+
+        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(IBasic1::getAutoIncId).toList()));
+        validateBasic1Equal(basic1Dtos, resolveBasic1sFromDb(basic1Dtos.stream().map(IBasic1::getAutoIncId).toList()));
+
+        // ------
+        // basic2
+        // ------
+        final Basic2Record basic2Record1 = createBasic2Record(Optional.of(insertedUuids.get(1))); // update
+        final Basic2Record basic2Record2 = createBasic2Record(Optional.of(UUID.randomUUID())); // insert
+        final Basic2Record basic2Record3 = createBasic2Record(empty()); // insert
+        final List<IBasic2> basic2Recs = List.of(basic2Record1, basic2Record2, basic2Record3);
+
+        final Basic2DTO basic2DTO1 = createBasic2DTO(Optional.of(insertedUuids.get(2))); // update
+        final Basic2DTO basic2DTO2 = createBasic2DTO(Optional.of(UUID.randomUUID())); // insert
+        final Basic2DTO basic2DTO3 = createBasic2DTO(empty()); // insert
+        final List<IBasic2> basic2Dtos = List.of(basic2DTO1, basic2DTO2, basic2DTO3);
+
+        assertEquals(3, basic2DAO.upsert(basic2Recs));
+        assertEquals(3, basic2DAO.upsert(basic2Dtos));
+
+        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(IBasic2::getUuidId).toList()));
+        validateBasic2Equal(basic2Dtos, resolveBasic2sFromDb(basic2Dtos.stream().map(IBasic2::getUuidId).toList()));
+
+        // -------
+        // nested1
+        // -------
+        final Nested1Record nested1Record1 = createNested1Record(
+                Optional.of(basic1Record1.getAutoIncId()), Optional.of(basic2Record1.getUuidId())); // update
+        final Nested1Record nested1Record2 = createNested1Record(
+                Optional.of(basic1Record2.getAutoIncId()), Optional.of(basic2Record2.getUuidId())); // insert
+        final Nested1Record nested1Record3 = createNested1Record(
+                Optional.of(basic1Record3.getAutoIncId()), Optional.of(basic2Record3.getUuidId())); // insert
+        final List<INested1> nested1Recs = List.of(nested1Record1, nested1Record2, nested1Record3);
+
+        assertEquals(3, nested1DAO.upsert(nested1Recs));
+
+        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(INested1::getAutoIncId).toList()));
+
+        // -----
+        // other
+        // -----
+
+        assertEquals(0, basic1DAO.upsert(new ArrayList<>()));
+        assertEquals(0, basic2DAO.upsert(new ArrayList<>()));
+        assertEquals(0, nested1DAO.upsert(new ArrayList<>()));
+
+        // ----------------
+        // final validation
+        // ----------------
+        assertBasic1Count(14);
+        assertBasic2Count(14);
+        assertNested1Count(9);
+    }
+
+
+    @Test
+    @Order(4)
     void testUpdate() throws IOException {
         // ------
         // basic1
@@ -269,13 +342,13 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(10);
-        assertBasic2Count(10);
-        assertNested1Count(7);
+        assertBasic1Count(14);
+        assertBasic2Count(14);
+        assertNested1Count(9);
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void testUpdates() throws IOException {
         // ------
         // basic1
@@ -353,14 +426,14 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(10);
-        assertBasic2Count(10);
-        assertNested1Count(7);
+        assertBasic1Count(14);
+        assertBasic2Count(14);
+        assertNested1Count(9);
     }
 
 
     @Test
-    @Order(5)
+    @Order(6)
     void testExistsById() throws IOException {
 
         Record2<Integer, UUID> id1 = nested1DAO.compositeKeyRecord(1, insertedUuids.get(1));
@@ -385,29 +458,29 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(10);
-        assertBasic2Count(10);
-        assertNested1Count(7);
-    }
-
-    @Test
-    @Order(6)
-    void testCountAll() throws IOException {
-
-        assertEquals(10, basic1DAO.countAll());
-        assertEquals(10, basic2DAO.countAll());
-        assertEquals(7, nested1DAO.countAll());
-
-        // ----------------
-        // final validation
-        // ----------------
-        assertBasic1Count(10);
-        assertBasic2Count(10);
-        assertNested1Count(7);
+        assertBasic1Count(14);
+        assertBasic2Count(14);
+        assertNested1Count(9);
     }
 
     @Test
     @Order(7)
+    void testCountAll() throws IOException {
+
+        assertEquals(14, basic1DAO.countAll());
+        assertEquals(14, basic2DAO.countAll());
+        assertEquals(9, nested1DAO.countAll());
+
+        // ----------------
+        // final validation
+        // ----------------
+        assertBasic1Count(14);
+        assertBasic2Count(14);
+        assertNested1Count(9);
+    }
+
+    @Test
+    @Order(8)
     void testFindById() throws IOException {
 
         Record2<Integer, UUID> id1 = nested1DAO.compositeKeyRecord(1, insertedUuids.get(1));
@@ -432,14 +505,14 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(10);
-        assertBasic2Count(10);
-        assertNested1Count(7);
+        assertBasic1Count(14);
+        assertBasic2Count(14);
+        assertNested1Count(9);
     }
 
 
     @Test
-    @Order(8)
+    @Order(9)
     void testDelete() throws IOException {
         // -------
         // nested1
@@ -482,13 +555,13 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(8);
-        assertBasic2Count(8);
-        assertNested1Count(5);
+        assertBasic1Count(12);
+        assertBasic2Count(12);
+        assertNested1Count(7);
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     void testDeletes() throws IOException {
         // -------
         // nested1
@@ -554,13 +627,13 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(4);
-        assertBasic2Count(4);
-        assertNested1Count(1);
+        assertBasic1Count(8);
+        assertBasic2Count(8);
+        assertNested1Count(3);
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     void deleteById() throws IOException {
 
         Record2<Integer, UUID> id1 = nested1DAO.compositeKeyRecord(7, insertedUuids.get(7));
@@ -581,13 +654,13 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(3);
-        assertBasic2Count(3);
-        assertNested1Count(0);
+        assertBasic1Count(7);
+        assertBasic2Count(7);
+        assertNested1Count(2);
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     void deleteByIds() throws IOException {
         basic1DAO.deleteById(8, 9, 10);
 
@@ -596,13 +669,13 @@ public class AbstractDAOTest {
         // ----------------
         // final validation
         // ----------------
-        assertBasic1Count(0);
-        assertBasic2Count(3);
-        assertNested1Count(0);
+        assertBasic1Count(4);
+        assertBasic2Count(7);
+        assertNested1Count(2);
     }
 
     @Test
-    @Order(12)
+    @Order(13)
     void testMissingRequest() throws IOException {
         // this should never happen, only if the dsl is called this way (Wrongly)
         DSLContext errorDsl = DSL.using(this.dsl.parsingConnection());
@@ -614,7 +687,7 @@ public class AbstractDAOTest {
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     void testMissingRequestClientId() throws IOException {
         RequestContext request = new RequestContext((Integer) null, 1);
         DSLContext errorDsl = database.dsl(request);

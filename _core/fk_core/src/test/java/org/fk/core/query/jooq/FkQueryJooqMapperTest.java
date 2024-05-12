@@ -3,46 +3,23 @@ package org.fk.core.query.jooq;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
-import jakarta.inject.Inject;
-import org.fk.core.dao.AbstractDAO;
-import org.fk.core.dao.AbstractDAOTest;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.exception.MappingException;
 import org.fk.core.query.model.*;
-import org.fk.core.request.RequestContext;
 import org.fk.core.test.CoreTestLifecycleManager;
 import org.fk.core.test.CoreTestProfile;
-import org.fk.core.test.CoreTestUtil;
-import org.fk.core.test.InjectCoreTestUtil;
-import org.fk.core.test.database.CoreTestDatabase;
 import org.fk.core.test.database.coretestdatabase.tables.Basic1;
-import org.fk.core.test.database.coretestdatabase.tables.Basic2;
 import org.fk.core.test.database.coretestdatabase.tables.Nested1;
-import org.fk.core.test.database.coretestdatabase.tables.dtos.Basic1Dto;
-import org.fk.core.test.database.coretestdatabase.tables.dtos.Basic2Dto;
-import org.fk.core.test.database.coretestdatabase.tables.dtos.Nested1Dto;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic2;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.INested1;
-import org.fk.core.test.database.coretestdatabase.tables.records.Basic1Record;
-import org.fk.core.test.database.coretestdatabase.tables.records.Basic2Record;
-import org.fk.core.test.database.coretestdatabase.tables.records.Nested1Record;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.*;
-
-import java.io.IOException;
 import java.util.*;
-
-import static java.util.Arrays.asList;
-import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestProfile(CoreTestProfile.class)
 @QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class FkQueryJooqMapperTest {
+class FkQueryJooqMapperTest {
 
     private List<Field<?>> mappableFields;
 

@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestProfile(CoreTestProfile.class)
 @QuarkusTestResource(CoreTestLifecycleManager.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class BookKeeperTest {
+class BookKeeperTest {
     @BeforeEach
     void setup() {
     }

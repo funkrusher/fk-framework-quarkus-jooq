@@ -13,6 +13,7 @@ import org.jooq.impl.DSL;
 import java.util.*;
 
 import static java.util.Arrays.asList;
+import static org.fk.core.dao.AbstractDAO.InsertType.*;
 import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 
 /**
@@ -350,6 +351,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         return this.table;
     }
 
+    /**
+     * InsertType
+     */
+    public enum InsertType {
+        INSERT,
+        INSERT_ON_DUPLICATE_UPDATE,
+        INSERT_ON_DUPLICATE_IGNORE
+    }
 
     /**
      * Performs a <code>INSERT</code> statement for a given set of items.
@@ -373,6 +382,54 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return insert-count of successful inserts.
      */
     public int insert(final List<Y> items) throws DataAccessException {
+        return this.insert(items, INSERT);
+    }
+
+    /**
+     * Performs a <code>UPSERT</code> statement for a given set of items.
+     * If an item exists by its id, it will be updated, otherwise it will be inserted.
+     * (with help of: SQL ON DUPLICATE KEY UPDATE)
+     *
+     * @param items The items to be upserted
+     * @throws DataAccessException if something went wrong executing the query
+     *
+     * @return upsert-count of successful upserts.
+     */
+    @SafeVarargs
+    public final int upsert(final Y... items) throws DataAccessException {
+        return upsert(asList(items));
+    }
+
+    /**
+     * Performs a <code>UPSERT</code> statement for a given set of items.
+     * If an item exists by its id, it will be updated, otherwise it will be inserted.
+     * (with help of: SQL ON DUPLICATE KEY UPDATE)
+     *
+     * @param items The items to be upserted
+     * @throws DataAccessException if something went wrong executing the query
+     *
+     * @return upsert-count of successful upserts.
+     */
+    public int upsert(final List<Y> items) throws DataAccessException {
+        return this.insert(items, INSERT_ON_DUPLICATE_UPDATE);
+    }
+
+    private InsertReturningStep<R> setInsertQueryOptions(InsertSetMoreStep<R> insert, InsertType insertType) {
+        // prepare our insert-query with different options for different use-cases.
+        if (insertType == INSERT) {
+            return insert;
+        } else if (insertType == INSERT_ON_DUPLICATE_UPDATE) {
+            return insert
+                    .onDuplicateKeyUpdate()
+                    .setAllToExcluded();
+        } else if (insertType == INSERT_ON_DUPLICATE_IGNORE) {
+            return insert.onDuplicateKeyIgnore();
+        } else {
+            throw new MappingException("unsupported insert-type!");
+        }
+    }
+
+    private int insert(final List<Y> items, InsertType insertType) throws DataAccessException {
         final List<R> inserts = prepareInserts(prepareRecords(items));
         if (inserts.isEmpty()) {
             return 0;
@@ -380,25 +437,46 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         int insertCount = 0;
 
         if (autoIncGeneratingField != null) {
-            // inserts that have autoinc primary-key
-            final Result<R> result = dsl()
-                    .insertInto(inserts.getFirst().getTable())
-                    .set(inserts)
-                    .returning(autoIncGeneratingField)
-                    .fetch();
-            insertCount = result.size();
+            // low-performance-route, we need to retrieve autoinc ids from the db.
+            List<Object> autoIncResults = new ArrayList<>();
+            for (R insert : inserts) {
+                // execute each INSERT one-by-one to retrieve its autoinc id.
+                InsertReturningStep<R> insertQuery = setInsertQueryOptions(dsl()
+                        .insertInto(inserts.getFirst().getTable())
+                        .set(insert), insertType);
+                Result<R> rec = insertQuery.returning(autoIncGeneratingField).fetch();
+                autoIncResults.add(rec.getFirst().getValue(autoIncGeneratingField));
+            }
+            insertCount = autoIncResults.size();
 
             // database has created autoinc-ids, we have retrieved them from the db,
             // now we must reflect them back into the inserts, so the caller has them available.
             // we need to use generic type A here which may be a concrete subclass of Number (we already made sure)
             for (int j = 0; j < items.size(); j++) {
-                inserts.get(j).setValue(autoIncGeneratingField, result.get(j).getValue(autoIncGeneratingField));
+                inserts.get(j).setValue(autoIncGeneratingField, autoIncResults.get(j));
             }
         } else {
             // inserts that have uuid primary-key, or no primary-key.
-            if (inserts.size() > 1) {
-                // batch insert (performance gain)
-                final int[] batchResult = dsl().batchInsert(inserts).execute();
+            // high-performance-route, we do not need to resolve anything back from the db
+            // - use batch-statements (db will execute them in a big bulk, and not one-by-one)
+            // - use multi-value insert-statements (one INSERT statement contains a chunk of items instead of only one)
+
+            int chunkSize = 10; // Define the size of each multi-value-insert chunk
+            List<Query> multiValueInserts = new ArrayList<>();
+
+            // Loop over the original inserts and slice them into smaller multi-value-insert chunks.
+            for (int i = 0; i < inserts.size(); i += chunkSize) {
+                int end = Math.min(inserts.size(), i + chunkSize);
+                List<R> chunk = inserts.subList(i, end);
+                Query insertQuery = setInsertQueryOptions(dsl()
+                        .insertInto(inserts.getFirst().getTable())
+                        .set(chunk), insertType);
+
+                multiValueInserts.add(insertQuery);
+            }
+            if (multiValueInserts.size() > 1) {
+                // multi-value batch insert (huge performance boost)
+                final int[] batchResult = dsl().batch(multiValueInserts).execute();
                 for (int oneResult : batchResult) {
                     if (oneResult == 1) {
                         insertCount = insertCount + 1;
@@ -406,7 +484,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                 }
             } else {
                 // single insert
-                insertCount = dsl().executeInsert(inserts.getFirst());
+                insertCount = multiValueInserts.getFirst().execute();
             }
         }
 
@@ -418,6 +496,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         }
         return insertCount;
     }
+
+
 
     /**
      * Performs a <code>UPDATE</code> statement for a given set of items.
