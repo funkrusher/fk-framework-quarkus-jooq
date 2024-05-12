@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
+import static org.jooq.impl.DSL.key;
 
 /**
  * A common base-class for Repositories
@@ -42,6 +43,23 @@ public abstract class AbstractRepository<D extends DTO, T> {
         this.dtoClazz = dtoClazz;
         this.idField = idField;
         this.request = (RequestContext) dsl.data(DSL_DATA_KEY);
+    }
+
+    // ------------------------------------------------------------------------
+    // Internal/Private Helper methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * Sometimes we need to use jsonObject in queries, and jooq currently has no helper-function
+     * to convert fields to the expected json-entries. We provide it here for subclasses to use
+     * (maybe move this to a utility-class). See:
+     * - https://stackoverflow.com/questions/70458821/jooq-jsonobject-select-all-statement
+     *
+     * @param fields fields
+     * @return json-entries.
+     */
+    protected JSONEntry<?>[] asJsonEntries(Field<?>[] fields) {
+        return Arrays.stream(fields).map(f -> key(f.getName()).value(f)).toArray(JSONEntry[]::new);
     }
 
     // ------------------------------------------------------------------------

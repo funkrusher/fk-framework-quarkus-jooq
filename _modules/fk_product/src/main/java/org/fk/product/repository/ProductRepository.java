@@ -11,8 +11,13 @@ import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.jooq.*;
 import org.jooq.Record;
+
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.DSL.jsonObject;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
     public ProductRepository(DSLContext dsl) {
@@ -41,12 +46,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                         multiset(
                                 selectDistinct(
                                         asterisk(),
-                                        jsonObject(
-                                                Arrays
-                                                        .stream(Lang.LANG.fields())
-                                                        .map(f -> key(f.getName()).value(f))
-                                                        .toList()
-                                        ).as("lang")
+                                        jsonObject(asJsonEntries(Lang.LANG.fields())).as("lang")
                                 )
                                         .from(ProductLang.PRODUCT_LANG)
                                         .join(Lang.LANG).on(Lang.LANG.LANGID.eq(ProductLang.PRODUCT_LANG.LANGID))
