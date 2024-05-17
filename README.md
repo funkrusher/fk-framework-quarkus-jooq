@@ -203,22 +203,23 @@ After starting, you can connect to it with:
 - user: mydbuser
 - pass: changeme
 
-### Create application.properties
+### Create application-dev.properties
 
-Within the folder `_services/fk_backend1/src/main/resources/`, copy the file `./templates/application.properties` to `./application.properties`, 
-then edit this newly created file `_services/fk_backend1/src/main/resources/application.properties` in your editor of choice 
-and replace the following settings ([port], [username], [password])  for a connection with: 
+Within the folder `_services/fk_backend1/src/main/resources/`, create a new empty file `./application-dev.properties`, 
+then edit this newly created file in your editor of choice and define all the following settings in this file. 
 - database1: your mariadb-database with your settings.
 - database2: your postgresql-database with your settings.
 
 ```code
-quarkus.datasource.database1.jdbc.url=jdbc:mariadb://localhost:[port]/testshop?useCursorFetch=true&rewriteBatchedStatements=true
-quarkus.datasource.database1.username=[username]
-quarkus.datasource.database1.password=[password]
-
-quarkus.datasource.database2.jdbc.url=jdbc:postgresql://localhost:[port]/testlibrary
-quarkus.datasource.database2.username=[username]
-quarkus.datasource.database2.password=[password]
+# database
+database1.hostname=localhost
+database1.port=1763
+database1.username=root
+database1.password=changeme
+database2.hostname=localhost
+database2.port=1764
+database2.username=mydbuser
+database2.password=changeme
 ```
 Do the same for `_services/fk_backend2`.
 
@@ -245,25 +246,16 @@ please note down the following three outputs of this task:
 - cognitolocal.userpoolclientid
 - cognitolocal.userpoolclientsecret
 
-copy those three outputs directly into your `fk_backend1/src/main/resources/application.properties` file.
+copy those three outputs directly into your `fk_backend1/src/main/resources/application-dev.properties` file.
 For example:
 ```
-# cognito-local
-cognitolocal.userpoolid=local_7GsYn8Qh
-cognitolocal.userpoolclientid=67jqekw6w9193e8khcu9d5slh
-cognitolocal.userpoolclientsecret=6sjqzo1wyemkrjecj4qlqembt
+# cognito
+cognito.userpoolid=local_7GsYn8Qh
+cognito.userpoolclientid=67jqekw6w9193e8khcu9d5slh
+cognito.userpoolclientsecret=6sjqzo1wyemkrjecj4qlqembt
+cognito.hostname=localhost
+cognito.port=9229
 ```
-Quarkus will take care of the JWT-Verify, for the JWT that has been created by a successful AWS-Cognito Authentication.
-We need to tell it where to get the OIDC configuration. So make sure that your `application.properties` file also contains the following configurations from the template
-(please insert the correct value for <cognitolocal.userpoolid>):
-```
-# quarkus oidc
-quarkus.oidc.auth-server-url=http://localhost:9229/<cognitolocal.userpoolid>
-quarkus.oidc.discovery-enabled=false
-quarkus.oidc.jwks-path=http://localhost:9229/<cognitolocal.userpoolid>/.well-known/jwks.json
-quarkus.oidc.roles.role-claim-path=custom:fk_roles
-```
-
 Do the same for `_services/fk_backend2`.
 
 ### Run the server
@@ -292,7 +284,7 @@ you can do like this (just give each a different port, but use the same configur
 ```code
 ./gradlew :_services:fk_backend1:quarkusDev -Dquarkus.http.port=9010
 ./gradlew :_services:fk_backend1:quarkusDev -Dquarkus.http.port=9020
-...
+```
 
 ## Setup/run Unit-Tests for local development
 
@@ -360,25 +352,12 @@ You also need to commit this generated code into your version-control system, as
 
 ## Dockerizing the application
 
-The first step is, to prepare the `_services/fk_backend1/src/main/resources/application.properties` file to be ready for the deploy
-within the docker-container. Note that, normally you would prepare this file within a ci-pipeline (like in gitlab for example),
-so it is already prepared with the correct settings for the live-environment.
-
-For testing it, we can replace all `localhost` occurrences with a host/port that would be reachable from within
-the docker-container. For our example this would be:
-- fk-database1 for database1 (mariadb)
-- fk-database1 for database2 (postgresql)
-```
-fk-database1:3306
-fk-database1:5432
-```
-
-Next, build the JAR-files with following command. It will execute the tests and build everything.
+Start the Build with the following command (we disable tests here for speed).
 ```shell script
-./gradlew build
+./gradlew clean build -x test
 ```
 The build produces the `quarkus-run.jar` file in the `_services/fk_backend1/build/quarkus-app/` directory along with other files,
-and also with our prepared `application.properties`. 
+and also with our `application.properties` which will also be compiled into some specific `.class`-Files by Quarkus. 
 
 Finally, we can build the docker-image and start it as docker-container by executing the docker-compose file as follows:
 ```shell script
@@ -387,6 +366,9 @@ docker-compose -f _services/fk_backend1/docker-compose-backend1.yml up -d --buil
 This will start up a docker-container build with the `_services/fk_backend1/src/main/docker/Dockerfile.jvm` which will use the `_services/fk_backend1/build/quarkus-app/` directory, we have created with our build and start up the `quarkus-run.jar`
 After the docker-container has started we can open a rest-route in our webbrowser and it should work:
 - http://localhost:8000/products/1
+
+You can also edit the file `_services/fk_backend1/docker-compose-backend1.yml` to set additional environment-variables,
+to override properties in the `application.properties` file, so that you can provide environment-specific runtime-configurations. 
 
 ## Gitlab-Deploy
 
