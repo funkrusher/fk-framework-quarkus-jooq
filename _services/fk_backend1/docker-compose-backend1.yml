@@ -4,9 +4,11 @@ services:
   fk-backend1:
     container_name: fk-backend1
     environment:
-        DATABASE1_HOSTNAME: fk-database1
-        DATABASE1_PORT: 3306
-        COGNITO_USERPOOLID: test123
+      DATABASE1_HOSTNAME: fk-database1
+      DATABASE1_PORT: 3306
+      DATABASE2_HOSTNAME: fk-database2
+      DATABASE2_PORT: 5432
+      COGNITO_USERPOOLID: test123
     build:
       context: .
       dockerfile: src/main/docker/Dockerfile.jvm
