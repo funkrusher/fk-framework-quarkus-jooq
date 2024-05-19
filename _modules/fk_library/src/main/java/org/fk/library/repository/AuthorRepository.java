@@ -10,12 +10,6 @@ import org.fk.database2.public_.tables.Author;
 import org.fk.library.dto.AuthorDTO;
 import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.impl.DSL;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
 import static org.jooq.impl.DSL.*;
 
 public class AuthorRepository extends AbstractRepository<AuthorDTO, Integer> {

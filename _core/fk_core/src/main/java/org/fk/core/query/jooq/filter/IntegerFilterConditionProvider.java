@@ -3,9 +3,6 @@ package org.fk.core.query.jooq.filter;
 import org.fk.core.exception.InvalidDataException;
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.impl.QOM;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 /**

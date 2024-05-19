@@ -9,9 +9,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.core.init.DataInitPlan;
 import org.fk.database1.Database1ConfigurationFactory;
 import org.fk.product.init.ProductBasicDataInit;
-import org.fk.product.init.ProductTestDataInit;
 import org.fk.root.init.RootBasicDataInit;
-import org.fk.root.init.RootTestDataInit;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 

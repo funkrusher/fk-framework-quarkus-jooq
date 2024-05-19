@@ -12,6 +12,7 @@ import org.fk.core.dto.DTO;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.product.type.ProductTypeId;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class ProductDTO implements IProduct, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

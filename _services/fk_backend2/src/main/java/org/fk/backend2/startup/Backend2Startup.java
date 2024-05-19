@@ -7,11 +7,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.core.init.DataInitPlan;
-import org.fk.database1.Database1ConfigurationFactory;
 import org.fk.database2.Database2ConfigurationFactory;
 import org.fk.library.init.LibraryBasicDataInit;
-import org.fk.library.init.LibraryTestDataInit;
-import org.jooq.DSLContext;
+simport org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
 /**

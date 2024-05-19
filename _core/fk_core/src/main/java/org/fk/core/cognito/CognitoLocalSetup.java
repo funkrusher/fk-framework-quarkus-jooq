@@ -29,43 +29,44 @@ public class CognitoLocalSetup {
 
     public static void main(String[] args) {
         // Create a CognitoIdentityProviderClient using the AWS SDK for Java
-        CognitoIdentityProviderClient cognitoClient = CognitoIdentityProviderClient.builder()
+        try (CognitoIdentityProviderClient cognitoClient = CognitoIdentityProviderClient.builder()
                 .region(COGNITO_LOCAL_REGION)
                 .endpointOverride(URI.create(COGNITO_LOCAL_ENDPOINT))
                 .credentialsProvider(() -> AwsBasicCredentials.create(ACCESSKEY, SECRETKEY))
-                .build();
+                .build()) {
 
-        // Create a new user pool
-        CreateUserPoolRequest poolRequest = CreateUserPoolRequest.builder()
-                .poolName(POOLNAME)
-                .schema(
-                        SchemaAttributeType.builder()
-                                .name(FK_CLAIM)
-                                .attributeDataType(AttributeDataType.STRING)
-                                .developerOnlyAttribute(false)
-                                .mutable(true)
-                                .required(false)
-                                .stringAttributeConstraints(d -> d.maxLength("2048"))
-                                .build())
-                .build();
-        CreateUserPoolResponse poolResponse = cognitoClient.createUserPool(poolRequest);
-        String userPoolId = poolResponse.userPool().id();
+            // Create a new user pool
+            CreateUserPoolRequest poolRequest = CreateUserPoolRequest.builder()
+                    .poolName(POOLNAME)
+                    .schema(
+                            SchemaAttributeType.builder()
+                                    .name(FK_CLAIM)
+                                    .attributeDataType(AttributeDataType.STRING)
+                                    .developerOnlyAttribute(false)
+                                    .mutable(true)
+                                    .required(false)
+                                    .stringAttributeConstraints(d -> d.maxLength("2048"))
+                                    .build())
+                    .build();
+            CreateUserPoolResponse poolResponse = cognitoClient.createUserPool(poolRequest);
+            String userPoolId = poolResponse.userPool().id();
 
-        // Create a user pool client
-        CreateUserPoolClientRequest clientRequest = CreateUserPoolClientRequest.builder()
-                .userPoolId(userPoolId)
-                .clientName(CLIENTNAME)
-                .generateSecret(true)
-                .readAttributes(Arrays.asList(FK_CLAIM)) //Add this line to set the read attributes
-                .writeAttributes(Arrays.asList(FK_CLAIM)) //Add this line to set the write attributes
-                .build();
-        CreateUserPoolClientResponse clientResponse = cognitoClient.createUserPoolClient(clientRequest);
-        String userPoolClientId = clientResponse.userPoolClient().clientId();
-        String userPoolClientSecret = clientResponse.userPoolClient().clientSecret();
+            // Create a user pool client
+            CreateUserPoolClientRequest clientRequest = CreateUserPoolClientRequest.builder()
+                    .userPoolId(userPoolId)
+                    .clientName(CLIENTNAME)
+                    .generateSecret(true)
+                    .readAttributes(Arrays.asList(FK_CLAIM)) //Add this line to set the read attributes
+                    .writeAttributes(Arrays.asList(FK_CLAIM)) //Add this line to set the write attributes
+                    .build();
+            CreateUserPoolClientResponse clientResponse = cognitoClient.createUserPoolClient(clientRequest);
+            String userPoolClientId = clientResponse.userPoolClient().clientId();
+            String userPoolClientSecret = clientResponse.userPoolClient().clientSecret();
 
-        // print all relevant information to the console, so the user can copy them.
-        LOGGER.info("cognitolocal.userpoolid=" + userPoolId);
-        LOGGER.info("cognitolocal.userpoolclientid=" + userPoolClientId);
-        LOGGER.info("cognitolocal.userpoolclientsecret=" + userPoolClientSecret);
+            // print all relevant information to the console, so the user can copy them.
+            LOGGER.info("cognitolocal.userpoolid=" + userPoolId);
+            LOGGER.info("cognitolocal.userpoolclientid=" + userPoolClientId);
+            LOGGER.info("cognitolocal.userpoolclientsecret=" + userPoolClientSecret);
+        }
     }
 }

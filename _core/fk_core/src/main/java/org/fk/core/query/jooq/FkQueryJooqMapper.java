@@ -5,7 +5,6 @@ import org.fk.core.query.jooq.filter.FilterConditionProvider;
 import org.fk.core.query.jooq.filter.FilterConditionProviderFactory;
 import org.fk.core.query.jooq.sorter.SortFieldFactory;
 import org.fk.core.query.model.*;
-import org.jetbrains.annotations.NotNull;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 

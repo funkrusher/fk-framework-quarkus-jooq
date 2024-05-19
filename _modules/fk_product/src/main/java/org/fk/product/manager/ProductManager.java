@@ -41,8 +41,7 @@ public class ProductManager extends AbstractManager {
 
 
     public List<ProductDTO> testMultiset(DSLContext dsl) {
-        List<Field<?>> fields = new ArrayList<>();
-        fields.addAll(List.of(table().fields()));
+        List<Field<?>> fields = new ArrayList<>(List.of(table().fields()));
 
         // note: for MULTISET to work, we need to activate allowMultiQueries=true in mariadb via jdbc-url.
         // see: https://blog.jooq.org/mysqls-allowmultiqueries-flag-with-jdbc-and-jooq/

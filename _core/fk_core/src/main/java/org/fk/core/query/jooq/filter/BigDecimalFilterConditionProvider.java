@@ -5,9 +5,6 @@ import org.jooq.Condition;
 import org.jooq.Field;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 /**

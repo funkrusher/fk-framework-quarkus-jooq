@@ -38,7 +38,7 @@ public class BookKeeper {
 
     private boolean touch0 (final String fieldName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         for (Class<?> clazz : clazzHierarchy) {
-            Field field = null;
+            Field field;
             try {
                 field = clazz.getDeclaredField(fieldName);
             } catch (Exception e) {

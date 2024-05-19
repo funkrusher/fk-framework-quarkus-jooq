@@ -1,10 +1,8 @@
 package org.fk.core.startup;
 
 import io.quarkus.runtime.Startup;
-import io.quarkus.runtime.StartupEvent;
 import io.smallrye.config.Priorities;
 import jakarta.annotation.Priority;
-import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.fk.core.dto.DTOValidityScanner;
