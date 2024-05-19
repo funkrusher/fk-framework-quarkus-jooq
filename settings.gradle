@@ -94,7 +94,7 @@ dependencyResolutionManagement {
             bundle('aws', ['awssdk', 'awssdkCognitoIdentityProvider'])
 
             // test-bundles
-            bundle('test.quarkus', ['quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
+            bundle('test.quarkus', ['restAssured', 'quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
             bundle('test.testcontainers', ['testcontainers', 'testcontainersMariadb', 'testcontainersJunitJupiter'])
         }
     }

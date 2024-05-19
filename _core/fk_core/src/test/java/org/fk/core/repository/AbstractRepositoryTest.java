@@ -82,6 +82,10 @@ class AbstractRepositoryTest {
                         .setDecimal1(new BigDecimal(String.valueOf(i))));
             }
         }
+        dsl.deleteFrom(Nested1.NESTED1).execute();
+        dsl.deleteFrom(Basic2.BASIC2).execute();
+        dsl.deleteFrom(Basic1.BASIC1).execute();
+
         dsl.insertInto(Basic1.BASIC1).set(basic1s).execute();
         dsl.insertInto(Basic2.BASIC2).set(basic2s).execute();
         dsl.insertInto(Nested1.NESTED1).set(nested1s).execute();
