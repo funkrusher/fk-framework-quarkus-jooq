@@ -99,6 +99,16 @@ public interface IProduct extends Serializable {
      */
     public Boolean getDeleted();
 
+    /**
+     * Setter for <code>testshop2.product.creatorId</code>.
+     */
+    public IProduct setCreatorId(Integer value);
+
+    /**
+     * Getter for <code>testshop2.product.creatorId</code>.
+     */
+    public Integer getCreatorId();
+
     // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------

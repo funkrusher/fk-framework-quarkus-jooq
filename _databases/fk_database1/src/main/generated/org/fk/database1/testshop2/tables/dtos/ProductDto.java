@@ -36,6 +36,7 @@ public class ProductDto implements IProduct, DTO {
     @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
     private LocalDateTime updatedAt;
     private Boolean deleted;
+    private Integer creatorId;
 
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
@@ -187,6 +188,24 @@ public class ProductDto implements IProduct, DTO {
         return this;
     }
 
+    /**
+     * Getter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public Integer getCreatorId() {
+        return this.creatorId;
+    }
+
+    /**
+     * Setter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public ProductDto setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
+        this.keeper.touch("creatorId");
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields Setters/Getters (please define here)
     // -------------------------------------------------------------------------
@@ -230,6 +249,7 @@ public class ProductDto implements IProduct, DTO {
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
     }
     @Override
     public <E extends IProduct> E into(E into) {

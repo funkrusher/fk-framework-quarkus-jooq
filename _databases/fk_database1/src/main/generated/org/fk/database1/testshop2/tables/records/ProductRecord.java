@@ -153,6 +153,23 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         return (Boolean) get(6);
     }
 
+    /**
+     * Setter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public ProductRecord setCreatorId(Integer value) {
+        set(7, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public Integer getCreatorId() {
+        return (Integer) get(7);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -175,6 +192,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
         resetChangedOnNotNull();
     }
 
@@ -198,7 +216,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
     /**
      * Create a detached, initialised ProductRecord
      */
-    public ProductRecord(Long productId, Integer clientId, BigDecimal price, String typeId, LocalDateTime createdAt, LocalDateTime updatedAt, Boolean deleted) {
+    public ProductRecord(Long productId, Integer clientId, BigDecimal price, String typeId, LocalDateTime createdAt, LocalDateTime updatedAt, Boolean deleted, Integer creatorId) {
         super(Product.PRODUCT);
 
         setProductId(productId);
@@ -208,6 +226,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         setCreatedAt(createdAt);
         setUpdatedAt(updatedAt);
         setDeleted(deleted);
+        setCreatorId(creatorId);
         resetChangedOnNotNull();
     }
 
@@ -225,6 +244,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
             setCreatedAt(value.getCreatedAt());
             setUpdatedAt(value.getUpdatedAt());
             setDeleted(value.getDeleted());
+            setCreatorId(value.getCreatorId());
             resetChangedOnNotNull();
         }
     }

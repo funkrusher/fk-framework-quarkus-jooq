@@ -14,6 +14,7 @@ import org.fk.database1.testshop.tables.Client.ClientPath;
 import org.fk.database1.testshop.tables.Role.RolePath;
 import org.fk.database1.testshop.tables.UserRole.UserRolePath;
 import org.fk.database1.testshop.tables.records.UserRecord;
+import org.fk.database1.testshop2.tables.Product.ProductPath;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -188,6 +189,19 @@ public class User extends TableImpl<UserRecord> {
             _fk_user_role_userId = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
 
         return _fk_user_role_userId;
+    }
+
+    private transient ProductPath _fk_product_creatorId;
+
+    /**
+     * Get the implicit to-many join path to the <code>testshop2.product</code>
+     * table
+     */
+    public ProductPath fk_product_creatorId() {
+        if (_fk_product_creatorId == null)
+            _fk_product_creatorId = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CREATORID.getInverseKey());
+
+        return _fk_product_creatorId;
     }
 
     /**

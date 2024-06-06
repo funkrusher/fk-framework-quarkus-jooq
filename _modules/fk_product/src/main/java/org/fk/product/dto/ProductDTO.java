@@ -9,6 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
+import org.fk.database1.testshop2.tables.dtos.ProductDto;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.product.type.ProductTypeId;
 
@@ -39,6 +40,7 @@ public class ProductDTO implements IProduct, DTO {
     @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
     private LocalDateTime updatedAt;
     private Boolean deleted;
+    private Integer creatorId;
 
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
@@ -52,8 +54,14 @@ public class ProductDTO implements IProduct, DTO {
 
     private List<ProductLangDTO> langs;
 
+    @Schema(readOnly = true)
+    private ProductLangDTO mylang;
+
     @Schema(hidden = true)
     private ProductTypeId productTypeId;
+
+    @Schema(hidden = true)
+    private UserDTO creator;
 
     // -------------------------------------------------------------------------
     // Constructor(s)
@@ -204,9 +212,38 @@ public class ProductDTO implements IProduct, DTO {
         return this;
     }
 
+    /**
+     * Getter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public Integer getCreatorId() {
+        return this.creatorId;
+    }
+
+    /**
+     * Setter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public ProductDTO setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
+        this.keeper.touch("creatorId");
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // Non-Database-Fields Setters/Getters (please define here)
     // -------------------------------------------------------------------------
+
+    @JsonIgnore
+    public void setCreator(UserDTO creator) {
+        this.creator = creator;
+        keeper.touch("creator");
+    }
+
+    @JsonProperty
+    public UserDTO getCreator() {
+        return creator;
+    }
 
     @JsonIgnore
     public ProductTypeId getProductTypeId() {
@@ -231,6 +268,18 @@ public class ProductDTO implements IProduct, DTO {
     public Boolean getDeleteFlag() {
         return deleteFlag;
     }
+
+    @JsonIgnore
+    public void setMylang(ProductLangDTO lang) {
+        this.mylang = mylang;
+        keeper.touch("mylang");
+    }
+
+    @JsonProperty
+    public ProductLangDTO getMylang() {
+        return mylang;
+    }
+
 
     @JsonIgnore
     public void setLang(ProductLangDTO lang) {

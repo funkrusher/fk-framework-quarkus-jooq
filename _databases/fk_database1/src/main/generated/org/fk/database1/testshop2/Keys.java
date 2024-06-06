@@ -6,8 +6,10 @@ package org.fk.database1.testshop2;
 
 import org.fk.database1.testshop.tables.Client;
 import org.fk.database1.testshop.tables.Lang;
+import org.fk.database1.testshop.tables.User;
 import org.fk.database1.testshop.tables.records.ClientRecord;
 import org.fk.database1.testshop.tables.records.LangRecord;
+import org.fk.database1.testshop.tables.records.UserRecord;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
@@ -38,6 +40,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<ProductRecord, ClientRecord> FK_PRODUCT_CLIENTID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_clientId"), new TableField[] { Product.PRODUCT.CLIENTID }, org.fk.database1.testshop.Keys.KEY_CLIENT_PRIMARY, new TableField[] { Client.CLIENT.CLIENTID }, true);
+    public static final ForeignKey<ProductRecord, UserRecord> FK_PRODUCT_CREATORID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_creatorId"), new TableField[] { Product.PRODUCT.CREATORID }, org.fk.database1.testshop.Keys.KEY_USER_PRIMARY, new TableField[] { User.USER.USERID }, true);
     public static final ForeignKey<ProductLangRecord, LangRecord> FK_PRODUCT_LANG_LANGID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_langId"), new TableField[] { ProductLang.PRODUCT_LANG.LANGID }, org.fk.database1.testshop.Keys.KEY_LANG_PRIMARY, new TableField[] { Lang.LANG.LANGID }, true);
     public static final ForeignKey<ProductLangRecord, ProductRecord> FK_PRODUCT_LANG_PRODUCTID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_productId"), new TableField[] { ProductLang.PRODUCT_LANG.PRODUCTID }, Keys.KEY_PRODUCT_PRIMARY, new TableField[] { Product.PRODUCT.PRODUCTID }, true);
 }

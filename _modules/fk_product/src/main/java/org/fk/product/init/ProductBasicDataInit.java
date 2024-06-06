@@ -17,18 +17,6 @@ public class ProductBasicDataInit implements DataInit {
     }
     @Override
     public void execute(DSLContext dsl) {
-            dsl.insertInto(LANG, LANG.LANGID, LANG.CODE, LANG.DESCRIPTION)
-                    .values(1, "de", "Deutsch")
-                    .values(2, "en", "English")
-                    .values(3, "fr", "FranÃ§ais")
-                    .values(4, "pt", "PortuguÃªs")
-                    .execute();
-
-            dsl.insertInto(CLIENT, CLIENT.CLIENTID)
-                    .values(1)
-                    .values(2)
-                    .values(3)
-                    .execute();
 
             dsl.insertInto(PRODUCT, PRODUCT.PRODUCTID, PRODUCT.CLIENTID, PRODUCT.PRICE, PRODUCT.TYPEID)
                     .values(1L, 1, new BigDecimal("10.20"), ProductTypeId.CLOTHING.getValue())
@@ -40,12 +28,6 @@ public class ProductBasicDataInit implements DataInit {
                     .values(1L, 3, "Sac repas isotherme", "Gardez votre lunch bien chaud ou bien frais avec un sac isotherme chic pour le bureau ou les excursions ! DoublÃ© avec de la feuille d''aluminium. Compartiment du dessus 25 x 16 x H 15 cm. Compartiment du dessous 25 x 16 x H 7 cm. H totale 24 cm. RevÃªtement dÃ©perlant. Gris perle, lÃ©gÃ¨rement brillant.")
                     .values(2L, 1, "Mira Eck Glas USB A", "Eck-Steckdosenelement, 2-fach und Doppel USB Charger (Ladestation). Frontseite in bedrucktem und kratzfestem Glas, fÃ¼r 90Â° Ecke.")
                     .values(2L, 2, "Mira corner111 glass USB A", "Corner socket element, 2-fold and double USB charger (charging station). Front printed and scratch-resistant glass. for 90Â° corner.")
-                    .execute();
-
-            dsl.insertInto(ROLE, ROLE.ROLEID)
-                    .values("ADMIN")
-                    .values("EDITOR")
-                    .values("VIEWER")
                     .execute();
 
             dsl.execute("" +

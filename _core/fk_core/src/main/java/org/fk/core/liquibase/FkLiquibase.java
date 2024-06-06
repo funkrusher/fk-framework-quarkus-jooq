@@ -115,9 +115,13 @@ public class FkLiquibase {
         } catch (IOException e) {
             throw new MappingException(e);
         }
-        final String jdbcUrl = properties.getProperty(QUARKUS_DATASOURCE + databaseId + ".jdbc.url");
-        final String username = properties.getProperty(QUARKUS_DATASOURCE + databaseId + ".username");
-        final String password = properties.getProperty(QUARKUS_DATASOURCE + databaseId + ".password");
+        final String hostname = properties.getProperty(databaseId + ".hostname");
+        final String port = properties.getProperty(databaseId + ".port");
+        final String username = properties.getProperty(databaseId + ".username");
+        final String password = properties.getProperty(databaseId + ".password");
+        final String dbName = properties.getProperty(databaseId + ".name");
+
+        final String jdbcUrl = "jdbc:mariadb://" + hostname + ":" + port + "/" + dbName + "?useCursorFetch=true&rewriteBatchedStatements=true&allowMultiQueries=true";
 
         // execute the desired command (update, rollback)
         final FkLiquibase fkLiquibase = new FkLiquibase(changeLogFilename, contexts.toArray(new FkLiquibaseChangesetContext[0]));

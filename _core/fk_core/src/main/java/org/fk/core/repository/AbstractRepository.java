@@ -72,11 +72,11 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * You can override this method if specific result mappings are needed / different from the default.
      * But only do this, if you really need it.
      *
-     * @param dto dto
+     * @param rec rec
      * @return dto
      */
-    protected D mapResult(D dto) {
-        return dto;
+    protected D mapResult(Record rec) {
+        return rec.into(dtoClazz);
     }
 
     // -------------------------------------------------------------------------
@@ -112,8 +112,12 @@ public abstract class AbstractRepository<D extends DTO, T> {
      */
     public List<D> query(FkQuery query) throws InvalidDataException {
         return prepareQuery(query)
-                .fetchInto(dtoClazz)
-                .stream().map(this::mapResult).toList();
+                .fetch().map(new RecordMapper<Record, D>() {
+                    @Override
+                    public @Nullable D map(Record record) {
+                        return mapResult(record);
+                    }
+                });
     }
 
     /**
@@ -139,8 +143,12 @@ public abstract class AbstractRepository<D extends DTO, T> {
     public Stream<D> stream(FkQuery query) throws InvalidDataException {
         return prepareQuery(query)
                 .fetchSize(250)
-                .fetchStreamInto(dtoClazz)
-                .map(this::mapResult);
+                .fetchStream().map(new RecordMapper<Record, D>() {
+                    @Override
+                    public @Nullable D map(Record record) {
+                        return mapResult(record);
+                    }
+                });
     }
 
     /**

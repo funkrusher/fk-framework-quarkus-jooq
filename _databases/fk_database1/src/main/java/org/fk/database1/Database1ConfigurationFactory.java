@@ -54,7 +54,7 @@ public class Database1ConfigurationFactory {
                             .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
                             .withRenderNameCase(RenderNameCase.AS_IS)
                     );
-            configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener()));
+            // configuration.set(new DefaultExecuteListenerProvider(new FkExecuteListener()));
         }
         return configuration;
     }

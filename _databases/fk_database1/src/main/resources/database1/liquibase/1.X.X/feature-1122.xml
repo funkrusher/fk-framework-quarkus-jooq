@@ -7,6 +7,20 @@
     </changeSet>
     <changeSet author="bernd" id="feature-1122-ddl" context="ddl">
         <sql>
+            CREATE TABLE testshop.lang
+            (
+                langId      INT     NOT NULL AUTO_INCREMENT COMMENT "langId",
+                code        CHAR(2) NOT NULL                COMMENT "ISO-639 language code",
+                description VARCHAR(50)                     COMMENT "internal description of language",
+                PRIMARY KEY (langId)
+            ) COMMENT = "Lang contains available languages of the app";
+
+            CREATE TABLE testshop.client
+            (
+                clientId INT NOT NULL AUTO_INCREMENT,
+                PRIMARY KEY (clientId)
+            );
+
             CREATE TABLE testshop.role
             (
                 roleId VARCHAR(50) NOT NULL,
@@ -37,17 +51,30 @@
             DROP TABLE testshop.user_role;
             DROP TABLE testshop.user;
             DROP TABLE testshop.role;
+            DROP TABLE testshop.lang;
+            DROP TABLE testshop.client;
         </rollback>
     </changeSet>
     <changeSet author="bernd" id="feature-1122-dml" context="dml">
         <preConditions onFail="MARK_RAN"><not><changeLogPropertyDefined property="no_dml" value="true"/></not></preConditions>
         <sql>
+            INSERT INTO testshop.client (clientId) VALUES (1);
+            INSERT INTO testshop.client (clientId) VALUES (2);
+            INSERT INTO testshop.client (clientId) VALUES (3);
+
+            INSERT INTO testshop.lang (langId, code, description) VALUES (1, 'de', 'Deutsch');
+            INSERT INTO testshop.lang (langId, code, description) VALUES (2, 'en', 'English');
+            INSERT INTO testshop.lang (langId, code, description) VALUES (3, 'fr', 'FranÃ§ais');
+            INSERT INTO testshop.lang (langId, code, description) VALUES (4, 'pt', 'PortuguÃªs');
+
             INSERT INTO testshop.role (roleId) VALUES ('ADMIN');
             INSERT INTO testshop.role (roleId) VALUES ('EDITOR');
             INSERT INTO testshop.role (roleId) VALUES ('VIEWER');
         </sql>
         <rollback>
             DELETE FROM testshop.role;
+            DELETE FROM testshop.lang;
+            DELETE FROM testshop.client;
         </rollback>
     </changeSet>
 </databaseChangeLog>

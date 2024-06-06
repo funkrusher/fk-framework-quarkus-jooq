@@ -28,6 +28,7 @@ public class Product implements IProduct {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;
+    private Integer creatorId;
 
     public Product() {}
 
@@ -39,6 +40,7 @@ public class Product implements IProduct {
         this.createdAt = value.getCreatedAt();
         this.updatedAt = value.getUpdatedAt();
         this.deleted = value.getDeleted();
+        this.creatorId = value.getCreatorId();
     }
 
     public Product(
@@ -48,7 +50,8 @@ public class Product implements IProduct {
         String typeId,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        Boolean deleted
+        Boolean deleted,
+        Integer creatorId
     ) {
         this.productId = productId;
         this.clientId = clientId;
@@ -57,6 +60,7 @@ public class Product implements IProduct {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deleted = deleted;
+        this.creatorId = creatorId;
     }
 
     /**
@@ -188,6 +192,23 @@ public class Product implements IProduct {
         return this;
     }
 
+    /**
+     * Getter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public Integer getCreatorId() {
+        return this.creatorId;
+    }
+
+    /**
+     * Setter for <code>testshop2.product.creatorId</code>.
+     */
+    @Override
+    public Product setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Product (");
@@ -199,6 +220,7 @@ public class Product implements IProduct {
         sb.append(", ").append(createdAt);
         sb.append(", ").append(updatedAt);
         sb.append(", ").append(deleted);
+        sb.append(", ").append(creatorId);
 
         sb.append(")");
         return sb.toString();
@@ -217,6 +239,7 @@ public class Product implements IProduct {
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
     }
 
     @Override
