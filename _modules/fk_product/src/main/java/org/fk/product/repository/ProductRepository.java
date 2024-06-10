@@ -5,7 +5,7 @@ import org.fk.database1.testshop.tables.Lang;
 import org.fk.database1.testshop.tables.User;
 import org.fk.database1.testshop.tables.UserRole;
 import org.fk.database1.testshop.tables.records.UserRecord;
-import org.fk.database1.testshop.tables.records.UserRoleRecord;
+import org.fk.database1.testshop.tables.records.RoleRecord;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.core.repository.AbstractRepository;
@@ -18,6 +18,8 @@ import org.fk.product.dto.UserRoleDTO;
 import org.jooq.*;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -30,6 +32,8 @@ import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.DSL.jsonObject;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
+    private static final Logger log = LoggerFactory.getLogger(ProductRepository.class);
+
     public ProductRepository(DSLContext dsl) {
         super(dsl, ProductDTO.class, Product.PRODUCT.PRODUCTID);
     }
@@ -56,29 +60,31 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
 
         return dsl()
                 .select(
-                        asterisk(),
+                        Product.PRODUCT.PRODUCTID,
+                        Product.PRODUCT.CLIENTID,
+                        Product.PRODUCT.PRICE,
+                        Product.PRODUCT.TYPEID,
+                        Product.PRODUCT.CREATEDAT,
+                        Product.PRODUCT.UPDATEDAT,
+                        Product.PRODUCT.DELETED,
+                        Product.PRODUCT.CREATORID,
+
+                        // Nest a projection of USER fields (using implicit joins)
+                        row(
+                                Product.PRODUCT.fk_product_creatorId().USERID,
+                                Product.PRODUCT.fk_product_creatorId().CLIENTID,
+                                Product.PRODUCT.fk_product_creatorId().EMAIL,
+                                Product.PRODUCT.fk_product_creatorId().FIRSTNAME,
+                                Product.PRODUCT.fk_product_creatorId().LASTNAME
+                        ).mapping(UserRecord::new),
+
                         multiset(
-                                selectDistinct(
-                                        asterisk(),
-                                        multiset(
-                                                selectDistinct(
-                                                        asterisk()
-                                                )
-                                                        .from(UserRole.USER_ROLE)
-                                                        .where(UserRole.USER_ROLE.USERID.eq(User.USER.USERID))
-                                        ).as("roles")
+                                select(
+                                        Product.PRODUCT.fk_product_creatorId().fk_user_role_roleId().ROLEID
                                 )
-                                        .from(User.USER)
-                                        .where(User.USER.USERID.eq(Product.PRODUCT.CREATORID))
-                        ).as("creator").convertFrom(r -> {
-                            if (r.isEmpty()) {
-                                return (UserDTO) null;
-                            } else {
-                                Record first = r.getFirst();
-                                List<UserRoleDTO> roles = first.get("roles", Result.class).into(UserRole.USER_ROLE).into(UserRoleDTO.class);
-                                return first.into(User.USER).into(UserDTO.class).setRoles(roles);
-                            }
-                        }),
+                        .from(Product.PRODUCT.fk_product_creatorId().fk_user_role_roleId())
+                        ).convertFrom(r -> r.map(Records.mapping(RoleRecord::new))),
+
                         multiset(
                                 selectDistinct(
                                         asterisk(),

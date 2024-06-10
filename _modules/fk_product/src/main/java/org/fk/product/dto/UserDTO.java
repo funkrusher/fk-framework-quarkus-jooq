@@ -17,13 +17,13 @@ public class UserDTO extends UserDto implements IUser {
     }
 
 
-    private List<UserRoleDTO> roles = new ArrayList<UserRoleDTO>();
+    private List<RoleDTO> roles = new ArrayList<RoleDTO>();
 
-    public List<UserRoleDTO> getRoles() {
+    public List<RoleDTO> getRoles() {
         return roles;
     }
 
-    public UserDTO setRoles(List<UserRoleDTO> roles) {
+    public UserDTO setRoles(List<RoleDTO> roles) {
         this.roles = roles;
         keeper.touch("roles");
         return this;
