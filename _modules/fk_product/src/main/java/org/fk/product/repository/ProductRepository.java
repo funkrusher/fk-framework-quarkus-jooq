@@ -1,11 +1,6 @@
 package org.fk.product.repository;
 
 import org.fk.core.query.jooq.FkQueryJooqMapper;
-import org.fk.database1.testshop.tables.Lang;
-import org.fk.database1.testshop.tables.User;
-import org.fk.database1.testshop.tables.UserRole;
-import org.fk.database1.testshop.tables.records.UserRecord;
-import org.fk.database1.testshop.tables.records.RoleRecord;
 import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.fk.database1.testshop.tables.User.USER;
@@ -13,7 +8,6 @@ import static org.fk.database1.testshop.tables.Role.ROLE;
 import static org.fk.database1.testshop.tables.UserRole.USER_ROLE;
 import static org.fk.database1.testshop.tables.Lang.LANG;
 import org.fk.core.repository.AbstractRepository;
-import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.model.FkQuery;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.product.dto.ProductDTO;
@@ -21,26 +15,10 @@ import org.fk.product.dto.ProductLangDTO;
 import org.fk.product.dto.RoleDTO;
 import org.fk.product.dto.UserDTO;
 import org.fk.product.dto.LangDTO;
-import org.fk.product.dto.UserRoleDTO;
-import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
-import org.jooq.Record;
-import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
-
-import static org.jooq.Records.mapping;
-import static org.jooq.impl.DSL.*;
-import static org.jooq.impl.DSL.jsonObject;
-
 import static org.jooq.impl.DSL.*;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
@@ -48,16 +26,6 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
 
     public ProductRepository(DSLContext dsl) {
         super(dsl, ProductDTO.class, PRODUCT.PRODUCTID);}
-
-    protected ProductDTO mapResult(Record rec) {
-        ProductDTO product = rec.into(ProductDTO.class);
-        for (ProductLangDTO productLang : product.getLangs()) {
-            if (productLang.getLangId().equals(request().getLangId())) {
-                product.setLang(productLang);
-            }
-        }
-        return product;
-    }
 
     private TableLike<?> getJoins() {
         return PRODUCT
