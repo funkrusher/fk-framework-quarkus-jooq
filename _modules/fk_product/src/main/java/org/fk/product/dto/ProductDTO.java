@@ -69,6 +69,36 @@ public class ProductDTO implements IProduct, DTO {
 
     public ProductDTO() { this.keeper = new BookKeeper(this); }
 
+    public ProductDTO(
+            // Database-Fields
+            Long productId,
+            Integer clientId,
+            BigDecimal price,
+            String typeId,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt,
+            Boolean deleted,
+            Integer creatorId,
+
+            // Non-database-Fields
+            UserDTO creator,
+            List<ProductLangDTO> langs
+    ) {
+        this.keeper = new BookKeeper(this);
+
+        setProductId(productId);
+        setClientId(clientId);
+        setPrice(price);
+        setTypeId(typeId);
+        setCreatedAt(createdAt);
+        setUpdatedAt(updatedAt);
+        setDeleted(deleted);
+        setCreatorId(creatorId);
+
+        setCreator(creator);
+        setLangs(langs);
+    }
+
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
     // -------------------------------------------------------------------------

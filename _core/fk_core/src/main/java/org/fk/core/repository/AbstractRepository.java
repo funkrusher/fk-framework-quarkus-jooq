@@ -1,6 +1,7 @@
 package org.fk.core.repository;
 
 import org.fk.core.dto.DTO;
+import org.fk.core.query.jooq.FkQueryJooqMapper;
 import org.fk.core.query.model.*;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.InvalidDataException;
@@ -66,18 +67,23 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    protected abstract SelectFinalStep<? extends Record> prepareQuery(FkQuery query) throws InvalidDataException;
+    /**
+     * Count the given @{@link FkFilter}s and return
+     * the total count of all items that would match the filters of the given query-parameters
+     *
+     * @return total count of items, matching the given filters
+     * @throws InvalidDataException invalid data in the given filters
+     */
+    abstract public int count(FkQuery fkQuery) throws InvalidDataException;
 
     /**
-     * You can override this method if specific result mappings are needed / different from the default.
-     * But only do this, if you really need it.
+     * Streams the given @{@link FkQuery} and return
+     * a stream of sorted, filtered DTOs that match all criteria defined in the given query-parameters.
      *
-     * @param rec rec
-     * @return dto
+     * @return stream of sorted, filtered Ids
+     * @throws InvalidDataException invalid data in the given queryParameters
      */
-    protected D mapResult(Record rec) {
-        return rec.into(dtoClazz);
-    }
+    abstract public Stream<D> stream(FkQuery fkQuery) throws InvalidDataException;
 
     // -------------------------------------------------------------------------
     // Repository API
@@ -106,49 +112,12 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * a list of sorted, filtered, page-sized DTOs that match all criteria defined in the given query-parameters.
      * This will be a list that is only as large as the page-size defined in the given query-parameters.
      *
-     * @param query query
+     * @param fkQuery fkQuery
      * @return list of sorted, filtered, page-sized DTOs
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public List<D> query(FkQuery query) throws InvalidDataException {
-        return prepareQuery(query)
-                .fetch().map(new RecordMapper<Record, D>() {
-                    @Override
-                    public @Nullable D map(Record record) {
-                        return mapResult(record);
-                    }
-                });
-    }
-
-    /**
-     * Count the given @{@link FkFilter}s and return
-     * the total count of all items that would match the filters of the given query-parameters
-     *
-     * @param filters filters
-     * @return total count of items, matching the given filters
-     * @throws InvalidDataException invalid data in the given filters
-     */
-    public int count(@Nullable List<FkFilter> filters) throws InvalidDataException {
-        return dsl().fetchCount(prepareQuery(new FkQuery().setFilters(filters == null ? new ArrayList<>() : filters)));
-    }
-
-    /**
-     * Streams the given @{@link FkQuery} and return
-     * a stream of sorted, filtered DTOs that match all criteria defined in the given query-parameters.
-     *
-     * @param query query
-     * @return stream of sorted, filtered Ids
-     * @throws InvalidDataException invalid data in the given queryParameters
-     */
-    public Stream<D> stream(FkQuery query) throws InvalidDataException {
-        return prepareQuery(query)
-                .fetchSize(250)
-                .fetchStream().map(new RecordMapper<Record, D>() {
-                    @Override
-                    public @Nullable D map(Record record) {
-                        return mapResult(record);
-                    }
-                });
+    public List<D> query(FkQuery fkQuery) throws InvalidDataException {
+       return stream(fkQuery).toList();
     }
 
     /**
