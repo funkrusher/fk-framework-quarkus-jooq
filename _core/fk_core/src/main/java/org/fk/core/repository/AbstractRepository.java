@@ -112,12 +112,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      */
     public List<D> query(FkQuery query) throws InvalidDataException {
         return prepareQuery(query)
-                .fetch().map(new RecordMapper<Record, D>() {
-                    @Override
-                    public @Nullable D map(Record record) {
-                        return mapResult(record);
-                    }
-                });
+                .fetchInto(dtoClazz);
     }
 
     /**

@@ -2,6 +2,7 @@ package org.fk.product.dto;
 
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.fk.product.repository.ProductRepository;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class ProductPaginateDTO {
 
-    private List<ProductDTO> products;
+    private List<ProductRepository.ProductItem> products;
 
     private Integer count;
 
@@ -19,11 +20,11 @@ public class ProductPaginateDTO {
         super();
     }
 
-    public List<ProductDTO> getProducts() {
+    public List<ProductRepository.ProductItem> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDTO> products) {
+    public void setProducts(List<ProductRepository.ProductItem> products) {
         this.products = products;
     }
 
