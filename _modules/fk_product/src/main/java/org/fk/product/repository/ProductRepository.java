@@ -16,8 +16,11 @@ import org.fk.product.dto.RoleDTO;
 import org.fk.product.dto.UserDTO;
 import org.fk.product.dto.LangDTO;
 import org.jooq.*;
+import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.function.Function;
+import java.lang.Record;
 import java.util.stream.Stream;
 import static org.jooq.impl.DSL.*;
 
@@ -58,13 +61,21 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
         );
     }
 
+    public static <R extends org.jooq.Record, T> T nullableMapping(R record, Function<R, T> mapper) {
+        // TODO: is this the right way to process nullable 1:1 relationships?
+        if (record == null || record.get(0) == null) {
+            return null;
+        }
+        return mapper.apply(record);
+    }
+
     @Override
     public Stream<ProductDTO> stream(FkQuery fkQuery) {
         FkQueryJooqMapper queryJooqMapper = getQueryJooqMapper(fkQuery);
         return dsl()
                 .select(
                         PRODUCT.PRODUCTID,
-                        PRODUCT.CLIENTID,
+                        DSL.val((Integer) null).as(PRODUCT.CLIENTID), // testing the ignore of a field.
                         PRODUCT.PRICE,
                         PRODUCT.TYPEID,
                         PRODUCT.CREATEDAT,
@@ -87,12 +98,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                                                 .join(ROLE).on(ROLE.ROLEID.eq(USER_ROLE.ROLEID))
                                                 .where(ROLE.ROLEID.eq(USER_ROLE.ROLEID))
                                 ).convertFrom(r -> r.map(Records.mapping(RoleDTO::new)))
-                        ).mapping(UserDTO::new).convertFrom(user -> {
-                            if (user.getUserId() == null) {
-                                return null;
-                            }
-                            return user;
-                        }),
+                        ).convertFrom(r -> nullableMapping(r, Records.mapping(UserDTO::new))),
 
                         multiset(
                                 selectDistinct(
