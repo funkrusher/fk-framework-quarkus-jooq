@@ -72,51 +72,58 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
     @Override
     public Stream<ProductDTO> stream(FkQuery fkQuery) {
         FkQueryJooqMapper queryJooqMapper = getQueryJooqMapper(fkQuery);
+
+        // experiment: try to wrap the SELECT into a "container"-row,
+        // to be able to use convertFrom on the ProductDTO for mapping everything beforehand.
+        // After fetching, unwrap the "container"-row and extract the contents.
+        // benefit: abstractions can work and expect the "container"-row, and type-safety still guaranteed.
         return dsl()
                 .select(
-                        PRODUCT.PRODUCTID,
-                        DSL.val((Integer) null).as(PRODUCT.CLIENTID), // testing the ignore of a field.
-                        PRODUCT.PRICE,
-                        PRODUCT.TYPEID,
-                        PRODUCT.CREATEDAT,
-                        PRODUCT.UPDATEDAT,
-                        PRODUCT.DELETED,
-                        PRODUCT.CREATORID,
-
-                        // Nest a projection of USER fields (using implicit joins)
                         row(
-                                PRODUCT.fk_product_creatorId().USERID,
-                                PRODUCT.fk_product_creatorId().CLIENTID,
-                                PRODUCT.fk_product_creatorId().EMAIL,
-                                PRODUCT.fk_product_creatorId().FIRSTNAME,
-                                PRODUCT.fk_product_creatorId().LASTNAME,
-                                multiset(
-                                        selectDistinct(
-                                                ROLE.ROLEID
-                                        )
-                                                .from(USER_ROLE)
-                                                .join(ROLE).on(ROLE.ROLEID.eq(USER_ROLE.ROLEID))
-                                                .where(ROLE.ROLEID.eq(USER_ROLE.ROLEID))
-                                ).convertFrom(r -> r.map(Records.mapping(RoleDTO::new)))
-                        ).convertFrom(r -> nullableMapping(r, Records.mapping(UserDTO::new))),
+                            PRODUCT.PRODUCTID,
+                            DSL.val((Integer) null).as(PRODUCT.CLIENTID), // testing the ignore of a field.
+                            PRODUCT.PRICE,
+                            PRODUCT.TYPEID,
+                            PRODUCT.CREATEDAT,
+                            PRODUCT.UPDATEDAT,
+                            PRODUCT.DELETED,
+                            PRODUCT.CREATORID,
 
-                        multiset(
-                                selectDistinct(
-                                        PRODUCT_LANG.PRODUCTID,
-                                        PRODUCT_LANG.LANGID,
-                                        PRODUCT_LANG.NAME,
-                                        PRODUCT_LANG.DESCRIPTION,
-                                        row(
-                                                LANG.LANGID,
-                                                LANG.CODE,
-                                                LANG.DESCRIPTION
-                                        ).mapping(LangDTO::new)
+                            // Nest a projection of USER fields (using implicit joins)
+                            row(
+                                    PRODUCT.fk_product_creatorId().USERID,
+                                    PRODUCT.fk_product_creatorId().CLIENTID,
+                                    PRODUCT.fk_product_creatorId().EMAIL,
+                                    PRODUCT.fk_product_creatorId().FIRSTNAME,
+                                    PRODUCT.fk_product_creatorId().LASTNAME,
+                                    multiset(
+                                            selectDistinct(
+                                                    ROLE.ROLEID
+                                            )
+                                                    .from(USER_ROLE)
+                                                    .join(ROLE).on(ROLE.ROLEID.eq(USER_ROLE.ROLEID))
+                                                    .where(ROLE.ROLEID.eq(USER_ROLE.ROLEID))
+                                    ).convertFrom(r -> r.map(Records.mapping(RoleDTO::new)))
+                            ).convertFrom(r -> nullableMapping(r, Records.mapping(UserDTO::new))),
 
-                                )
-                                        .from(PRODUCT_LANG)
-                                        .join(LANG).on(LANG.LANGID.eq(PRODUCT_LANG.LANGID))
-                                        .where(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))
-                        ).convertFrom(r -> r.map(Records.mapping(ProductLangDTO::new)))
+                            multiset(
+                                    selectDistinct(
+                                            PRODUCT_LANG.PRODUCTID,
+                                            PRODUCT_LANG.LANGID,
+                                            PRODUCT_LANG.NAME,
+                                            PRODUCT_LANG.DESCRIPTION,
+                                            row(
+                                                    LANG.LANGID,
+                                                    LANG.CODE,
+                                                    LANG.DESCRIPTION
+                                            ).mapping(LangDTO::new)
+
+                                    )
+                                            .from(PRODUCT_LANG)
+                                            .join(LANG).on(LANG.LANGID.eq(PRODUCT_LANG.LANGID))
+                                            .where(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))
+                            ).convertFrom(r -> r.map(Records.mapping(ProductLangDTO::new)))
+                        ).convertFrom(Records.mapping(ProductDTO::new)).as("container")
                 )
                 .from(getJoins())
                 .where(queryJooqMapper.getFilters())
@@ -127,6 +134,6 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                 .limit(queryJooqMapper.getLimit())
                 .fetchSize(250)
                 .fetchStream()
-                .map(Records.mapping(ProductDTO::new));
+                .map(x -> (ProductDTO) x.get("container"));
     }
 }
