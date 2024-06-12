@@ -62,7 +62,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getID() {
+    public String ID() {
         return this.ID;
     }
 
@@ -70,9 +70,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
     @Override
-    public DatabasechangelogDto setID(String ID) {
+    public Databasechangelog ID(String ID) {
         this.ID = ID;
-        this.keeper.touch("ID");
         return this;
     }
 
@@ -82,7 +81,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getAUTHOR() {
+    public String AUTHOR() {
         return this.AUTHOR;
     }
 
@@ -90,9 +89,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
     @Override
-    public DatabasechangelogDto setAUTHOR(String AUTHOR) {
+    public Databasechangelog AUTHOR(String AUTHOR) {
         this.AUTHOR = AUTHOR;
-        this.keeper.touch("AUTHOR");
         return this;
     }
 
@@ -102,7 +100,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getFILENAME() {
+    public String FILENAME() {
         return this.FILENAME;
     }
 
@@ -110,9 +108,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
     @Override
-    public DatabasechangelogDto setFILENAME(String FILENAME) {
+    public Databasechangelog FILENAME(String FILENAME) {
         this.FILENAME = FILENAME;
-        this.keeper.touch("FILENAME");
         return this;
     }
 
@@ -121,7 +118,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @NotNull
     @Override
-    public LocalDateTime getDATEEXECUTED() {
+    public LocalDateTime DATEEXECUTED() {
         return this.DATEEXECUTED;
     }
 
@@ -129,9 +126,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
     @Override
-    public DatabasechangelogDto setDATEEXECUTED(LocalDateTime DATEEXECUTED) {
+    public Databasechangelog DATEEXECUTED(LocalDateTime DATEEXECUTED) {
         this.DATEEXECUTED = DATEEXECUTED;
-        this.keeper.touch("DATEEXECUTED");
         return this;
     }
 
@@ -140,7 +136,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @NotNull
     @Override
-    public Integer getORDEREXECUTED() {
+    public Integer ORDEREXECUTED() {
         return this.ORDEREXECUTED;
     }
 
@@ -148,9 +144,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
     @Override
-    public DatabasechangelogDto setORDEREXECUTED(Integer ORDEREXECUTED) {
+    public Databasechangelog ORDEREXECUTED(Integer ORDEREXECUTED) {
         this.ORDEREXECUTED = ORDEREXECUTED;
-        this.keeper.touch("ORDEREXECUTED");
         return this;
     }
 
@@ -160,7 +155,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     @NotNull
     @Size(max = 10)
     @Override
-    public String getEXECTYPE() {
+    public String EXECTYPE() {
         return this.EXECTYPE;
     }
 
@@ -168,9 +163,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
     @Override
-    public DatabasechangelogDto setEXECTYPE(String EXECTYPE) {
+    public Databasechangelog EXECTYPE(String EXECTYPE) {
         this.EXECTYPE = EXECTYPE;
-        this.keeper.touch("EXECTYPE");
         return this;
     }
 
@@ -179,7 +173,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 35)
     @Override
-    public String getMD5SUM() {
+    public String MD5SUM() {
         return this.MD5SUM;
     }
 
@@ -187,9 +181,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
     @Override
-    public DatabasechangelogDto setMD5SUM(String MD5SUM) {
+    public Databasechangelog MD5SUM(String MD5SUM) {
         this.MD5SUM = MD5SUM;
-        this.keeper.touch("MD5SUM");
         return this;
     }
 
@@ -198,7 +191,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 255)
     @Override
-    public String getDESCRIPTION() {
+    public String DESCRIPTION() {
         return this.DESCRIPTION;
     }
 
@@ -206,9 +199,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
     @Override
-    public DatabasechangelogDto setDESCRIPTION(String DESCRIPTION) {
+    public Databasechangelog DESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("DESCRIPTION");
         return this;
     }
 
@@ -217,7 +209,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 255)
     @Override
-    public String getCOMMENTS() {
+    public String COMMENTS() {
         return this.COMMENTS;
     }
 
@@ -225,9 +217,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
     @Override
-    public DatabasechangelogDto setCOMMENTS(String COMMENTS) {
+    public Databasechangelog COMMENTS(String COMMENTS) {
         this.COMMENTS = COMMENTS;
-        this.keeper.touch("COMMENTS");
         return this;
     }
 
@@ -236,7 +227,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 255)
     @Override
-    public String getTAG() {
+    public String TAG() {
         return this.TAG;
     }
 
@@ -244,9 +235,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
     @Override
-    public DatabasechangelogDto setTAG(String TAG) {
+    public Databasechangelog TAG(String TAG) {
         this.TAG = TAG;
-        this.keeper.touch("TAG");
         return this;
     }
 
@@ -255,7 +245,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 20)
     @Override
-    public String getLIQUIBASE() {
+    public String LIQUIBASE() {
         return this.LIQUIBASE;
     }
 
@@ -263,9 +253,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
     @Override
-    public DatabasechangelogDto setLIQUIBASE(String LIQUIBASE) {
+    public Databasechangelog LIQUIBASE(String LIQUIBASE) {
         this.LIQUIBASE = LIQUIBASE;
-        this.keeper.touch("LIQUIBASE");
         return this;
     }
 
@@ -274,7 +263,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 255)
     @Override
-    public String getCONTEXTS() {
+    public String CONTEXTS() {
         return this.CONTEXTS;
     }
 
@@ -282,9 +271,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
     @Override
-    public DatabasechangelogDto setCONTEXTS(String CONTEXTS) {
+    public Databasechangelog CONTEXTS(String CONTEXTS) {
         this.CONTEXTS = CONTEXTS;
-        this.keeper.touch("CONTEXTS");
         return this;
     }
 
@@ -293,7 +281,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 255)
     @Override
-    public String getLABELS() {
+    public String LABELS() {
         return this.LABELS;
     }
 
@@ -301,9 +289,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
     @Override
-    public DatabasechangelogDto setLABELS(String LABELS) {
+    public Databasechangelog LABELS(String LABELS) {
         this.LABELS = LABELS;
-        this.keeper.touch("LABELS");
         return this;
     }
 
@@ -312,7 +299,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      */
     @Size(max = 10)
     @Override
-    public String getDEPLOYMENT_ID() {
+    public String DEPLOYMENT_ID() {
         return this.DEPLOYMENT_ID;
     }
 
@@ -320,9 +307,8 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      * Setter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
     @Override
-    public DatabasechangelogDto setDEPLOYMENT_ID(String DEPLOYMENT_ID) {
+    public Databasechangelog DEPLOYMENT_ID(String DEPLOYMENT_ID) {
         this.DEPLOYMENT_ID = DEPLOYMENT_ID;
-        this.keeper.touch("DEPLOYMENT_ID");
         return this;
     }
 
@@ -362,20 +348,20 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
 
     @Override
     public void from(IDatabasechangelog from) {
-        setID(from.getID());
-        setAUTHOR(from.getAUTHOR());
-        setFILENAME(from.getFILENAME());
-        setDATEEXECUTED(from.getDATEEXECUTED());
-        setORDEREXECUTED(from.getORDEREXECUTED());
-        setEXECTYPE(from.getEXECTYPE());
-        setMD5SUM(from.getMD5SUM());
-        setDESCRIPTION(from.getDESCRIPTION());
-        setCOMMENTS(from.getCOMMENTS());
-        setTAG(from.getTAG());
-        setLIQUIBASE(from.getLIQUIBASE());
-        setCONTEXTS(from.getCONTEXTS());
-        setLABELS(from.getLABELS());
-        setDEPLOYMENT_ID(from.getDEPLOYMENT_ID());
+        ID(from.ID());
+        AUTHOR(from.AUTHOR());
+        FILENAME(from.FILENAME());
+        DATEEXECUTED(from.DATEEXECUTED());
+        ORDEREXECUTED(from.ORDEREXECUTED());
+        EXECTYPE(from.EXECTYPE());
+        MD5SUM(from.MD5SUM());
+        DESCRIPTION(from.DESCRIPTION());
+        COMMENTS(from.COMMENTS());
+        TAG(from.TAG());
+        LIQUIBASE(from.LIQUIBASE());
+        CONTEXTS(from.CONTEXTS());
+        LABELS(from.LABELS());
+        DEPLOYMENT_ID(from.DEPLOYMENT_ID());
     }
     @Override
     public <E extends IDatabasechangelog> E into(E into) {

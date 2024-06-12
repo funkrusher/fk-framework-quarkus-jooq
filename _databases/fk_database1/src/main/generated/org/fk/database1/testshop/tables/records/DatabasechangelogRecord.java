@@ -26,7 +26,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
     @Override
-    public DatabasechangelogRecord setID(String value) {
+    public DatabasechangelogRecord ID(String value) {
         set(0, value);
         return this;
     }
@@ -37,7 +37,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     @NotNull
     @Size(max = 255)
     @Override
-    public String getID() {
+    public String ID() {
         return (String) get(0);
     }
 
@@ -45,7 +45,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
     @Override
-    public DatabasechangelogRecord setAUTHOR(String value) {
+    public DatabasechangelogRecord AUTHOR(String value) {
         set(1, value);
         return this;
     }
@@ -56,7 +56,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     @NotNull
     @Size(max = 255)
     @Override
-    public String getAUTHOR() {
+    public String AUTHOR() {
         return (String) get(1);
     }
 
@@ -64,7 +64,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
     @Override
-    public DatabasechangelogRecord setFILENAME(String value) {
+    public DatabasechangelogRecord FILENAME(String value) {
         set(2, value);
         return this;
     }
@@ -75,7 +75,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     @NotNull
     @Size(max = 255)
     @Override
-    public String getFILENAME() {
+    public String FILENAME() {
         return (String) get(2);
     }
 
@@ -83,7 +83,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
     @Override
-    public DatabasechangelogRecord setDATEEXECUTED(LocalDateTime value) {
+    public DatabasechangelogRecord DATEEXECUTED(LocalDateTime value) {
         set(3, value);
         return this;
     }
@@ -93,7 +93,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @NotNull
     @Override
-    public LocalDateTime getDATEEXECUTED() {
+    public LocalDateTime DATEEXECUTED() {
         return (LocalDateTime) get(3);
     }
 
@@ -101,7 +101,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
     @Override
-    public DatabasechangelogRecord setORDEREXECUTED(Integer value) {
+    public DatabasechangelogRecord ORDEREXECUTED(Integer value) {
         set(4, value);
         return this;
     }
@@ -111,7 +111,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @NotNull
     @Override
-    public Integer getORDEREXECUTED() {
+    public Integer ORDEREXECUTED() {
         return (Integer) get(4);
     }
 
@@ -119,7 +119,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
     @Override
-    public DatabasechangelogRecord setEXECTYPE(String value) {
+    public DatabasechangelogRecord EXECTYPE(String value) {
         set(5, value);
         return this;
     }
@@ -130,7 +130,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     @NotNull
     @Size(max = 10)
     @Override
-    public String getEXECTYPE() {
+    public String EXECTYPE() {
         return (String) get(5);
     }
 
@@ -138,7 +138,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
     @Override
-    public DatabasechangelogRecord setMD5SUM(String value) {
+    public DatabasechangelogRecord MD5SUM(String value) {
         set(6, value);
         return this;
     }
@@ -148,7 +148,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 35)
     @Override
-    public String getMD5SUM() {
+    public String MD5SUM() {
         return (String) get(6);
     }
 
@@ -156,7 +156,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
     @Override
-    public DatabasechangelogRecord setDESCRIPTION(String value) {
+    public DatabasechangelogRecord DESCRIPTION(String value) {
         set(7, value);
         return this;
     }
@@ -166,7 +166,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 255)
     @Override
-    public String getDESCRIPTION() {
+    public String DESCRIPTION() {
         return (String) get(7);
     }
 
@@ -174,7 +174,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
     @Override
-    public DatabasechangelogRecord setCOMMENTS(String value) {
+    public DatabasechangelogRecord COMMENTS(String value) {
         set(8, value);
         return this;
     }
@@ -184,7 +184,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 255)
     @Override
-    public String getCOMMENTS() {
+    public String COMMENTS() {
         return (String) get(8);
     }
 
@@ -192,7 +192,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
     @Override
-    public DatabasechangelogRecord setTAG(String value) {
+    public DatabasechangelogRecord TAG(String value) {
         set(9, value);
         return this;
     }
@@ -202,7 +202,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 255)
     @Override
-    public String getTAG() {
+    public String TAG() {
         return (String) get(9);
     }
 
@@ -210,7 +210,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
     @Override
-    public DatabasechangelogRecord setLIQUIBASE(String value) {
+    public DatabasechangelogRecord LIQUIBASE(String value) {
         set(10, value);
         return this;
     }
@@ -220,7 +220,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 20)
     @Override
-    public String getLIQUIBASE() {
+    public String LIQUIBASE() {
         return (String) get(10);
     }
 
@@ -228,7 +228,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
     @Override
-    public DatabasechangelogRecord setCONTEXTS(String value) {
+    public DatabasechangelogRecord CONTEXTS(String value) {
         set(11, value);
         return this;
     }
@@ -238,7 +238,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 255)
     @Override
-    public String getCONTEXTS() {
+    public String CONTEXTS() {
         return (String) get(11);
     }
 
@@ -246,7 +246,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
     @Override
-    public DatabasechangelogRecord setLABELS(String value) {
+    public DatabasechangelogRecord LABELS(String value) {
         set(12, value);
         return this;
     }
@@ -256,7 +256,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 255)
     @Override
-    public String getLABELS() {
+    public String LABELS() {
         return (String) get(12);
     }
 
@@ -264,7 +264,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      * Setter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
     @Override
-    public DatabasechangelogRecord setDEPLOYMENT_ID(String value) {
+    public DatabasechangelogRecord DEPLOYMENT_ID(String value) {
         set(13, value);
         return this;
     }
@@ -274,7 +274,7 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
      */
     @Size(max = 10)
     @Override
-    public String getDEPLOYMENT_ID() {
+    public String DEPLOYMENT_ID() {
         return (String) get(13);
     }
 
@@ -284,20 +284,20 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
 
     @Override
     public void from(IDatabasechangelog from) {
-        setID(from.getID());
-        setAUTHOR(from.getAUTHOR());
-        setFILENAME(from.getFILENAME());
-        setDATEEXECUTED(from.getDATEEXECUTED());
-        setORDEREXECUTED(from.getORDEREXECUTED());
-        setEXECTYPE(from.getEXECTYPE());
-        setMD5SUM(from.getMD5SUM());
-        setDESCRIPTION(from.getDESCRIPTION());
-        setCOMMENTS(from.getCOMMENTS());
-        setTAG(from.getTAG());
-        setLIQUIBASE(from.getLIQUIBASE());
-        setCONTEXTS(from.getCONTEXTS());
-        setLABELS(from.getLABELS());
-        setDEPLOYMENT_ID(from.getDEPLOYMENT_ID());
+        ID(from.ID());
+        AUTHOR(from.AUTHOR());
+        FILENAME(from.FILENAME());
+        DATEEXECUTED(from.DATEEXECUTED());
+        ORDEREXECUTED(from.ORDEREXECUTED());
+        EXECTYPE(from.EXECTYPE());
+        MD5SUM(from.MD5SUM());
+        DESCRIPTION(from.DESCRIPTION());
+        COMMENTS(from.COMMENTS());
+        TAG(from.TAG());
+        LIQUIBASE(from.LIQUIBASE());
+        CONTEXTS(from.CONTEXTS());
+        LABELS(from.LABELS());
+        DEPLOYMENT_ID(from.DEPLOYMENT_ID());
         resetChangedOnNotNull();
     }
 
@@ -324,20 +324,20 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
     public DatabasechangelogRecord(String ID, String AUTHOR, String FILENAME, LocalDateTime DATEEXECUTED, Integer ORDEREXECUTED, String EXECTYPE, String MD5SUM, String DESCRIPTION, String COMMENTS, String TAG, String LIQUIBASE, String CONTEXTS, String LABELS, String DEPLOYMENT_ID) {
         super(Databasechangelog.DATABASECHANGELOG);
 
-        setID(ID);
-        setAUTHOR(AUTHOR);
-        setFILENAME(FILENAME);
-        setDATEEXECUTED(DATEEXECUTED);
-        setORDEREXECUTED(ORDEREXECUTED);
-        setEXECTYPE(EXECTYPE);
-        setMD5SUM(MD5SUM);
-        setDESCRIPTION(DESCRIPTION);
-        setCOMMENTS(COMMENTS);
-        setTAG(TAG);
-        setLIQUIBASE(LIQUIBASE);
-        setCONTEXTS(CONTEXTS);
-        setLABELS(LABELS);
-        setDEPLOYMENT_ID(DEPLOYMENT_ID);
+        ID(ID);
+        AUTHOR(AUTHOR);
+        FILENAME(FILENAME);
+        DATEEXECUTED(DATEEXECUTED);
+        ORDEREXECUTED(ORDEREXECUTED);
+        EXECTYPE(EXECTYPE);
+        MD5SUM(MD5SUM);
+        DESCRIPTION(DESCRIPTION);
+        COMMENTS(COMMENTS);
+        TAG(TAG);
+        LIQUIBASE(LIQUIBASE);
+        CONTEXTS(CONTEXTS);
+        LABELS(LABELS);
+        DEPLOYMENT_ID(DEPLOYMENT_ID);
         resetChangedOnNotNull();
     }
 
@@ -348,20 +348,20 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
         super(Databasechangelog.DATABASECHANGELOG);
 
         if (value != null) {
-            setID(value.getID());
-            setAUTHOR(value.getAUTHOR());
-            setFILENAME(value.getFILENAME());
-            setDATEEXECUTED(value.getDATEEXECUTED());
-            setORDEREXECUTED(value.getORDEREXECUTED());
-            setEXECTYPE(value.getEXECTYPE());
-            setMD5SUM(value.getMD5SUM());
-            setDESCRIPTION(value.getDESCRIPTION());
-            setCOMMENTS(value.getCOMMENTS());
-            setTAG(value.getTAG());
-            setLIQUIBASE(value.getLIQUIBASE());
-            setCONTEXTS(value.getCONTEXTS());
-            setLABELS(value.getLABELS());
-            setDEPLOYMENT_ID(value.getDEPLOYMENT_ID());
+            ID(value.ID());
+            AUTHOR(value.AUTHOR());
+            FILENAME(value.FILENAME());
+            DATEEXECUTED(value.DATEEXECUTED());
+            ORDEREXECUTED(value.ORDEREXECUTED());
+            EXECTYPE(value.EXECTYPE());
+            MD5SUM(value.MD5SUM());
+            DESCRIPTION(value.DESCRIPTION());
+            COMMENTS(value.COMMENTS());
+            TAG(value.TAG());
+            LIQUIBASE(value.LIQUIBASE());
+            CONTEXTS(value.CONTEXTS());
+            LABELS(value.LABELS());
+            DEPLOYMENT_ID(value.DEPLOYMENT_ID());
             resetChangedOnNotNull();
         }
     }

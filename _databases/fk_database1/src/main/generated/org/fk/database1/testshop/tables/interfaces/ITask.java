@@ -18,22 +18,22 @@ public interface ITask extends Serializable {
     /**
      * Setter for <code>testshop.task.taskId</code>.
      */
-    public ITask setTaskId(Long value);
+    public ITask TaskId(Long value);
 
     /**
      * Getter for <code>testshop.task.taskId</code>.
      */
-    public Long getTaskId();
+    public Long TaskId();
 
     /**
      * Setter for <code>testshop.task.createdAt</code>.
      */
-    public ITask setCreatedAt(LocalDateTime value);
+    public ITask CreatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.task.createdAt</code>.
      */
-    public LocalDateTime getCreatedAt();
+    public LocalDateTime CreatedAt();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

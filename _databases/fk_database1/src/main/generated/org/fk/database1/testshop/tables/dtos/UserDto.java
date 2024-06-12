@@ -48,7 +48,7 @@ public class UserDto implements IUser, DTO {
      * Getter for <code>testshop.user.userId</code>.
      */
     @Override
-    public Integer getUserId() {
+    public Integer UserId() {
         return this.userId;
     }
 
@@ -56,9 +56,8 @@ public class UserDto implements IUser, DTO {
      * Setter for <code>testshop.user.userId</code>.
      */
     @Override
-    public UserDto setUserId(Integer userId) {
+    public User UserId(Integer userId) {
         this.userId = userId;
-        this.keeper.touch("userId");
         return this;
     }
 
@@ -67,7 +66,7 @@ public class UserDto implements IUser, DTO {
      */
     @NotNull
     @Override
-    public Integer getClientId() {
+    public Integer ClientId() {
         return this.clientId;
     }
 
@@ -75,9 +74,8 @@ public class UserDto implements IUser, DTO {
      * Setter for <code>testshop.user.clientId</code>.
      */
     @Override
-    public UserDto setClientId(Integer clientId) {
+    public User ClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return this;
     }
 
@@ -87,7 +85,7 @@ public class UserDto implements IUser, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getEmail() {
+    public String Email() {
         return this.email;
     }
 
@@ -95,9 +93,8 @@ public class UserDto implements IUser, DTO {
      * Setter for <code>testshop.user.email</code>.
      */
     @Override
-    public UserDto setEmail(String email) {
+    public User Email(String email) {
         this.email = email;
-        this.keeper.touch("email");
         return this;
     }
 
@@ -107,7 +104,7 @@ public class UserDto implements IUser, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getFirstname() {
+    public String Firstname() {
         return this.firstname;
     }
 
@@ -115,9 +112,8 @@ public class UserDto implements IUser, DTO {
      * Setter for <code>testshop.user.firstname</code>.
      */
     @Override
-    public UserDto setFirstname(String firstname) {
+    public User Firstname(String firstname) {
         this.firstname = firstname;
-        this.keeper.touch("firstname");
         return this;
     }
 
@@ -127,7 +123,7 @@ public class UserDto implements IUser, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getLastname() {
+    public String Lastname() {
         return this.lastname;
     }
 
@@ -135,9 +131,8 @@ public class UserDto implements IUser, DTO {
      * Setter for <code>testshop.user.lastname</code>.
      */
     @Override
-    public UserDto setLastname(String lastname) {
+    public User Lastname(String lastname) {
         this.lastname = lastname;
-        this.keeper.touch("lastname");
         return this;
     }
 
@@ -177,11 +172,11 @@ public class UserDto implements IUser, DTO {
 
     @Override
     public void from(IUser from) {
-        setUserId(from.getUserId());
-        setClientId(from.getClientId());
-        setEmail(from.getEmail());
-        setFirstname(from.getFirstname());
-        setLastname(from.getLastname());
+        UserId(from.UserId());
+        ClientId(from.ClientId());
+        Email(from.Email());
+        Firstname(from.Firstname());
+        Lastname(from.Lastname());
     }
     @Override
     public <E extends IUser> E into(E into) {

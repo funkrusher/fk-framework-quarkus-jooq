@@ -62,27 +62,27 @@ public class User extends TableImpl<UserRecord> {
     /**
      * The column <code>testshop.user.userId</code>.
      */
-    public final TableField<UserRecord, Integer> USERID = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<UserRecord, Integer> userId = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>testshop.user.clientId</code>.
      */
-    public final TableField<UserRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UserRecord, Integer> clientId = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>testshop.user.email</code>.
      */
-    public final TableField<UserRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> email = createField(DSL.name("email"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop.user.firstname</code>.
      */
-    public final TableField<UserRecord, String> FIRSTNAME = createField(DSL.name("firstname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> firstname = createField(DSL.name("firstname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop.user.lastname</code>.
      */
-    public final TableField<UserRecord, String> LASTNAME = createField(DSL.name("lastname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> lastname = createField(DSL.name("lastname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     private User(Name alias, Table<UserRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -166,50 +166,50 @@ public class User extends TableImpl<UserRecord> {
         return Arrays.asList(Keys.FK_USER_CLIENTID);
     }
 
-    private transient ClientPath _fk_user_clientId;
+    private transient ClientPath _client;
 
     /**
      * Get the implicit join path to the <code>testshop.client</code> table.
      */
-    public ClientPath fk_user_clientId() {
-        if (_fk_user_clientId == null)
-            _fk_user_clientId = new ClientPath(this, Keys.FK_USER_CLIENTID, null);
+    public ClientPath client() {
+        if (_client == null)
+            _client = new ClientPath(this, Keys.FK_USER_CLIENTID, null);
 
-        return _fk_user_clientId;
+        return _client;
     }
 
-    private transient UserRolePath _fk_user_role_userId;
+    private transient UserRolePath _user;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user_role</code>
      * table
      */
-    public UserRolePath fk_user_role_userId() {
-        if (_fk_user_role_userId == null)
-            _fk_user_role_userId = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
+    public UserRolePath user() {
+        if (_user == null)
+            _user = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
 
-        return _fk_user_role_userId;
+        return _user;
     }
 
-    private transient ProductPath _fk_product_creatorId;
+    private transient ProductPath _creator;
 
     /**
      * Get the implicit to-many join path to the <code>testshop2.product</code>
      * table
      */
-    public ProductPath fk_product_creatorId() {
-        if (_fk_product_creatorId == null)
-            _fk_product_creatorId = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CREATORID.getInverseKey());
+    public ProductPath creator() {
+        if (_creator == null)
+            _creator = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CREATORID.getInverseKey());
 
-        return _fk_product_creatorId;
+        return _creator;
     }
 
     /**
      * Get the implicit many-to-many join path to the <code>testshop.role</code>
      * table
      */
-    public RolePath fk_user_role_roleId() {
-        return fk_user_role_userId().fk_user_role_roleId();
+    public RolePath role() {
+        return user().role();
     }
 
     @Override

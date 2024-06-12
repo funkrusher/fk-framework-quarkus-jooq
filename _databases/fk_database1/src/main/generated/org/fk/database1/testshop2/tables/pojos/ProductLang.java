@@ -26,10 +26,10 @@ public class ProductLang implements IProductLang {
     public ProductLang() {}
 
     public ProductLang(IProductLang value) {
-        this.productId = value.getProductId();
-        this.langId = value.getLangId();
-        this.name = value.getName();
-        this.description = value.getDescription();
+        this.productId = value.ProductId();
+        this.langId = value.LangId();
+        this.name = value.Name();
+        this.description = value.Description();
     }
 
     public ProductLang(
@@ -49,7 +49,7 @@ public class ProductLang implements IProductLang {
      */
     @NotNull
     @Override
-    public Long getProductId() {
+    public Long ProductId() {
         return this.productId;
     }
 
@@ -57,7 +57,7 @@ public class ProductLang implements IProductLang {
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
     @Override
-    public ProductLang setProductId(Long productId) {
+    public ProductLang ProductId(Long productId) {
         this.productId = productId;
         return this;
     }
@@ -67,7 +67,7 @@ public class ProductLang implements IProductLang {
      */
     @NotNull
     @Override
-    public Integer getLangId() {
+    public Integer LangId() {
         return this.langId;
     }
 
@@ -75,7 +75,7 @@ public class ProductLang implements IProductLang {
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
     @Override
-    public ProductLang setLangId(Integer langId) {
+    public ProductLang LangId(Integer langId) {
         this.langId = langId;
         return this;
     }
@@ -86,7 +86,7 @@ public class ProductLang implements IProductLang {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getName() {
+    public String Name() {
         return this.name;
     }
 
@@ -94,7 +94,7 @@ public class ProductLang implements IProductLang {
      * Setter for <code>testshop2.product_lang.name</code>.
      */
     @Override
-    public ProductLang setName(String name) {
+    public ProductLang Name(String name) {
         this.name = name;
         return this;
     }
@@ -105,7 +105,7 @@ public class ProductLang implements IProductLang {
     @NotNull
     @Size(max = 65535)
     @Override
-    public String getDescription() {
+    public String Description() {
         return this.description;
     }
 
@@ -113,7 +113,7 @@ public class ProductLang implements IProductLang {
      * Setter for <code>testshop2.product_lang.description</code>.
      */
     @Override
-    public ProductLang setDescription(String description) {
+    public ProductLang Description(String description) {
         this.description = description;
         return this;
     }
@@ -137,10 +137,10 @@ public class ProductLang implements IProductLang {
 
     @Override
     public void from(IProductLang from) {
-        setProductId(from.getProductId());
-        setLangId(from.getLangId());
-        setName(from.getName());
-        setDescription(from.getDescription());
+        ProductId(from.ProductId());
+        LangId(from.LangId());
+        Name(from.Name());
+        Description(from.Description());
     }
 
     @Override

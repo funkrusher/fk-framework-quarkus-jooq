@@ -21,153 +21,153 @@ public interface IQrtzSimpropTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
      */
-    public IQrtzSimpropTriggers setSCHED_NAME(String value);
+    public IQrtzSimpropTriggers SCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSCHED_NAME();
+    public String SCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public IQrtzSimpropTriggers setTRIGGER_NAME(String value);
+    public IQrtzSimpropTriggers TRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTRIGGER_NAME();
+    public String TRIGGER_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public IQrtzSimpropTriggers setTRIGGER_GROUP(String value);
+    public IQrtzSimpropTriggers TRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTRIGGER_GROUP();
+    public String TRIGGER_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
      */
-    public IQrtzSimpropTriggers setSTR_PROP_1(String value);
+    public IQrtzSimpropTriggers STR_PROP_1(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
      */
     @Size(max = 512)
-    public String getSTR_PROP_1();
+    public String STR_PROP_1();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
      */
-    public IQrtzSimpropTriggers setSTR_PROP_2(String value);
+    public IQrtzSimpropTriggers STR_PROP_2(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
      */
     @Size(max = 512)
-    public String getSTR_PROP_2();
+    public String STR_PROP_2();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
      */
-    public IQrtzSimpropTriggers setSTR_PROP_3(String value);
+    public IQrtzSimpropTriggers STR_PROP_3(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
      */
     @Size(max = 512)
-    public String getSTR_PROP_3();
+    public String STR_PROP_3();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
-    public IQrtzSimpropTriggers setINT_PROP_1(Integer value);
+    public IQrtzSimpropTriggers INT_PROP_1(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
-    public Integer getINT_PROP_1();
+    public Integer INT_PROP_1();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
-    public IQrtzSimpropTriggers setINT_PROP_2(Integer value);
+    public IQrtzSimpropTriggers INT_PROP_2(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
-    public Integer getINT_PROP_2();
+    public Integer INT_PROP_2();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
-    public IQrtzSimpropTriggers setLONG_PROP_1(Long value);
+    public IQrtzSimpropTriggers LONG_PROP_1(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
-    public Long getLONG_PROP_1();
+    public Long LONG_PROP_1();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
-    public IQrtzSimpropTriggers setLONG_PROP_2(Long value);
+    public IQrtzSimpropTriggers LONG_PROP_2(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
-    public Long getLONG_PROP_2();
+    public Long LONG_PROP_2();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
-    public IQrtzSimpropTriggers setDEC_PROP_1(BigDecimal value);
+    public IQrtzSimpropTriggers DEC_PROP_1(BigDecimal value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
-    public BigDecimal getDEC_PROP_1();
+    public BigDecimal DEC_PROP_1();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
-    public IQrtzSimpropTriggers setDEC_PROP_2(BigDecimal value);
+    public IQrtzSimpropTriggers DEC_PROP_2(BigDecimal value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
-    public BigDecimal getDEC_PROP_2();
+    public BigDecimal DEC_PROP_2();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
      */
-    public IQrtzSimpropTriggers setBOOL_PROP_1(String value);
+    public IQrtzSimpropTriggers BOOL_PROP_1(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
      */
     @Size(max = 1)
-    public String getBOOL_PROP_1();
+    public String BOOL_PROP_1();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.
      */
-    public IQrtzSimpropTriggers setBOOL_PROP_2(String value);
+    public IQrtzSimpropTriggers BOOL_PROP_2(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.
      */
     @Size(max = 1)
-    public String getBOOL_PROP_2();
+    public String BOOL_PROP_2();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

@@ -58,18 +58,18 @@ public class Lang extends TableImpl<LangRecord> {
     /**
      * The column <code>testshop.lang.langId</code>. langId
      */
-    public final TableField<LangRecord, Integer> LANGID = createField(DSL.name("langId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "langId");
+    public final TableField<LangRecord, Integer> langId = createField(DSL.name("langId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "langId");
 
     /**
      * The column <code>testshop.lang.code</code>. ISO-639 language code
      */
-    public final TableField<LangRecord, String> CODE = createField(DSL.name("code"), SQLDataType.CHAR(2).nullable(false), this, "ISO-639 language code");
+    public final TableField<LangRecord, String> code = createField(DSL.name("code"), SQLDataType.CHAR(2).nullable(false), this, "ISO-639 language code");
 
     /**
      * The column <code>testshop.lang.description</code>. internal description
      * of language
      */
-    public final TableField<LangRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR(50).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.VARCHAR)), this, "internal description of language");
+    public final TableField<LangRecord, String> description = createField(DSL.name("description"), SQLDataType.VARCHAR(50).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.VARCHAR)), this, "internal description of language");
 
     private Lang(Name alias, Table<LangRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -148,25 +148,25 @@ public class Lang extends TableImpl<LangRecord> {
         return Keys.KEY_LANG_PRIMARY;
     }
 
-    private transient ProductLangPath _fk_product_lang_langId;
+    private transient ProductLangPath _lang;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop2.product_lang</code> table
      */
-    public ProductLangPath fk_product_lang_langId() {
-        if (_fk_product_lang_langId == null)
-            _fk_product_lang_langId = new ProductLangPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_LANG_LANGID.getInverseKey());
+    public ProductLangPath lang() {
+        if (_lang == null)
+            _lang = new ProductLangPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_LANG_LANGID.getInverseKey());
 
-        return _fk_product_lang_langId;
+        return _lang;
     }
 
     /**
      * Get the implicit many-to-many join path to the
      * <code>testshop2.product</code> table
      */
-    public ProductPath fk_product_lang_productId() {
-        return fk_product_lang_langId().fk_product_lang_productId();
+    public ProductPath product() {
+        return lang().product();
     }
 
     @Override

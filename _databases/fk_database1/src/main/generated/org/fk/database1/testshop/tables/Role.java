@@ -57,7 +57,7 @@ public class Role extends TableImpl<RoleRecord> {
     /**
      * The column <code>testshop.role.roleId</code>.
      */
-    public final TableField<RoleRecord, String> ROLEID = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<RoleRecord, String> roleId = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private Role(Name alias, Table<RoleRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -131,25 +131,25 @@ public class Role extends TableImpl<RoleRecord> {
         return Keys.KEY_ROLE_PRIMARY;
     }
 
-    private transient UserRolePath _fk_user_role_roleId;
+    private transient UserRolePath _role;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user_role</code>
      * table
      */
-    public UserRolePath fk_user_role_roleId() {
-        if (_fk_user_role_roleId == null)
-            _fk_user_role_roleId = new UserRolePath(this, null, Keys.FK_USER_ROLE_ROLEID.getInverseKey());
+    public UserRolePath role() {
+        if (_role == null)
+            _role = new UserRolePath(this, null, Keys.FK_USER_ROLE_ROLEID.getInverseKey());
 
-        return _fk_user_role_roleId;
+        return _role;
     }
 
     /**
      * Get the implicit many-to-many join path to the <code>testshop.user</code>
      * table
      */
-    public UserPath fk_user_role_userId() {
-        return fk_user_role_roleId().fk_user_role_userId();
+    public UserPath user() {
+        return role().user();
     }
 
     @Override

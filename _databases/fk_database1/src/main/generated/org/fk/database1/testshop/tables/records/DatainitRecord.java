@@ -26,7 +26,7 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
      * Setter for <code>testshop.DataInit.dataInitId</code>.
      */
     @Override
-    public DatainitRecord setDataInitId(String value) {
+    public DatainitRecord DataInitId(String value) {
         set(0, value);
         return this;
     }
@@ -37,7 +37,7 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
     @NotNull
     @Size(max = 255)
     @Override
-    public String getDataInitId() {
+    public String DataInitId() {
         return (String) get(0);
     }
 
@@ -45,7 +45,7 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
      * Setter for <code>testshop.DataInit.createdAt</code>.
      */
     @Override
-    public DatainitRecord setCreatedAt(LocalDateTime value) {
+    public DatainitRecord CreatedAt(LocalDateTime value) {
         set(1, value);
         return this;
     }
@@ -54,7 +54,7 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
      * Getter for <code>testshop.DataInit.createdAt</code>.
      */
     @Override
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime CreatedAt() {
         return (LocalDateTime) get(1);
     }
 
@@ -64,8 +64,8 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
 
     @Override
     public void from(IDatainit from) {
-        setDataInitId(from.getDataInitId());
-        setCreatedAt(from.getCreatedAt());
+        DataInitId(from.DataInitId());
+        CreatedAt(from.CreatedAt());
         resetChangedOnNotNull();
     }
 
@@ -92,8 +92,8 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
     public DatainitRecord(String dataInitId, LocalDateTime createdAt) {
         super(Datainit.DATAINIT);
 
-        setDataInitId(dataInitId);
-        setCreatedAt(createdAt);
+        DataInitId(dataInitId);
+        CreatedAt(createdAt);
         resetChangedOnNotNull();
     }
 
@@ -104,8 +104,8 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
         super(Datainit.DATAINIT);
 
         if (value != null) {
-            setDataInitId(value.getDataInitId());
-            setCreatedAt(value.getCreatedAt());
+            DataInitId(value.DataInitId());
+            CreatedAt(value.CreatedAt());
             resetChangedOnNotNull();
         }
     }

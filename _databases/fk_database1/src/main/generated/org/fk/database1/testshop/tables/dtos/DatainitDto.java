@@ -50,7 +50,7 @@ public class DatainitDto implements IDatainit, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getDataInitId() {
+    public String DataInitId() {
         return this.dataInitId;
     }
 
@@ -58,9 +58,8 @@ public class DatainitDto implements IDatainit, DTO {
      * Setter for <code>testshop.DataInit.dataInitId</code>.
      */
     @Override
-    public DatainitDto setDataInitId(String dataInitId) {
+    public Datainit DataInitId(String dataInitId) {
         this.dataInitId = dataInitId;
-        this.keeper.touch("dataInitId");
         return this;
     }
 
@@ -68,7 +67,7 @@ public class DatainitDto implements IDatainit, DTO {
      * Getter for <code>testshop.DataInit.createdAt</code>.
      */
     @Override
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime CreatedAt() {
         return this.createdAt;
     }
 
@@ -76,9 +75,8 @@ public class DatainitDto implements IDatainit, DTO {
      * Setter for <code>testshop.DataInit.createdAt</code>.
      */
     @Override
-    public DatainitDto setCreatedAt(LocalDateTime createdAt) {
+    public Datainit CreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        this.keeper.touch("createdAt");
         return this;
     }
 
@@ -118,8 +116,8 @@ public class DatainitDto implements IDatainit, DTO {
 
     @Override
     public void from(IDatainit from) {
-        setDataInitId(from.getDataInitId());
-        setCreatedAt(from.getCreatedAt());
+        DataInitId(from.DataInitId());
+        CreatedAt(from.CreatedAt());
     }
     @Override
     public <E extends IDatainit> E into(E into) {

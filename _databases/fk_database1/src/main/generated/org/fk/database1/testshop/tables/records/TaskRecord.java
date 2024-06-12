@@ -24,7 +24,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Setter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public TaskRecord setTaskId(Long value) {
+    public TaskRecord TaskId(Long value) {
         set(0, value);
         return this;
     }
@@ -33,7 +33,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Getter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public Long getTaskId() {
+    public Long TaskId() {
         return (Long) get(0);
     }
 
@@ -41,7 +41,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Setter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public TaskRecord setCreatedAt(LocalDateTime value) {
+    public TaskRecord CreatedAt(LocalDateTime value) {
         set(1, value);
         return this;
     }
@@ -50,7 +50,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Getter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime CreatedAt() {
         return (LocalDateTime) get(1);
     }
 
@@ -69,8 +69,8 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
 
     @Override
     public void from(ITask from) {
-        setTaskId(from.getTaskId());
-        setCreatedAt(from.getCreatedAt());
+        TaskId(from.TaskId());
+        CreatedAt(from.CreatedAt());
         resetChangedOnNotNull();
     }
 
@@ -97,8 +97,8 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
     public TaskRecord(Long taskId, LocalDateTime createdAt) {
         super(Task.TASK);
 
-        setTaskId(taskId);
-        setCreatedAt(createdAt);
+        TaskId(taskId);
+        CreatedAt(createdAt);
         resetChangedOnNotNull();
     }
 
@@ -109,8 +109,8 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
         super(Task.TASK);
 
         if (value != null) {
-            setTaskId(value.getTaskId());
-            setCreatedAt(value.getCreatedAt());
+            TaskId(value.TaskId());
+            CreatedAt(value.CreatedAt());
             resetChangedOnNotNull();
         }
     }

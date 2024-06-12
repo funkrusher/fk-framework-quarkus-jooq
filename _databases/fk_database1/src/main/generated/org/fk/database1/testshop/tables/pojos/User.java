@@ -27,11 +27,11 @@ public class User implements IUser {
     public User() {}
 
     public User(IUser value) {
-        this.userId = value.getUserId();
-        this.clientId = value.getClientId();
-        this.email = value.getEmail();
-        this.firstname = value.getFirstname();
-        this.lastname = value.getLastname();
+        this.userId = value.UserId();
+        this.clientId = value.ClientId();
+        this.email = value.Email();
+        this.firstname = value.Firstname();
+        this.lastname = value.Lastname();
     }
 
     public User(
@@ -52,7 +52,7 @@ public class User implements IUser {
      * Getter for <code>testshop.user.userId</code>.
      */
     @Override
-    public Integer getUserId() {
+    public Integer UserId() {
         return this.userId;
     }
 
@@ -60,7 +60,7 @@ public class User implements IUser {
      * Setter for <code>testshop.user.userId</code>.
      */
     @Override
-    public User setUserId(Integer userId) {
+    public User UserId(Integer userId) {
         this.userId = userId;
         return this;
     }
@@ -70,7 +70,7 @@ public class User implements IUser {
      */
     @NotNull
     @Override
-    public Integer getClientId() {
+    public Integer ClientId() {
         return this.clientId;
     }
 
@@ -78,7 +78,7 @@ public class User implements IUser {
      * Setter for <code>testshop.user.clientId</code>.
      */
     @Override
-    public User setClientId(Integer clientId) {
+    public User ClientId(Integer clientId) {
         this.clientId = clientId;
         return this;
     }
@@ -89,7 +89,7 @@ public class User implements IUser {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getEmail() {
+    public String Email() {
         return this.email;
     }
 
@@ -97,7 +97,7 @@ public class User implements IUser {
      * Setter for <code>testshop.user.email</code>.
      */
     @Override
-    public User setEmail(String email) {
+    public User Email(String email) {
         this.email = email;
         return this;
     }
@@ -108,7 +108,7 @@ public class User implements IUser {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getFirstname() {
+    public String Firstname() {
         return this.firstname;
     }
 
@@ -116,7 +116,7 @@ public class User implements IUser {
      * Setter for <code>testshop.user.firstname</code>.
      */
     @Override
-    public User setFirstname(String firstname) {
+    public User Firstname(String firstname) {
         this.firstname = firstname;
         return this;
     }
@@ -127,7 +127,7 @@ public class User implements IUser {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getLastname() {
+    public String Lastname() {
         return this.lastname;
     }
 
@@ -135,7 +135,7 @@ public class User implements IUser {
      * Setter for <code>testshop.user.lastname</code>.
      */
     @Override
-    public User setLastname(String lastname) {
+    public User Lastname(String lastname) {
         this.lastname = lastname;
         return this;
     }
@@ -160,11 +160,11 @@ public class User implements IUser {
 
     @Override
     public void from(IUser from) {
-        setUserId(from.getUserId());
-        setClientId(from.getClientId());
-        setEmail(from.getEmail());
-        setFirstname(from.getFirstname());
-        setLastname(from.getLastname());
+        UserId(from.UserId());
+        ClientId(from.ClientId());
+        Email(from.Email());
+        Firstname(from.Firstname());
+        Lastname(from.Lastname());
     }
 
     @Override

@@ -184,17 +184,17 @@ public class QrtzJobDetails extends TableImpl<QrtzJobDetailsRecord> {
         return Keys.KEY_QRTZ_JOB_DETAILS_PRIMARY;
     }
 
-    private transient QrtzTriggersPath _QRTZ_TRIGGERS_ibfk_1;
+    private transient QrtzTriggersPath __1;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop.QRTZ_TRIGGERS</code> table
      */
-    public QrtzTriggersPath QRTZ_TRIGGERS_ibfk_1() {
-        if (_QRTZ_TRIGGERS_ibfk_1 == null)
-            _QRTZ_TRIGGERS_ibfk_1 = new QrtzTriggersPath(this, null, Keys.QRTZ_TRIGGERS_IBFK_1.getInverseKey());
+    public QrtzTriggersPath _1() {
+        if (__1 == null)
+            __1 = new QrtzTriggersPath(this, null, Keys.QRTZ_TRIGGERS_IBFK_1.getInverseKey());
 
-        return _QRTZ_TRIGGERS_ibfk_1;
+        return __1;
     }
 
     @Override

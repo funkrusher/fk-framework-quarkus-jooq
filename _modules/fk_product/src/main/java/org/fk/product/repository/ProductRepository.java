@@ -96,11 +96,11 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
 
                     // Nest a projection of USER fields (using implicit joins)
                     row(
-                        PRODUCT.fk_product_creatorId().USERID,
-                        PRODUCT.fk_product_creatorId().CLIENTID,
-                        PRODUCT.fk_product_creatorId().EMAIL,
-                        PRODUCT.fk_product_creatorId().FIRSTNAME,
-                        PRODUCT.fk_product_creatorId().LASTNAME,
+                        PRODUCT.creator().USERID,
+                        PRODUCT.creator().CLIENTID,
+                        PRODUCT.creator().EMAIL,
+                        PRODUCT.creator().FIRSTNAME,
+                        PRODUCT.creator().LASTNAME,
                         multiset(
                             selectDistinct(
                                 ROLE.ROLEID

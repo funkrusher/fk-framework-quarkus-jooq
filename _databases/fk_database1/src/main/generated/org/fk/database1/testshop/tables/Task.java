@@ -53,12 +53,12 @@ public class Task extends TableImpl<TaskRecord> {
     /**
      * The column <code>testshop.task.taskId</code>.
      */
-    public final TableField<TaskRecord, Long> TASKID = createField(DSL.name("taskId"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
+    public final TableField<TaskRecord, Long> taskId = createField(DSL.name("taskId"), SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>testshop.task.createdAt</code>.
      */
-    public final TableField<TaskRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<TaskRecord, LocalDateTime> createdAt = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Task(Name alias, Table<TaskRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

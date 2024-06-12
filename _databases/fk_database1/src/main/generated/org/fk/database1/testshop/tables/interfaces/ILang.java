@@ -20,37 +20,37 @@ public interface ILang extends Serializable {
     /**
      * Setter for <code>testshop.lang.langId</code>. langId
      */
-    public ILang setLangId(Integer value);
+    public ILang LangId(Integer value);
 
     /**
      * Getter for <code>testshop.lang.langId</code>. langId
      */
-    public Integer getLangId();
+    public Integer LangId();
 
     /**
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code
      */
-    public ILang setCode(String value);
+    public ILang Code(String value);
 
     /**
      * Getter for <code>testshop.lang.code</code>. ISO-639 language code
      */
     @NotNull
     @Size(max = 2)
-    public String getCode();
+    public String Code();
 
     /**
      * Setter for <code>testshop.lang.description</code>. internal description
      * of language
      */
-    public ILang setDescription(String value);
+    public ILang Description(String value);
 
     /**
      * Getter for <code>testshop.lang.description</code>. internal description
      * of language
      */
     @Size(max = 50)
-    public String getDescription();
+    public String Description();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

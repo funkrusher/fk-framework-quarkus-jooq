@@ -64,45 +64,45 @@ public class Product extends TableImpl<ProductRecord> {
     /**
      * The column <code>testshop2.product.productId</code>. productId
      */
-    public final TableField<ProductRecord, Long> PRODUCTID = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false).identity(true), this, "productId");
+    public final TableField<ProductRecord, Long> productId = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false).identity(true), this, "productId");
 
     /**
      * The column <code>testshop2.product.clientId</code>. clientId
      */
-    public final TableField<ProductRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "clientId");
+    public final TableField<ProductRecord, Integer> clientId = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "clientId");
 
     /**
      * The column <code>testshop2.product.price</code>. price of the product in
      * Euro
      */
-    public final TableField<ProductRecord, BigDecimal> PRICE = createField(DSL.name("price"), SQLDataType.DECIMAL(10, 2).nullable(false), this, "price of the product in Euro");
+    public final TableField<ProductRecord, BigDecimal> price = createField(DSL.name("price"), SQLDataType.DECIMAL(10, 2).nullable(false), this, "price of the product in Euro");
 
     /**
      * The column <code>testshop2.product.typeId</code>. typeId, enumeration -
      * one of: books,...
      */
-    public final TableField<ProductRecord, String> TYPEID = createField(DSL.name("typeId"), SQLDataType.VARCHAR(255).nullable(false), this, "typeId, enumeration - one of: books,...");
+    public final TableField<ProductRecord, String> typeId = createField(DSL.name("typeId"), SQLDataType.VARCHAR(255).nullable(false), this, "typeId, enumeration - one of: books,...");
 
     /**
      * The column <code>testshop2.product.createdAt</code>.
      */
-    public final TableField<ProductRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ProductRecord, LocalDateTime> createdAt = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>testshop2.product.updatedAt</code>.
      */
-    public final TableField<ProductRecord, LocalDateTime> UPDATEDAT = createField(DSL.name("updatedAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ProductRecord, LocalDateTime> updatedAt = createField(DSL.name("updatedAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>testshop2.product.deleted</code>. if this product is
      * marked as deleted
      */
-    public final TableField<ProductRecord, Boolean> DELETED = createField(DSL.name("deleted"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("0"), SQLDataType.BOOLEAN)), this, "if this product is marked as deleted");
+    public final TableField<ProductRecord, Boolean> deleted = createField(DSL.name("deleted"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("0"), SQLDataType.BOOLEAN)), this, "if this product is marked as deleted");
 
     /**
      * The column <code>testshop2.product.creatorId</code>.
      */
-    public final TableField<ProductRecord, Integer> CREATORID = createField(DSL.name("creatorId"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.INTEGER)), this, "");
+    public final TableField<ProductRecord, Integer> creatorId = createField(DSL.name("creatorId"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.INTEGER)), this, "");
 
     private Product(Name alias, Table<ProductRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -186,49 +186,49 @@ public class Product extends TableImpl<ProductRecord> {
         return Arrays.asList(Keys.FK_PRODUCT_CLIENTID, Keys.FK_PRODUCT_CREATORID);
     }
 
-    private transient ClientPath _fk_product_clientId;
+    private transient ClientPath _client;
 
     /**
      * Get the implicit join path to the <code>testshop.client</code> table.
      */
-    public ClientPath fk_product_clientId() {
-        if (_fk_product_clientId == null)
-            _fk_product_clientId = new ClientPath(this, Keys.FK_PRODUCT_CLIENTID, null);
+    public ClientPath client() {
+        if (_client == null)
+            _client = new ClientPath(this, Keys.FK_PRODUCT_CLIENTID, null);
 
-        return _fk_product_clientId;
+        return _client;
     }
 
-    private transient UserPath _fk_product_creatorId;
+    private transient UserPath _creator;
 
     /**
      * Get the implicit join path to the <code>testshop.user</code> table.
      */
-    public UserPath fk_product_creatorId() {
-        if (_fk_product_creatorId == null)
-            _fk_product_creatorId = new UserPath(this, Keys.FK_PRODUCT_CREATORID, null);
+    public UserPath creator() {
+        if (_creator == null)
+            _creator = new UserPath(this, Keys.FK_PRODUCT_CREATORID, null);
 
-        return _fk_product_creatorId;
+        return _creator;
     }
 
-    private transient ProductLangPath _fk_product_lang_productId;
+    private transient ProductLangPath _product;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop2.product_lang</code> table
      */
-    public ProductLangPath fk_product_lang_productId() {
-        if (_fk_product_lang_productId == null)
-            _fk_product_lang_productId = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
+    public ProductLangPath product() {
+        if (_product == null)
+            _product = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
 
-        return _fk_product_lang_productId;
+        return _product;
     }
 
     /**
      * Get the implicit many-to-many join path to the <code>testshop.lang</code>
      * table
      */
-    public LangPath fk_product_lang_langId() {
-        return fk_product_lang_productId().fk_product_lang_langId();
+    public LangPath lang() {
+        return product().lang();
     }
 
     @Override

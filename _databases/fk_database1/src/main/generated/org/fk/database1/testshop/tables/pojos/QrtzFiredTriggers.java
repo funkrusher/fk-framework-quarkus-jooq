@@ -35,19 +35,19 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     public QrtzFiredTriggers() {}
 
     public QrtzFiredTriggers(IQrtzFiredTriggers value) {
-        this.SCHED_NAME = value.getSCHED_NAME();
-        this.ENTRY_ID = value.getENTRY_ID();
-        this.TRIGGER_NAME = value.getTRIGGER_NAME();
-        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
-        this.INSTANCE_NAME = value.getINSTANCE_NAME();
-        this.FIRED_TIME = value.getFIRED_TIME();
-        this.SCHED_TIME = value.getSCHED_TIME();
-        this.PRIORITY = value.getPRIORITY();
-        this.STATE = value.getSTATE();
-        this.JOB_NAME = value.getJOB_NAME();
-        this.JOB_GROUP = value.getJOB_GROUP();
-        this.IS_NONCONCURRENT = value.getIS_NONCONCURRENT();
-        this.REQUESTS_RECOVERY = value.getREQUESTS_RECOVERY();
+        this.SCHED_NAME = value.SCHED_NAME();
+        this.ENTRY_ID = value.ENTRY_ID();
+        this.TRIGGER_NAME = value.TRIGGER_NAME();
+        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
+        this.INSTANCE_NAME = value.INSTANCE_NAME();
+        this.FIRED_TIME = value.FIRED_TIME();
+        this.SCHED_TIME = value.SCHED_TIME();
+        this.PRIORITY = value.PRIORITY();
+        this.STATE = value.STATE();
+        this.JOB_NAME = value.JOB_NAME();
+        this.JOB_GROUP = value.JOB_GROUP();
+        this.IS_NONCONCURRENT = value.IS_NONCONCURRENT();
+        this.REQUESTS_RECOVERY = value.REQUESTS_RECOVERY();
     }
 
     public QrtzFiredTriggers(
@@ -86,7 +86,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -94,7 +94,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers setSCHED_NAME(String SCHED_NAME) {
+    public QrtzFiredTriggers SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -105,7 +105,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     @NotNull
     @Size(max = 95)
     @Override
-    public String getENTRY_ID() {
+    public String ENTRY_ID() {
         return this.ENTRY_ID;
     }
 
@@ -113,7 +113,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
     @Override
-    public QrtzFiredTriggers setENTRY_ID(String ENTRY_ID) {
+    public QrtzFiredTriggers ENTRY_ID(String ENTRY_ID) {
         this.ENTRY_ID = ENTRY_ID;
         return this;
     }
@@ -124,7 +124,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_NAME() {
+    public String TRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -132,7 +132,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers setTRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzFiredTriggers TRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
         return this;
     }
@@ -143,7 +143,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_GROUP() {
+    public String TRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -151,7 +151,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzFiredTriggers setTRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzFiredTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -162,7 +162,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getINSTANCE_NAME() {
+    public String INSTANCE_NAME() {
         return this.INSTANCE_NAME;
     }
 
@@ -170,7 +170,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers setINSTANCE_NAME(String INSTANCE_NAME) {
+    public QrtzFiredTriggers INSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
         return this;
     }
@@ -180,7 +180,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @NotNull
     @Override
-    public Long getFIRED_TIME() {
+    public Long FIRED_TIME() {
         return this.FIRED_TIME;
     }
 
@@ -188,7 +188,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
     @Override
-    public QrtzFiredTriggers setFIRED_TIME(Long FIRED_TIME) {
+    public QrtzFiredTriggers FIRED_TIME(Long FIRED_TIME) {
         this.FIRED_TIME = FIRED_TIME;
         return this;
     }
@@ -198,7 +198,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @NotNull
     @Override
-    public Long getSCHED_TIME() {
+    public Long SCHED_TIME() {
         return this.SCHED_TIME;
     }
 
@@ -206,7 +206,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
     @Override
-    public QrtzFiredTriggers setSCHED_TIME(Long SCHED_TIME) {
+    public QrtzFiredTriggers SCHED_TIME(Long SCHED_TIME) {
         this.SCHED_TIME = SCHED_TIME;
         return this;
     }
@@ -216,7 +216,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @NotNull
     @Override
-    public Integer getPRIORITY() {
+    public Integer PRIORITY() {
         return this.PRIORITY;
     }
 
@@ -224,7 +224,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public QrtzFiredTriggers setPRIORITY(Integer PRIORITY) {
+    public QrtzFiredTriggers PRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
         return this;
     }
@@ -235,7 +235,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
     @NotNull
     @Size(max = 16)
     @Override
-    public String getSTATE() {
+    public String STATE() {
         return this.STATE;
     }
 
@@ -243,7 +243,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
     @Override
-    public QrtzFiredTriggers setSTATE(String STATE) {
+    public QrtzFiredTriggers STATE(String STATE) {
         this.STATE = STATE;
         return this;
     }
@@ -253,7 +253,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @Size(max = 190)
     @Override
-    public String getJOB_NAME() {
+    public String JOB_NAME() {
         return this.JOB_NAME;
     }
 
@@ -261,7 +261,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers setJOB_NAME(String JOB_NAME) {
+    public QrtzFiredTriggers JOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
         return this;
     }
@@ -271,7 +271,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @Size(max = 190)
     @Override
-    public String getJOB_GROUP() {
+    public String JOB_GROUP() {
         return this.JOB_GROUP;
     }
 
@@ -279,7 +279,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzFiredTriggers setJOB_GROUP(String JOB_GROUP) {
+    public QrtzFiredTriggers JOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
         return this;
     }
@@ -289,7 +289,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @Size(max = 1)
     @Override
-    public String getIS_NONCONCURRENT() {
+    public String IS_NONCONCURRENT() {
         return this.IS_NONCONCURRENT;
     }
 
@@ -297,7 +297,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public QrtzFiredTriggers setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
+    public QrtzFiredTriggers IS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
         return this;
     }
@@ -307,7 +307,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      */
     @Size(max = 1)
     @Override
-    public String getREQUESTS_RECOVERY() {
+    public String REQUESTS_RECOVERY() {
         return this.REQUESTS_RECOVERY;
     }
 
@@ -315,7 +315,7 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public QrtzFiredTriggers setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
+    public QrtzFiredTriggers REQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
         return this;
     }
@@ -348,19 +348,19 @@ public class QrtzFiredTriggers implements IQrtzFiredTriggers {
 
     @Override
     public void from(IQrtzFiredTriggers from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setENTRY_ID(from.getENTRY_ID());
-        setTRIGGER_NAME(from.getTRIGGER_NAME());
-        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
-        setINSTANCE_NAME(from.getINSTANCE_NAME());
-        setFIRED_TIME(from.getFIRED_TIME());
-        setSCHED_TIME(from.getSCHED_TIME());
-        setPRIORITY(from.getPRIORITY());
-        setSTATE(from.getSTATE());
-        setJOB_NAME(from.getJOB_NAME());
-        setJOB_GROUP(from.getJOB_GROUP());
-        setIS_NONCONCURRENT(from.getIS_NONCONCURRENT());
-        setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
+        SCHED_NAME(from.SCHED_NAME());
+        ENTRY_ID(from.ENTRY_ID());
+        TRIGGER_NAME(from.TRIGGER_NAME());
+        TRIGGER_GROUP(from.TRIGGER_GROUP());
+        INSTANCE_NAME(from.INSTANCE_NAME());
+        FIRED_TIME(from.FIRED_TIME());
+        SCHED_TIME(from.SCHED_TIME());
+        PRIORITY(from.PRIORITY());
+        STATE(from.STATE());
+        JOB_NAME(from.JOB_NAME());
+        JOB_GROUP(from.JOB_GROUP());
+        IS_NONCONCURRENT(from.IS_NONCONCURRENT());
+        REQUESTS_RECOVERY(from.REQUESTS_RECOVERY());
     }
 
     @Override

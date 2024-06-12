@@ -38,20 +38,20 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
     public QrtzSimpropTriggers() {}
 
     public QrtzSimpropTriggers(IQrtzSimpropTriggers value) {
-        this.SCHED_NAME = value.getSCHED_NAME();
-        this.TRIGGER_NAME = value.getTRIGGER_NAME();
-        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
-        this.STR_PROP_1 = value.getSTR_PROP_1();
-        this.STR_PROP_2 = value.getSTR_PROP_2();
-        this.STR_PROP_3 = value.getSTR_PROP_3();
-        this.INT_PROP_1 = value.getINT_PROP_1();
-        this.INT_PROP_2 = value.getINT_PROP_2();
-        this.LONG_PROP_1 = value.getLONG_PROP_1();
-        this.LONG_PROP_2 = value.getLONG_PROP_2();
-        this.DEC_PROP_1 = value.getDEC_PROP_1();
-        this.DEC_PROP_2 = value.getDEC_PROP_2();
-        this.BOOL_PROP_1 = value.getBOOL_PROP_1();
-        this.BOOL_PROP_2 = value.getBOOL_PROP_2();
+        this.SCHED_NAME = value.SCHED_NAME();
+        this.TRIGGER_NAME = value.TRIGGER_NAME();
+        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
+        this.STR_PROP_1 = value.STR_PROP_1();
+        this.STR_PROP_2 = value.STR_PROP_2();
+        this.STR_PROP_3 = value.STR_PROP_3();
+        this.INT_PROP_1 = value.INT_PROP_1();
+        this.INT_PROP_2 = value.INT_PROP_2();
+        this.LONG_PROP_1 = value.LONG_PROP_1();
+        this.LONG_PROP_2 = value.LONG_PROP_2();
+        this.DEC_PROP_1 = value.DEC_PROP_1();
+        this.DEC_PROP_2 = value.DEC_PROP_2();
+        this.BOOL_PROP_1 = value.BOOL_PROP_1();
+        this.BOOL_PROP_2 = value.BOOL_PROP_2();
     }
 
     public QrtzSimpropTriggers(
@@ -92,7 +92,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -100,7 +100,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSimpropTriggers setSCHED_NAME(String SCHED_NAME) {
+    public QrtzSimpropTriggers SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -111,7 +111,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_NAME() {
+    public String TRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -119,7 +119,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzSimpropTriggers setTRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzSimpropTriggers TRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
         return this;
     }
@@ -130,7 +130,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_GROUP() {
+    public String TRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -138,7 +138,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzSimpropTriggers setTRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzSimpropTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -148,7 +148,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      */
     @Size(max = 512)
     @Override
-    public String getSTR_PROP_1() {
+    public String STR_PROP_1() {
         return this.STR_PROP_1;
     }
 
@@ -156,7 +156,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggers setSTR_PROP_1(String STR_PROP_1) {
+    public QrtzSimpropTriggers STR_PROP_1(String STR_PROP_1) {
         this.STR_PROP_1 = STR_PROP_1;
         return this;
     }
@@ -166,7 +166,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      */
     @Size(max = 512)
     @Override
-    public String getSTR_PROP_2() {
+    public String STR_PROP_2() {
         return this.STR_PROP_2;
     }
 
@@ -174,7 +174,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggers setSTR_PROP_2(String STR_PROP_2) {
+    public QrtzSimpropTriggers STR_PROP_2(String STR_PROP_2) {
         this.STR_PROP_2 = STR_PROP_2;
         return this;
     }
@@ -184,7 +184,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      */
     @Size(max = 512)
     @Override
-    public String getSTR_PROP_3() {
+    public String STR_PROP_3() {
         return this.STR_PROP_3;
     }
 
@@ -192,7 +192,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
      */
     @Override
-    public QrtzSimpropTriggers setSTR_PROP_3(String STR_PROP_3) {
+    public QrtzSimpropTriggers STR_PROP_3(String STR_PROP_3) {
         this.STR_PROP_3 = STR_PROP_3;
         return this;
     }
@@ -201,7 +201,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
     @Override
-    public Integer getINT_PROP_1() {
+    public Integer INT_PROP_1() {
         return this.INT_PROP_1;
     }
 
@@ -209,7 +209,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggers setINT_PROP_1(Integer INT_PROP_1) {
+    public QrtzSimpropTriggers INT_PROP_1(Integer INT_PROP_1) {
         this.INT_PROP_1 = INT_PROP_1;
         return this;
     }
@@ -218,7 +218,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
     @Override
-    public Integer getINT_PROP_2() {
+    public Integer INT_PROP_2() {
         return this.INT_PROP_2;
     }
 
@@ -226,7 +226,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggers setINT_PROP_2(Integer INT_PROP_2) {
+    public QrtzSimpropTriggers INT_PROP_2(Integer INT_PROP_2) {
         this.INT_PROP_2 = INT_PROP_2;
         return this;
     }
@@ -235,7 +235,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
     @Override
-    public Long getLONG_PROP_1() {
+    public Long LONG_PROP_1() {
         return this.LONG_PROP_1;
     }
 
@@ -243,7 +243,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggers setLONG_PROP_1(Long LONG_PROP_1) {
+    public QrtzSimpropTriggers LONG_PROP_1(Long LONG_PROP_1) {
         this.LONG_PROP_1 = LONG_PROP_1;
         return this;
     }
@@ -252,7 +252,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
     @Override
-    public Long getLONG_PROP_2() {
+    public Long LONG_PROP_2() {
         return this.LONG_PROP_2;
     }
 
@@ -260,7 +260,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggers setLONG_PROP_2(Long LONG_PROP_2) {
+    public QrtzSimpropTriggers LONG_PROP_2(Long LONG_PROP_2) {
         this.LONG_PROP_2 = LONG_PROP_2;
         return this;
     }
@@ -269,7 +269,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
     @Override
-    public BigDecimal getDEC_PROP_1() {
+    public BigDecimal DEC_PROP_1() {
         return this.DEC_PROP_1;
     }
 
@@ -277,7 +277,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggers setDEC_PROP_1(BigDecimal DEC_PROP_1) {
+    public QrtzSimpropTriggers DEC_PROP_1(BigDecimal DEC_PROP_1) {
         this.DEC_PROP_1 = DEC_PROP_1;
         return this;
     }
@@ -286,7 +286,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
     @Override
-    public BigDecimal getDEC_PROP_2() {
+    public BigDecimal DEC_PROP_2() {
         return this.DEC_PROP_2;
     }
 
@@ -294,7 +294,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggers setDEC_PROP_2(BigDecimal DEC_PROP_2) {
+    public QrtzSimpropTriggers DEC_PROP_2(BigDecimal DEC_PROP_2) {
         this.DEC_PROP_2 = DEC_PROP_2;
         return this;
     }
@@ -304,7 +304,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      */
     @Size(max = 1)
     @Override
-    public String getBOOL_PROP_1() {
+    public String BOOL_PROP_1() {
         return this.BOOL_PROP_1;
     }
 
@@ -312,7 +312,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggers setBOOL_PROP_1(String BOOL_PROP_1) {
+    public QrtzSimpropTriggers BOOL_PROP_1(String BOOL_PROP_1) {
         this.BOOL_PROP_1 = BOOL_PROP_1;
         return this;
     }
@@ -322,7 +322,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      */
     @Size(max = 1)
     @Override
-    public String getBOOL_PROP_2() {
+    public String BOOL_PROP_2() {
         return this.BOOL_PROP_2;
     }
 
@@ -330,7 +330,7 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggers setBOOL_PROP_2(String BOOL_PROP_2) {
+    public QrtzSimpropTriggers BOOL_PROP_2(String BOOL_PROP_2) {
         this.BOOL_PROP_2 = BOOL_PROP_2;
         return this;
     }
@@ -364,20 +364,20 @@ public class QrtzSimpropTriggers implements IQrtzSimpropTriggers {
 
     @Override
     public void from(IQrtzSimpropTriggers from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setTRIGGER_NAME(from.getTRIGGER_NAME());
-        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
-        setSTR_PROP_1(from.getSTR_PROP_1());
-        setSTR_PROP_2(from.getSTR_PROP_2());
-        setSTR_PROP_3(from.getSTR_PROP_3());
-        setINT_PROP_1(from.getINT_PROP_1());
-        setINT_PROP_2(from.getINT_PROP_2());
-        setLONG_PROP_1(from.getLONG_PROP_1());
-        setLONG_PROP_2(from.getLONG_PROP_2());
-        setDEC_PROP_1(from.getDEC_PROP_1());
-        setDEC_PROP_2(from.getDEC_PROP_2());
-        setBOOL_PROP_1(from.getBOOL_PROP_1());
-        setBOOL_PROP_2(from.getBOOL_PROP_2());
+        SCHED_NAME(from.SCHED_NAME());
+        TRIGGER_NAME(from.TRIGGER_NAME());
+        TRIGGER_GROUP(from.TRIGGER_GROUP());
+        STR_PROP_1(from.STR_PROP_1());
+        STR_PROP_2(from.STR_PROP_2());
+        STR_PROP_3(from.STR_PROP_3());
+        INT_PROP_1(from.INT_PROP_1());
+        INT_PROP_2(from.INT_PROP_2());
+        LONG_PROP_1(from.LONG_PROP_1());
+        LONG_PROP_2(from.LONG_PROP_2());
+        DEC_PROP_1(from.DEC_PROP_1());
+        DEC_PROP_2(from.DEC_PROP_2());
+        BOOL_PROP_1(from.BOOL_PROP_1());
+        BOOL_PROP_2(from.BOOL_PROP_2());
     }
 
     @Override

@@ -24,8 +24,8 @@ public class UserRole implements IUserRole {
     public UserRole() {}
 
     public UserRole(IUserRole value) {
-        this.userId = value.getUserId();
-        this.roleId = value.getRoleId();
+        this.userId = value.UserId();
+        this.roleId = value.RoleId();
     }
 
     public UserRole(
@@ -41,7 +41,7 @@ public class UserRole implements IUserRole {
      */
     @NotNull
     @Override
-    public Integer getUserId() {
+    public Integer UserId() {
         return this.userId;
     }
 
@@ -49,7 +49,7 @@ public class UserRole implements IUserRole {
      * Setter for <code>testshop.user_role.userId</code>.
      */
     @Override
-    public UserRole setUserId(Integer userId) {
+    public UserRole UserId(Integer userId) {
         this.userId = userId;
         return this;
     }
@@ -60,7 +60,7 @@ public class UserRole implements IUserRole {
     @NotNull
     @Size(max = 50)
     @Override
-    public String getRoleId() {
+    public String RoleId() {
         return this.roleId;
     }
 
@@ -68,7 +68,7 @@ public class UserRole implements IUserRole {
      * Setter for <code>testshop.user_role.roleId</code>.
      */
     @Override
-    public UserRole setRoleId(String roleId) {
+    public UserRole RoleId(String roleId) {
         this.roleId = roleId;
         return this;
     }
@@ -90,8 +90,8 @@ public class UserRole implements IUserRole {
 
     @Override
     public void from(IUserRole from) {
-        setUserId(from.getUserId());
-        setRoleId(from.getRoleId());
+        UserId(from.UserId());
+        RoleId(from.RoleId());
     }
 
     @Override

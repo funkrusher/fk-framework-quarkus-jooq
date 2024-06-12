@@ -59,22 +59,22 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
     /**
      * The column <code>testshop2.product_lang.productId</code>.
      */
-    public final TableField<ProductLangRecord, Long> PRODUCTID = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<ProductLangRecord, Long> productId = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>testshop2.product_lang.langId</code>.
      */
-    public final TableField<ProductLangRecord, Integer> LANGID = createField(DSL.name("langId"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProductLangRecord, Integer> langId = createField(DSL.name("langId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>testshop2.product_lang.name</code>.
      */
-    public final TableField<ProductLangRecord, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<ProductLangRecord, String> name = createField(DSL.name("name"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop2.product_lang.description</code>.
      */
-    public final TableField<ProductLangRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<ProductLangRecord, String> description = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
 
     private ProductLang(Name alias, Table<ProductLangRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -153,28 +153,28 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
         return Arrays.asList(Keys.FK_PRODUCT_LANG_PRODUCTID, Keys.FK_PRODUCT_LANG_LANGID);
     }
 
-    private transient ProductPath _fk_product_lang_productId;
+    private transient ProductPath _product;
 
     /**
      * Get the implicit join path to the <code>testshop2.product</code> table.
      */
-    public ProductPath fk_product_lang_productId() {
-        if (_fk_product_lang_productId == null)
-            _fk_product_lang_productId = new ProductPath(this, Keys.FK_PRODUCT_LANG_PRODUCTID, null);
+    public ProductPath product() {
+        if (_product == null)
+            _product = new ProductPath(this, Keys.FK_PRODUCT_LANG_PRODUCTID, null);
 
-        return _fk_product_lang_productId;
+        return _product;
     }
 
-    private transient LangPath _fk_product_lang_langId;
+    private transient LangPath _lang;
 
     /**
      * Get the implicit join path to the <code>testshop.lang</code> table.
      */
-    public LangPath fk_product_lang_langId() {
-        if (_fk_product_lang_langId == null)
-            _fk_product_lang_langId = new LangPath(this, Keys.FK_PRODUCT_LANG_LANGID, null);
+    public LangPath lang() {
+        if (_lang == null)
+            _lang = new LangPath(this, Keys.FK_PRODUCT_LANG_LANGID, null);
 
-        return _fk_product_lang_langId;
+        return _lang;
     }
 
     @Override

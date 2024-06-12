@@ -25,7 +25,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Setter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public LangRecord setLangId(Integer value) {
+    public LangRecord LangId(Integer value) {
         set(0, value);
         return this;
     }
@@ -34,7 +34,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Getter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public Integer getLangId() {
+    public Integer LangId() {
         return (Integer) get(0);
     }
 
@@ -42,7 +42,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code
      */
     @Override
-    public LangRecord setCode(String value) {
+    public LangRecord Code(String value) {
         set(1, value);
         return this;
     }
@@ -53,7 +53,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
     @NotNull
     @Size(max = 2)
     @Override
-    public String getCode() {
+    public String Code() {
         return (String) get(1);
     }
 
@@ -62,7 +62,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * of language
      */
     @Override
-    public LangRecord setDescription(String value) {
+    public LangRecord Description(String value) {
         set(2, value);
         return this;
     }
@@ -73,7 +73,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      */
     @Size(max = 50)
     @Override
-    public String getDescription() {
+    public String Description() {
         return (String) get(2);
     }
 
@@ -92,9 +92,9 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
 
     @Override
     public void from(ILang from) {
-        setLangId(from.getLangId());
-        setCode(from.getCode());
-        setDescription(from.getDescription());
+        LangId(from.LangId());
+        Code(from.Code());
+        Description(from.Description());
         resetChangedOnNotNull();
     }
 
@@ -121,9 +121,9 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
     public LangRecord(Integer langId, String code, String description) {
         super(Lang.LANG);
 
-        setLangId(langId);
-        setCode(code);
-        setDescription(description);
+        LangId(langId);
+        Code(code);
+        Description(description);
         resetChangedOnNotNull();
     }
 
@@ -134,9 +134,9 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
         super(Lang.LANG);
 
         if (value != null) {
-            setLangId(value.getLangId());
-            setCode(value.getCode());
-            setDescription(value.getDescription());
+            LangId(value.LangId());
+            Code(value.Code());
+            Description(value.Description());
             resetChangedOnNotNull();
         }
     }

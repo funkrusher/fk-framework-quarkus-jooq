@@ -20,120 +20,120 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
-    public IQrtzJobDetails setSCHED_NAME(String value);
+    public IQrtzJobDetails SCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSCHED_NAME();
+    public String SCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
-    public IQrtzJobDetails setJOB_NAME(String value);
+    public IQrtzJobDetails JOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getJOB_NAME();
+    public String JOB_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
-    public IQrtzJobDetails setJOB_GROUP(String value);
+    public IQrtzJobDetails JOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getJOB_GROUP();
+    public String JOB_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
-    public IQrtzJobDetails setDESCRIPTION(String value);
+    public IQrtzJobDetails DESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
     @Size(max = 250)
-    public String getDESCRIPTION();
+    public String DESCRIPTION();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
-    public IQrtzJobDetails setJOB_CLASS_NAME(String value);
+    public IQrtzJobDetails JOB_CLASS_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
     @NotNull
     @Size(max = 250)
-    public String getJOB_CLASS_NAME();
+    public String JOB_CLASS_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
-    public IQrtzJobDetails setIS_DURABLE(String value);
+    public IQrtzJobDetails IS_DURABLE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getIS_DURABLE();
+    public String IS_DURABLE();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
-    public IQrtzJobDetails setIS_NONCONCURRENT(String value);
+    public IQrtzJobDetails IS_NONCONCURRENT(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getIS_NONCONCURRENT();
+    public String IS_NONCONCURRENT();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
-    public IQrtzJobDetails setIS_UPDATE_DATA(String value);
+    public IQrtzJobDetails IS_UPDATE_DATA(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getIS_UPDATE_DATA();
+    public String IS_UPDATE_DATA();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
-    public IQrtzJobDetails setREQUESTS_RECOVERY(String value);
+    public IQrtzJobDetails REQUESTS_RECOVERY(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getREQUESTS_RECOVERY();
+    public String REQUESTS_RECOVERY();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
-    public IQrtzJobDetails setJOB_DATA(byte[] value);
+    public IQrtzJobDetails JOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
     @Size(max = 65535)
-    public byte[] getJOB_DATA();
+    public byte[] JOB_DATA();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

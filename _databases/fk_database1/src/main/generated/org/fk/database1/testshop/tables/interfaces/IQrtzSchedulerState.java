@@ -20,48 +20,48 @@ public interface IQrtzSchedulerState extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
-    public IQrtzSchedulerState setSCHED_NAME(String value);
+    public IQrtzSchedulerState SCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSCHED_NAME();
+    public String SCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
-    public IQrtzSchedulerState setINSTANCE_NAME(String value);
+    public IQrtzSchedulerState INSTANCE_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getINSTANCE_NAME();
+    public String INSTANCE_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
-    public IQrtzSchedulerState setLAST_CHECKIN_TIME(Long value);
+    public IQrtzSchedulerState LAST_CHECKIN_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
     @NotNull
-    public Long getLAST_CHECKIN_TIME();
+    public Long LAST_CHECKIN_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
-    public IQrtzSchedulerState setCHECKIN_INTERVAL(Long value);
+    public IQrtzSchedulerState CHECKIN_INTERVAL(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
     @NotNull
-    public Long getCHECKIN_INTERVAL();
+    public Long CHECKIN_INTERVAL();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

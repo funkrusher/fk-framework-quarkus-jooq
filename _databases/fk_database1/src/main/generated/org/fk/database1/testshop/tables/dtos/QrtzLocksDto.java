@@ -47,7 +47,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -55,9 +55,8 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzLocksDto setSCHED_NAME(String SCHED_NAME) {
+    public QrtzLocks SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -67,7 +66,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
     @NotNull
     @Size(max = 40)
     @Override
-    public String getLOCK_NAME() {
+    public String LOCK_NAME() {
         return this.LOCK_NAME;
     }
 
@@ -75,9 +74,8 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
     @Override
-    public QrtzLocksDto setLOCK_NAME(String LOCK_NAME) {
+    public QrtzLocks LOCK_NAME(String LOCK_NAME) {
         this.LOCK_NAME = LOCK_NAME;
-        this.keeper.touch("LOCK_NAME");
         return this;
     }
 
@@ -117,8 +115,8 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
 
     @Override
     public void from(IQrtzLocks from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setLOCK_NAME(from.getLOCK_NAME());
+        SCHED_NAME(from.SCHED_NAME());
+        LOCK_NAME(from.LOCK_NAME());
     }
     @Override
     public <E extends IQrtzLocks> E into(E into) {

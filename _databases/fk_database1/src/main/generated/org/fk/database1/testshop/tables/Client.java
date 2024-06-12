@@ -10,7 +10,6 @@ import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
 import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop.tables.records.ClientRecord;
-import org.fk.database1.testshop2.tables.Product.ProductPath;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -58,7 +57,7 @@ public class Client extends TableImpl<ClientRecord> {
     /**
      * The column <code>testshop.client.clientId</code>.
      */
-    public final TableField<ClientRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ClientRecord, Integer> clientId = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     private Client(Name alias, Table<ClientRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -137,30 +136,17 @@ public class Client extends TableImpl<ClientRecord> {
         return Keys.KEY_CLIENT_PRIMARY;
     }
 
-    private transient UserPath _fk_user_clientId;
+    private transient UserPath _client;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user</code>
      * table
      */
-    public UserPath fk_user_clientId() {
-        if (_fk_user_clientId == null)
-            _fk_user_clientId = new UserPath(this, null, Keys.FK_USER_CLIENTID.getInverseKey());
+    public UserPath client() {
+        if (_client == null)
+            _client = new UserPath(this, null, Keys.FK_USER_CLIENTID.getInverseKey());
 
-        return _fk_user_clientId;
-    }
-
-    private transient ProductPath _fk_product_clientId;
-
-    /**
-     * Get the implicit to-many join path to the <code>testshop2.product</code>
-     * table
-     */
-    public ProductPath fk_product_clientId() {
-        if (_fk_product_clientId == null)
-            _fk_product_clientId = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CLIENTID.getInverseKey());
-
-        return _fk_product_clientId;
+        return _client;
     }
 
     @Override

@@ -49,7 +49,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -57,9 +57,8 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSchedulerStateDto setSCHED_NAME(String SCHED_NAME) {
+    public QrtzSchedulerState SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -69,7 +68,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getINSTANCE_NAME() {
+    public String INSTANCE_NAME() {
         return this.INSTANCE_NAME;
     }
 
@@ -77,9 +76,8 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
     @Override
-    public QrtzSchedulerStateDto setINSTANCE_NAME(String INSTANCE_NAME) {
+    public QrtzSchedulerState INSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.keeper.touch("INSTANCE_NAME");
         return this;
     }
 
@@ -88,7 +86,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      */
     @NotNull
     @Override
-    public Long getLAST_CHECKIN_TIME() {
+    public Long LAST_CHECKIN_TIME() {
         return this.LAST_CHECKIN_TIME;
     }
 
@@ -96,9 +94,8 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
     @Override
-    public QrtzSchedulerStateDto setLAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
+    public QrtzSchedulerState LAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
         this.LAST_CHECKIN_TIME = LAST_CHECKIN_TIME;
-        this.keeper.touch("LAST_CHECKIN_TIME");
         return this;
     }
 
@@ -107,7 +104,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      */
     @NotNull
     @Override
-    public Long getCHECKIN_INTERVAL() {
+    public Long CHECKIN_INTERVAL() {
         return this.CHECKIN_INTERVAL;
     }
 
@@ -115,9 +112,8 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
     @Override
-    public QrtzSchedulerStateDto setCHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
+    public QrtzSchedulerState CHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
         this.CHECKIN_INTERVAL = CHECKIN_INTERVAL;
-        this.keeper.touch("CHECKIN_INTERVAL");
         return this;
     }
 
@@ -157,10 +153,10 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
 
     @Override
     public void from(IQrtzSchedulerState from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setINSTANCE_NAME(from.getINSTANCE_NAME());
-        setLAST_CHECKIN_TIME(from.getLAST_CHECKIN_TIME());
-        setCHECKIN_INTERVAL(from.getCHECKIN_INTERVAL());
+        SCHED_NAME(from.SCHED_NAME());
+        INSTANCE_NAME(from.INSTANCE_NAME());
+        LAST_CHECKIN_TIME(from.LAST_CHECKIN_TIME());
+        CHECKIN_INTERVAL(from.CHECKIN_INTERVAL());
     }
     @Override
     public <E extends IQrtzSchedulerState> E into(E into) {

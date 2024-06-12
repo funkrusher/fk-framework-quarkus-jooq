@@ -25,7 +25,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSchedulerStateRecord setSCHED_NAME(String value) {
+    public QrtzSchedulerStateRecord SCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
     @Override
-    public QrtzSchedulerStateRecord setINSTANCE_NAME(String value) {
+    public QrtzSchedulerStateRecord INSTANCE_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
     @NotNull
     @Size(max = 190)
     @Override
-    public String getINSTANCE_NAME() {
+    public String INSTANCE_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
     @Override
-    public QrtzSchedulerStateRecord setLAST_CHECKIN_TIME(Long value) {
+    public QrtzSchedulerStateRecord LAST_CHECKIN_TIME(Long value) {
         set(2, value);
         return this;
     }
@@ -73,7 +73,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      */
     @NotNull
     @Override
-    public Long getLAST_CHECKIN_TIME() {
+    public Long LAST_CHECKIN_TIME() {
         return (Long) get(2);
     }
 
@@ -81,7 +81,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
     @Override
-    public QrtzSchedulerStateRecord setCHECKIN_INTERVAL(Long value) {
+    public QrtzSchedulerStateRecord CHECKIN_INTERVAL(Long value) {
         set(3, value);
         return this;
     }
@@ -91,7 +91,7 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
      */
     @NotNull
     @Override
-    public Long getCHECKIN_INTERVAL() {
+    public Long CHECKIN_INTERVAL() {
         return (Long) get(3);
     }
 
@@ -110,10 +110,10 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
 
     @Override
     public void from(IQrtzSchedulerState from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setINSTANCE_NAME(from.getINSTANCE_NAME());
-        setLAST_CHECKIN_TIME(from.getLAST_CHECKIN_TIME());
-        setCHECKIN_INTERVAL(from.getCHECKIN_INTERVAL());
+        SCHED_NAME(from.SCHED_NAME());
+        INSTANCE_NAME(from.INSTANCE_NAME());
+        LAST_CHECKIN_TIME(from.LAST_CHECKIN_TIME());
+        CHECKIN_INTERVAL(from.CHECKIN_INTERVAL());
         resetChangedOnNotNull();
     }
 
@@ -140,10 +140,10 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
     public QrtzSchedulerStateRecord(String SCHED_NAME, String INSTANCE_NAME, Long LAST_CHECKIN_TIME, Long CHECKIN_INTERVAL) {
         super(QrtzSchedulerState.QRTZ_SCHEDULER_STATE);
 
-        setSCHED_NAME(SCHED_NAME);
-        setINSTANCE_NAME(INSTANCE_NAME);
-        setLAST_CHECKIN_TIME(LAST_CHECKIN_TIME);
-        setCHECKIN_INTERVAL(CHECKIN_INTERVAL);
+        SCHED_NAME(SCHED_NAME);
+        INSTANCE_NAME(INSTANCE_NAME);
+        LAST_CHECKIN_TIME(LAST_CHECKIN_TIME);
+        CHECKIN_INTERVAL(CHECKIN_INTERVAL);
         resetChangedOnNotNull();
     }
 
@@ -154,10 +154,10 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
         super(QrtzSchedulerState.QRTZ_SCHEDULER_STATE);
 
         if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setINSTANCE_NAME(value.getINSTANCE_NAME());
-            setLAST_CHECKIN_TIME(value.getLAST_CHECKIN_TIME());
-            setCHECKIN_INTERVAL(value.getCHECKIN_INTERVAL());
+            SCHED_NAME(value.SCHED_NAME());
+            INSTANCE_NAME(value.INSTANCE_NAME());
+            LAST_CHECKIN_TIME(value.LAST_CHECKIN_TIME());
+            CHECKIN_INTERVAL(value.CHECKIN_INTERVAL());
             resetChangedOnNotNull();
         }
     }

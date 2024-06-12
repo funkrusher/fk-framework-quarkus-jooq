@@ -38,20 +38,20 @@ public class Databasechangelog implements IDatabasechangelog {
     public Databasechangelog() {}
 
     public Databasechangelog(IDatabasechangelog value) {
-        this.ID = value.getID();
-        this.AUTHOR = value.getAUTHOR();
-        this.FILENAME = value.getFILENAME();
-        this.DATEEXECUTED = value.getDATEEXECUTED();
-        this.ORDEREXECUTED = value.getORDEREXECUTED();
-        this.EXECTYPE = value.getEXECTYPE();
-        this.MD5SUM = value.getMD5SUM();
-        this.DESCRIPTION = value.getDESCRIPTION();
-        this.COMMENTS = value.getCOMMENTS();
-        this.TAG = value.getTAG();
-        this.LIQUIBASE = value.getLIQUIBASE();
-        this.CONTEXTS = value.getCONTEXTS();
-        this.LABELS = value.getLABELS();
-        this.DEPLOYMENT_ID = value.getDEPLOYMENT_ID();
+        this.ID = value.ID();
+        this.AUTHOR = value.AUTHOR();
+        this.FILENAME = value.FILENAME();
+        this.DATEEXECUTED = value.DATEEXECUTED();
+        this.ORDEREXECUTED = value.ORDEREXECUTED();
+        this.EXECTYPE = value.EXECTYPE();
+        this.MD5SUM = value.MD5SUM();
+        this.DESCRIPTION = value.DESCRIPTION();
+        this.COMMENTS = value.COMMENTS();
+        this.TAG = value.TAG();
+        this.LIQUIBASE = value.LIQUIBASE();
+        this.CONTEXTS = value.CONTEXTS();
+        this.LABELS = value.LABELS();
+        this.DEPLOYMENT_ID = value.DEPLOYMENT_ID();
     }
 
     public Databasechangelog(
@@ -92,7 +92,7 @@ public class Databasechangelog implements IDatabasechangelog {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getID() {
+    public String ID() {
         return this.ID;
     }
 
@@ -100,7 +100,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
     @Override
-    public Databasechangelog setID(String ID) {
+    public Databasechangelog ID(String ID) {
         this.ID = ID;
         return this;
     }
@@ -111,7 +111,7 @@ public class Databasechangelog implements IDatabasechangelog {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getAUTHOR() {
+    public String AUTHOR() {
         return this.AUTHOR;
     }
 
@@ -119,7 +119,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
     @Override
-    public Databasechangelog setAUTHOR(String AUTHOR) {
+    public Databasechangelog AUTHOR(String AUTHOR) {
         this.AUTHOR = AUTHOR;
         return this;
     }
@@ -130,7 +130,7 @@ public class Databasechangelog implements IDatabasechangelog {
     @NotNull
     @Size(max = 255)
     @Override
-    public String getFILENAME() {
+    public String FILENAME() {
         return this.FILENAME;
     }
 
@@ -138,7 +138,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
     @Override
-    public Databasechangelog setFILENAME(String FILENAME) {
+    public Databasechangelog FILENAME(String FILENAME) {
         this.FILENAME = FILENAME;
         return this;
     }
@@ -148,7 +148,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @NotNull
     @Override
-    public LocalDateTime getDATEEXECUTED() {
+    public LocalDateTime DATEEXECUTED() {
         return this.DATEEXECUTED;
     }
 
@@ -156,7 +156,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
     @Override
-    public Databasechangelog setDATEEXECUTED(LocalDateTime DATEEXECUTED) {
+    public Databasechangelog DATEEXECUTED(LocalDateTime DATEEXECUTED) {
         this.DATEEXECUTED = DATEEXECUTED;
         return this;
     }
@@ -166,7 +166,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @NotNull
     @Override
-    public Integer getORDEREXECUTED() {
+    public Integer ORDEREXECUTED() {
         return this.ORDEREXECUTED;
     }
 
@@ -174,7 +174,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
     @Override
-    public Databasechangelog setORDEREXECUTED(Integer ORDEREXECUTED) {
+    public Databasechangelog ORDEREXECUTED(Integer ORDEREXECUTED) {
         this.ORDEREXECUTED = ORDEREXECUTED;
         return this;
     }
@@ -185,7 +185,7 @@ public class Databasechangelog implements IDatabasechangelog {
     @NotNull
     @Size(max = 10)
     @Override
-    public String getEXECTYPE() {
+    public String EXECTYPE() {
         return this.EXECTYPE;
     }
 
@@ -193,7 +193,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
     @Override
-    public Databasechangelog setEXECTYPE(String EXECTYPE) {
+    public Databasechangelog EXECTYPE(String EXECTYPE) {
         this.EXECTYPE = EXECTYPE;
         return this;
     }
@@ -203,7 +203,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 35)
     @Override
-    public String getMD5SUM() {
+    public String MD5SUM() {
         return this.MD5SUM;
     }
 
@@ -211,7 +211,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
     @Override
-    public Databasechangelog setMD5SUM(String MD5SUM) {
+    public Databasechangelog MD5SUM(String MD5SUM) {
         this.MD5SUM = MD5SUM;
         return this;
     }
@@ -221,7 +221,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 255)
     @Override
-    public String getDESCRIPTION() {
+    public String DESCRIPTION() {
         return this.DESCRIPTION;
     }
 
@@ -229,7 +229,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
     @Override
-    public Databasechangelog setDESCRIPTION(String DESCRIPTION) {
+    public Databasechangelog DESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
         return this;
     }
@@ -239,7 +239,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 255)
     @Override
-    public String getCOMMENTS() {
+    public String COMMENTS() {
         return this.COMMENTS;
     }
 
@@ -247,7 +247,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
     @Override
-    public Databasechangelog setCOMMENTS(String COMMENTS) {
+    public Databasechangelog COMMENTS(String COMMENTS) {
         this.COMMENTS = COMMENTS;
         return this;
     }
@@ -257,7 +257,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 255)
     @Override
-    public String getTAG() {
+    public String TAG() {
         return this.TAG;
     }
 
@@ -265,7 +265,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
     @Override
-    public Databasechangelog setTAG(String TAG) {
+    public Databasechangelog TAG(String TAG) {
         this.TAG = TAG;
         return this;
     }
@@ -275,7 +275,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 20)
     @Override
-    public String getLIQUIBASE() {
+    public String LIQUIBASE() {
         return this.LIQUIBASE;
     }
 
@@ -283,7 +283,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
     @Override
-    public Databasechangelog setLIQUIBASE(String LIQUIBASE) {
+    public Databasechangelog LIQUIBASE(String LIQUIBASE) {
         this.LIQUIBASE = LIQUIBASE;
         return this;
     }
@@ -293,7 +293,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 255)
     @Override
-    public String getCONTEXTS() {
+    public String CONTEXTS() {
         return this.CONTEXTS;
     }
 
@@ -301,7 +301,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
     @Override
-    public Databasechangelog setCONTEXTS(String CONTEXTS) {
+    public Databasechangelog CONTEXTS(String CONTEXTS) {
         this.CONTEXTS = CONTEXTS;
         return this;
     }
@@ -311,7 +311,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 255)
     @Override
-    public String getLABELS() {
+    public String LABELS() {
         return this.LABELS;
     }
 
@@ -319,7 +319,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
     @Override
-    public Databasechangelog setLABELS(String LABELS) {
+    public Databasechangelog LABELS(String LABELS) {
         this.LABELS = LABELS;
         return this;
     }
@@ -329,7 +329,7 @@ public class Databasechangelog implements IDatabasechangelog {
      */
     @Size(max = 10)
     @Override
-    public String getDEPLOYMENT_ID() {
+    public String DEPLOYMENT_ID() {
         return this.DEPLOYMENT_ID;
     }
 
@@ -337,7 +337,7 @@ public class Databasechangelog implements IDatabasechangelog {
      * Setter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
     @Override
-    public Databasechangelog setDEPLOYMENT_ID(String DEPLOYMENT_ID) {
+    public Databasechangelog DEPLOYMENT_ID(String DEPLOYMENT_ID) {
         this.DEPLOYMENT_ID = DEPLOYMENT_ID;
         return this;
     }
@@ -371,20 +371,20 @@ public class Databasechangelog implements IDatabasechangelog {
 
     @Override
     public void from(IDatabasechangelog from) {
-        setID(from.getID());
-        setAUTHOR(from.getAUTHOR());
-        setFILENAME(from.getFILENAME());
-        setDATEEXECUTED(from.getDATEEXECUTED());
-        setORDEREXECUTED(from.getORDEREXECUTED());
-        setEXECTYPE(from.getEXECTYPE());
-        setMD5SUM(from.getMD5SUM());
-        setDESCRIPTION(from.getDESCRIPTION());
-        setCOMMENTS(from.getCOMMENTS());
-        setTAG(from.getTAG());
-        setLIQUIBASE(from.getLIQUIBASE());
-        setCONTEXTS(from.getCONTEXTS());
-        setLABELS(from.getLABELS());
-        setDEPLOYMENT_ID(from.getDEPLOYMENT_ID());
+        ID(from.ID());
+        AUTHOR(from.AUTHOR());
+        FILENAME(from.FILENAME());
+        DATEEXECUTED(from.DATEEXECUTED());
+        ORDEREXECUTED(from.ORDEREXECUTED());
+        EXECTYPE(from.EXECTYPE());
+        MD5SUM(from.MD5SUM());
+        DESCRIPTION(from.DESCRIPTION());
+        COMMENTS(from.COMMENTS());
+        TAG(from.TAG());
+        LIQUIBASE(from.LIQUIBASE());
+        CONTEXTS(from.CONTEXTS());
+        LABELS(from.LABELS());
+        DEPLOYMENT_ID(from.DEPLOYMENT_ID());
     }
 
     @Override

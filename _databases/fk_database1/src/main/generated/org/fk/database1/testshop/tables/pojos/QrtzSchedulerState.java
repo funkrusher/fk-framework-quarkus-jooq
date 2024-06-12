@@ -26,10 +26,10 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
     public QrtzSchedulerState() {}
 
     public QrtzSchedulerState(IQrtzSchedulerState value) {
-        this.SCHED_NAME = value.getSCHED_NAME();
-        this.INSTANCE_NAME = value.getINSTANCE_NAME();
-        this.LAST_CHECKIN_TIME = value.getLAST_CHECKIN_TIME();
-        this.CHECKIN_INTERVAL = value.getCHECKIN_INTERVAL();
+        this.SCHED_NAME = value.SCHED_NAME();
+        this.INSTANCE_NAME = value.INSTANCE_NAME();
+        this.LAST_CHECKIN_TIME = value.LAST_CHECKIN_TIME();
+        this.CHECKIN_INTERVAL = value.CHECKIN_INTERVAL();
     }
 
     public QrtzSchedulerState(
@@ -50,7 +50,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -58,7 +58,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSchedulerState setSCHED_NAME(String SCHED_NAME) {
+    public QrtzSchedulerState SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -69,7 +69,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getINSTANCE_NAME() {
+    public String INSTANCE_NAME() {
         return this.INSTANCE_NAME;
     }
 
@@ -77,7 +77,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.INSTANCE_NAME</code>.
      */
     @Override
-    public QrtzSchedulerState setINSTANCE_NAME(String INSTANCE_NAME) {
+    public QrtzSchedulerState INSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
         return this;
     }
@@ -87,7 +87,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
      */
     @NotNull
     @Override
-    public Long getLAST_CHECKIN_TIME() {
+    public Long LAST_CHECKIN_TIME() {
         return this.LAST_CHECKIN_TIME;
     }
 
@@ -95,7 +95,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.LAST_CHECKIN_TIME</code>.
      */
     @Override
-    public QrtzSchedulerState setLAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
+    public QrtzSchedulerState LAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
         this.LAST_CHECKIN_TIME = LAST_CHECKIN_TIME;
         return this;
     }
@@ -105,7 +105,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
      */
     @NotNull
     @Override
-    public Long getCHECKIN_INTERVAL() {
+    public Long CHECKIN_INTERVAL() {
         return this.CHECKIN_INTERVAL;
     }
 
@@ -113,7 +113,7 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
      * Setter for <code>testshop.QRTZ_SCHEDULER_STATE.CHECKIN_INTERVAL</code>.
      */
     @Override
-    public QrtzSchedulerState setCHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
+    public QrtzSchedulerState CHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
         this.CHECKIN_INTERVAL = CHECKIN_INTERVAL;
         return this;
     }
@@ -137,10 +137,10 @@ public class QrtzSchedulerState implements IQrtzSchedulerState {
 
     @Override
     public void from(IQrtzSchedulerState from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setINSTANCE_NAME(from.getINSTANCE_NAME());
-        setLAST_CHECKIN_TIME(from.getLAST_CHECKIN_TIME());
-        setCHECKIN_INTERVAL(from.getCHECKIN_INTERVAL());
+        SCHED_NAME(from.SCHED_NAME());
+        INSTANCE_NAME(from.INSTANCE_NAME());
+        LAST_CHECKIN_TIME(from.LAST_CHECKIN_TIME());
+        CHECKIN_INTERVAL(from.CHECKIN_INTERVAL());
     }
 
     @Override

@@ -46,7 +46,7 @@ public class RoleDto implements IRole, DTO {
     @NotNull
     @Size(max = 50)
     @Override
-    public String getRoleId() {
+    public String RoleId() {
         return this.roleId;
     }
 
@@ -54,9 +54,8 @@ public class RoleDto implements IRole, DTO {
      * Setter for <code>testshop.role.roleId</code>.
      */
     @Override
-    public RoleDto setRoleId(String roleId) {
+    public Role RoleId(String roleId) {
         this.roleId = roleId;
-        this.keeper.touch("roleId");
         return this;
     }
 
@@ -96,7 +95,7 @@ public class RoleDto implements IRole, DTO {
 
     @Override
     public void from(IRole from) {
-        setRoleId(from.getRoleId());
+        RoleId(from.RoleId());
     }
     @Override
     public <E extends IRole> E into(E into) {

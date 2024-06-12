@@ -17,6 +17,7 @@ public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
+        System.out.println("TEST: " + definition.getOutputName());
         return definition.getOutputName();
     }
 
@@ -24,4 +25,5 @@ public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
     public String getJavaMemberName(Definition definition, Mode mode) {
         return definition.getOutputName();
     }
+
 }

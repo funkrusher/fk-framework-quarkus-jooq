@@ -28,7 +28,7 @@ public class CoreTestDatabaseCodeGenerator {
                                     .withPojosEqualsAndHashCode(false)
                             )
                             .withStrategy(new Strategy()
-                                    .withName(FkGeneratorStrategy.class.getName())
+                                .withName(FkGeneratorStrategy.class.getName())
                             )
                             .withDatabase(new Database()
                                     .withName(MariaDBDatabase.class.getName())

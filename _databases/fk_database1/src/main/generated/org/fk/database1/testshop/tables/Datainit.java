@@ -50,12 +50,12 @@ public class Datainit extends TableImpl<DatainitRecord> {
     /**
      * The column <code>testshop.DataInit.dataInitId</code>.
      */
-    public final TableField<DatainitRecord, String> DATAINITID = createField(DSL.name("dataInitId"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<DatainitRecord, String> dataInitId = createField(DSL.name("dataInitId"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop.DataInit.createdAt</code>.
      */
-    public final TableField<DatainitRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<DatainitRecord, LocalDateTime> createdAt = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Datainit(Name alias, Table<DatainitRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

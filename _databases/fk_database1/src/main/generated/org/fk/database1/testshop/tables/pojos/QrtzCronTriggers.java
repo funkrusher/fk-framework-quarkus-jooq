@@ -27,11 +27,11 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
     public QrtzCronTriggers() {}
 
     public QrtzCronTriggers(IQrtzCronTriggers value) {
-        this.SCHED_NAME = value.getSCHED_NAME();
-        this.TRIGGER_NAME = value.getTRIGGER_NAME();
-        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
-        this.CRON_EXPRESSION = value.getCRON_EXPRESSION();
-        this.TIME_ZONE_ID = value.getTIME_ZONE_ID();
+        this.SCHED_NAME = value.SCHED_NAME();
+        this.TRIGGER_NAME = value.TRIGGER_NAME();
+        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
+        this.CRON_EXPRESSION = value.CRON_EXPRESSION();
+        this.TIME_ZONE_ID = value.TIME_ZONE_ID();
     }
 
     public QrtzCronTriggers(
@@ -54,7 +54,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -62,7 +62,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzCronTriggers setSCHED_NAME(String SCHED_NAME) {
+    public QrtzCronTriggers SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -73,7 +73,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_NAME() {
+    public String TRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -81,7 +81,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzCronTriggers setTRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzCronTriggers TRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
         return this;
     }
@@ -92,7 +92,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_GROUP() {
+    public String TRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -100,7 +100,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzCronTriggers setTRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzCronTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -111,7 +111,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getCRON_EXPRESSION() {
+    public String CRON_EXPRESSION() {
         return this.CRON_EXPRESSION;
     }
 
@@ -119,7 +119,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
      */
     @Override
-    public QrtzCronTriggers setCRON_EXPRESSION(String CRON_EXPRESSION) {
+    public QrtzCronTriggers CRON_EXPRESSION(String CRON_EXPRESSION) {
         this.CRON_EXPRESSION = CRON_EXPRESSION;
         return this;
     }
@@ -129,7 +129,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
      */
     @Size(max = 80)
     @Override
-    public String getTIME_ZONE_ID() {
+    public String TIME_ZONE_ID() {
         return this.TIME_ZONE_ID;
     }
 
@@ -137,7 +137,7 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.
      */
     @Override
-    public QrtzCronTriggers setTIME_ZONE_ID(String TIME_ZONE_ID) {
+    public QrtzCronTriggers TIME_ZONE_ID(String TIME_ZONE_ID) {
         this.TIME_ZONE_ID = TIME_ZONE_ID;
         return this;
     }
@@ -162,11 +162,11 @@ public class QrtzCronTriggers implements IQrtzCronTriggers {
 
     @Override
     public void from(IQrtzCronTriggers from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setTRIGGER_NAME(from.getTRIGGER_NAME());
-        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
-        setCRON_EXPRESSION(from.getCRON_EXPRESSION());
-        setTIME_ZONE_ID(from.getTIME_ZONE_ID());
+        SCHED_NAME(from.SCHED_NAME());
+        TRIGGER_NAME(from.TRIGGER_NAME());
+        TRIGGER_GROUP(from.TRIGGER_GROUP());
+        CRON_EXPRESSION(from.CRON_EXPRESSION());
+        TIME_ZONE_ID(from.TIME_ZONE_ID());
     }
 
     @Override

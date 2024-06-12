@@ -24,8 +24,8 @@ public class QrtzPausedTriggerGrps implements IQrtzPausedTriggerGrps {
     public QrtzPausedTriggerGrps() {}
 
     public QrtzPausedTriggerGrps(IQrtzPausedTriggerGrps value) {
-        this.SCHED_NAME = value.getSCHED_NAME();
-        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
+        this.SCHED_NAME = value.SCHED_NAME();
+        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
     }
 
     public QrtzPausedTriggerGrps(
@@ -42,7 +42,7 @@ public class QrtzPausedTriggerGrps implements IQrtzPausedTriggerGrps {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -50,7 +50,7 @@ public class QrtzPausedTriggerGrps implements IQrtzPausedTriggerGrps {
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzPausedTriggerGrps setSCHED_NAME(String SCHED_NAME) {
+    public QrtzPausedTriggerGrps SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -61,7 +61,7 @@ public class QrtzPausedTriggerGrps implements IQrtzPausedTriggerGrps {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_GROUP() {
+    public String TRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -69,7 +69,7 @@ public class QrtzPausedTriggerGrps implements IQrtzPausedTriggerGrps {
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzPausedTriggerGrps setTRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzPausedTriggerGrps TRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -91,8 +91,8 @@ public class QrtzPausedTriggerGrps implements IQrtzPausedTriggerGrps {
 
     @Override
     public void from(IQrtzPausedTriggerGrps from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        SCHED_NAME(from.SCHED_NAME());
+        TRIGGER_GROUP(from.TRIGGER_GROUP());
     }
 
     @Override

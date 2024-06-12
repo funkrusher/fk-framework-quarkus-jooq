@@ -46,7 +46,7 @@ public class UserRoleDto implements IUserRole, DTO {
      */
     @NotNull
     @Override
-    public Integer getUserId() {
+    public Integer UserId() {
         return this.userId;
     }
 
@@ -54,9 +54,8 @@ public class UserRoleDto implements IUserRole, DTO {
      * Setter for <code>testshop.user_role.userId</code>.
      */
     @Override
-    public UserRoleDto setUserId(Integer userId) {
+    public UserRole UserId(Integer userId) {
         this.userId = userId;
-        this.keeper.touch("userId");
         return this;
     }
 
@@ -66,7 +65,7 @@ public class UserRoleDto implements IUserRole, DTO {
     @NotNull
     @Size(max = 50)
     @Override
-    public String getRoleId() {
+    public String RoleId() {
         return this.roleId;
     }
 
@@ -74,9 +73,8 @@ public class UserRoleDto implements IUserRole, DTO {
      * Setter for <code>testshop.user_role.roleId</code>.
      */
     @Override
-    public UserRoleDto setRoleId(String roleId) {
+    public UserRole RoleId(String roleId) {
         this.roleId = roleId;
-        this.keeper.touch("roleId");
         return this;
     }
 
@@ -116,8 +114,8 @@ public class UserRoleDto implements IUserRole, DTO {
 
     @Override
     public void from(IUserRole from) {
-        setUserId(from.getUserId());
-        setRoleId(from.getRoleId());
+        UserId(from.UserId());
+        RoleId(from.RoleId());
     }
     @Override
     public <E extends IUserRole> E into(E into) {

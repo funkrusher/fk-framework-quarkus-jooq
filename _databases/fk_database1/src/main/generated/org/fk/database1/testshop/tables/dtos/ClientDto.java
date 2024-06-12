@@ -41,7 +41,7 @@ public class ClientDto implements IClient, DTO {
      * Getter for <code>testshop.client.clientId</code>.
      */
     @Override
-    public Integer getClientId() {
+    public Integer ClientId() {
         return this.clientId;
     }
 
@@ -49,9 +49,8 @@ public class ClientDto implements IClient, DTO {
      * Setter for <code>testshop.client.clientId</code>.
      */
     @Override
-    public ClientDto setClientId(Integer clientId) {
+    public Client ClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return this;
     }
 
@@ -91,7 +90,7 @@ public class ClientDto implements IClient, DTO {
 
     @Override
     public void from(IClient from) {
-        setClientId(from.getClientId());
+        ClientId(from.ClientId());
     }
     @Override
     public <E extends IClient> E into(E into) {

@@ -21,24 +21,24 @@ public interface IDatainit extends Serializable {
     /**
      * Setter for <code>testshop.DataInit.dataInitId</code>.
      */
-    public IDatainit setDataInitId(String value);
+    public IDatainit DataInitId(String value);
 
     /**
      * Getter for <code>testshop.DataInit.dataInitId</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String getDataInitId();
+    public String DataInitId();
 
     /**
      * Setter for <code>testshop.DataInit.createdAt</code>.
      */
-    public IDatainit setCreatedAt(LocalDateTime value);
+    public IDatainit CreatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.DataInit.createdAt</code>.
      */
-    public LocalDateTime getCreatedAt();
+    public LocalDateTime CreatedAt();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

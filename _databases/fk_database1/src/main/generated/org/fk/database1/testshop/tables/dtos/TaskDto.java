@@ -45,7 +45,7 @@ public class TaskDto implements ITask, DTO {
      * Getter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public Long getTaskId() {
+    public Long TaskId() {
         return this.taskId;
     }
 
@@ -53,9 +53,8 @@ public class TaskDto implements ITask, DTO {
      * Setter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public TaskDto setTaskId(Long taskId) {
+    public Task TaskId(Long taskId) {
         this.taskId = taskId;
-        this.keeper.touch("taskId");
         return this;
     }
 
@@ -63,7 +62,7 @@ public class TaskDto implements ITask, DTO {
      * Getter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime CreatedAt() {
         return this.createdAt;
     }
 
@@ -71,9 +70,8 @@ public class TaskDto implements ITask, DTO {
      * Setter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public TaskDto setCreatedAt(LocalDateTime createdAt) {
+    public Task CreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        this.keeper.touch("createdAt");
         return this;
     }
 
@@ -113,8 +111,8 @@ public class TaskDto implements ITask, DTO {
 
     @Override
     public void from(ITask from) {
-        setTaskId(from.getTaskId());
-        setCreatedAt(from.getCreatedAt());
+        TaskId(from.TaskId());
+        CreatedAt(from.CreatedAt());
     }
     @Override
     public <E extends ITask> E into(E into) {

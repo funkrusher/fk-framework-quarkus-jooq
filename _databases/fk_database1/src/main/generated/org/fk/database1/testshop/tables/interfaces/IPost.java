@@ -21,24 +21,24 @@ public interface IPost extends Serializable {
     /**
      * Setter for <code>testshop.post.id</code>.
      */
-    public IPost setId(UUID value);
+    public IPost Id(UUID value);
 
     /**
      * Getter for <code>testshop.post.id</code>.
      */
     @NotNull
-    public UUID getId();
+    public UUID Id();
 
     /**
      * Setter for <code>testshop.post.title</code>.
      */
-    public IPost setTitle(String value);
+    public IPost Title(String value);
 
     /**
      * Getter for <code>testshop.post.title</code>.
      */
     @Size(max = 255)
-    public String getTitle();
+    public String Title();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

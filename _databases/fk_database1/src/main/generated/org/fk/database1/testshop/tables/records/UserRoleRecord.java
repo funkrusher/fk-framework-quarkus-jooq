@@ -25,7 +25,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      * Setter for <code>testshop.user_role.userId</code>.
      */
     @Override
-    public UserRoleRecord setUserId(Integer value) {
+    public UserRoleRecord UserId(Integer value) {
         set(0, value);
         return this;
     }
@@ -35,7 +35,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      */
     @NotNull
     @Override
-    public Integer getUserId() {
+    public Integer UserId() {
         return (Integer) get(0);
     }
 
@@ -43,7 +43,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      * Setter for <code>testshop.user_role.roleId</code>.
      */
     @Override
-    public UserRoleRecord setRoleId(String value) {
+    public UserRoleRecord RoleId(String value) {
         set(1, value);
         return this;
     }
@@ -54,7 +54,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     @NotNull
     @Size(max = 50)
     @Override
-    public String getRoleId() {
+    public String RoleId() {
         return (String) get(1);
     }
 
@@ -73,8 +73,8 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
 
     @Override
     public void from(IUserRole from) {
-        setUserId(from.getUserId());
-        setRoleId(from.getRoleId());
+        UserId(from.UserId());
+        RoleId(from.RoleId());
         resetChangedOnNotNull();
     }
 
@@ -101,8 +101,8 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     public UserRoleRecord(Integer userId, String roleId) {
         super(UserRole.USER_ROLE);
 
-        setUserId(userId);
-        setRoleId(roleId);
+        UserId(userId);
+        RoleId(roleId);
         resetChangedOnNotNull();
     }
 
@@ -113,8 +113,8 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
         super(UserRole.USER_ROLE);
 
         if (value != null) {
-            setUserId(value.getUserId());
-            setRoleId(value.getRoleId());
+            UserId(value.UserId());
+            RoleId(value.RoleId());
             resetChangedOnNotNull();
         }
     }

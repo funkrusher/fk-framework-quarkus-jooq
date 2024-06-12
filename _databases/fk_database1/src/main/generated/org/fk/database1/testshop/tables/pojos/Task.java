@@ -23,8 +23,8 @@ public class Task implements ITask {
     public Task() {}
 
     public Task(ITask value) {
-        this.taskId = value.getTaskId();
-        this.createdAt = value.getCreatedAt();
+        this.taskId = value.TaskId();
+        this.createdAt = value.CreatedAt();
     }
 
     public Task(
@@ -39,7 +39,7 @@ public class Task implements ITask {
      * Getter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public Long getTaskId() {
+    public Long TaskId() {
         return this.taskId;
     }
 
@@ -47,7 +47,7 @@ public class Task implements ITask {
      * Setter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public Task setTaskId(Long taskId) {
+    public Task TaskId(Long taskId) {
         this.taskId = taskId;
         return this;
     }
@@ -56,7 +56,7 @@ public class Task implements ITask {
      * Getter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime CreatedAt() {
         return this.createdAt;
     }
 
@@ -64,7 +64,7 @@ public class Task implements ITask {
      * Setter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public Task setCreatedAt(LocalDateTime createdAt) {
+    public Task CreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -86,8 +86,8 @@ public class Task implements ITask {
 
     @Override
     public void from(ITask from) {
-        setTaskId(from.getTaskId());
-        setCreatedAt(from.getCreatedAt());
+        TaskId(from.TaskId());
+        CreatedAt(from.CreatedAt());
     }
 
     @Override

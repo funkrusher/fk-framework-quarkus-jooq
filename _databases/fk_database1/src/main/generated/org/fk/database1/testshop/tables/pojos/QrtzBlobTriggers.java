@@ -26,10 +26,10 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
     public QrtzBlobTriggers() {}
 
     public QrtzBlobTriggers(IQrtzBlobTriggers value) {
-        this.SCHED_NAME = value.getSCHED_NAME();
-        this.TRIGGER_NAME = value.getTRIGGER_NAME();
-        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
-        this.BLOB_DATA = value.getBLOB_DATA();
+        this.SCHED_NAME = value.SCHED_NAME();
+        this.TRIGGER_NAME = value.TRIGGER_NAME();
+        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
+        this.BLOB_DATA = value.BLOB_DATA();
     }
 
     public QrtzBlobTriggers(
@@ -50,7 +50,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -58,7 +58,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzBlobTriggers setSCHED_NAME(String SCHED_NAME) {
+    public QrtzBlobTriggers SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -69,7 +69,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_NAME() {
+    public String TRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -77,7 +77,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzBlobTriggers setTRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzBlobTriggers TRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
         return this;
     }
@@ -88,7 +88,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTRIGGER_GROUP() {
+    public String TRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -96,7 +96,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzBlobTriggers setTRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzBlobTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -106,7 +106,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
      */
     @Size(max = 65535)
     @Override
-    public byte[] getBLOB_DATA() {
+    public byte[] BLOB_DATA() {
         return this.BLOB_DATA;
     }
 
@@ -114,7 +114,7 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.BLOB_DATA</code>.
      */
     @Override
-    public QrtzBlobTriggers setBLOB_DATA(byte[] BLOB_DATA) {
+    public QrtzBlobTriggers BLOB_DATA(byte[] BLOB_DATA) {
         this.BLOB_DATA = BLOB_DATA;
         return this;
     }
@@ -138,10 +138,10 @@ public class QrtzBlobTriggers implements IQrtzBlobTriggers {
 
     @Override
     public void from(IQrtzBlobTriggers from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setTRIGGER_NAME(from.getTRIGGER_NAME());
-        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
-        setBLOB_DATA(from.getBLOB_DATA());
+        SCHED_NAME(from.SCHED_NAME());
+        TRIGGER_NAME(from.TRIGGER_NAME());
+        TRIGGER_GROUP(from.TRIGGER_GROUP());
+        BLOB_DATA(from.BLOB_DATA());
     }
 
     @Override

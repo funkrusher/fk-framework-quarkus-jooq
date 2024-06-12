@@ -56,7 +56,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSCHED_NAME() {
+    public String SCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -64,9 +64,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzJobDetailsDto setSCHED_NAME(String SCHED_NAME) {
+    public QrtzJobDetails SCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -76,7 +75,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getJOB_NAME() {
+    public String JOB_NAME() {
         return this.JOB_NAME;
     }
 
@@ -84,9 +83,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
     @Override
-    public QrtzJobDetailsDto setJOB_NAME(String JOB_NAME) {
+    public QrtzJobDetails JOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("JOB_NAME");
         return this;
     }
 
@@ -96,7 +94,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String getJOB_GROUP() {
+    public String JOB_GROUP() {
         return this.JOB_GROUP;
     }
 
@@ -104,9 +102,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzJobDetailsDto setJOB_GROUP(String JOB_GROUP) {
+    public QrtzJobDetails JOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("JOB_GROUP");
         return this;
     }
 
@@ -115,7 +112,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      */
     @Size(max = 250)
     @Override
-    public String getDESCRIPTION() {
+    public String DESCRIPTION() {
         return this.DESCRIPTION;
     }
 
@@ -123,9 +120,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
     @Override
-    public QrtzJobDetailsDto setDESCRIPTION(String DESCRIPTION) {
+    public QrtzJobDetails DESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("DESCRIPTION");
         return this;
     }
 
@@ -135,7 +131,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 250)
     @Override
-    public String getJOB_CLASS_NAME() {
+    public String JOB_CLASS_NAME() {
         return this.JOB_CLASS_NAME;
     }
 
@@ -143,9 +139,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
     @Override
-    public QrtzJobDetailsDto setJOB_CLASS_NAME(String JOB_CLASS_NAME) {
+    public QrtzJobDetails JOB_CLASS_NAME(String JOB_CLASS_NAME) {
         this.JOB_CLASS_NAME = JOB_CLASS_NAME;
-        this.keeper.touch("JOB_CLASS_NAME");
         return this;
     }
 
@@ -155,7 +150,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 1)
     @Override
-    public String getIS_DURABLE() {
+    public String IS_DURABLE() {
         return this.IS_DURABLE;
     }
 
@@ -163,9 +158,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
     @Override
-    public QrtzJobDetailsDto setIS_DURABLE(String IS_DURABLE) {
+    public QrtzJobDetails IS_DURABLE(String IS_DURABLE) {
         this.IS_DURABLE = IS_DURABLE;
-        this.keeper.touch("IS_DURABLE");
         return this;
     }
 
@@ -175,7 +169,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 1)
     @Override
-    public String getIS_NONCONCURRENT() {
+    public String IS_NONCONCURRENT() {
         return this.IS_NONCONCURRENT;
     }
 
@@ -183,9 +177,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public QrtzJobDetailsDto setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
+    public QrtzJobDetails IS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.keeper.touch("IS_NONCONCURRENT");
         return this;
     }
 
@@ -195,7 +188,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 1)
     @Override
-    public String getIS_UPDATE_DATA() {
+    public String IS_UPDATE_DATA() {
         return this.IS_UPDATE_DATA;
     }
 
@@ -203,9 +196,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
     @Override
-    public QrtzJobDetailsDto setIS_UPDATE_DATA(String IS_UPDATE_DATA) {
+    public QrtzJobDetails IS_UPDATE_DATA(String IS_UPDATE_DATA) {
         this.IS_UPDATE_DATA = IS_UPDATE_DATA;
-        this.keeper.touch("IS_UPDATE_DATA");
         return this;
     }
 
@@ -215,7 +207,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     @NotNull
     @Size(max = 1)
     @Override
-    public String getREQUESTS_RECOVERY() {
+    public String REQUESTS_RECOVERY() {
         return this.REQUESTS_RECOVERY;
     }
 
@@ -223,9 +215,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public QrtzJobDetailsDto setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
+    public QrtzJobDetails REQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.keeper.touch("REQUESTS_RECOVERY");
         return this;
     }
 
@@ -234,7 +225,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      */
     @Size(max = 65535)
     @Override
-    public byte[] getJOB_DATA() {
+    public byte[] JOB_DATA() {
         return this.JOB_DATA;
     }
 
@@ -242,9 +233,8 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
     @Override
-    public QrtzJobDetailsDto setJOB_DATA(byte[] JOB_DATA) {
+    public QrtzJobDetails JOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.keeper.touch("JOB_DATA");
         return this;
     }
 
@@ -284,16 +274,16 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
 
     @Override
     public void from(IQrtzJobDetails from) {
-        setSCHED_NAME(from.getSCHED_NAME());
-        setJOB_NAME(from.getJOB_NAME());
-        setJOB_GROUP(from.getJOB_GROUP());
-        setDESCRIPTION(from.getDESCRIPTION());
-        setJOB_CLASS_NAME(from.getJOB_CLASS_NAME());
-        setIS_DURABLE(from.getIS_DURABLE());
-        setIS_NONCONCURRENT(from.getIS_NONCONCURRENT());
-        setIS_UPDATE_DATA(from.getIS_UPDATE_DATA());
-        setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
-        setJOB_DATA(from.getJOB_DATA());
+        SCHED_NAME(from.SCHED_NAME());
+        JOB_NAME(from.JOB_NAME());
+        JOB_GROUP(from.JOB_GROUP());
+        DESCRIPTION(from.DESCRIPTION());
+        JOB_CLASS_NAME(from.JOB_CLASS_NAME());
+        IS_DURABLE(from.IS_DURABLE());
+        IS_NONCONCURRENT(from.IS_NONCONCURRENT());
+        IS_UPDATE_DATA(from.IS_UPDATE_DATA());
+        REQUESTS_RECOVERY(from.REQUESTS_RECOVERY());
+        JOB_DATA(from.JOB_DATA());
     }
     @Override
     public <E extends IQrtzJobDetails> E into(E into) {

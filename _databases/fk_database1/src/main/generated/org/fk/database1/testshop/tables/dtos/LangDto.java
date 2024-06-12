@@ -46,7 +46,7 @@ public class LangDto implements ILang, DTO {
      * Getter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public Integer getLangId() {
+    public Integer LangId() {
         return this.langId;
     }
 
@@ -54,9 +54,8 @@ public class LangDto implements ILang, DTO {
      * Setter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public LangDto setLangId(Integer langId) {
+    public Lang LangId(Integer langId) {
         this.langId = langId;
-        this.keeper.touch("langId");
         return this;
     }
 
@@ -66,7 +65,7 @@ public class LangDto implements ILang, DTO {
     @NotNull
     @Size(max = 2)
     @Override
-    public String getCode() {
+    public String Code() {
         return this.code;
     }
 
@@ -74,9 +73,8 @@ public class LangDto implements ILang, DTO {
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code
      */
     @Override
-    public LangDto setCode(String code) {
+    public Lang Code(String code) {
         this.code = code;
-        this.keeper.touch("code");
         return this;
     }
 
@@ -86,7 +84,7 @@ public class LangDto implements ILang, DTO {
      */
     @Size(max = 50)
     @Override
-    public String getDescription() {
+    public String Description() {
         return this.description;
     }
 
@@ -95,9 +93,8 @@ public class LangDto implements ILang, DTO {
      * of language
      */
     @Override
-    public LangDto setDescription(String description) {
+    public Lang Description(String description) {
         this.description = description;
-        this.keeper.touch("description");
         return this;
     }
 
@@ -137,9 +134,9 @@ public class LangDto implements ILang, DTO {
 
     @Override
     public void from(ILang from) {
-        setLangId(from.getLangId());
-        setCode(from.getCode());
-        setDescription(from.getDescription());
+        LangId(from.LangId());
+        Code(from.Code());
+        Description(from.Description());
     }
     @Override
     public <E extends ILang> E into(E into) {

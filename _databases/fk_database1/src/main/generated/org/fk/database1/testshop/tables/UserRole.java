@@ -59,12 +59,12 @@ public class UserRole extends TableImpl<UserRoleRecord> {
     /**
      * The column <code>testshop.user_role.userId</code>.
      */
-    public final TableField<UserRoleRecord, Integer> USERID = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UserRoleRecord, Integer> userId = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>testshop.user_role.roleId</code>.
      */
-    public final TableField<UserRoleRecord, String> ROLEID = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<UserRoleRecord, String> roleId = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private UserRole(Name alias, Table<UserRoleRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -143,28 +143,28 @@ public class UserRole extends TableImpl<UserRoleRecord> {
         return Arrays.asList(Keys.FK_USER_ROLE_USERID, Keys.FK_USER_ROLE_ROLEID);
     }
 
-    private transient UserPath _fk_user_role_userId;
+    private transient UserPath _user;
 
     /**
      * Get the implicit join path to the <code>testshop.user</code> table.
      */
-    public UserPath fk_user_role_userId() {
-        if (_fk_user_role_userId == null)
-            _fk_user_role_userId = new UserPath(this, Keys.FK_USER_ROLE_USERID, null);
+    public UserPath user() {
+        if (_user == null)
+            _user = new UserPath(this, Keys.FK_USER_ROLE_USERID, null);
 
-        return _fk_user_role_userId;
+        return _user;
     }
 
-    private transient RolePath _fk_user_role_roleId;
+    private transient RolePath _role;
 
     /**
      * Get the implicit join path to the <code>testshop.role</code> table.
      */
-    public RolePath fk_user_role_roleId() {
-        if (_fk_user_role_roleId == null)
-            _fk_user_role_roleId = new RolePath(this, Keys.FK_USER_ROLE_ROLEID, null);
+    public RolePath role() {
+        if (_role == null)
+            _role = new RolePath(this, Keys.FK_USER_ROLE_ROLEID, null);
 
-        return _fk_user_role_roleId;
+        return _role;
     }
 
     @Override

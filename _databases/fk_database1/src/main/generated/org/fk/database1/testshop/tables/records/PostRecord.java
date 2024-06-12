@@ -27,7 +27,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      * Setter for <code>testshop.post.id</code>.
      */
     @Override
-    public PostRecord setId(UUID value) {
+    public PostRecord Id(UUID value) {
         set(0, value);
         return this;
     }
@@ -37,7 +37,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      */
     @NotNull
     @Override
-    public UUID getId() {
+    public UUID Id() {
         return (UUID) get(0);
     }
 
@@ -45,7 +45,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      * Setter for <code>testshop.post.title</code>.
      */
     @Override
-    public PostRecord setTitle(String value) {
+    public PostRecord Title(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
      */
     @Size(max = 255)
     @Override
-    public String getTitle() {
+    public String Title() {
         return (String) get(1);
     }
 
@@ -74,8 +74,8 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
 
     @Override
     public void from(IPost from) {
-        setId(from.getId());
-        setTitle(from.getTitle());
+        Id(from.Id());
+        Title(from.Title());
         resetChangedOnNotNull();
     }
 
@@ -102,8 +102,8 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
     public PostRecord(UUID id, String title) {
         super(Post.POST);
 
-        setId(id);
-        setTitle(title);
+        Id(id);
+        Title(title);
         resetChangedOnNotNull();
     }
 
@@ -114,8 +114,8 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
         super(Post.POST);
 
         if (value != null) {
-            setId(value.getId());
-            setTitle(value.getTitle());
+            Id(value.Id());
+            Title(value.Title());
             resetChangedOnNotNull();
         }
     }
