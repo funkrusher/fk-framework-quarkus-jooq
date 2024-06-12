@@ -46,7 +46,53 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzFiredTriggersDto() { this.keeper = new BookKeeper(this); }
+    public QrtzFiredTriggersDto() {}
+
+    public QrtzFiredTriggersDto(IQrtzFiredTriggers value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setENTRY_ID(value.getENTRY_ID());
+        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
+        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+        this.setINSTANCE_NAME(value.getINSTANCE_NAME());
+        this.setFIRED_TIME(value.getFIRED_TIME());
+        this.setSCHED_TIME(value.getSCHED_TIME());
+        this.setPRIORITY(value.getPRIORITY());
+        this.setSTATE(value.getSTATE());
+        this.setJOB_NAME(value.getJOB_NAME());
+        this.setJOB_GROUP(value.getJOB_GROUP());
+        this.setIS_NONCONCURRENT(value.getIS_NONCONCURRENT());
+        this.setREQUESTS_RECOVERY(value.getREQUESTS_RECOVERY());
+    }
+
+    public QrtzFiredTriggersDto(
+        String SCHED_NAME,
+        String ENTRY_ID,
+        String TRIGGER_NAME,
+        String TRIGGER_GROUP,
+        String INSTANCE_NAME,
+        Long FIRED_TIME,
+        Long SCHED_TIME,
+        Integer PRIORITY,
+        String STATE,
+        String JOB_NAME,
+        String JOB_GROUP,
+        String IS_NONCONCURRENT,
+        String REQUESTS_RECOVERY
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setENTRY_ID(ENTRY_ID);
+        this.setTRIGGER_NAME(TRIGGER_NAME);
+        this.setTRIGGER_GROUP(TRIGGER_GROUP);
+        this.setINSTANCE_NAME(INSTANCE_NAME);
+        this.setFIRED_TIME(FIRED_TIME);
+        this.setSCHED_TIME(SCHED_TIME);
+        this.setPRIORITY(PRIORITY);
+        this.setSTATE(STATE);
+        this.setJOB_NAME(JOB_NAME);
+        this.setJOB_GROUP(JOB_GROUP);
+        this.setIS_NONCONCURRENT(IS_NONCONCURRENT);
+        this.setREQUESTS_RECOVERY(REQUESTS_RECOVERY);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -367,7 +413,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

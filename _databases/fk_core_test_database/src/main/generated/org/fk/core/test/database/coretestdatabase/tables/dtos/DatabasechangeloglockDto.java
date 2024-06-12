@@ -40,7 +40,26 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public DatabasechangeloglockDto() { this.keeper = new BookKeeper(this); }
+    public DatabasechangeloglockDto() {}
+
+    public DatabasechangeloglockDto(IDatabasechangeloglock value) {
+        this.setID(value.getID());
+        this.setLOCKED(value.getLOCKED());
+        this.setLOCKGRANTED(value.getLOCKGRANTED());
+        this.setLOCKEDBY(value.getLOCKEDBY());
+    }
+
+    public DatabasechangeloglockDto(
+        Integer ID,
+        Boolean LOCKED,
+        LocalDateTime LOCKGRANTED,
+        String LOCKEDBY
+    ) {
+        this.setID(ID);
+        this.setLOCKED(LOCKED);
+        this.setLOCKGRANTED(LOCKGRANTED);
+        this.setLOCKEDBY(LOCKEDBY);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -176,7 +195,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

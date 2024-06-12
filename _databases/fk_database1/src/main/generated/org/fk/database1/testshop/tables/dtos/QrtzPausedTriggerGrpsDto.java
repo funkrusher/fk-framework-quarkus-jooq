@@ -35,7 +35,20 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzPausedTriggerGrpsDto() { this.keeper = new BookKeeper(this); }
+    public QrtzPausedTriggerGrpsDto() {}
+
+    public QrtzPausedTriggerGrpsDto(IQrtzPausedTriggerGrps value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+    }
+
+    public QrtzPausedTriggerGrpsDto(
+        String SCHED_NAME,
+        String TRIGGER_GROUP
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setTRIGGER_GROUP(TRIGGER_GROUP);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -132,7 +145,7 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

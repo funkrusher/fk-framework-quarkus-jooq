@@ -50,7 +50,56 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public DatabasechangelogDto() { this.keeper = new BookKeeper(this); }
+    public DatabasechangelogDto() {}
+
+    public DatabasechangelogDto(IDatabasechangelog value) {
+        this.setId(value.getId());
+        this.setAuthor(value.getAuthor());
+        this.setFilename(value.getFilename());
+        this.setDateexecuted(value.getDateexecuted());
+        this.setOrderexecuted(value.getOrderexecuted());
+        this.setExectype(value.getExectype());
+        this.setMd5sum(value.getMd5sum());
+        this.setDescription(value.getDescription());
+        this.setComments(value.getComments());
+        this.setTag(value.getTag());
+        this.setLiquibase(value.getLiquibase());
+        this.setContexts(value.getContexts());
+        this.setLabels(value.getLabels());
+        this.setDeployment_id(value.getDeployment_id());
+    }
+
+    public DatabasechangelogDto(
+        String id,
+        String author,
+        String filename,
+        LocalDateTime dateexecuted,
+        Integer orderexecuted,
+        String exectype,
+        String md5sum,
+        String description,
+        String comments,
+        String tag,
+        String liquibase,
+        String contexts,
+        String labels,
+        String deployment_id
+    ) {
+        this.setId(id);
+        this.setAuthor(author);
+        this.setFilename(filename);
+        this.setDateexecuted(dateexecuted);
+        this.setOrderexecuted(orderexecuted);
+        this.setExectype(exectype);
+        this.setMd5sum(md5sum);
+        this.setDescription(description);
+        this.setComments(comments);
+        this.setTag(tag);
+        this.setLiquibase(liquibase);
+        this.setContexts(contexts);
+        this.setLabels(labels);
+        this.setDeployment_id(deployment_id);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -389,7 +438,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

@@ -31,7 +31,17 @@ public class ClientDto implements IClient, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public ClientDto() { this.keeper = new BookKeeper(this); }
+    public ClientDto() {}
+
+    public ClientDto(IClient value) {
+        this.setClientId(value.getClientId());
+    }
+
+    public ClientDto(
+        Integer clientId
+    ) {
+        this.setClientId(clientId);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -105,7 +115,7 @@ public class ClientDto implements IClient, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

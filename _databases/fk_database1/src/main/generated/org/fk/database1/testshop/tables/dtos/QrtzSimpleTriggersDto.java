@@ -39,7 +39,32 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzSimpleTriggersDto() { this.keeper = new BookKeeper(this); }
+    public QrtzSimpleTriggersDto() {}
+
+    public QrtzSimpleTriggersDto(IQrtzSimpleTriggers value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
+        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+        this.setREPEAT_COUNT(value.getREPEAT_COUNT());
+        this.setREPEAT_INTERVAL(value.getREPEAT_INTERVAL());
+        this.setTIMES_TRIGGERED(value.getTIMES_TRIGGERED());
+    }
+
+    public QrtzSimpleTriggersDto(
+        String SCHED_NAME,
+        String TRIGGER_NAME,
+        String TRIGGER_GROUP,
+        Long REPEAT_COUNT,
+        Long REPEAT_INTERVAL,
+        Long TIMES_TRIGGERED
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setTRIGGER_NAME(TRIGGER_NAME);
+        this.setTRIGGER_GROUP(TRIGGER_GROUP);
+        this.setREPEAT_COUNT(REPEAT_COUNT);
+        this.setREPEAT_INTERVAL(REPEAT_INTERVAL);
+        this.setTIMES_TRIGGERED(TIMES_TRIGGERED);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -217,7 +242,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

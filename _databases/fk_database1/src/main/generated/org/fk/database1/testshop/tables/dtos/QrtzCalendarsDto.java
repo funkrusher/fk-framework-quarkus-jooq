@@ -37,7 +37,23 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzCalendarsDto() { this.keeper = new BookKeeper(this); }
+    public QrtzCalendarsDto() {}
+
+    public QrtzCalendarsDto(IQrtzCalendars value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setCALENDAR_NAME(value.getCALENDAR_NAME());
+        this.setCALENDAR(value.getCALENDAR());
+    }
+
+    public QrtzCalendarsDto(
+        String SCHED_NAME,
+        String CALENDAR_NAME,
+        byte[] CALENDAR
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setCALENDAR_NAME(CALENDAR_NAME);
+        this.setCALENDAR(CALENDAR);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -155,7 +171,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

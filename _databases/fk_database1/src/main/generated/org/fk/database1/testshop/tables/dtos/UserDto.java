@@ -38,7 +38,29 @@ public class UserDto implements IUser, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public UserDto() { this.keeper = new BookKeeper(this); }
+    public UserDto() {}
+
+    public UserDto(IUser value) {
+        this.setUserId(value.getUserId());
+        this.setClientId(value.getClientId());
+        this.setEmail(value.getEmail());
+        this.setFirstname(value.getFirstname());
+        this.setLastname(value.getLastname());
+    }
+
+    public UserDto(
+        Integer userId,
+        Integer clientId,
+        String email,
+        String firstname,
+        String lastname
+    ) {
+        this.setUserId(userId);
+        this.setClientId(clientId);
+        this.setEmail(email);
+        this.setFirstname(firstname);
+        this.setLastname(lastname);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -195,7 +217,7 @@ public class UserDto implements IUser, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

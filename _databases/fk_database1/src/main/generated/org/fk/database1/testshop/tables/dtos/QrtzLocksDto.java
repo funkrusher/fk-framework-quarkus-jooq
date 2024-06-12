@@ -35,7 +35,20 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzLocksDto() { this.keeper = new BookKeeper(this); }
+    public QrtzLocksDto() {}
+
+    public QrtzLocksDto(IQrtzLocks value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setLOCK_NAME(value.getLOCK_NAME());
+    }
+
+    public QrtzLocksDto(
+        String SCHED_NAME,
+        String LOCK_NAME
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setLOCK_NAME(LOCK_NAME);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -132,7 +145,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

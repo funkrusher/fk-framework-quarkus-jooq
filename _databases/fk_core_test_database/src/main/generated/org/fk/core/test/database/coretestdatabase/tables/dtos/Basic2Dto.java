@@ -39,7 +39,26 @@ public class Basic2Dto implements IBasic2, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public Basic2Dto() { this.keeper = new BookKeeper(this); }
+    public Basic2Dto() {}
+
+    public Basic2Dto(IBasic2 value) {
+        this.setUuidId(value.getUuidId());
+        this.setString1(value.getString1());
+        this.setString2(value.getString2());
+        this.setClientId(value.getClientId());
+    }
+
+    public Basic2Dto(
+        UUID uuidId,
+        String string1,
+        String string2,
+        Integer clientId
+    ) {
+        this.setUuidId(uuidId);
+        this.setString1(string1);
+        this.setString2(string2);
+        this.setClientId(clientId);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -174,7 +193,7 @@ public class Basic2Dto implements IBasic2, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

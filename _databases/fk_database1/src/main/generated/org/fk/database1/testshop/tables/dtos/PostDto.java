@@ -37,7 +37,20 @@ public class PostDto implements IPost, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public PostDto() { this.keeper = new BookKeeper(this); }
+    public PostDto() {}
+
+    public PostDto(IPost value) {
+        this.setId(value.getId());
+        this.setTitle(value.getTitle());
+    }
+
+    public PostDto(
+        UUID id,
+        String title
+    ) {
+        this.setId(id);
+        this.setTitle(title);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -132,7 +145,7 @@ public class PostDto implements IPost, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

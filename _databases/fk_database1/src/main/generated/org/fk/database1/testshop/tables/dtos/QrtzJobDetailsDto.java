@@ -44,7 +44,44 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzJobDetailsDto() { this.keeper = new BookKeeper(this); }
+    public QrtzJobDetailsDto() {}
+
+    public QrtzJobDetailsDto(IQrtzJobDetails value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setJOB_NAME(value.getJOB_NAME());
+        this.setJOB_GROUP(value.getJOB_GROUP());
+        this.setDESCRIPTION(value.getDESCRIPTION());
+        this.setJOB_CLASS_NAME(value.getJOB_CLASS_NAME());
+        this.setIS_DURABLE(value.getIS_DURABLE());
+        this.setIS_NONCONCURRENT(value.getIS_NONCONCURRENT());
+        this.setIS_UPDATE_DATA(value.getIS_UPDATE_DATA());
+        this.setREQUESTS_RECOVERY(value.getREQUESTS_RECOVERY());
+        this.setJOB_DATA(value.getJOB_DATA());
+    }
+
+    public QrtzJobDetailsDto(
+        String SCHED_NAME,
+        String JOB_NAME,
+        String JOB_GROUP,
+        String DESCRIPTION,
+        String JOB_CLASS_NAME,
+        String IS_DURABLE,
+        String IS_NONCONCURRENT,
+        String IS_UPDATE_DATA,
+        String REQUESTS_RECOVERY,
+        byte[] JOB_DATA
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setJOB_NAME(JOB_NAME);
+        this.setJOB_GROUP(JOB_GROUP);
+        this.setDESCRIPTION(DESCRIPTION);
+        this.setJOB_CLASS_NAME(JOB_CLASS_NAME);
+        this.setIS_DURABLE(IS_DURABLE);
+        this.setIS_NONCONCURRENT(IS_NONCONCURRENT);
+        this.setIS_UPDATE_DATA(IS_UPDATE_DATA);
+        this.setREQUESTS_RECOVERY(REQUESTS_RECOVERY);
+        this.setJOB_DATA(JOB_DATA);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -307,7 +344,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

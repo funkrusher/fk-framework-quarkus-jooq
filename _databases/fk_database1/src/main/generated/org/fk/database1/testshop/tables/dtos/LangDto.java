@@ -36,7 +36,23 @@ public class LangDto implements ILang, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public LangDto() { this.keeper = new BookKeeper(this); }
+    public LangDto() {}
+
+    public LangDto(ILang value) {
+        this.setLangId(value.getLangId());
+        this.setCode(value.getCode());
+        this.setDescription(value.getDescription());
+    }
+
+    public LangDto(
+        Integer langId,
+        String code,
+        String description
+    ) {
+        this.setLangId(langId);
+        this.setCode(code);
+        this.setDescription(description);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -153,7 +169,7 @@ public class LangDto implements ILang, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

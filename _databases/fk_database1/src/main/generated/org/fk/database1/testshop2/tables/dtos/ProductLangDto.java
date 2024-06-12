@@ -37,7 +37,26 @@ public class ProductLangDto implements IProductLang, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public ProductLangDto() { this.keeper = new BookKeeper(this); }
+    public ProductLangDto() {}
+
+    public ProductLangDto(IProductLang value) {
+        this.setProductId(value.getProductId());
+        this.setLangId(value.getLangId());
+        this.setName(value.getName());
+        this.setDescription(value.getDescription());
+    }
+
+    public ProductLangDto(
+        Long productId,
+        Integer langId,
+        String name,
+        String description
+    ) {
+        this.setProductId(productId);
+        this.setLangId(langId);
+        this.setName(name);
+        this.setDescription(description);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -174,7 +193,7 @@ public class ProductLangDto implements IProductLang, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

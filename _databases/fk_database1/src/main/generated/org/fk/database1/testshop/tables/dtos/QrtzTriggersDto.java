@@ -50,7 +50,62 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzTriggersDto() { this.keeper = new BookKeeper(this); }
+    public QrtzTriggersDto() {}
+
+    public QrtzTriggersDto(IQrtzTriggers value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
+        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+        this.setJOB_NAME(value.getJOB_NAME());
+        this.setJOB_GROUP(value.getJOB_GROUP());
+        this.setDESCRIPTION(value.getDESCRIPTION());
+        this.setNEXT_FIRE_TIME(value.getNEXT_FIRE_TIME());
+        this.setPREV_FIRE_TIME(value.getPREV_FIRE_TIME());
+        this.setPRIORITY(value.getPRIORITY());
+        this.setTRIGGER_STATE(value.getTRIGGER_STATE());
+        this.setTRIGGER_TYPE(value.getTRIGGER_TYPE());
+        this.setSTART_TIME(value.getSTART_TIME());
+        this.setEND_TIME(value.getEND_TIME());
+        this.setCALENDAR_NAME(value.getCALENDAR_NAME());
+        this.setMISFIRE_INSTR(value.getMISFIRE_INSTR());
+        this.setJOB_DATA(value.getJOB_DATA());
+    }
+
+    public QrtzTriggersDto(
+        String SCHED_NAME,
+        String TRIGGER_NAME,
+        String TRIGGER_GROUP,
+        String JOB_NAME,
+        String JOB_GROUP,
+        String DESCRIPTION,
+        Long NEXT_FIRE_TIME,
+        Long PREV_FIRE_TIME,
+        Integer PRIORITY,
+        String TRIGGER_STATE,
+        String TRIGGER_TYPE,
+        Long START_TIME,
+        Long END_TIME,
+        String CALENDAR_NAME,
+        Short MISFIRE_INSTR,
+        byte[] JOB_DATA
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setTRIGGER_NAME(TRIGGER_NAME);
+        this.setTRIGGER_GROUP(TRIGGER_GROUP);
+        this.setJOB_NAME(JOB_NAME);
+        this.setJOB_GROUP(JOB_GROUP);
+        this.setDESCRIPTION(DESCRIPTION);
+        this.setNEXT_FIRE_TIME(NEXT_FIRE_TIME);
+        this.setPREV_FIRE_TIME(PREV_FIRE_TIME);
+        this.setPRIORITY(PRIORITY);
+        this.setTRIGGER_STATE(TRIGGER_STATE);
+        this.setTRIGGER_TYPE(TRIGGER_TYPE);
+        this.setSTART_TIME(START_TIME);
+        this.setEND_TIME(END_TIME);
+        this.setCALENDAR_NAME(CALENDAR_NAME);
+        this.setMISFIRE_INSTR(MISFIRE_INSTR);
+        this.setJOB_DATA(JOB_DATA);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -427,7 +482,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

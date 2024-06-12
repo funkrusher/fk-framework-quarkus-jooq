@@ -38,7 +38,29 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzCronTriggersDto() { this.keeper = new BookKeeper(this); }
+    public QrtzCronTriggersDto() {}
+
+    public QrtzCronTriggersDto(IQrtzCronTriggers value) {
+        this.setSCHED_NAME(value.getSCHED_NAME());
+        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
+        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+        this.setCRON_EXPRESSION(value.getCRON_EXPRESSION());
+        this.setTIME_ZONE_ID(value.getTIME_ZONE_ID());
+    }
+
+    public QrtzCronTriggersDto(
+        String SCHED_NAME,
+        String TRIGGER_NAME,
+        String TRIGGER_GROUP,
+        String CRON_EXPRESSION,
+        String TIME_ZONE_ID
+    ) {
+        this.setSCHED_NAME(SCHED_NAME);
+        this.setTRIGGER_NAME(TRIGGER_NAME);
+        this.setTRIGGER_GROUP(TRIGGER_GROUP);
+        this.setCRON_EXPRESSION(CRON_EXPRESSION);
+        this.setTIME_ZONE_ID(TIME_ZONE_ID);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -197,7 +219,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient
