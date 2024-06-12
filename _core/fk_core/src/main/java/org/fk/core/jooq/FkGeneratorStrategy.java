@@ -2,8 +2,16 @@ package org.fk.core.jooq;
 
 import org.jooq.codegen.DefaultGeneratorStrategy;
 import org.jooq.meta.Definition;
+import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.InverseForeignKeyDefinition;
+import org.jooq.meta.ManyToManyKeyDefinition;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
+
+    private static Pattern FK_PATTERN = Pattern.compile("^(.*)_(.*?)(Id)?$");
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
@@ -17,13 +25,22 @@ public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        System.out.println("TEST: " + definition.getOutputName());
-        return definition.getOutputName();
+        if (definition instanceof ForeignKeyDefinition
+            || definition instanceof ManyToManyKeyDefinition
+            || definition instanceof InverseForeignKeyDefinition) {
+            Matcher matcher = FK_PATTERN.matcher(definition.getOutputName());
+            if (matcher.matches()) {
+                return matcher.group(2);
+            } else {
+                return definition.getOutputName();
+            }
+        } else {
+            return definition.getOutputName();
+        }
     }
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
         return definition.getOutputName();
     }
-
 }

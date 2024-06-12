@@ -25,7 +25,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSimpleTriggersRecord SCHED_NAME(String value) {
+    public QrtzSimpleTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzSimpleTriggersRecord TRIGGER_NAME(String value) {
+    public QrtzSimpleTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_NAME() {
+    public String getTRIGGER_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzSimpleTriggersRecord TRIGGER_GROUP(String value) {
+    public QrtzSimpleTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_GROUP() {
+    public String getTRIGGER_GROUP() {
         return (String) get(2);
     }
 
@@ -82,7 +82,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
      */
     @Override
-    public QrtzSimpleTriggersRecord REPEAT_COUNT(Long value) {
+    public QrtzSimpleTriggersRecord setREPEAT_COUNT(Long value) {
         set(3, value);
         return this;
     }
@@ -92,7 +92,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      */
     @NotNull
     @Override
-    public Long REPEAT_COUNT() {
+    public Long getREPEAT_COUNT() {
         return (Long) get(3);
     }
 
@@ -100,7 +100,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
      */
     @Override
-    public QrtzSimpleTriggersRecord REPEAT_INTERVAL(Long value) {
+    public QrtzSimpleTriggersRecord setREPEAT_INTERVAL(Long value) {
         set(4, value);
         return this;
     }
@@ -110,7 +110,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      */
     @NotNull
     @Override
-    public Long REPEAT_INTERVAL() {
+    public Long getREPEAT_INTERVAL() {
         return (Long) get(4);
     }
 
@@ -118,7 +118,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.
      */
     @Override
-    public QrtzSimpleTriggersRecord TIMES_TRIGGERED(Long value) {
+    public QrtzSimpleTriggersRecord setTIMES_TRIGGERED(Long value) {
         set(5, value);
         return this;
     }
@@ -128,7 +128,7 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
      */
     @NotNull
     @Override
-    public Long TIMES_TRIGGERED() {
+    public Long getTIMES_TRIGGERED() {
         return (Long) get(5);
     }
 
@@ -147,12 +147,12 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
 
     @Override
     public void from(IQrtzSimpleTriggers from) {
-        SCHED_NAME(from.SCHED_NAME());
-        TRIGGER_NAME(from.TRIGGER_NAME());
-        TRIGGER_GROUP(from.TRIGGER_GROUP());
-        REPEAT_COUNT(from.REPEAT_COUNT());
-        REPEAT_INTERVAL(from.REPEAT_INTERVAL());
-        TIMES_TRIGGERED(from.TIMES_TRIGGERED());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setREPEAT_COUNT(from.getREPEAT_COUNT());
+        setREPEAT_INTERVAL(from.getREPEAT_INTERVAL());
+        setTIMES_TRIGGERED(from.getTIMES_TRIGGERED());
         resetChangedOnNotNull();
     }
 
@@ -179,12 +179,12 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
     public QrtzSimpleTriggersRecord(String SCHED_NAME, String TRIGGER_NAME, String TRIGGER_GROUP, Long REPEAT_COUNT, Long REPEAT_INTERVAL, Long TIMES_TRIGGERED) {
         super(QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS);
 
-        SCHED_NAME(SCHED_NAME);
-        TRIGGER_NAME(TRIGGER_NAME);
-        TRIGGER_GROUP(TRIGGER_GROUP);
-        REPEAT_COUNT(REPEAT_COUNT);
-        REPEAT_INTERVAL(REPEAT_INTERVAL);
-        TIMES_TRIGGERED(TIMES_TRIGGERED);
+        setSCHED_NAME(SCHED_NAME);
+        setTRIGGER_NAME(TRIGGER_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
+        setREPEAT_COUNT(REPEAT_COUNT);
+        setREPEAT_INTERVAL(REPEAT_INTERVAL);
+        setTIMES_TRIGGERED(TIMES_TRIGGERED);
         resetChangedOnNotNull();
     }
 
@@ -195,12 +195,12 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
         super(QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS);
 
         if (value != null) {
-            SCHED_NAME(value.SCHED_NAME());
-            TRIGGER_NAME(value.TRIGGER_NAME());
-            TRIGGER_GROUP(value.TRIGGER_GROUP());
-            REPEAT_COUNT(value.REPEAT_COUNT());
-            REPEAT_INTERVAL(value.REPEAT_INTERVAL());
-            TIMES_TRIGGERED(value.TIMES_TRIGGERED());
+            setSCHED_NAME(value.getSCHED_NAME());
+            setTRIGGER_NAME(value.getTRIGGER_NAME());
+            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+            setREPEAT_COUNT(value.getREPEAT_COUNT());
+            setREPEAT_INTERVAL(value.getREPEAT_INTERVAL());
+            setTIMES_TRIGGERED(value.getTIMES_TRIGGERED());
             resetChangedOnNotNull();
         }
     }

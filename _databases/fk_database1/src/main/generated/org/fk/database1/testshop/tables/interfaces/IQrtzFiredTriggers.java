@@ -20,151 +20,151 @@ public interface IQrtzFiredTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
-    public IQrtzFiredTriggers SCHED_NAME(String value);
+    public IQrtzFiredTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String SCHED_NAME();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
-    public IQrtzFiredTriggers ENTRY_ID(String value);
+    public IQrtzFiredTriggers setENTRY_ID(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
     @NotNull
     @Size(max = 95)
-    public String ENTRY_ID();
+    public String getENTRY_ID();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public IQrtzFiredTriggers TRIGGER_NAME(String value);
+    public IQrtzFiredTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String TRIGGER_NAME();
+    public String getTRIGGER_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public IQrtzFiredTriggers TRIGGER_GROUP(String value);
+    public IQrtzFiredTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String TRIGGER_GROUP();
+    public String getTRIGGER_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
-    public IQrtzFiredTriggers INSTANCE_NAME(String value);
+    public IQrtzFiredTriggers setINSTANCE_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String INSTANCE_NAME();
+    public String getINSTANCE_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
-    public IQrtzFiredTriggers FIRED_TIME(Long value);
+    public IQrtzFiredTriggers setFIRED_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
     @NotNull
-    public Long FIRED_TIME();
+    public Long getFIRED_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
-    public IQrtzFiredTriggers SCHED_TIME(Long value);
+    public IQrtzFiredTriggers setSCHED_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
     @NotNull
-    public Long SCHED_TIME();
+    public Long getSCHED_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
-    public IQrtzFiredTriggers PRIORITY(Integer value);
+    public IQrtzFiredTriggers setPRIORITY(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
     @NotNull
-    public Integer PRIORITY();
+    public Integer getPRIORITY();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
-    public IQrtzFiredTriggers STATE(String value);
+    public IQrtzFiredTriggers setSTATE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
     @NotNull
     @Size(max = 16)
-    public String STATE();
+    public String getSTATE();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
-    public IQrtzFiredTriggers JOB_NAME(String value);
+    public IQrtzFiredTriggers setJOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
     @Size(max = 190)
-    public String JOB_NAME();
+    public String getJOB_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
-    public IQrtzFiredTriggers JOB_GROUP(String value);
+    public IQrtzFiredTriggers setJOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
     @Size(max = 190)
-    public String JOB_GROUP();
+    public String getJOB_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
-    public IQrtzFiredTriggers IS_NONCONCURRENT(String value);
+    public IQrtzFiredTriggers setIS_NONCONCURRENT(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
     @Size(max = 1)
-    public String IS_NONCONCURRENT();
+    public String getIS_NONCONCURRENT();
 
     /**
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
-    public IQrtzFiredTriggers REQUESTS_RECOVERY(String value);
+    public IQrtzFiredTriggers setREQUESTS_RECOVERY(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
     @Size(max = 1)
-    public String REQUESTS_RECOVERY();
+    public String getREQUESTS_RECOVERY();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

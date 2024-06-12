@@ -25,7 +25,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.userId</code>.
      */
     @Override
-    public UserRecord UserId(Integer value) {
+    public UserRecord setUserId(Integer value) {
         set(0, value);
         return this;
     }
@@ -34,7 +34,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Getter for <code>testshop.user.userId</code>.
      */
     @Override
-    public Integer UserId() {
+    public Integer getUserId() {
         return (Integer) get(0);
     }
 
@@ -42,7 +42,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.clientId</code>.
      */
     @Override
-    public UserRecord ClientId(Integer value) {
+    public UserRecord setClientId(Integer value) {
         set(1, value);
         return this;
     }
@@ -52,7 +52,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      */
     @NotNull
     @Override
-    public Integer ClientId() {
+    public Integer getClientId() {
         return (Integer) get(1);
     }
 
@@ -60,7 +60,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.email</code>.
      */
     @Override
-    public UserRecord Email(String value) {
+    public UserRecord setEmail(String value) {
         set(2, value);
         return this;
     }
@@ -71,7 +71,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
     @NotNull
     @Size(max = 255)
     @Override
-    public String Email() {
+    public String getEmail() {
         return (String) get(2);
     }
 
@@ -79,7 +79,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.firstname</code>.
      */
     @Override
-    public UserRecord Firstname(String value) {
+    public UserRecord setFirstname(String value) {
         set(3, value);
         return this;
     }
@@ -90,7 +90,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
     @NotNull
     @Size(max = 255)
     @Override
-    public String Firstname() {
+    public String getFirstname() {
         return (String) get(3);
     }
 
@@ -98,7 +98,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.lastname</code>.
      */
     @Override
-    public UserRecord Lastname(String value) {
+    public UserRecord setLastname(String value) {
         set(4, value);
         return this;
     }
@@ -109,7 +109,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
     @NotNull
     @Size(max = 255)
     @Override
-    public String Lastname() {
+    public String getLastname() {
         return (String) get(4);
     }
 
@@ -128,11 +128,11 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
 
     @Override
     public void from(IUser from) {
-        UserId(from.UserId());
-        ClientId(from.ClientId());
-        Email(from.Email());
-        Firstname(from.Firstname());
-        Lastname(from.Lastname());
+        setUserId(from.getUserId());
+        setClientId(from.getClientId());
+        setEmail(from.getEmail());
+        setFirstname(from.getFirstname());
+        setLastname(from.getLastname());
         resetChangedOnNotNull();
     }
 
@@ -159,11 +159,11 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
     public UserRecord(Integer userId, Integer clientId, String email, String firstname, String lastname) {
         super(User.USER);
 
-        UserId(userId);
-        ClientId(clientId);
-        Email(email);
-        Firstname(firstname);
-        Lastname(lastname);
+        setUserId(userId);
+        setClientId(clientId);
+        setEmail(email);
+        setFirstname(firstname);
+        setLastname(lastname);
         resetChangedOnNotNull();
     }
 
@@ -174,11 +174,11 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
         super(User.USER);
 
         if (value != null) {
-            UserId(value.UserId());
-            ClientId(value.ClientId());
-            Email(value.Email());
-            Firstname(value.Firstname());
-            Lastname(value.Lastname());
+            setUserId(value.getUserId());
+            setClientId(value.getClientId());
+            setEmail(value.getEmail());
+            setFirstname(value.getFirstname());
+            setLastname(value.getLastname());
             resetChangedOnNotNull();
         }
     }

@@ -59,22 +59,22 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
     /**
      * The column <code>testshop2.product_lang.productId</code>.
      */
-    public final TableField<ProductLangRecord, Long> productId = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<ProductLangRecord, Long> PRODUCTID = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>testshop2.product_lang.langId</code>.
      */
-    public final TableField<ProductLangRecord, Integer> langId = createField(DSL.name("langId"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProductLangRecord, Integer> LANGID = createField(DSL.name("langId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>testshop2.product_lang.name</code>.
      */
-    public final TableField<ProductLangRecord, String> name = createField(DSL.name("name"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<ProductLangRecord, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop2.product_lang.description</code>.
      */
-    public final TableField<ProductLangRecord, String> description = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<ProductLangRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB.nullable(false), this, "");
 
     private ProductLang(Name alias, Table<ProductLangRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

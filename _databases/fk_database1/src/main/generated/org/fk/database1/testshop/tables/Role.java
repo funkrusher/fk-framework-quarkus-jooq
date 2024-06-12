@@ -57,7 +57,7 @@ public class Role extends TableImpl<RoleRecord> {
     /**
      * The column <code>testshop.role.roleId</code>.
      */
-    public final TableField<RoleRecord, String> roleId = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<RoleRecord, String> ROLEID = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private Role(Name alias, Table<RoleRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

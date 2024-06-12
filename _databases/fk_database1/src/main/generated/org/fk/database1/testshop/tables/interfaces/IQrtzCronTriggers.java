@@ -20,61 +20,61 @@ public interface IQrtzCronTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
      */
-    public IQrtzCronTriggers SCHED_NAME(String value);
+    public IQrtzCronTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String SCHED_NAME();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public IQrtzCronTriggers TRIGGER_NAME(String value);
+    public IQrtzCronTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String TRIGGER_NAME();
+    public String getTRIGGER_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public IQrtzCronTriggers TRIGGER_GROUP(String value);
+    public IQrtzCronTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String TRIGGER_GROUP();
+    public String getTRIGGER_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
      */
-    public IQrtzCronTriggers CRON_EXPRESSION(String value);
+    public IQrtzCronTriggers setCRON_EXPRESSION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String CRON_EXPRESSION();
+    public String getCRON_EXPRESSION();
 
     /**
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.
      */
-    public IQrtzCronTriggers TIME_ZONE_ID(String value);
+    public IQrtzCronTriggers setTIME_ZONE_ID(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.
      */
     @Size(max = 80)
-    public String TIME_ZONE_ID();
+    public String getTIME_ZONE_ID();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

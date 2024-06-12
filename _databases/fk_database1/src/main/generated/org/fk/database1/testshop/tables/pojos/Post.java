@@ -26,8 +26,8 @@ public class Post implements IPost {
     public Post() {}
 
     public Post(IPost value) {
-        this.id = value.Id();
-        this.title = value.Title();
+        this.id = value.getId();
+        this.title = value.getTitle();
     }
 
     public Post(
@@ -43,7 +43,7 @@ public class Post implements IPost {
      */
     @NotNull
     @Override
-    public UUID Id() {
+    public UUID getId() {
         return this.id;
     }
 
@@ -51,7 +51,7 @@ public class Post implements IPost {
      * Setter for <code>testshop.post.id</code>.
      */
     @Override
-    public Post Id(UUID id) {
+    public Post setId(UUID id) {
         this.id = id;
         return this;
     }
@@ -61,7 +61,7 @@ public class Post implements IPost {
      */
     @Size(max = 255)
     @Override
-    public String Title() {
+    public String getTitle() {
         return this.title;
     }
 
@@ -69,7 +69,7 @@ public class Post implements IPost {
      * Setter for <code>testshop.post.title</code>.
      */
     @Override
-    public Post Title(String title) {
+    public Post setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -91,8 +91,8 @@ public class Post implements IPost {
 
     @Override
     public void from(IPost from) {
-        Id(from.Id());
-        Title(from.Title());
+        setId(from.getId());
+        setTitle(from.getTitle());
     }
 
     @Override

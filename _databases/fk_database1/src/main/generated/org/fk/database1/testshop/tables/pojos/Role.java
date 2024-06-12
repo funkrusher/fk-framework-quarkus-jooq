@@ -23,7 +23,7 @@ public class Role implements IRole {
     public Role() {}
 
     public Role(IRole value) {
-        this.roleId = value.RoleId();
+        this.roleId = value.getRoleId();
     }
 
     public Role(
@@ -38,7 +38,7 @@ public class Role implements IRole {
     @NotNull
     @Size(max = 50)
     @Override
-    public String RoleId() {
+    public String getRoleId() {
         return this.roleId;
     }
 
@@ -46,7 +46,7 @@ public class Role implements IRole {
      * Setter for <code>testshop.role.roleId</code>.
      */
     @Override
-    public Role RoleId(String roleId) {
+    public Role setRoleId(String roleId) {
         this.roleId = roleId;
         return this;
     }
@@ -67,7 +67,7 @@ public class Role implements IRole {
 
     @Override
     public void from(IRole from) {
-        RoleId(from.RoleId());
+        setRoleId(from.getRoleId());
     }
 
     @Override

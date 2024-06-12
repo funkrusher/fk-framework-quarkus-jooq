@@ -20,26 +20,26 @@ public interface IQrtzPausedTriggerGrps extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
      */
-    public IQrtzPausedTriggerGrps SCHED_NAME(String value);
+    public IQrtzPausedTriggerGrps setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String SCHED_NAME();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.
      */
-    public IQrtzPausedTriggerGrps TRIGGER_GROUP(String value);
+    public IQrtzPausedTriggerGrps setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String TRIGGER_GROUP();
+    public String getTRIGGER_GROUP();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

@@ -20,48 +20,48 @@ public interface IProductLang extends Serializable {
     /**
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
-    public IProductLang ProductId(Long value);
+    public IProductLang setProductId(Long value);
 
     /**
      * Getter for <code>testshop2.product_lang.productId</code>.
      */
     @NotNull
-    public Long ProductId();
+    public Long getProductId();
 
     /**
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
-    public IProductLang LangId(Integer value);
+    public IProductLang setLangId(Integer value);
 
     /**
      * Getter for <code>testshop2.product_lang.langId</code>.
      */
     @NotNull
-    public Integer LangId();
+    public Integer getLangId();
 
     /**
      * Setter for <code>testshop2.product_lang.name</code>.
      */
-    public IProductLang Name(String value);
+    public IProductLang setName(String value);
 
     /**
      * Getter for <code>testshop2.product_lang.name</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String Name();
+    public String getName();
 
     /**
      * Setter for <code>testshop2.product_lang.description</code>.
      */
-    public IProductLang Description(String value);
+    public IProductLang setDescription(String value);
 
     /**
      * Getter for <code>testshop2.product_lang.description</code>.
      */
     @NotNull
     @Size(max = 65535)
-    public String Description();
+    public String getDescription();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

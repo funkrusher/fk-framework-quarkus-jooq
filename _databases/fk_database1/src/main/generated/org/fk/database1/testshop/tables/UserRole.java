@@ -59,12 +59,12 @@ public class UserRole extends TableImpl<UserRoleRecord> {
     /**
      * The column <code>testshop.user_role.userId</code>.
      */
-    public final TableField<UserRoleRecord, Integer> userId = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UserRoleRecord, Integer> USERID = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>testshop.user_role.roleId</code>.
      */
-    public final TableField<UserRoleRecord, String> roleId = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<UserRoleRecord, String> ROLEID = createField(DSL.name("roleId"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     private UserRole(Name alias, Table<UserRoleRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

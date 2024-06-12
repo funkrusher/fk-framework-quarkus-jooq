@@ -27,7 +27,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
     @Override
-    public DatabasechangeloglockRecord ID(Integer value) {
+    public DatabasechangeloglockRecord setID(Integer value) {
         set(0, value);
         return this;
     }
@@ -37,7 +37,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @NotNull
     @Override
-    public Integer ID() {
+    public Integer getID() {
         return (Integer) get(0);
     }
 
@@ -45,7 +45,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public DatabasechangeloglockRecord LOCKED(Boolean value) {
+    public DatabasechangeloglockRecord setLOCKED(Boolean value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @NotNull
     @Override
-    public Boolean LOCKED() {
+    public Boolean getLOCKED() {
         return (Boolean) get(1);
     }
 
@@ -63,7 +63,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public DatabasechangeloglockRecord LOCKGRANTED(LocalDateTime value) {
+    public DatabasechangeloglockRecord setLOCKGRANTED(LocalDateTime value) {
         set(2, value);
         return this;
     }
@@ -72,7 +72,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public LocalDateTime LOCKGRANTED() {
+    public LocalDateTime getLOCKGRANTED() {
         return (LocalDateTime) get(2);
     }
 
@@ -80,7 +80,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
     @Override
-    public DatabasechangeloglockRecord LOCKEDBY(String value) {
+    public DatabasechangeloglockRecord setLOCKEDBY(String value) {
         set(3, value);
         return this;
     }
@@ -90,7 +90,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @Size(max = 255)
     @Override
-    public String LOCKEDBY() {
+    public String getLOCKEDBY() {
         return (String) get(3);
     }
 
@@ -109,10 +109,10 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
 
     @Override
     public void from(IDatabasechangeloglock from) {
-        ID(from.ID());
-        LOCKED(from.LOCKED());
-        LOCKGRANTED(from.LOCKGRANTED());
-        LOCKEDBY(from.LOCKEDBY());
+        setID(from.getID());
+        setLOCKED(from.getLOCKED());
+        setLOCKGRANTED(from.getLOCKGRANTED());
+        setLOCKEDBY(from.getLOCKEDBY());
         resetChangedOnNotNull();
     }
 
@@ -139,10 +139,10 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
     public DatabasechangeloglockRecord(Integer ID, Boolean LOCKED, LocalDateTime LOCKGRANTED, String LOCKEDBY) {
         super(Databasechangeloglock.DATABASECHANGELOGLOCK);
 
-        ID(ID);
-        LOCKED(LOCKED);
-        LOCKGRANTED(LOCKGRANTED);
-        LOCKEDBY(LOCKEDBY);
+        setID(ID);
+        setLOCKED(LOCKED);
+        setLOCKGRANTED(LOCKGRANTED);
+        setLOCKEDBY(LOCKEDBY);
         resetChangedOnNotNull();
     }
 
@@ -153,10 +153,10 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
         super(Databasechangeloglock.DATABASECHANGELOGLOCK);
 
         if (value != null) {
-            ID(value.ID());
-            LOCKED(value.LOCKED());
-            LOCKGRANTED(value.LOCKGRANTED());
-            LOCKEDBY(value.LOCKEDBY());
+            setID(value.getID());
+            setLOCKED(value.getLOCKED());
+            setLOCKGRANTED(value.getLOCKGRANTED());
+            setLOCKEDBY(value.getLOCKEDBY());
             resetChangedOnNotNull();
         }
     }

@@ -20,7 +20,7 @@ public class Client implements IClient {
     public Client() {}
 
     public Client(IClient value) {
-        this.clientId = value.ClientId();
+        this.clientId = value.getClientId();
     }
 
     public Client(
@@ -33,7 +33,7 @@ public class Client implements IClient {
      * Getter for <code>testshop.client.clientId</code>.
      */
     @Override
-    public Integer ClientId() {
+    public Integer getClientId() {
         return this.clientId;
     }
 
@@ -41,7 +41,7 @@ public class Client implements IClient {
      * Setter for <code>testshop.client.clientId</code>.
      */
     @Override
-    public Client ClientId(Integer clientId) {
+    public Client setClientId(Integer clientId) {
         this.clientId = clientId;
         return this;
     }
@@ -62,7 +62,7 @@ public class Client implements IClient {
 
     @Override
     public void from(IClient from) {
-        ClientId(from.ClientId());
+        setClientId(from.getClientId());
     }
 
     @Override

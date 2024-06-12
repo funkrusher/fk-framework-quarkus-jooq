@@ -62,27 +62,27 @@ public class User extends TableImpl<UserRecord> {
     /**
      * The column <code>testshop.user.userId</code>.
      */
-    public final TableField<UserRecord, Integer> userId = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<UserRecord, Integer> USERID = createField(DSL.name("userId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>testshop.user.clientId</code>.
      */
-    public final TableField<UserRecord, Integer> clientId = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UserRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>testshop.user.email</code>.
      */
-    public final TableField<UserRecord, String> email = createField(DSL.name("email"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop.user.firstname</code>.
      */
-    public final TableField<UserRecord, String> firstname = createField(DSL.name("firstname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> FIRSTNAME = createField(DSL.name("firstname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>testshop.user.lastname</code>.
      */
-    public final TableField<UserRecord, String> lastname = createField(DSL.name("lastname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<UserRecord, String> LASTNAME = createField(DSL.name("lastname"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     private User(Name alias, Table<UserRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

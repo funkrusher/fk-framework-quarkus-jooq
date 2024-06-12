@@ -38,22 +38,22 @@ public class QrtzTriggers implements IQrtzTriggers {
     public QrtzTriggers() {}
 
     public QrtzTriggers(IQrtzTriggers value) {
-        this.SCHED_NAME = value.SCHED_NAME();
-        this.TRIGGER_NAME = value.TRIGGER_NAME();
-        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
-        this.JOB_NAME = value.JOB_NAME();
-        this.JOB_GROUP = value.JOB_GROUP();
-        this.DESCRIPTION = value.DESCRIPTION();
-        this.NEXT_FIRE_TIME = value.NEXT_FIRE_TIME();
-        this.PREV_FIRE_TIME = value.PREV_FIRE_TIME();
-        this.PRIORITY = value.PRIORITY();
-        this.TRIGGER_STATE = value.TRIGGER_STATE();
-        this.TRIGGER_TYPE = value.TRIGGER_TYPE();
-        this.START_TIME = value.START_TIME();
-        this.END_TIME = value.END_TIME();
-        this.CALENDAR_NAME = value.CALENDAR_NAME();
-        this.MISFIRE_INSTR = value.MISFIRE_INSTR();
-        this.JOB_DATA = value.JOB_DATA();
+        this.SCHED_NAME = value.getSCHED_NAME();
+        this.TRIGGER_NAME = value.getTRIGGER_NAME();
+        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
+        this.JOB_NAME = value.getJOB_NAME();
+        this.JOB_GROUP = value.getJOB_GROUP();
+        this.DESCRIPTION = value.getDESCRIPTION();
+        this.NEXT_FIRE_TIME = value.getNEXT_FIRE_TIME();
+        this.PREV_FIRE_TIME = value.getPREV_FIRE_TIME();
+        this.PRIORITY = value.getPRIORITY();
+        this.TRIGGER_STATE = value.getTRIGGER_STATE();
+        this.TRIGGER_TYPE = value.getTRIGGER_TYPE();
+        this.START_TIME = value.getSTART_TIME();
+        this.END_TIME = value.getEND_TIME();
+        this.CALENDAR_NAME = value.getCALENDAR_NAME();
+        this.MISFIRE_INSTR = value.getMISFIRE_INSTR();
+        this.JOB_DATA = value.getJOB_DATA();
     }
 
     public QrtzTriggers(
@@ -98,7 +98,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -106,7 +106,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzTriggers SCHED_NAME(String SCHED_NAME) {
+    public QrtzTriggers setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -117,7 +117,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_NAME() {
+    public String getTRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -125,7 +125,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzTriggers TRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzTriggers setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
         return this;
     }
@@ -136,7 +136,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_GROUP() {
+    public String getTRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -144,7 +144,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzTriggers setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -155,7 +155,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String JOB_NAME() {
+    public String getJOB_NAME() {
         return this.JOB_NAME;
     }
 
@@ -163,7 +163,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public QrtzTriggers JOB_NAME(String JOB_NAME) {
+    public QrtzTriggers setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
         return this;
     }
@@ -174,7 +174,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String JOB_GROUP() {
+    public String getJOB_GROUP() {
         return this.JOB_GROUP;
     }
 
@@ -182,7 +182,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzTriggers JOB_GROUP(String JOB_GROUP) {
+    public QrtzTriggers setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
         return this;
     }
@@ -192,7 +192,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      */
     @Size(max = 250)
     @Override
-    public String DESCRIPTION() {
+    public String getDESCRIPTION() {
         return this.DESCRIPTION;
     }
 
@@ -200,7 +200,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
      */
     @Override
-    public QrtzTriggers DESCRIPTION(String DESCRIPTION) {
+    public QrtzTriggers setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
         return this;
     }
@@ -209,7 +209,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Getter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
     @Override
-    public Long NEXT_FIRE_TIME() {
+    public Long getNEXT_FIRE_TIME() {
         return this.NEXT_FIRE_TIME;
     }
 
@@ -217,7 +217,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
     @Override
-    public QrtzTriggers NEXT_FIRE_TIME(Long NEXT_FIRE_TIME) {
+    public QrtzTriggers setNEXT_FIRE_TIME(Long NEXT_FIRE_TIME) {
         this.NEXT_FIRE_TIME = NEXT_FIRE_TIME;
         return this;
     }
@@ -226,7 +226,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Getter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
     @Override
-    public Long PREV_FIRE_TIME() {
+    public Long getPREV_FIRE_TIME() {
         return this.PREV_FIRE_TIME;
     }
 
@@ -234,7 +234,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
     @Override
-    public QrtzTriggers PREV_FIRE_TIME(Long PREV_FIRE_TIME) {
+    public QrtzTriggers setPREV_FIRE_TIME(Long PREV_FIRE_TIME) {
         this.PREV_FIRE_TIME = PREV_FIRE_TIME;
         return this;
     }
@@ -243,7 +243,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Getter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public Integer PRIORITY() {
+    public Integer getPRIORITY() {
         return this.PRIORITY;
     }
 
@@ -251,7 +251,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public QrtzTriggers PRIORITY(Integer PRIORITY) {
+    public QrtzTriggers setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
         return this;
     }
@@ -262,7 +262,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 16)
     @Override
-    public String TRIGGER_STATE() {
+    public String getTRIGGER_STATE() {
         return this.TRIGGER_STATE;
     }
 
@@ -270,7 +270,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
      */
     @Override
-    public QrtzTriggers TRIGGER_STATE(String TRIGGER_STATE) {
+    public QrtzTriggers setTRIGGER_STATE(String TRIGGER_STATE) {
         this.TRIGGER_STATE = TRIGGER_STATE;
         return this;
     }
@@ -281,7 +281,7 @@ public class QrtzTriggers implements IQrtzTriggers {
     @NotNull
     @Size(max = 8)
     @Override
-    public String TRIGGER_TYPE() {
+    public String getTRIGGER_TYPE() {
         return this.TRIGGER_TYPE;
     }
 
@@ -289,7 +289,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
      */
     @Override
-    public QrtzTriggers TRIGGER_TYPE(String TRIGGER_TYPE) {
+    public QrtzTriggers setTRIGGER_TYPE(String TRIGGER_TYPE) {
         this.TRIGGER_TYPE = TRIGGER_TYPE;
         return this;
     }
@@ -299,7 +299,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      */
     @NotNull
     @Override
-    public Long START_TIME() {
+    public Long getSTART_TIME() {
         return this.START_TIME;
     }
 
@@ -307,7 +307,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
      */
     @Override
-    public QrtzTriggers START_TIME(Long START_TIME) {
+    public QrtzTriggers setSTART_TIME(Long START_TIME) {
         this.START_TIME = START_TIME;
         return this;
     }
@@ -316,7 +316,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Getter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
     @Override
-    public Long END_TIME() {
+    public Long getEND_TIME() {
         return this.END_TIME;
     }
 
@@ -324,7 +324,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
     @Override
-    public QrtzTriggers END_TIME(Long END_TIME) {
+    public QrtzTriggers setEND_TIME(Long END_TIME) {
         this.END_TIME = END_TIME;
         return this;
     }
@@ -334,7 +334,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      */
     @Size(max = 190)
     @Override
-    public String CALENDAR_NAME() {
+    public String getCALENDAR_NAME() {
         return this.CALENDAR_NAME;
     }
 
@@ -342,7 +342,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
      */
     @Override
-    public QrtzTriggers CALENDAR_NAME(String CALENDAR_NAME) {
+    public QrtzTriggers setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
         return this;
     }
@@ -351,7 +351,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Getter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
     @Override
-    public Short MISFIRE_INSTR() {
+    public Short getMISFIRE_INSTR() {
         return this.MISFIRE_INSTR;
     }
 
@@ -359,7 +359,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
     @Override
-    public QrtzTriggers MISFIRE_INSTR(Short MISFIRE_INSTR) {
+    public QrtzTriggers setMISFIRE_INSTR(Short MISFIRE_INSTR) {
         this.MISFIRE_INSTR = MISFIRE_INSTR;
         return this;
     }
@@ -369,7 +369,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      */
     @Size(max = 65535)
     @Override
-    public byte[] JOB_DATA() {
+    public byte[] getJOB_DATA() {
         return this.JOB_DATA;
     }
 
@@ -377,7 +377,7 @@ public class QrtzTriggers implements IQrtzTriggers {
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.
      */
     @Override
-    public QrtzTriggers JOB_DATA(byte[] JOB_DATA) {
+    public QrtzTriggers setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
         return this;
     }
@@ -413,22 +413,22 @@ public class QrtzTriggers implements IQrtzTriggers {
 
     @Override
     public void from(IQrtzTriggers from) {
-        SCHED_NAME(from.SCHED_NAME());
-        TRIGGER_NAME(from.TRIGGER_NAME());
-        TRIGGER_GROUP(from.TRIGGER_GROUP());
-        JOB_NAME(from.JOB_NAME());
-        JOB_GROUP(from.JOB_GROUP());
-        DESCRIPTION(from.DESCRIPTION());
-        NEXT_FIRE_TIME(from.NEXT_FIRE_TIME());
-        PREV_FIRE_TIME(from.PREV_FIRE_TIME());
-        PRIORITY(from.PRIORITY());
-        TRIGGER_STATE(from.TRIGGER_STATE());
-        TRIGGER_TYPE(from.TRIGGER_TYPE());
-        START_TIME(from.START_TIME());
-        END_TIME(from.END_TIME());
-        CALENDAR_NAME(from.CALENDAR_NAME());
-        MISFIRE_INSTR(from.MISFIRE_INSTR());
-        JOB_DATA(from.JOB_DATA());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setJOB_NAME(from.getJOB_NAME());
+        setJOB_GROUP(from.getJOB_GROUP());
+        setDESCRIPTION(from.getDESCRIPTION());
+        setNEXT_FIRE_TIME(from.getNEXT_FIRE_TIME());
+        setPREV_FIRE_TIME(from.getPREV_FIRE_TIME());
+        setPRIORITY(from.getPRIORITY());
+        setTRIGGER_STATE(from.getTRIGGER_STATE());
+        setTRIGGER_TYPE(from.getTRIGGER_TYPE());
+        setSTART_TIME(from.getSTART_TIME());
+        setEND_TIME(from.getEND_TIME());
+        setCALENDAR_NAME(from.getCALENDAR_NAME());
+        setMISFIRE_INSTR(from.getMISFIRE_INSTR());
+        setJOB_DATA(from.getJOB_DATA());
     }
 
     @Override

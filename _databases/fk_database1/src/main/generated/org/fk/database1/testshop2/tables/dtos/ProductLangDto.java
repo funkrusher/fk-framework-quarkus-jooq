@@ -48,7 +48,7 @@ public class ProductLangDto implements IProductLang, DTO {
      */
     @NotNull
     @Override
-    public Long ProductId() {
+    public Long getProductId() {
         return this.productId;
     }
 
@@ -56,8 +56,9 @@ public class ProductLangDto implements IProductLang, DTO {
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
     @Override
-    public ProductLang ProductId(Long productId) {
+    public ProductLangDto setProductId(Long productId) {
         this.productId = productId;
+        this.keeper.touch("productId");
         return this;
     }
 
@@ -66,7 +67,7 @@ public class ProductLangDto implements IProductLang, DTO {
      */
     @NotNull
     @Override
-    public Integer LangId() {
+    public Integer getLangId() {
         return this.langId;
     }
 
@@ -74,8 +75,9 @@ public class ProductLangDto implements IProductLang, DTO {
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
     @Override
-    public ProductLang LangId(Integer langId) {
+    public ProductLangDto setLangId(Integer langId) {
         this.langId = langId;
+        this.keeper.touch("langId");
         return this;
     }
 
@@ -85,7 +87,7 @@ public class ProductLangDto implements IProductLang, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String Name() {
+    public String getName() {
         return this.name;
     }
 
@@ -93,8 +95,9 @@ public class ProductLangDto implements IProductLang, DTO {
      * Setter for <code>testshop2.product_lang.name</code>.
      */
     @Override
-    public ProductLang Name(String name) {
+    public ProductLangDto setName(String name) {
         this.name = name;
+        this.keeper.touch("name");
         return this;
     }
 
@@ -104,7 +107,7 @@ public class ProductLangDto implements IProductLang, DTO {
     @NotNull
     @Size(max = 65535)
     @Override
-    public String Description() {
+    public String getDescription() {
         return this.description;
     }
 
@@ -112,8 +115,9 @@ public class ProductLangDto implements IProductLang, DTO {
      * Setter for <code>testshop2.product_lang.description</code>.
      */
     @Override
-    public ProductLang Description(String description) {
+    public ProductLangDto setDescription(String description) {
         this.description = description;
+        this.keeper.touch("description");
         return this;
     }
 
@@ -153,10 +157,10 @@ public class ProductLangDto implements IProductLang, DTO {
 
     @Override
     public void from(IProductLang from) {
-        ProductId(from.ProductId());
-        LangId(from.LangId());
-        Name(from.Name());
-        Description(from.Description());
+        setProductId(from.getProductId());
+        setLangId(from.getLangId());
+        setName(from.getName());
+        setDescription(from.getDescription());
     }
     @Override
     public <E extends IProductLang> E into(E into) {

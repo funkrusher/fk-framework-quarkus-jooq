@@ -25,9 +25,9 @@ public class Lang implements ILang {
     public Lang() {}
 
     public Lang(ILang value) {
-        this.langId = value.LangId();
-        this.code = value.Code();
-        this.description = value.Description();
+        this.langId = value.getLangId();
+        this.code = value.getCode();
+        this.description = value.getDescription();
     }
 
     public Lang(
@@ -44,7 +44,7 @@ public class Lang implements ILang {
      * Getter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public Integer LangId() {
+    public Integer getLangId() {
         return this.langId;
     }
 
@@ -52,7 +52,7 @@ public class Lang implements ILang {
      * Setter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public Lang LangId(Integer langId) {
+    public Lang setLangId(Integer langId) {
         this.langId = langId;
         return this;
     }
@@ -63,7 +63,7 @@ public class Lang implements ILang {
     @NotNull
     @Size(max = 2)
     @Override
-    public String Code() {
+    public String getCode() {
         return this.code;
     }
 
@@ -71,7 +71,7 @@ public class Lang implements ILang {
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code
      */
     @Override
-    public Lang Code(String code) {
+    public Lang setCode(String code) {
         this.code = code;
         return this;
     }
@@ -82,7 +82,7 @@ public class Lang implements ILang {
      */
     @Size(max = 50)
     @Override
-    public String Description() {
+    public String getDescription() {
         return this.description;
     }
 
@@ -91,7 +91,7 @@ public class Lang implements ILang {
      * of language
      */
     @Override
-    public Lang Description(String description) {
+    public Lang setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -114,9 +114,9 @@ public class Lang implements ILang {
 
     @Override
     public void from(ILang from) {
-        LangId(from.LangId());
-        Code(from.Code());
-        Description(from.Description());
+        setLangId(from.getLangId());
+        setCode(from.getCode());
+        setDescription(from.getDescription());
     }
 
     @Override

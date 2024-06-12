@@ -26,8 +26,8 @@ public class Datainit implements IDatainit {
     public Datainit() {}
 
     public Datainit(IDatainit value) {
-        this.dataInitId = value.DataInitId();
-        this.createdAt = value.CreatedAt();
+        this.dataInitId = value.getDataInitId();
+        this.createdAt = value.getCreatedAt();
     }
 
     public Datainit(
@@ -44,7 +44,7 @@ public class Datainit implements IDatainit {
     @NotNull
     @Size(max = 255)
     @Override
-    public String DataInitId() {
+    public String getDataInitId() {
         return this.dataInitId;
     }
 
@@ -52,7 +52,7 @@ public class Datainit implements IDatainit {
      * Setter for <code>testshop.DataInit.dataInitId</code>.
      */
     @Override
-    public Datainit DataInitId(String dataInitId) {
+    public Datainit setDataInitId(String dataInitId) {
         this.dataInitId = dataInitId;
         return this;
     }
@@ -61,7 +61,7 @@ public class Datainit implements IDatainit {
      * Getter for <code>testshop.DataInit.createdAt</code>.
      */
     @Override
-    public LocalDateTime CreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
 
@@ -69,7 +69,7 @@ public class Datainit implements IDatainit {
      * Setter for <code>testshop.DataInit.createdAt</code>.
      */
     @Override
-    public Datainit CreatedAt(LocalDateTime createdAt) {
+    public Datainit setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -91,8 +91,8 @@ public class Datainit implements IDatainit {
 
     @Override
     public void from(IDatainit from) {
-        DataInitId(from.DataInitId());
-        CreatedAt(from.CreatedAt());
+        setDataInitId(from.getDataInitId());
+        setCreatedAt(from.getCreatedAt());
     }
 
     @Override

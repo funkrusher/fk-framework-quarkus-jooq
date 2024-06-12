@@ -52,12 +52,12 @@ public class Post extends TableImpl<PostRecord> {
     /**
      * The column <code>testshop.post.id</code>.
      */
-    public final TableField<PostRecord, UUID> id = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<PostRecord, UUID> ID = createField(DSL.name("id"), SQLDataType.UUID.nullable(false), this, "");
 
     /**
      * The column <code>testshop.post.title</code>.
      */
-    public final TableField<PostRecord, String> title = createField(DSL.name("title"), SQLDataType.VARCHAR(255).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.VARCHAR)), this, "");
+    public final TableField<PostRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(255).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.VARCHAR)), this, "");
 
     private Post(Name alias, Table<PostRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

@@ -25,7 +25,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
     @Override
-    public ProductLangRecord ProductId(Long value) {
+    public ProductLangRecord setProductId(Long value) {
         set(0, value);
         return this;
     }
@@ -35,7 +35,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      */
     @NotNull
     @Override
-    public Long ProductId() {
+    public Long getProductId() {
         return (Long) get(0);
     }
 
@@ -43,7 +43,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
     @Override
-    public ProductLangRecord LangId(Integer value) {
+    public ProductLangRecord setLangId(Integer value) {
         set(1, value);
         return this;
     }
@@ -53,7 +53,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      */
     @NotNull
     @Override
-    public Integer LangId() {
+    public Integer getLangId() {
         return (Integer) get(1);
     }
 
@@ -61,7 +61,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.name</code>.
      */
     @Override
-    public ProductLangRecord Name(String value) {
+    public ProductLangRecord setName(String value) {
         set(2, value);
         return this;
     }
@@ -72,7 +72,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     @NotNull
     @Size(max = 255)
     @Override
-    public String Name() {
+    public String getName() {
         return (String) get(2);
     }
 
@@ -80,7 +80,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.description</code>.
      */
     @Override
-    public ProductLangRecord Description(String value) {
+    public ProductLangRecord setDescription(String value) {
         set(3, value);
         return this;
     }
@@ -91,7 +91,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     @NotNull
     @Size(max = 65535)
     @Override
-    public String Description() {
+    public String getDescription() {
         return (String) get(3);
     }
 
@@ -110,10 +110,10 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
 
     @Override
     public void from(IProductLang from) {
-        ProductId(from.ProductId());
-        LangId(from.LangId());
-        Name(from.Name());
-        Description(from.Description());
+        setProductId(from.getProductId());
+        setLangId(from.getLangId());
+        setName(from.getName());
+        setDescription(from.getDescription());
         resetChangedOnNotNull();
     }
 
@@ -140,10 +140,10 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     public ProductLangRecord(Long productId, Integer langId, String name, String description) {
         super(ProductLang.PRODUCT_LANG);
 
-        ProductId(productId);
-        LangId(langId);
-        Name(name);
-        Description(description);
+        setProductId(productId);
+        setLangId(langId);
+        setName(name);
+        setDescription(description);
         resetChangedOnNotNull();
     }
 
@@ -154,10 +154,10 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
         super(ProductLang.PRODUCT_LANG);
 
         if (value != null) {
-            ProductId(value.ProductId());
-            LangId(value.LangId());
-            Name(value.Name());
-            Description(value.Description());
+            setProductId(value.getProductId());
+            setLangId(value.getLangId());
+            setName(value.getName());
+            setDescription(value.getDescription());
             resetChangedOnNotNull();
         }
     }

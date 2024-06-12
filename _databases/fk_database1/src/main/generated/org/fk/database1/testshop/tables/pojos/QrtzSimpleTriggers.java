@@ -28,12 +28,12 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
     public QrtzSimpleTriggers() {}
 
     public QrtzSimpleTriggers(IQrtzSimpleTriggers value) {
-        this.SCHED_NAME = value.SCHED_NAME();
-        this.TRIGGER_NAME = value.TRIGGER_NAME();
-        this.TRIGGER_GROUP = value.TRIGGER_GROUP();
-        this.REPEAT_COUNT = value.REPEAT_COUNT();
-        this.REPEAT_INTERVAL = value.REPEAT_INTERVAL();
-        this.TIMES_TRIGGERED = value.TIMES_TRIGGERED();
+        this.SCHED_NAME = value.getSCHED_NAME();
+        this.TRIGGER_NAME = value.getTRIGGER_NAME();
+        this.TRIGGER_GROUP = value.getTRIGGER_GROUP();
+        this.REPEAT_COUNT = value.getREPEAT_COUNT();
+        this.REPEAT_INTERVAL = value.getREPEAT_INTERVAL();
+        this.TIMES_TRIGGERED = value.getTIMES_TRIGGERED();
     }
 
     public QrtzSimpleTriggers(
@@ -58,7 +58,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -66,7 +66,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSimpleTriggers SCHED_NAME(String SCHED_NAME) {
+    public QrtzSimpleTriggers setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -77,7 +77,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_NAME() {
+    public String getTRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -85,7 +85,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzSimpleTriggers TRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzSimpleTriggers setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
         return this;
     }
@@ -96,7 +96,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_GROUP() {
+    public String getTRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -104,7 +104,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzSimpleTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzSimpleTriggers setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
         return this;
     }
@@ -114,7 +114,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      */
     @NotNull
     @Override
-    public Long REPEAT_COUNT() {
+    public Long getREPEAT_COUNT() {
         return this.REPEAT_COUNT;
     }
 
@@ -122,7 +122,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
      */
     @Override
-    public QrtzSimpleTriggers REPEAT_COUNT(Long REPEAT_COUNT) {
+    public QrtzSimpleTriggers setREPEAT_COUNT(Long REPEAT_COUNT) {
         this.REPEAT_COUNT = REPEAT_COUNT;
         return this;
     }
@@ -132,7 +132,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      */
     @NotNull
     @Override
-    public Long REPEAT_INTERVAL() {
+    public Long getREPEAT_INTERVAL() {
         return this.REPEAT_INTERVAL;
     }
 
@@ -140,7 +140,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
      */
     @Override
-    public QrtzSimpleTriggers REPEAT_INTERVAL(Long REPEAT_INTERVAL) {
+    public QrtzSimpleTriggers setREPEAT_INTERVAL(Long REPEAT_INTERVAL) {
         this.REPEAT_INTERVAL = REPEAT_INTERVAL;
         return this;
     }
@@ -150,7 +150,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      */
     @NotNull
     @Override
-    public Long TIMES_TRIGGERED() {
+    public Long getTIMES_TRIGGERED() {
         return this.TIMES_TRIGGERED;
     }
 
@@ -158,7 +158,7 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.
      */
     @Override
-    public QrtzSimpleTriggers TIMES_TRIGGERED(Long TIMES_TRIGGERED) {
+    public QrtzSimpleTriggers setTIMES_TRIGGERED(Long TIMES_TRIGGERED) {
         this.TIMES_TRIGGERED = TIMES_TRIGGERED;
         return this;
     }
@@ -184,12 +184,12 @@ public class QrtzSimpleTriggers implements IQrtzSimpleTriggers {
 
     @Override
     public void from(IQrtzSimpleTriggers from) {
-        SCHED_NAME(from.SCHED_NAME());
-        TRIGGER_NAME(from.TRIGGER_NAME());
-        TRIGGER_GROUP(from.TRIGGER_GROUP());
-        REPEAT_COUNT(from.REPEAT_COUNT());
-        REPEAT_INTERVAL(from.REPEAT_INTERVAL());
-        TIMES_TRIGGERED(from.TIMES_TRIGGERED());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setREPEAT_COUNT(from.getREPEAT_COUNT());
+        setREPEAT_INTERVAL(from.getREPEAT_INTERVAL());
+        setTIMES_TRIGGERED(from.getTIMES_TRIGGERED());
     }
 
     @Override

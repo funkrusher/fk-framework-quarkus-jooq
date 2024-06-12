@@ -22,42 +22,42 @@ public interface IProduct extends Serializable {
     /**
      * Setter for <code>testshop2.product.productId</code>. productId
      */
-    public IProduct ProductId(Long value);
+    public IProduct setProductId(Long value);
 
     /**
      * Getter for <code>testshop2.product.productId</code>. productId
      */
-    public Long ProductId();
+    public Long getProductId();
 
     /**
      * Setter for <code>testshop2.product.clientId</code>. clientId
      */
-    public IProduct ClientId(Integer value);
+    public IProduct setClientId(Integer value);
 
     /**
      * Getter for <code>testshop2.product.clientId</code>. clientId
      */
     @NotNull
-    public Integer ClientId();
+    public Integer getClientId();
 
     /**
      * Setter for <code>testshop2.product.price</code>. price of the product in
      * Euro
      */
-    public IProduct Price(BigDecimal value);
+    public IProduct setPrice(BigDecimal value);
 
     /**
      * Getter for <code>testshop2.product.price</code>. price of the product in
      * Euro
      */
     @NotNull
-    public BigDecimal Price();
+    public BigDecimal getPrice();
 
     /**
      * Setter for <code>testshop2.product.typeId</code>. typeId, enumeration -
      * one of: books,...
      */
-    public IProduct TypeId(String value);
+    public IProduct setTypeId(String value);
 
     /**
      * Getter for <code>testshop2.product.typeId</code>. typeId, enumeration -
@@ -65,49 +65,49 @@ public interface IProduct extends Serializable {
      */
     @NotNull
     @Size(max = 255)
-    public String TypeId();
+    public String getTypeId();
 
     /**
      * Setter for <code>testshop2.product.createdAt</code>.
      */
-    public IProduct CreatedAt(LocalDateTime value);
+    public IProduct setCreatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop2.product.createdAt</code>.
      */
-    public LocalDateTime CreatedAt();
+    public LocalDateTime getCreatedAt();
 
     /**
      * Setter for <code>testshop2.product.updatedAt</code>.
      */
-    public IProduct UpdatedAt(LocalDateTime value);
+    public IProduct setUpdatedAt(LocalDateTime value);
 
     /**
      * Getter for <code>testshop2.product.updatedAt</code>.
      */
-    public LocalDateTime UpdatedAt();
+    public LocalDateTime getUpdatedAt();
 
     /**
      * Setter for <code>testshop2.product.deleted</code>. if this product is
      * marked as deleted
      */
-    public IProduct Deleted(Boolean value);
+    public IProduct setDeleted(Boolean value);
 
     /**
      * Getter for <code>testshop2.product.deleted</code>. if this product is
      * marked as deleted
      */
-    public Boolean Deleted();
+    public Boolean getDeleted();
 
     /**
      * Setter for <code>testshop2.product.creatorId</code>.
      */
-    public IProduct CreatorId(Integer value);
+    public IProduct setCreatorId(Integer value);
 
     /**
      * Getter for <code>testshop2.product.creatorId</code>.
      */
-    public Integer CreatorId();
+    public Integer getCreatorId();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

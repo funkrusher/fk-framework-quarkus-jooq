@@ -25,7 +25,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord SCHED_NAME(String value) {
+    public QrtzFiredTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord ENTRY_ID(String value) {
+    public QrtzFiredTriggersRecord setENTRY_ID(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     @NotNull
     @Size(max = 95)
     @Override
-    public String ENTRY_ID() {
+    public String getENTRY_ID() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord TRIGGER_NAME(String value) {
+    public QrtzFiredTriggersRecord setTRIGGER_NAME(String value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_NAME() {
+    public String getTRIGGER_NAME() {
         return (String) get(2);
     }
 
@@ -82,7 +82,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord TRIGGER_GROUP(String value) {
+    public QrtzFiredTriggersRecord setTRIGGER_GROUP(String value) {
         set(3, value);
         return this;
     }
@@ -93,7 +93,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_GROUP() {
+    public String getTRIGGER_GROUP() {
         return (String) get(3);
     }
 
@@ -101,7 +101,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord INSTANCE_NAME(String value) {
+    public QrtzFiredTriggersRecord setINSTANCE_NAME(String value) {
         set(4, value);
         return this;
     }
@@ -112,7 +112,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     @NotNull
     @Size(max = 190)
     @Override
-    public String INSTANCE_NAME() {
+    public String getINSTANCE_NAME() {
         return (String) get(4);
     }
 
@@ -120,7 +120,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord FIRED_TIME(Long value) {
+    public QrtzFiredTriggersRecord setFIRED_TIME(Long value) {
         set(5, value);
         return this;
     }
@@ -130,7 +130,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @NotNull
     @Override
-    public Long FIRED_TIME() {
+    public Long getFIRED_TIME() {
         return (Long) get(5);
     }
 
@@ -138,7 +138,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord SCHED_TIME(Long value) {
+    public QrtzFiredTriggersRecord setSCHED_TIME(Long value) {
         set(6, value);
         return this;
     }
@@ -148,7 +148,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @NotNull
     @Override
-    public Long SCHED_TIME() {
+    public Long getSCHED_TIME() {
         return (Long) get(6);
     }
 
@@ -156,7 +156,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord PRIORITY(Integer value) {
+    public QrtzFiredTriggersRecord setPRIORITY(Integer value) {
         set(7, value);
         return this;
     }
@@ -166,7 +166,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @NotNull
     @Override
-    public Integer PRIORITY() {
+    public Integer getPRIORITY() {
         return (Integer) get(7);
     }
 
@@ -174,7 +174,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord STATE(String value) {
+    public QrtzFiredTriggersRecord setSTATE(String value) {
         set(8, value);
         return this;
     }
@@ -185,7 +185,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     @NotNull
     @Size(max = 16)
     @Override
-    public String STATE() {
+    public String getSTATE() {
         return (String) get(8);
     }
 
@@ -193,7 +193,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord JOB_NAME(String value) {
+    public QrtzFiredTriggersRecord setJOB_NAME(String value) {
         set(9, value);
         return this;
     }
@@ -203,7 +203,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @Size(max = 190)
     @Override
-    public String JOB_NAME() {
+    public String getJOB_NAME() {
         return (String) get(9);
     }
 
@@ -211,7 +211,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord JOB_GROUP(String value) {
+    public QrtzFiredTriggersRecord setJOB_GROUP(String value) {
         set(10, value);
         return this;
     }
@@ -221,7 +221,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @Size(max = 190)
     @Override
-    public String JOB_GROUP() {
+    public String getJOB_GROUP() {
         return (String) get(10);
     }
 
@@ -229,7 +229,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord IS_NONCONCURRENT(String value) {
+    public QrtzFiredTriggersRecord setIS_NONCONCURRENT(String value) {
         set(11, value);
         return this;
     }
@@ -239,7 +239,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @Size(max = 1)
     @Override
-    public String IS_NONCONCURRENT() {
+    public String getIS_NONCONCURRENT() {
         return (String) get(11);
     }
 
@@ -247,7 +247,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public QrtzFiredTriggersRecord REQUESTS_RECOVERY(String value) {
+    public QrtzFiredTriggersRecord setREQUESTS_RECOVERY(String value) {
         set(12, value);
         return this;
     }
@@ -257,7 +257,7 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
      */
     @Size(max = 1)
     @Override
-    public String REQUESTS_RECOVERY() {
+    public String getREQUESTS_RECOVERY() {
         return (String) get(12);
     }
 
@@ -276,19 +276,19 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
 
     @Override
     public void from(IQrtzFiredTriggers from) {
-        SCHED_NAME(from.SCHED_NAME());
-        ENTRY_ID(from.ENTRY_ID());
-        TRIGGER_NAME(from.TRIGGER_NAME());
-        TRIGGER_GROUP(from.TRIGGER_GROUP());
-        INSTANCE_NAME(from.INSTANCE_NAME());
-        FIRED_TIME(from.FIRED_TIME());
-        SCHED_TIME(from.SCHED_TIME());
-        PRIORITY(from.PRIORITY());
-        STATE(from.STATE());
-        JOB_NAME(from.JOB_NAME());
-        JOB_GROUP(from.JOB_GROUP());
-        IS_NONCONCURRENT(from.IS_NONCONCURRENT());
-        REQUESTS_RECOVERY(from.REQUESTS_RECOVERY());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setENTRY_ID(from.getENTRY_ID());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setINSTANCE_NAME(from.getINSTANCE_NAME());
+        setFIRED_TIME(from.getFIRED_TIME());
+        setSCHED_TIME(from.getSCHED_TIME());
+        setPRIORITY(from.getPRIORITY());
+        setSTATE(from.getSTATE());
+        setJOB_NAME(from.getJOB_NAME());
+        setJOB_GROUP(from.getJOB_GROUP());
+        setIS_NONCONCURRENT(from.getIS_NONCONCURRENT());
+        setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
         resetChangedOnNotNull();
     }
 
@@ -315,19 +315,19 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
     public QrtzFiredTriggersRecord(String SCHED_NAME, String ENTRY_ID, String TRIGGER_NAME, String TRIGGER_GROUP, String INSTANCE_NAME, Long FIRED_TIME, Long SCHED_TIME, Integer PRIORITY, String STATE, String JOB_NAME, String JOB_GROUP, String IS_NONCONCURRENT, String REQUESTS_RECOVERY) {
         super(QrtzFiredTriggers.QRTZ_FIRED_TRIGGERS);
 
-        SCHED_NAME(SCHED_NAME);
-        ENTRY_ID(ENTRY_ID);
-        TRIGGER_NAME(TRIGGER_NAME);
-        TRIGGER_GROUP(TRIGGER_GROUP);
-        INSTANCE_NAME(INSTANCE_NAME);
-        FIRED_TIME(FIRED_TIME);
-        SCHED_TIME(SCHED_TIME);
-        PRIORITY(PRIORITY);
-        STATE(STATE);
-        JOB_NAME(JOB_NAME);
-        JOB_GROUP(JOB_GROUP);
-        IS_NONCONCURRENT(IS_NONCONCURRENT);
-        REQUESTS_RECOVERY(REQUESTS_RECOVERY);
+        setSCHED_NAME(SCHED_NAME);
+        setENTRY_ID(ENTRY_ID);
+        setTRIGGER_NAME(TRIGGER_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
+        setINSTANCE_NAME(INSTANCE_NAME);
+        setFIRED_TIME(FIRED_TIME);
+        setSCHED_TIME(SCHED_TIME);
+        setPRIORITY(PRIORITY);
+        setSTATE(STATE);
+        setJOB_NAME(JOB_NAME);
+        setJOB_GROUP(JOB_GROUP);
+        setIS_NONCONCURRENT(IS_NONCONCURRENT);
+        setREQUESTS_RECOVERY(REQUESTS_RECOVERY);
         resetChangedOnNotNull();
     }
 
@@ -338,19 +338,19 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
         super(QrtzFiredTriggers.QRTZ_FIRED_TRIGGERS);
 
         if (value != null) {
-            SCHED_NAME(value.SCHED_NAME());
-            ENTRY_ID(value.ENTRY_ID());
-            TRIGGER_NAME(value.TRIGGER_NAME());
-            TRIGGER_GROUP(value.TRIGGER_GROUP());
-            INSTANCE_NAME(value.INSTANCE_NAME());
-            FIRED_TIME(value.FIRED_TIME());
-            SCHED_TIME(value.SCHED_TIME());
-            PRIORITY(value.PRIORITY());
-            STATE(value.STATE());
-            JOB_NAME(value.JOB_NAME());
-            JOB_GROUP(value.JOB_GROUP());
-            IS_NONCONCURRENT(value.IS_NONCONCURRENT());
-            REQUESTS_RECOVERY(value.REQUESTS_RECOVERY());
+            setSCHED_NAME(value.getSCHED_NAME());
+            setENTRY_ID(value.getENTRY_ID());
+            setTRIGGER_NAME(value.getTRIGGER_NAME());
+            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+            setINSTANCE_NAME(value.getINSTANCE_NAME());
+            setFIRED_TIME(value.getFIRED_TIME());
+            setSCHED_TIME(value.getSCHED_TIME());
+            setPRIORITY(value.getPRIORITY());
+            setSTATE(value.getSTATE());
+            setJOB_NAME(value.getJOB_NAME());
+            setJOB_GROUP(value.getJOB_GROUP());
+            setIS_NONCONCURRENT(value.getIS_NONCONCURRENT());
+            setREQUESTS_RECOVERY(value.getREQUESTS_RECOVERY());
             resetChangedOnNotNull();
         }
     }

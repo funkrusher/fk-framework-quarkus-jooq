@@ -64,45 +64,45 @@ public class Product extends TableImpl<ProductRecord> {
     /**
      * The column <code>testshop2.product.productId</code>. productId
      */
-    public final TableField<ProductRecord, Long> productId = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false).identity(true), this, "productId");
+    public final TableField<ProductRecord, Long> PRODUCTID = createField(DSL.name("productId"), SQLDataType.BIGINT.nullable(false).identity(true), this, "productId");
 
     /**
      * The column <code>testshop2.product.clientId</code>. clientId
      */
-    public final TableField<ProductRecord, Integer> clientId = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "clientId");
+    public final TableField<ProductRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false), this, "clientId");
 
     /**
      * The column <code>testshop2.product.price</code>. price of the product in
      * Euro
      */
-    public final TableField<ProductRecord, BigDecimal> price = createField(DSL.name("price"), SQLDataType.DECIMAL(10, 2).nullable(false), this, "price of the product in Euro");
+    public final TableField<ProductRecord, BigDecimal> PRICE = createField(DSL.name("price"), SQLDataType.DECIMAL(10, 2).nullable(false), this, "price of the product in Euro");
 
     /**
      * The column <code>testshop2.product.typeId</code>. typeId, enumeration -
      * one of: books,...
      */
-    public final TableField<ProductRecord, String> typeId = createField(DSL.name("typeId"), SQLDataType.VARCHAR(255).nullable(false), this, "typeId, enumeration - one of: books,...");
+    public final TableField<ProductRecord, String> TYPEID = createField(DSL.name("typeId"), SQLDataType.VARCHAR(255).nullable(false), this, "typeId, enumeration - one of: books,...");
 
     /**
      * The column <code>testshop2.product.createdAt</code>.
      */
-    public final TableField<ProductRecord, LocalDateTime> createdAt = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ProductRecord, LocalDateTime> CREATEDAT = createField(DSL.name("createdAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>testshop2.product.updatedAt</code>.
      */
-    public final TableField<ProductRecord, LocalDateTime> updatedAt = createField(DSL.name("updatedAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ProductRecord, LocalDateTime> UPDATEDAT = createField(DSL.name("updatedAt"), SQLDataType.LOCALDATETIME(0).nullable(false).defaultValue(DSL.field(DSL.raw("current_timestamp()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>testshop2.product.deleted</code>. if this product is
      * marked as deleted
      */
-    public final TableField<ProductRecord, Boolean> deleted = createField(DSL.name("deleted"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("0"), SQLDataType.BOOLEAN)), this, "if this product is marked as deleted");
+    public final TableField<ProductRecord, Boolean> DELETED = createField(DSL.name("deleted"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("0"), SQLDataType.BOOLEAN)), this, "if this product is marked as deleted");
 
     /**
      * The column <code>testshop2.product.creatorId</code>.
      */
-    public final TableField<ProductRecord, Integer> creatorId = createField(DSL.name("creatorId"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.INTEGER)), this, "");
+    public final TableField<ProductRecord, Integer> CREATORID = createField(DSL.name("creatorId"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.INTEGER)), this, "");
 
     private Product(Name alias, Table<ProductRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

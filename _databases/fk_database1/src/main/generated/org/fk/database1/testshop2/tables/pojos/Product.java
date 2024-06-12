@@ -33,14 +33,14 @@ public class Product implements IProduct {
     public Product() {}
 
     public Product(IProduct value) {
-        this.productId = value.ProductId();
-        this.clientId = value.ClientId();
-        this.price = value.Price();
-        this.typeId = value.TypeId();
-        this.createdAt = value.CreatedAt();
-        this.updatedAt = value.UpdatedAt();
-        this.deleted = value.Deleted();
-        this.creatorId = value.CreatorId();
+        this.productId = value.getProductId();
+        this.clientId = value.getClientId();
+        this.price = value.getPrice();
+        this.typeId = value.getTypeId();
+        this.createdAt = value.getCreatedAt();
+        this.updatedAt = value.getUpdatedAt();
+        this.deleted = value.getDeleted();
+        this.creatorId = value.getCreatorId();
     }
 
     public Product(
@@ -67,7 +67,7 @@ public class Product implements IProduct {
      * Getter for <code>testshop2.product.productId</code>. productId
      */
     @Override
-    public Long ProductId() {
+    public Long getProductId() {
         return this.productId;
     }
 
@@ -75,7 +75,7 @@ public class Product implements IProduct {
      * Setter for <code>testshop2.product.productId</code>. productId
      */
     @Override
-    public Product ProductId(Long productId) {
+    public Product setProductId(Long productId) {
         this.productId = productId;
         return this;
     }
@@ -85,7 +85,7 @@ public class Product implements IProduct {
      */
     @NotNull
     @Override
-    public Integer ClientId() {
+    public Integer getClientId() {
         return this.clientId;
     }
 
@@ -93,7 +93,7 @@ public class Product implements IProduct {
      * Setter for <code>testshop2.product.clientId</code>. clientId
      */
     @Override
-    public Product ClientId(Integer clientId) {
+    public Product setClientId(Integer clientId) {
         this.clientId = clientId;
         return this;
     }
@@ -104,7 +104,7 @@ public class Product implements IProduct {
      */
     @NotNull
     @Override
-    public BigDecimal Price() {
+    public BigDecimal getPrice() {
         return this.price;
     }
 
@@ -113,7 +113,7 @@ public class Product implements IProduct {
      * Euro
      */
     @Override
-    public Product Price(BigDecimal price) {
+    public Product setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -125,7 +125,7 @@ public class Product implements IProduct {
     @NotNull
     @Size(max = 255)
     @Override
-    public String TypeId() {
+    public String getTypeId() {
         return this.typeId;
     }
 
@@ -134,7 +134,7 @@ public class Product implements IProduct {
      * one of: books,...
      */
     @Override
-    public Product TypeId(String typeId) {
+    public Product setTypeId(String typeId) {
         this.typeId = typeId;
         return this;
     }
@@ -143,7 +143,7 @@ public class Product implements IProduct {
      * Getter for <code>testshop2.product.createdAt</code>.
      */
     @Override
-    public LocalDateTime CreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
 
@@ -151,7 +151,7 @@ public class Product implements IProduct {
      * Setter for <code>testshop2.product.createdAt</code>.
      */
     @Override
-    public Product CreatedAt(LocalDateTime createdAt) {
+    public Product setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
     }
@@ -160,7 +160,7 @@ public class Product implements IProduct {
      * Getter for <code>testshop2.product.updatedAt</code>.
      */
     @Override
-    public LocalDateTime UpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
     }
 
@@ -168,7 +168,7 @@ public class Product implements IProduct {
      * Setter for <code>testshop2.product.updatedAt</code>.
      */
     @Override
-    public Product UpdatedAt(LocalDateTime updatedAt) {
+    public Product setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
@@ -178,7 +178,7 @@ public class Product implements IProduct {
      * marked as deleted
      */
     @Override
-    public Boolean Deleted() {
+    public Boolean getDeleted() {
         return this.deleted;
     }
 
@@ -187,7 +187,7 @@ public class Product implements IProduct {
      * marked as deleted
      */
     @Override
-    public Product Deleted(Boolean deleted) {
+    public Product setDeleted(Boolean deleted) {
         this.deleted = deleted;
         return this;
     }
@@ -196,7 +196,7 @@ public class Product implements IProduct {
      * Getter for <code>testshop2.product.creatorId</code>.
      */
     @Override
-    public Integer CreatorId() {
+    public Integer getCreatorId() {
         return this.creatorId;
     }
 
@@ -204,7 +204,7 @@ public class Product implements IProduct {
      * Setter for <code>testshop2.product.creatorId</code>.
      */
     @Override
-    public Product CreatorId(Integer creatorId) {
+    public Product setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
         return this;
     }
@@ -232,14 +232,14 @@ public class Product implements IProduct {
 
     @Override
     public void from(IProduct from) {
-        ProductId(from.ProductId());
-        ClientId(from.ClientId());
-        Price(from.Price());
-        TypeId(from.TypeId());
-        CreatedAt(from.CreatedAt());
-        UpdatedAt(from.UpdatedAt());
-        Deleted(from.Deleted());
-        CreatorId(from.CreatorId());
+        setProductId(from.getProductId());
+        setClientId(from.getClientId());
+        setPrice(from.getPrice());
+        setTypeId(from.getTypeId());
+        setCreatedAt(from.getCreatedAt());
+        setUpdatedAt(from.getUpdatedAt());
+        setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
     }
 
     @Override

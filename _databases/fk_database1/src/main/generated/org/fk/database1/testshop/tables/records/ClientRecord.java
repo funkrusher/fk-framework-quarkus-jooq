@@ -22,7 +22,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
      * Setter for <code>testshop.client.clientId</code>.
      */
     @Override
-    public ClientRecord ClientId(Integer value) {
+    public ClientRecord setClientId(Integer value) {
         set(0, value);
         return this;
     }
@@ -31,7 +31,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
      * Getter for <code>testshop.client.clientId</code>.
      */
     @Override
-    public Integer ClientId() {
+    public Integer getClientId() {
         return (Integer) get(0);
     }
 
@@ -50,7 +50,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
 
     @Override
     public void from(IClient from) {
-        ClientId(from.ClientId());
+        setClientId(from.getClientId());
         resetChangedOnNotNull();
     }
 
@@ -77,7 +77,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
     public ClientRecord(Integer clientId) {
         super(Client.CLIENT);
 
-        ClientId(clientId);
+        setClientId(clientId);
         resetChangedOnNotNull();
     }
 
@@ -88,7 +88,7 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
         super(Client.CLIENT);
 
         if (value != null) {
-            ClientId(value.ClientId());
+            setClientId(value.getClientId());
             resetChangedOnNotNull();
         }
     }

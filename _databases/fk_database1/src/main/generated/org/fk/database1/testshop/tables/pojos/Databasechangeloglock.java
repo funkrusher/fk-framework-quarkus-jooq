@@ -28,10 +28,10 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
     public Databasechangeloglock() {}
 
     public Databasechangeloglock(IDatabasechangeloglock value) {
-        this.ID = value.ID();
-        this.LOCKED = value.LOCKED();
-        this.LOCKGRANTED = value.LOCKGRANTED();
-        this.LOCKEDBY = value.LOCKEDBY();
+        this.ID = value.getID();
+        this.LOCKED = value.getLOCKED();
+        this.LOCKGRANTED = value.getLOCKGRANTED();
+        this.LOCKEDBY = value.getLOCKEDBY();
     }
 
     public Databasechangeloglock(
@@ -51,7 +51,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      */
     @NotNull
     @Override
-    public Integer ID() {
+    public Integer getID() {
         return this.ID;
     }
 
@@ -59,7 +59,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
     @Override
-    public Databasechangeloglock ID(Integer ID) {
+    public Databasechangeloglock setID(Integer ID) {
         this.ID = ID;
         return this;
     }
@@ -69,7 +69,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      */
     @NotNull
     @Override
-    public Boolean LOCKED() {
+    public Boolean getLOCKED() {
         return this.LOCKED;
     }
 
@@ -77,7 +77,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public Databasechangeloglock LOCKED(Boolean LOCKED) {
+    public Databasechangeloglock setLOCKED(Boolean LOCKED) {
         this.LOCKED = LOCKED;
         return this;
     }
@@ -86,7 +86,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public LocalDateTime LOCKGRANTED() {
+    public LocalDateTime getLOCKGRANTED() {
         return this.LOCKGRANTED;
     }
 
@@ -94,7 +94,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public Databasechangeloglock LOCKGRANTED(LocalDateTime LOCKGRANTED) {
+    public Databasechangeloglock setLOCKGRANTED(LocalDateTime LOCKGRANTED) {
         this.LOCKGRANTED = LOCKGRANTED;
         return this;
     }
@@ -104,7 +104,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      */
     @Size(max = 255)
     @Override
-    public String LOCKEDBY() {
+    public String getLOCKEDBY() {
         return this.LOCKEDBY;
     }
 
@@ -112,7 +112,7 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
     @Override
-    public Databasechangeloglock LOCKEDBY(String LOCKEDBY) {
+    public Databasechangeloglock setLOCKEDBY(String LOCKEDBY) {
         this.LOCKEDBY = LOCKEDBY;
         return this;
     }
@@ -136,10 +136,10 @@ public class Databasechangeloglock implements IDatabasechangeloglock {
 
     @Override
     public void from(IDatabasechangeloglock from) {
-        ID(from.ID());
-        LOCKED(from.LOCKED());
-        LOCKGRANTED(from.LOCKGRANTED());
-        LOCKEDBY(from.LOCKEDBY());
+        setID(from.getID());
+        setLOCKED(from.getLOCKED());
+        setLOCKGRANTED(from.getLOCKGRANTED());
+        setLOCKEDBY(from.getLOCKEDBY());
     }
 
     @Override

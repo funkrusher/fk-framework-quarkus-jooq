@@ -56,7 +56,7 @@ public class ProductDto implements IProduct, DTO {
      * Getter for <code>testshop2.product.productId</code>. productId
      */
     @Override
-    public Long ProductId() {
+    public Long getProductId() {
         return this.productId;
     }
 
@@ -64,8 +64,9 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.productId</code>. productId
      */
     @Override
-    public Product ProductId(Long productId) {
+    public ProductDto setProductId(Long productId) {
         this.productId = productId;
+        this.keeper.touch("productId");
         return this;
     }
 
@@ -74,7 +75,7 @@ public class ProductDto implements IProduct, DTO {
      */
     @NotNull
     @Override
-    public Integer ClientId() {
+    public Integer getClientId() {
         return this.clientId;
     }
 
@@ -82,8 +83,9 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.clientId</code>. clientId
      */
     @Override
-    public Product ClientId(Integer clientId) {
+    public ProductDto setClientId(Integer clientId) {
         this.clientId = clientId;
+        this.keeper.touch("clientId");
         return this;
     }
 
@@ -93,7 +95,7 @@ public class ProductDto implements IProduct, DTO {
      */
     @NotNull
     @Override
-    public BigDecimal Price() {
+    public BigDecimal getPrice() {
         return this.price;
     }
 
@@ -102,8 +104,9 @@ public class ProductDto implements IProduct, DTO {
      * Euro
      */
     @Override
-    public Product Price(BigDecimal price) {
+    public ProductDto setPrice(BigDecimal price) {
         this.price = price;
+        this.keeper.touch("price");
         return this;
     }
 
@@ -114,7 +117,7 @@ public class ProductDto implements IProduct, DTO {
     @NotNull
     @Size(max = 255)
     @Override
-    public String TypeId() {
+    public String getTypeId() {
         return this.typeId;
     }
 
@@ -123,8 +126,9 @@ public class ProductDto implements IProduct, DTO {
      * one of: books,...
      */
     @Override
-    public Product TypeId(String typeId) {
+    public ProductDto setTypeId(String typeId) {
         this.typeId = typeId;
+        this.keeper.touch("typeId");
         return this;
     }
 
@@ -132,7 +136,7 @@ public class ProductDto implements IProduct, DTO {
      * Getter for <code>testshop2.product.createdAt</code>.
      */
     @Override
-    public LocalDateTime CreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
 
@@ -140,8 +144,9 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.createdAt</code>.
      */
     @Override
-    public Product CreatedAt(LocalDateTime createdAt) {
+    public ProductDto setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+        this.keeper.touch("createdAt");
         return this;
     }
 
@@ -149,7 +154,7 @@ public class ProductDto implements IProduct, DTO {
      * Getter for <code>testshop2.product.updatedAt</code>.
      */
     @Override
-    public LocalDateTime UpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
     }
 
@@ -157,8 +162,9 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.updatedAt</code>.
      */
     @Override
-    public Product UpdatedAt(LocalDateTime updatedAt) {
+    public ProductDto setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+        this.keeper.touch("updatedAt");
         return this;
     }
 
@@ -167,7 +173,7 @@ public class ProductDto implements IProduct, DTO {
      * marked as deleted
      */
     @Override
-    public Boolean Deleted() {
+    public Boolean getDeleted() {
         return this.deleted;
     }
 
@@ -176,8 +182,9 @@ public class ProductDto implements IProduct, DTO {
      * marked as deleted
      */
     @Override
-    public Product Deleted(Boolean deleted) {
+    public ProductDto setDeleted(Boolean deleted) {
         this.deleted = deleted;
+        this.keeper.touch("deleted");
         return this;
     }
 
@@ -185,7 +192,7 @@ public class ProductDto implements IProduct, DTO {
      * Getter for <code>testshop2.product.creatorId</code>.
      */
     @Override
-    public Integer CreatorId() {
+    public Integer getCreatorId() {
         return this.creatorId;
     }
 
@@ -193,8 +200,9 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.creatorId</code>.
      */
     @Override
-    public Product CreatorId(Integer creatorId) {
+    public ProductDto setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
+        this.keeper.touch("creatorId");
         return this;
     }
 
@@ -234,14 +242,14 @@ public class ProductDto implements IProduct, DTO {
 
     @Override
     public void from(IProduct from) {
-        ProductId(from.ProductId());
-        ClientId(from.ClientId());
-        Price(from.Price());
-        TypeId(from.TypeId());
-        CreatedAt(from.CreatedAt());
-        UpdatedAt(from.UpdatedAt());
-        Deleted(from.Deleted());
-        CreatorId(from.CreatorId());
+        setProductId(from.getProductId());
+        setClientId(from.getClientId());
+        setPrice(from.getPrice());
+        setTypeId(from.getTypeId());
+        setCreatedAt(from.getCreatedAt());
+        setUpdatedAt(from.getUpdatedAt());
+        setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
     }
     @Override
     public <E extends IProduct> E into(E into) {

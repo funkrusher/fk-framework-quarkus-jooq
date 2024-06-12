@@ -24,8 +24,8 @@ public class QrtzLocks implements IQrtzLocks {
     public QrtzLocks() {}
 
     public QrtzLocks(IQrtzLocks value) {
-        this.SCHED_NAME = value.SCHED_NAME();
-        this.LOCK_NAME = value.LOCK_NAME();
+        this.SCHED_NAME = value.getSCHED_NAME();
+        this.LOCK_NAME = value.getLOCK_NAME();
     }
 
     public QrtzLocks(
@@ -42,7 +42,7 @@ public class QrtzLocks implements IQrtzLocks {
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -50,7 +50,7 @@ public class QrtzLocks implements IQrtzLocks {
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzLocks SCHED_NAME(String SCHED_NAME) {
+    public QrtzLocks setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
         return this;
     }
@@ -61,7 +61,7 @@ public class QrtzLocks implements IQrtzLocks {
     @NotNull
     @Size(max = 40)
     @Override
-    public String LOCK_NAME() {
+    public String getLOCK_NAME() {
         return this.LOCK_NAME;
     }
 
@@ -69,7 +69,7 @@ public class QrtzLocks implements IQrtzLocks {
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
     @Override
-    public QrtzLocks LOCK_NAME(String LOCK_NAME) {
+    public QrtzLocks setLOCK_NAME(String LOCK_NAME) {
         this.LOCK_NAME = LOCK_NAME;
         return this;
     }
@@ -91,8 +91,8 @@ public class QrtzLocks implements IQrtzLocks {
 
     @Override
     public void from(IQrtzLocks from) {
-        SCHED_NAME(from.SCHED_NAME());
-        LOCK_NAME(from.LOCK_NAME());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setLOCK_NAME(from.getLOCK_NAME());
     }
 
     @Override

@@ -20,59 +20,59 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.userId</code>.
      */
-    public IUser UserId(Integer value);
+    public IUser setUserId(Integer value);
 
     /**
      * Getter for <code>testshop.user.userId</code>.
      */
-    public Integer UserId();
+    public Integer getUserId();
 
     /**
      * Setter for <code>testshop.user.clientId</code>.
      */
-    public IUser ClientId(Integer value);
+    public IUser setClientId(Integer value);
 
     /**
      * Getter for <code>testshop.user.clientId</code>.
      */
     @NotNull
-    public Integer ClientId();
+    public Integer getClientId();
 
     /**
      * Setter for <code>testshop.user.email</code>.
      */
-    public IUser Email(String value);
+    public IUser setEmail(String value);
 
     /**
      * Getter for <code>testshop.user.email</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String Email();
+    public String getEmail();
 
     /**
      * Setter for <code>testshop.user.firstname</code>.
      */
-    public IUser Firstname(String value);
+    public IUser setFirstname(String value);
 
     /**
      * Getter for <code>testshop.user.firstname</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String Firstname();
+    public String getFirstname();
 
     /**
      * Setter for <code>testshop.user.lastname</code>.
      */
-    public IUser Lastname(String value);
+    public IUser setLastname(String value);
 
     /**
      * Getter for <code>testshop.user.lastname</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String Lastname();
+    public String getLastname();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

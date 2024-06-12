@@ -51,7 +51,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      */
     @NotNull
     @Override
-    public Integer ID() {
+    public Integer getID() {
         return this.ID;
     }
 
@@ -59,8 +59,9 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
     @Override
-    public Databasechangeloglock ID(Integer ID) {
+    public DatabasechangeloglockDto setID(Integer ID) {
         this.ID = ID;
+        this.keeper.touch("ID");
         return this;
     }
 
@@ -69,7 +70,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      */
     @NotNull
     @Override
-    public Boolean LOCKED() {
+    public Boolean getLOCKED() {
         return this.LOCKED;
     }
 
@@ -77,8 +78,9 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public Databasechangeloglock LOCKED(Boolean LOCKED) {
+    public DatabasechangeloglockDto setLOCKED(Boolean LOCKED) {
         this.LOCKED = LOCKED;
+        this.keeper.touch("LOCKED");
         return this;
     }
 
@@ -86,7 +88,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public LocalDateTime LOCKGRANTED() {
+    public LocalDateTime getLOCKGRANTED() {
         return this.LOCKGRANTED;
     }
 
@@ -94,8 +96,9 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public Databasechangeloglock LOCKGRANTED(LocalDateTime LOCKGRANTED) {
+    public DatabasechangeloglockDto setLOCKGRANTED(LocalDateTime LOCKGRANTED) {
         this.LOCKGRANTED = LOCKGRANTED;
+        this.keeper.touch("LOCKGRANTED");
         return this;
     }
 
@@ -104,7 +107,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      */
     @Size(max = 255)
     @Override
-    public String LOCKEDBY() {
+    public String getLOCKEDBY() {
         return this.LOCKEDBY;
     }
 
@@ -112,8 +115,9 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
     @Override
-    public Databasechangeloglock LOCKEDBY(String LOCKEDBY) {
+    public DatabasechangeloglockDto setLOCKEDBY(String LOCKEDBY) {
         this.LOCKEDBY = LOCKEDBY;
+        this.keeper.touch("LOCKEDBY");
         return this;
     }
 
@@ -153,10 +157,10 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
 
     @Override
     public void from(IDatabasechangeloglock from) {
-        ID(from.ID());
-        LOCKED(from.LOCKED());
-        LOCKGRANTED(from.LOCKGRANTED());
-        LOCKEDBY(from.LOCKEDBY());
+        setID(from.getID());
+        setLOCKED(from.getLOCKED());
+        setLOCKGRANTED(from.getLOCKGRANTED());
+        setLOCKEDBY(from.getLOCKEDBY());
     }
     @Override
     public <E extends IDatabasechangeloglock> E into(E into) {

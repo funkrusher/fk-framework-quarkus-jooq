@@ -25,7 +25,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzLocksRecord SCHED_NAME(String value) {
+    public QrtzLocksRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
     @Override
-    public QrtzLocksRecord LOCK_NAME(String value) {
+    public QrtzLocksRecord setLOCK_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     @NotNull
     @Size(max = 40)
     @Override
-    public String LOCK_NAME() {
+    public String getLOCK_NAME() {
         return (String) get(1);
     }
 
@@ -74,8 +74,8 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
 
     @Override
     public void from(IQrtzLocks from) {
-        SCHED_NAME(from.SCHED_NAME());
-        LOCK_NAME(from.LOCK_NAME());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setLOCK_NAME(from.getLOCK_NAME());
         resetChangedOnNotNull();
     }
 
@@ -102,8 +102,8 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     public QrtzLocksRecord(String SCHED_NAME, String LOCK_NAME) {
         super(QrtzLocks.QRTZ_LOCKS);
 
-        SCHED_NAME(SCHED_NAME);
-        LOCK_NAME(LOCK_NAME);
+        setSCHED_NAME(SCHED_NAME);
+        setLOCK_NAME(LOCK_NAME);
         resetChangedOnNotNull();
     }
 
@@ -114,8 +114,8 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
         super(QrtzLocks.QRTZ_LOCKS);
 
         if (value != null) {
-            SCHED_NAME(value.SCHED_NAME());
-            LOCK_NAME(value.LOCK_NAME());
+            setSCHED_NAME(value.getSCHED_NAME());
+            setLOCK_NAME(value.getLOCK_NAME());
             resetChangedOnNotNull();
         }
     }

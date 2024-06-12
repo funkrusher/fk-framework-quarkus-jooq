@@ -21,45 +21,45 @@ public interface IDatabasechangeloglock extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
-    public IDatabasechangeloglock ID(Integer value);
+    public IDatabasechangeloglock setID(Integer value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
     @NotNull
-    public Integer ID();
+    public Integer getID();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
-    public IDatabasechangeloglock LOCKED(Boolean value);
+    public IDatabasechangeloglock setLOCKED(Boolean value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @NotNull
-    public Boolean LOCKED();
+    public Boolean getLOCKED();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
-    public IDatabasechangeloglock LOCKGRANTED(LocalDateTime value);
+    public IDatabasechangeloglock setLOCKGRANTED(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
-    public LocalDateTime LOCKGRANTED();
+    public LocalDateTime getLOCKGRANTED();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
-    public IDatabasechangeloglock LOCKEDBY(String value);
+    public IDatabasechangeloglock setLOCKEDBY(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
     @Size(max = 255)
-    public String LOCKEDBY();
+    public String getLOCKEDBY();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

@@ -20,26 +20,26 @@ public interface IQrtzLocks extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
-    public IQrtzLocks SCHED_NAME(String value);
+    public IQrtzLocks setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String SCHED_NAME();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
-    public IQrtzLocks LOCK_NAME(String value);
+    public IQrtzLocks setLOCK_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
     @NotNull
     @Size(max = 40)
-    public String LOCK_NAME();
+    public String getLOCK_NAME();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

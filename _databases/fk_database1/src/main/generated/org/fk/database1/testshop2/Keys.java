@@ -32,15 +32,15 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<ProductRecord> KEY_PRODUCT_PRIMARY = Internal.createUniqueKey(Product.PRODUCT, DSL.name("KEY_product_PRIMARY"), new TableField[] { Product.PRODUCT.productId }, true);
-    public static final UniqueKey<ProductLangRecord> KEY_PRODUCT_LANG_PRIMARY = Internal.createUniqueKey(ProductLang.PRODUCT_LANG, DSL.name("KEY_product_lang_PRIMARY"), new TableField[] { ProductLang.PRODUCT_LANG.productId, ProductLang.PRODUCT_LANG.langId }, true);
+    public static final UniqueKey<ProductRecord> KEY_PRODUCT_PRIMARY = Internal.createUniqueKey(Product.PRODUCT, DSL.name("KEY_product_PRIMARY"), new TableField[] { Product.PRODUCT.PRODUCTID }, true);
+    public static final UniqueKey<ProductLangRecord> KEY_PRODUCT_LANG_PRIMARY = Internal.createUniqueKey(ProductLang.PRODUCT_LANG, DSL.name("KEY_product_lang_PRIMARY"), new TableField[] { ProductLang.PRODUCT_LANG.PRODUCTID, ProductLang.PRODUCT_LANG.LANGID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<ProductRecord, ClientRecord> FK_PRODUCT_CLIENTID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_clientId"), new TableField[] { Product.PRODUCT.clientId }, org.fk.database1.testshop.Keys.KEY_CLIENT_PRIMARY, new TableField[] { Client.CLIENT.clientId }, true);
-    public static final ForeignKey<ProductRecord, UserRecord> FK_PRODUCT_CREATORID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_creatorId"), new TableField[] { Product.PRODUCT.creatorId }, org.fk.database1.testshop.Keys.KEY_USER_PRIMARY, new TableField[] { User.USER.userId }, true);
-    public static final ForeignKey<ProductLangRecord, LangRecord> FK_PRODUCT_LANG_LANGID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_langId"), new TableField[] { ProductLang.PRODUCT_LANG.langId }, org.fk.database1.testshop.Keys.KEY_LANG_PRIMARY, new TableField[] { Lang.LANG.langId }, true);
-    public static final ForeignKey<ProductLangRecord, ProductRecord> FK_PRODUCT_LANG_PRODUCTID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_productId"), new TableField[] { ProductLang.PRODUCT_LANG.productId }, Keys.KEY_PRODUCT_PRIMARY, new TableField[] { Product.PRODUCT.productId }, true);
+    public static final ForeignKey<ProductRecord, ClientRecord> FK_PRODUCT_CLIENTID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_clientId"), new TableField[] { Product.PRODUCT.CLIENTID }, org.fk.database1.testshop.Keys.KEY_CLIENT_PRIMARY, new TableField[] { Client.CLIENT.CLIENTID }, true);
+    public static final ForeignKey<ProductRecord, UserRecord> FK_PRODUCT_CREATORID = Internal.createForeignKey(Product.PRODUCT, DSL.name("fk_product_creatorId"), new TableField[] { Product.PRODUCT.CREATORID }, org.fk.database1.testshop.Keys.KEY_USER_PRIMARY, new TableField[] { User.USER.USERID }, true);
+    public static final ForeignKey<ProductLangRecord, LangRecord> FK_PRODUCT_LANG_LANGID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_langId"), new TableField[] { ProductLang.PRODUCT_LANG.LANGID }, org.fk.database1.testshop.Keys.KEY_LANG_PRIMARY, new TableField[] { Lang.LANG.LANGID }, true);
+    public static final ForeignKey<ProductLangRecord, ProductRecord> FK_PRODUCT_LANG_PRODUCTID = Internal.createForeignKey(ProductLang.PRODUCT_LANG, DSL.name("fk_product_lang_productId"), new TableField[] { ProductLang.PRODUCT_LANG.PRODUCTID }, Keys.KEY_PRODUCT_PRIMARY, new TableField[] { Product.PRODUCT.PRODUCTID }, true);
 }

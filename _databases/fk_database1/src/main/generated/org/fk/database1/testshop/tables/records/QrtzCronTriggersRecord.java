@@ -25,7 +25,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzCronTriggersRecord SCHED_NAME(String value) {
+    public QrtzCronTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzCronTriggersRecord TRIGGER_NAME(String value) {
+    public QrtzCronTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_NAME() {
+    public String getTRIGGER_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzCronTriggersRecord TRIGGER_GROUP(String value) {
+    public QrtzCronTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_GROUP() {
+    public String getTRIGGER_GROUP() {
         return (String) get(2);
     }
 
@@ -82,7 +82,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.CRON_EXPRESSION</code>.
      */
     @Override
-    public QrtzCronTriggersRecord CRON_EXPRESSION(String value) {
+    public QrtzCronTriggersRecord setCRON_EXPRESSION(String value) {
         set(3, value);
         return this;
     }
@@ -93,7 +93,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
     @NotNull
     @Size(max = 120)
     @Override
-    public String CRON_EXPRESSION() {
+    public String getCRON_EXPRESSION() {
         return (String) get(3);
     }
 
@@ -101,7 +101,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      * Setter for <code>testshop.QRTZ_CRON_TRIGGERS.TIME_ZONE_ID</code>.
      */
     @Override
-    public QrtzCronTriggersRecord TIME_ZONE_ID(String value) {
+    public QrtzCronTriggersRecord setTIME_ZONE_ID(String value) {
         set(4, value);
         return this;
     }
@@ -111,7 +111,7 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
      */
     @Size(max = 80)
     @Override
-    public String TIME_ZONE_ID() {
+    public String getTIME_ZONE_ID() {
         return (String) get(4);
     }
 
@@ -130,11 +130,11 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
 
     @Override
     public void from(IQrtzCronTriggers from) {
-        SCHED_NAME(from.SCHED_NAME());
-        TRIGGER_NAME(from.TRIGGER_NAME());
-        TRIGGER_GROUP(from.TRIGGER_GROUP());
-        CRON_EXPRESSION(from.CRON_EXPRESSION());
-        TIME_ZONE_ID(from.TIME_ZONE_ID());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setCRON_EXPRESSION(from.getCRON_EXPRESSION());
+        setTIME_ZONE_ID(from.getTIME_ZONE_ID());
         resetChangedOnNotNull();
     }
 
@@ -161,11 +161,11 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
     public QrtzCronTriggersRecord(String SCHED_NAME, String TRIGGER_NAME, String TRIGGER_GROUP, String CRON_EXPRESSION, String TIME_ZONE_ID) {
         super(QrtzCronTriggers.QRTZ_CRON_TRIGGERS);
 
-        SCHED_NAME(SCHED_NAME);
-        TRIGGER_NAME(TRIGGER_NAME);
-        TRIGGER_GROUP(TRIGGER_GROUP);
-        CRON_EXPRESSION(CRON_EXPRESSION);
-        TIME_ZONE_ID(TIME_ZONE_ID);
+        setSCHED_NAME(SCHED_NAME);
+        setTRIGGER_NAME(TRIGGER_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
+        setCRON_EXPRESSION(CRON_EXPRESSION);
+        setTIME_ZONE_ID(TIME_ZONE_ID);
         resetChangedOnNotNull();
     }
 
@@ -176,11 +176,11 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
         super(QrtzCronTriggers.QRTZ_CRON_TRIGGERS);
 
         if (value != null) {
-            SCHED_NAME(value.SCHED_NAME());
-            TRIGGER_NAME(value.TRIGGER_NAME());
-            TRIGGER_GROUP(value.TRIGGER_GROUP());
-            CRON_EXPRESSION(value.CRON_EXPRESSION());
-            TIME_ZONE_ID(value.TIME_ZONE_ID());
+            setSCHED_NAME(value.getSCHED_NAME());
+            setTRIGGER_NAME(value.getTRIGGER_NAME());
+            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
+            setCRON_EXPRESSION(value.getCRON_EXPRESSION());
+            setTIME_ZONE_ID(value.getTIME_ZONE_ID());
             resetChangedOnNotNull();
         }
     }

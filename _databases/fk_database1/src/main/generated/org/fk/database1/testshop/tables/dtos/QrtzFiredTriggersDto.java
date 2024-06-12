@@ -58,7 +58,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -66,8 +66,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers SCHED_NAME(String SCHED_NAME) {
+    public QrtzFiredTriggersDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -77,7 +78,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @NotNull
     @Size(max = 95)
     @Override
-    public String ENTRY_ID() {
+    public String getENTRY_ID() {
         return this.ENTRY_ID;
     }
 
@@ -85,8 +86,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.ENTRY_ID</code>.
      */
     @Override
-    public QrtzFiredTriggers ENTRY_ID(String ENTRY_ID) {
+    public QrtzFiredTriggersDto setENTRY_ID(String ENTRY_ID) {
         this.ENTRY_ID = ENTRY_ID;
+        this.keeper.touch("ENTRY_ID");
         return this;
     }
 
@@ -96,7 +98,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_NAME() {
+    public String getTRIGGER_NAME() {
         return this.TRIGGER_NAME;
     }
 
@@ -104,8 +106,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers TRIGGER_NAME(String TRIGGER_NAME) {
+    public QrtzFiredTriggersDto setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
+        this.keeper.touch("TRIGGER_NAME");
         return this;
     }
 
@@ -115,7 +118,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String TRIGGER_GROUP() {
+    public String getTRIGGER_GROUP() {
         return this.TRIGGER_GROUP;
     }
 
@@ -123,8 +126,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzFiredTriggers TRIGGER_GROUP(String TRIGGER_GROUP) {
+    public QrtzFiredTriggersDto setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
+        this.keeper.touch("TRIGGER_GROUP");
         return this;
     }
 
@@ -134,7 +138,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String INSTANCE_NAME() {
+    public String getINSTANCE_NAME() {
         return this.INSTANCE_NAME;
     }
 
@@ -142,8 +146,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.INSTANCE_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers INSTANCE_NAME(String INSTANCE_NAME) {
+    public QrtzFiredTriggersDto setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
+        this.keeper.touch("INSTANCE_NAME");
         return this;
     }
 
@@ -152,7 +157,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @NotNull
     @Override
-    public Long FIRED_TIME() {
+    public Long getFIRED_TIME() {
         return this.FIRED_TIME;
     }
 
@@ -160,8 +165,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.FIRED_TIME</code>.
      */
     @Override
-    public QrtzFiredTriggers FIRED_TIME(Long FIRED_TIME) {
+    public QrtzFiredTriggersDto setFIRED_TIME(Long FIRED_TIME) {
         this.FIRED_TIME = FIRED_TIME;
+        this.keeper.touch("FIRED_TIME");
         return this;
     }
 
@@ -170,7 +176,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @NotNull
     @Override
-    public Long SCHED_TIME() {
+    public Long getSCHED_TIME() {
         return this.SCHED_TIME;
     }
 
@@ -178,8 +184,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.SCHED_TIME</code>.
      */
     @Override
-    public QrtzFiredTriggers SCHED_TIME(Long SCHED_TIME) {
+    public QrtzFiredTriggersDto setSCHED_TIME(Long SCHED_TIME) {
         this.SCHED_TIME = SCHED_TIME;
+        this.keeper.touch("SCHED_TIME");
         return this;
     }
 
@@ -188,7 +195,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @NotNull
     @Override
-    public Integer PRIORITY() {
+    public Integer getPRIORITY() {
         return this.PRIORITY;
     }
 
@@ -196,8 +203,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public QrtzFiredTriggers PRIORITY(Integer PRIORITY) {
+    public QrtzFiredTriggersDto setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
+        this.keeper.touch("PRIORITY");
         return this;
     }
 
@@ -207,7 +215,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
     @NotNull
     @Size(max = 16)
     @Override
-    public String STATE() {
+    public String getSTATE() {
         return this.STATE;
     }
 
@@ -215,8 +223,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.STATE</code>.
      */
     @Override
-    public QrtzFiredTriggers STATE(String STATE) {
+    public QrtzFiredTriggersDto setSTATE(String STATE) {
         this.STATE = STATE;
+        this.keeper.touch("STATE");
         return this;
     }
 
@@ -225,7 +234,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @Size(max = 190)
     @Override
-    public String JOB_NAME() {
+    public String getJOB_NAME() {
         return this.JOB_NAME;
     }
 
@@ -233,8 +242,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public QrtzFiredTriggers JOB_NAME(String JOB_NAME) {
+    public QrtzFiredTriggersDto setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
+        this.keeper.touch("JOB_NAME");
         return this;
     }
 
@@ -243,7 +253,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @Size(max = 190)
     @Override
-    public String JOB_GROUP() {
+    public String getJOB_GROUP() {
         return this.JOB_GROUP;
     }
 
@@ -251,8 +261,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzFiredTriggers JOB_GROUP(String JOB_GROUP) {
+    public QrtzFiredTriggersDto setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
+        this.keeper.touch("JOB_GROUP");
         return this;
     }
 
@@ -261,7 +272,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @Size(max = 1)
     @Override
-    public String IS_NONCONCURRENT() {
+    public String getIS_NONCONCURRENT() {
         return this.IS_NONCONCURRENT;
     }
 
@@ -269,8 +280,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public QrtzFiredTriggers IS_NONCONCURRENT(String IS_NONCONCURRENT) {
+    public QrtzFiredTriggersDto setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
+        this.keeper.touch("IS_NONCONCURRENT");
         return this;
     }
 
@@ -279,7 +291,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      */
     @Size(max = 1)
     @Override
-    public String REQUESTS_RECOVERY() {
+    public String getREQUESTS_RECOVERY() {
         return this.REQUESTS_RECOVERY;
     }
 
@@ -287,8 +299,9 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
      * Setter for <code>testshop.QRTZ_FIRED_TRIGGERS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public QrtzFiredTriggers REQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
+    public QrtzFiredTriggersDto setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
+        this.keeper.touch("REQUESTS_RECOVERY");
         return this;
     }
 
@@ -328,19 +341,19 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
 
     @Override
     public void from(IQrtzFiredTriggers from) {
-        SCHED_NAME(from.SCHED_NAME());
-        ENTRY_ID(from.ENTRY_ID());
-        TRIGGER_NAME(from.TRIGGER_NAME());
-        TRIGGER_GROUP(from.TRIGGER_GROUP());
-        INSTANCE_NAME(from.INSTANCE_NAME());
-        FIRED_TIME(from.FIRED_TIME());
-        SCHED_TIME(from.SCHED_TIME());
-        PRIORITY(from.PRIORITY());
-        STATE(from.STATE());
-        JOB_NAME(from.JOB_NAME());
-        JOB_GROUP(from.JOB_GROUP());
-        IS_NONCONCURRENT(from.IS_NONCONCURRENT());
-        REQUESTS_RECOVERY(from.REQUESTS_RECOVERY());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setENTRY_ID(from.getENTRY_ID());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setINSTANCE_NAME(from.getINSTANCE_NAME());
+        setFIRED_TIME(from.getFIRED_TIME());
+        setSCHED_TIME(from.getSCHED_TIME());
+        setPRIORITY(from.getPRIORITY());
+        setSTATE(from.getSTATE());
+        setJOB_NAME(from.getJOB_NAME());
+        setJOB_GROUP(from.getJOB_GROUP());
+        setIS_NONCONCURRENT(from.getIS_NONCONCURRENT());
+        setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
     }
     @Override
     public <E extends IQrtzFiredTriggers> E into(E into) {

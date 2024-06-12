@@ -21,160 +21,160 @@ public interface IDatabasechangelog extends Serializable {
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
-    public IDatabasechangelog ID(String value);
+    public IDatabasechangelog setID(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ID</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String ID();
+    public String getID();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
-    public IDatabasechangelog AUTHOR(String value);
+    public IDatabasechangelog setAUTHOR(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.AUTHOR</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String AUTHOR();
+    public String getAUTHOR();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
-    public IDatabasechangelog FILENAME(String value);
+    public IDatabasechangelog setFILENAME(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.FILENAME</code>.
      */
     @NotNull
     @Size(max = 255)
-    public String FILENAME();
+    public String getFILENAME();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
-    public IDatabasechangelog DATEEXECUTED(LocalDateTime value);
+    public IDatabasechangelog setDATEEXECUTED(LocalDateTime value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DATEEXECUTED</code>.
      */
     @NotNull
-    public LocalDateTime DATEEXECUTED();
+    public LocalDateTime getDATEEXECUTED();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
-    public IDatabasechangelog ORDEREXECUTED(Integer value);
+    public IDatabasechangelog setORDEREXECUTED(Integer value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.ORDEREXECUTED</code>.
      */
     @NotNull
-    public Integer ORDEREXECUTED();
+    public Integer getORDEREXECUTED();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
-    public IDatabasechangelog EXECTYPE(String value);
+    public IDatabasechangelog setEXECTYPE(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.EXECTYPE</code>.
      */
     @NotNull
     @Size(max = 10)
-    public String EXECTYPE();
+    public String getEXECTYPE();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
-    public IDatabasechangelog MD5SUM(String value);
+    public IDatabasechangelog setMD5SUM(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.MD5SUM</code>.
      */
     @Size(max = 35)
-    public String MD5SUM();
+    public String getMD5SUM();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
-    public IDatabasechangelog DESCRIPTION(String value);
+    public IDatabasechangelog setDESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DESCRIPTION</code>.
      */
     @Size(max = 255)
-    public String DESCRIPTION();
+    public String getDESCRIPTION();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
-    public IDatabasechangelog COMMENTS(String value);
+    public IDatabasechangelog setCOMMENTS(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.COMMENTS</code>.
      */
     @Size(max = 255)
-    public String COMMENTS();
+    public String getCOMMENTS();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
-    public IDatabasechangelog TAG(String value);
+    public IDatabasechangelog setTAG(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.TAG</code>.
      */
     @Size(max = 255)
-    public String TAG();
+    public String getTAG();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
-    public IDatabasechangelog LIQUIBASE(String value);
+    public IDatabasechangelog setLIQUIBASE(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LIQUIBASE</code>.
      */
     @Size(max = 20)
-    public String LIQUIBASE();
+    public String getLIQUIBASE();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
-    public IDatabasechangelog CONTEXTS(String value);
+    public IDatabasechangelog setCONTEXTS(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.CONTEXTS</code>.
      */
     @Size(max = 255)
-    public String CONTEXTS();
+    public String getCONTEXTS();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
-    public IDatabasechangelog LABELS(String value);
+    public IDatabasechangelog setLABELS(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.LABELS</code>.
      */
     @Size(max = 255)
-    public String LABELS();
+    public String getLABELS();
 
     /**
      * Setter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
-    public IDatabasechangelog DEPLOYMENT_ID(String value);
+    public IDatabasechangelog setDEPLOYMENT_ID(String value);
 
     /**
      * Getter for <code>testshop.DATABASECHANGELOG.DEPLOYMENT_ID</code>.
      */
     @Size(max = 10)
-    public String DEPLOYMENT_ID();
+    public String getDEPLOYMENT_ID();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

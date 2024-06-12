@@ -48,7 +48,7 @@ public class PostDto implements IPost, DTO {
      */
     @NotNull
     @Override
-    public UUID Id() {
+    public UUID getId() {
         return this.id;
     }
 
@@ -56,8 +56,9 @@ public class PostDto implements IPost, DTO {
      * Setter for <code>testshop.post.id</code>.
      */
     @Override
-    public Post Id(UUID id) {
+    public PostDto setId(UUID id) {
         this.id = id;
+        this.keeper.touch("id");
         return this;
     }
 
@@ -66,7 +67,7 @@ public class PostDto implements IPost, DTO {
      */
     @Size(max = 255)
     @Override
-    public String Title() {
+    public String getTitle() {
         return this.title;
     }
 
@@ -74,8 +75,9 @@ public class PostDto implements IPost, DTO {
      * Setter for <code>testshop.post.title</code>.
      */
     @Override
-    public Post Title(String title) {
+    public PostDto setTitle(String title) {
         this.title = title;
+        this.keeper.touch("title");
         return this;
     }
 
@@ -115,8 +117,8 @@ public class PostDto implements IPost, DTO {
 
     @Override
     public void from(IPost from) {
-        Id(from.Id());
-        Title(from.Title());
+        setId(from.getId());
+        setTitle(from.getTitle());
     }
     @Override
     public <E extends IPost> E into(E into) {

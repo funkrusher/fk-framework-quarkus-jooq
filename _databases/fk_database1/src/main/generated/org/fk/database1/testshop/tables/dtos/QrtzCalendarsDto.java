@@ -49,7 +49,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     @NotNull
     @Size(max = 120)
     @Override
-    public String SCHED_NAME() {
+    public String getSCHED_NAME() {
         return this.SCHED_NAME;
     }
 
@@ -57,8 +57,9 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
      * Setter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzCalendars SCHED_NAME(String SCHED_NAME) {
+    public QrtzCalendarsDto setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
+        this.keeper.touch("SCHED_NAME");
         return this;
     }
 
@@ -68,7 +69,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     @NotNull
     @Size(max = 190)
     @Override
-    public String CALENDAR_NAME() {
+    public String getCALENDAR_NAME() {
         return this.CALENDAR_NAME;
     }
 
@@ -76,8 +77,9 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
      */
     @Override
-    public QrtzCalendars CALENDAR_NAME(String CALENDAR_NAME) {
+    public QrtzCalendarsDto setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
+        this.keeper.touch("CALENDAR_NAME");
         return this;
     }
 
@@ -87,7 +89,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
     @NotNull
     @Size(max = 65535)
     @Override
-    public byte[] CALENDAR() {
+    public byte[] getCALENDAR() {
         return this.CALENDAR;
     }
 
@@ -95,8 +97,9 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.
      */
     @Override
-    public QrtzCalendars CALENDAR(byte[] CALENDAR) {
+    public QrtzCalendarsDto setCALENDAR(byte[] CALENDAR) {
         this.CALENDAR = CALENDAR;
+        this.keeper.touch("CALENDAR");
         return this;
     }
 
@@ -136,9 +139,9 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
 
     @Override
     public void from(IQrtzCalendars from) {
-        SCHED_NAME(from.SCHED_NAME());
-        CALENDAR_NAME(from.CALENDAR_NAME());
-        CALENDAR(from.CALENDAR());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setCALENDAR_NAME(from.getCALENDAR_NAME());
+        setCALENDAR(from.getCALENDAR());
     }
     @Override
     public <E extends IQrtzCalendars> E into(E into) {

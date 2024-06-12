@@ -57,7 +57,7 @@ public class Client extends TableImpl<ClientRecord> {
     /**
      * The column <code>testshop.client.clientId</code>.
      */
-    public final TableField<ClientRecord, Integer> clientId = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ClientRecord, Integer> CLIENTID = createField(DSL.name("clientId"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     private Client(Name alias, Table<ClientRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
