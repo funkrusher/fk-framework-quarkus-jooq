@@ -6,7 +6,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "ProductPaginate", description = "Represents the pagination result of products")
-
 public class ProductPaginateDTO {
 
     private List<ProductDTO> products;

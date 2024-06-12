@@ -401,6 +401,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
         setIS_NONCONCURRENT(from.getIS_NONCONCURRENT());
         setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
     }
+
     @Override
     public <E extends IQrtzFiredTriggers> E into(E into) {
         into.from(this);

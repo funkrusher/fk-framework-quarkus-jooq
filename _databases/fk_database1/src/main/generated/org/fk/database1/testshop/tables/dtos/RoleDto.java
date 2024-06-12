@@ -108,6 +108,7 @@ public class RoleDto implements IRole, DTO {
     public void from(IRole from) {
         setRoleId(from.getRoleId());
     }
+
     @Override
     public <E extends IRole> E into(E into) {
         into.from(this);

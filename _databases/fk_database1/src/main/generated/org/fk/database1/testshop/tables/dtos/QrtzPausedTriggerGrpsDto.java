@@ -133,6 +133,7 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
         setSCHED_NAME(from.getSCHED_NAME());
         setTRIGGER_GROUP(from.getTRIGGER_GROUP());
     }
+
     @Override
     public <E extends IQrtzPausedTriggerGrps> E into(E into) {
         into.from(this);

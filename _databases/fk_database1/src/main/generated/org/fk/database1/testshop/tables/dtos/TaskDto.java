@@ -129,6 +129,7 @@ public class TaskDto implements ITask, DTO {
         setTaskId(from.getTaskId());
         setCreatedAt(from.getCreatedAt());
     }
+
     @Override
     public <E extends ITask> E into(E into) {
         into.from(this);

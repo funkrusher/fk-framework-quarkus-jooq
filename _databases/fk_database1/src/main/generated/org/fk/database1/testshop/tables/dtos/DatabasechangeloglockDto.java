@@ -181,6 +181,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
         setLOCKGRANTED(from.getLOCKGRANTED());
         setLOCKEDBY(from.getLOCKEDBY());
     }
+
     @Override
     public <E extends IDatabasechangeloglock> E into(E into) {
         into.from(this);

@@ -133,6 +133,7 @@ public class PostDto implements IPost, DTO {
         setId(from.getId());
         setTitle(from.getTitle());
     }
+
     @Override
     public <E extends IPost> E into(E into) {
         into.from(this);

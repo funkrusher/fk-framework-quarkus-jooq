@@ -207,6 +207,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
         setCRON_EXPRESSION(from.getCRON_EXPRESSION());
         setTIME_ZONE_ID(from.getTIME_ZONE_ID());
     }
+
     @Override
     public <E extends IQrtzCronTriggers> E into(E into) {
         into.from(this);

@@ -134,6 +134,7 @@ public class DatainitDto implements IDatainit, DTO {
         setDataInitId(from.getDataInitId());
         setCreatedAt(from.getCreatedAt());
     }
+
     @Override
     public <E extends IDatainit> E into(E into) {
         into.from(this);

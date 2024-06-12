@@ -230,6 +230,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
         setREPEAT_INTERVAL(from.getREPEAT_INTERVAL());
         setTIMES_TRIGGERED(from.getTIMES_TRIGGERED());
     }
+
     @Override
     public <E extends IQrtzSimpleTriggers> E into(E into) {
         into.from(this);

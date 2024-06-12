@@ -426,6 +426,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
         setLABELS(from.getLABELS());
         setDEPLOYMENT_ID(from.getDEPLOYMENT_ID());
     }
+
     @Override
     public <E extends IDatabasechangelog> E into(E into) {
         into.from(this);

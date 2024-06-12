@@ -282,6 +282,7 @@ public class ProductDto implements IProduct, DTO {
         setDeleted(from.getDeleted());
         setCreatorId(from.getCreatorId());
     }
+
     @Override
     public <E extends IProduct> E into(E into) {
         into.from(this);

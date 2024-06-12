@@ -418,6 +418,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
         setBOOL_PROP_1(from.getBOOL_PROP_1());
         setBOOL_PROP_2(from.getBOOL_PROP_2());
     }
+
     @Override
     public <E extends IQrtzSimpropTriggers> E into(E into) {
         into.from(this);

@@ -181,6 +181,7 @@ public class ProductLangDto implements IProductLang, DTO {
         setName(from.getName());
         setDescription(from.getDescription());
     }
+
     @Override
     public <E extends IProductLang> E into(E into) {
         into.from(this);

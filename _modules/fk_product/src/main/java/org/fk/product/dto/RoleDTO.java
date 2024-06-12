@@ -33,18 +33,17 @@ public class RoleDTO implements IRole, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public RoleDTO() { this.keeper = new BookKeeper(this); }
+    public RoleDTO() {}
 
-    public RoleDTO(
-            // Database-Fields
-            String roleId
-    ) {
-        this.keeper = new BookKeeper(this);
-
-        setRoleId(roleId);
+    public RoleDTO(IRole value) {
+        this.setRoleId(value.getRoleId());
     }
 
-
+    public RoleDTO(
+        String roleId
+    ) {
+        this.setRoleId(roleId);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -108,6 +107,7 @@ public class RoleDTO implements IRole, DTO {
     public void from(IRole from) {
         setRoleId(from.getRoleId());
     }
+
     @Override
     public <E extends IRole> E into(E into) {
         into.from(this);
@@ -120,7 +120,7 @@ public class RoleDTO implements IRole, DTO {
 
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
 
     @JsonIgnore
     @XmlTransient

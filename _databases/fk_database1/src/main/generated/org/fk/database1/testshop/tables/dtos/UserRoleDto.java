@@ -132,6 +132,7 @@ public class UserRoleDto implements IUserRole, DTO {
         setUserId(from.getUserId());
         setRoleId(from.getRoleId());
     }
+
     @Override
     public <E extends IUserRole> E into(E into) {
         into.from(this);

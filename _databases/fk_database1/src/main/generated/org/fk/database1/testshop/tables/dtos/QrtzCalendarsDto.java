@@ -159,6 +159,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
         setCALENDAR_NAME(from.getCALENDAR_NAME());
         setCALENDAR(from.getCALENDAR());
     }
+
     @Override
     public <E extends IQrtzCalendars> E into(E into) {
         into.from(this);

@@ -103,6 +103,7 @@ public class ClientDto implements IClient, DTO {
     public void from(IClient from) {
         setClientId(from.getClientId());
     }
+
     @Override
     public <E extends IClient> E into(E into) {
         into.from(this);

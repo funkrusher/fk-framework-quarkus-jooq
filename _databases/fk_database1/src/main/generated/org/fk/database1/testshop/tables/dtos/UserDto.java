@@ -205,6 +205,7 @@ public class UserDto implements IUser, DTO {
         setFirstname(from.getFirstname());
         setLastname(from.getLastname());
     }
+
     @Override
     public <E extends IUser> E into(E into) {
         into.from(this);

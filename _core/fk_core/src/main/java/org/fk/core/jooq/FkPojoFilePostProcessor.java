@@ -511,11 +511,18 @@ public class FkPojoFilePostProcessor {
             }
             eventFinished = true;
         } else if (event == COLLECTED_OVERRIDE_BLOCK && line.contains(CURLY_CLOSE)) {
-            boolean isToStringMethod = linesCollected
-                    .stream()
-                    .anyMatch(x -> x.contains("public String toString() {"));
-            if (isToStringMethod) {
+            final String secondLine = linesCollected.get(1);
+            if (secondLine.contains("public String toString() {")) {
                 rewriteCollectedToStringBlock(writer);
+            } else if (secondLine.contains("from(")) {
+                for (String collectedLine : linesCollected) {
+                    writer.write(collectedLine);
+                }
+                writer.write(EOL);
+            } else if (secondLine.contains("into(")) {
+                for (String collectedLine : linesCollected) {
+                    writer.write(collectedLine);
+                }
             } else {
                 // we assume that the other case here is the setter-block.
                 rewriteCollectedSetterBlock(linesCollected, writer, configs);
@@ -560,8 +567,8 @@ public class FkPojoFilePostProcessor {
                 if (writeEnabled && (lastLine == null || !(lastLine.equals(EMPTY_STRING) && line.equals(EMPTY_STRING)))) {
                     // ignore double empty lines, but write everything else.
                     writer.write(line + EOL);
-                    lastLine = line;
                 }
+                lastLine = line;
             } else {
                 // event given, use the custom write-logic.
                 event = processOngoingEvent(event, line, linesCollected, writer, configs);

@@ -157,6 +157,7 @@ public class LangDto implements ILang, DTO {
         setCode(from.getCode());
         setDescription(from.getDescription());
     }
+
     @Override
     public <E extends ILang> E into(E into) {
         into.from(this);

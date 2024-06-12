@@ -181,6 +181,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
         setLAST_CHECKIN_TIME(from.getLAST_CHECKIN_TIME());
         setCHECKIN_INTERVAL(from.getCHECKIN_INTERVAL());
     }
+
     @Override
     public <E extends IQrtzSchedulerState> E into(E into) {
         into.from(this);

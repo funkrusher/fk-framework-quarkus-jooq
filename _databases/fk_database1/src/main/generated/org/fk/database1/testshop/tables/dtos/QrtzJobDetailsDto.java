@@ -332,6 +332,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
         setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
         setJOB_DATA(from.getJOB_DATA());
     }
+
     @Override
     public <E extends IQrtzJobDetails> E into(E into) {
         into.from(this);

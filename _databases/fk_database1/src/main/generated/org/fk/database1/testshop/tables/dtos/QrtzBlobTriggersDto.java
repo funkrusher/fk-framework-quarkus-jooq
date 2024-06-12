@@ -183,6 +183,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
         setTRIGGER_GROUP(from.getTRIGGER_GROUP());
         setBLOB_DATA(from.getBLOB_DATA());
     }
+
     @Override
     public <E extends IQrtzBlobTriggers> E into(E into) {
         into.from(this);

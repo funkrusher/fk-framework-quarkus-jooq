@@ -37,31 +37,31 @@ public class UserDTO implements IUser, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public UserDTO() { this.keeper = new BookKeeper(this); }
+    public UserDTO() {}
 
-    public UserDTO(
-            // Database-Fields
-            Integer userId,
-            Integer clientId,
-            String email,
-            String firstname,
-            String lastname,
-
-            // Non-database-Fields
-            List<RoleDTO> roles
-    ) {
-        this.keeper = new BookKeeper(this);
-
-        setUserId(userId);
-        setClientId(clientId);
-        setEmail(email);
-        setFirstname(firstname);
-        setLastname(lastname);
-
-        setRoles(roles);
+    public UserDTO(IUser value) {
+        this.setUserId(value.getUserId());
+        this.setClientId(value.getClientId());
+        this.setEmail(value.getEmail());
+        this.setFirstname(value.getFirstname());
+        this.setLastname(value.getLastname());
     }
 
-
+    public UserDTO(
+        Integer userId,
+        Integer clientId,
+        String email,
+        String firstname,
+        String lastname,
+        List<RoleDTO> roles
+    ) {
+        this.setUserId(userId);
+        this.setClientId(clientId);
+        this.setEmail(email);
+        this.setFirstname(firstname);
+        this.setLastname(lastname);
+        this.setRoles(roles);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -167,6 +167,7 @@ public class UserDTO implements IUser, DTO {
     // -------------------------------------------------------------------------
     // Non-Database-Fields Setters/Getters (please define here)
     // -------------------------------------------------------------------------
+
     public List<RoleDTO> getRoles() {
         return roles;
     }
@@ -176,6 +177,7 @@ public class UserDTO implements IUser, DTO {
         keeper.touch("roles");
         return this;
     }
+
     // -------------------------------------------------------------------------
     // ToString, Equals, HashCode
     // -------------------------------------------------------------------------
@@ -214,6 +216,7 @@ public class UserDTO implements IUser, DTO {
         setFirstname(from.getFirstname());
         setLastname(from.getLastname());
     }
+
     @Override
     public <E extends IUser> E into(E into) {
         into.from(this);
@@ -226,7 +229,7 @@ public class UserDTO implements IUser, DTO {
 
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
 
     @JsonIgnore
     @XmlTransient

@@ -133,6 +133,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
         setSCHED_NAME(from.getSCHED_NAME());
         setLOCK_NAME(from.getLOCK_NAME());
     }
+
     @Override
     public <E extends IQrtzLocks> E into(E into) {
         into.from(this);

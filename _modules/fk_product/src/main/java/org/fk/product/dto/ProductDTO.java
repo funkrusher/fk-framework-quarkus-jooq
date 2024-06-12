@@ -9,11 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
-import org.fk.database1.testshop2.tables.dtos.ProductDto;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.product.type.ProductTypeId;
-
-import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +20,6 @@ import java.util.List;
  */
 public class ProductDTO implements IProduct, DTO {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------
@@ -33,7 +29,6 @@ public class ProductDTO implements IProduct, DTO {
     private Long productId;
     private Integer clientId;
     private BigDecimal price;
-    @Schema(example = "book", type = SchemaType.STRING, format = "string", description = "type of product (one of: book, ...)")
     private String typeId;
     @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
     private LocalDateTime createdAt;
@@ -67,36 +62,41 @@ public class ProductDTO implements IProduct, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public ProductDTO() { this.keeper = new BookKeeper(this); }
+    public ProductDTO() {}
+
+    public ProductDTO(IProduct value) {
+        this.setProductId(value.getProductId());
+        this.setClientId(value.getClientId());
+        this.setPrice(value.getPrice());
+        this.setTypeId(value.getTypeId());
+        this.setCreatedAt(value.getCreatedAt());
+        this.setUpdatedAt(value.getUpdatedAt());
+        this.setDeleted(value.getDeleted());
+        this.setCreatorId(value.getCreatorId());
+    }
 
     public ProductDTO(
-            // Database-Fields
-            Long productId,
-            Integer clientId,
-            BigDecimal price,
-            String typeId,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
-            Boolean deleted,
-            Integer creatorId,
-
-            // Non-database-Fields
-            UserDTO creator,
-            List<ProductLangDTO> langs
+        Long productId,
+        Integer clientId,
+        BigDecimal price,
+        String typeId,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        Boolean deleted,
+        Integer creatorId,
+        UserDTO creator,
+        List<ProductLangDTO> langs
     ) {
-        this.keeper = new BookKeeper(this);
-
-        setProductId(productId);
-        setClientId(clientId);
-        setPrice(price);
-        setTypeId(typeId);
-        setCreatedAt(createdAt);
-        setUpdatedAt(updatedAt);
-        setDeleted(deleted);
-        setCreatorId(creatorId);
-
-        setCreator(creator);
-        setLangs(langs);
+        this.setProductId(productId);
+        this.setClientId(clientId);
+        this.setPrice(price);
+        this.setTypeId(typeId);
+        this.setCreatedAt(createdAt);
+        this.setUpdatedAt(updatedAt);
+        this.setDeleted(deleted);
+        this.setCreatorId(creatorId);
+        this.setCreator(creator);
+        this.setLangs(langs);
     }
 
     // -------------------------------------------------------------------------
@@ -178,13 +178,10 @@ public class ProductDTO implements IProduct, DTO {
      */
     @Override
     public ProductDTO setTypeId(String typeId) {
-        this.productTypeId = ProductTypeId.fromValue(typeId);
         this.typeId = typeId;
-        this.keeper.touch("productTypeId");
         this.keeper.touch("typeId");
         return this;
     }
-
 
     /**
      * Getter for <code>testshop2.product.createdAt</code>.
@@ -370,7 +367,9 @@ public class ProductDTO implements IProduct, DTO {
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
     }
+
     @Override
     public <E extends IProduct> E into(E into) {
         into.from(this);
@@ -383,7 +382,7 @@ public class ProductDTO implements IProduct, DTO {
 
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
 
     @JsonIgnore
     @XmlTransient

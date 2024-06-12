@@ -470,6 +470,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
         setMISFIRE_INSTR(from.getMISFIRE_INSTR());
         setJOB_DATA(from.getJOB_DATA());
     }
+
     @Override
     public <E extends IQrtzTriggers> E into(E into) {
         into.from(this);
