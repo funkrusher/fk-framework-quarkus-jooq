@@ -51,8 +51,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                     PRODUCT.UPDATEDAT,
                     PRODUCT.DELETED,
                     PRODUCT.CREATORID,
-
-                    // Nest a projection of USER fields (using implicit joins)
+                    // creator
                     row(
                         PRODUCT.creator().USERID,
                         PRODUCT.creator().CLIENTID,
@@ -65,17 +64,14 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                             ).from(PRODUCT.creator().role())
                         ).convertFrom(r -> r.map(mapping(RoleDTO::create)))
                     ).convertFrom(nullOnFirstNull(mapping(UserDTO::create))),
-
+                    // langs
                     multiset(
                         selectDistinct(
-                            PRODUCT_LANG.PRODUCTID,
-                            PRODUCT_LANG.LANGID,
-                            PRODUCT_LANG.NAME,
-                            PRODUCT_LANG.DESCRIPTION
-
-                        )
-                            .from(PRODUCT_LANG)
-                            .where(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))
+                            PRODUCT.product().PRODUCTID,
+                            PRODUCT.product().LANGID,
+                            PRODUCT.product().NAME,
+                            PRODUCT.product().DESCRIPTION
+                        ).from(PRODUCT.product())
                     ).convertFrom(r -> r.map(mapping(ProductLangDTO::create)))
                 ).convertFrom(mapping(ProductDTO::create))
             )
