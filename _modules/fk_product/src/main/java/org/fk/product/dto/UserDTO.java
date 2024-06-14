@@ -39,15 +39,7 @@ public class UserDTO implements IUser, DTO {
 
     public UserDTO() {}
 
-    public UserDTO(IUser value) {
-        this.setUserId(value.getUserId());
-        this.setClientId(value.getClientId());
-        this.setEmail(value.getEmail());
-        this.setFirstname(value.getFirstname());
-        this.setLastname(value.getLastname());
-    }
-
-    public UserDTO(
+    public static UserDTO create(
         Integer userId,
         Integer clientId,
         String email,
@@ -55,14 +47,15 @@ public class UserDTO implements IUser, DTO {
         String lastname,
         List<RoleDTO> roles
     ) {
-        this.setUserId(userId);
-        this.setClientId(clientId);
-        this.setEmail(email);
-        this.setFirstname(firstname);
-        this.setLastname(lastname);
-        this.setRoles(roles);
+        return new UserDTO()
+            .setUserId(userId)
+            .setClientId(clientId)
+            .setEmail(email)
+            .setFirstname(firstname)
+            .setLastname(lastname)
+            .setRoles(roles);
     }
-
+    
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
     // -------------------------------------------------------------------------

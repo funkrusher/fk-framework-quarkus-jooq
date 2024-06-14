@@ -36,14 +36,11 @@ public class RoleDto implements IRole, DTO {
  
     public RoleDto() {}
 
-    public RoleDto(IRole value) {
-        this.setRoleId(value.getRoleId());
-    }
-
-    public RoleDto(
+    public static RoleDto create(
         String roleId
     ) {
-        this.setRoleId(roleId);
+        return new RoleDto()
+            .setRoleId(roleId);
     }
 
     // -------------------------------------------------------------------------

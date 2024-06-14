@@ -299,27 +299,7 @@ public class FkPojoFilePostProcessor {
      * @throws IOException internal-error during io.
      */
     private void rewriteCollectedInterfaceConstructorBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
-        for (String collectedLine : linesCollected) {
-            Matcher constructorMatcher = DTO_CONSTRUCTOR_PATTERN.matcher(collectedLine);
-            if (constructorMatcher.find()) {
-                // we arrived at a constructor-opening
-                String constructorName = constructorMatcher.group(1);
-                writer.write(collectedLine.replaceFirst(constructorName, constructorName + DTO_NAME));
-            } else {
-                Matcher fieldInitMatcher = DTO_FIELD_INIT_PATTERN.matcher(collectedLine);
-                if (fieldInitMatcher.find()) {
-                    // we arrived at a field-init
-                    String fieldInitName = fieldInitMatcher.group(1);
-                    String fieldInitNameCC = Character.toUpperCase(fieldInitName.charAt(0)) + fieldInitName.substring(1);
-                    String setterName = "        this.set" + fieldInitNameCC + "(" + "value.get" + fieldInitNameCC + "());";
-                    writer.write(setterName);
-                    writer.write(EOL);
-                } else {
-                    writer.write(collectedLine);
-                }
-            }
-        }
-        writer.write(EOL);
+        // we don't need that one for now.
     }
 
     /**
@@ -331,26 +311,60 @@ public class FkPojoFilePostProcessor {
      * @throws IOException internal-error during io.
      */
     private void rewriteCollectedFieldsConstructorBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        String constructorName = null;
+
+        List<String> openMethodPart = new ArrayList<>();
+        List<String> setterCalls = new ArrayList<>();
+        List<String> closingMethodPart = new ArrayList<>();
+
+        int step = 0;
         for (String collectedLine : linesCollected) {
             Matcher constructorMatcher = DTO_CONSTRUCTOR_PATTERN.matcher(collectedLine);
             if (constructorMatcher.find()) {
-                // we arrived at a setter-method.
-                String constructorName = constructorMatcher.group(1);
-                writer.write(collectedLine.replaceFirst(constructorName, constructorName + DTO_NAME));
+                // we arrived at a constructor-method.
+                constructorName = constructorMatcher.group(1);
+                openMethodPart.add(collectedLine.replaceFirst(constructorName, "static " + constructorName + DTO_NAME + " create"));
+            } else if (collectedLine.contains("{")) {
+                openMethodPart.add(collectedLine);
+                openMethodPart.add("        return new " + constructorName + DTO_NAME + "()");
+                openMethodPart.add(EOL);
             } else {
                 Matcher fieldInitMatcher = DTO_FIELD_INIT_PATTERN.matcher(collectedLine);
                 if (fieldInitMatcher.find()) {
+                    step = 1;
                     // we arrived at a field-init
                     String fieldInitName = fieldInitMatcher.group(1);
                     String fieldInitNameCC = Character.toUpperCase(fieldInitName.charAt(0)) + fieldInitName.substring(1);
-                    String setterName = "        this.set" + fieldInitNameCC + "(" + fieldInitName + ");";
-                    writer.write(setterName);
-                    writer.write(EOL);
+                    String setterName = "            .set" + fieldInitNameCC + "(" + fieldInitName + ")";
+                    setterCalls.add(setterName);
                 } else {
-                    writer.write(collectedLine);
+                    if (step == 1) {
+                        step = 2;
+                    }
+                    if (step == 0) {
+                        openMethodPart.add(collectedLine);
+                    } else if (step == 2) {
+                        closingMethodPart.add(collectedLine);
+                    }
                 }
             }
         }
+
+        for (String line : openMethodPart) {
+            writer.write(line);
+        }
+        for (int i=0; i < setterCalls.size(); i++) {
+            String setterCall = setterCalls.get(i);
+            writer.write(setterCall);
+            if ((i+1) == setterCalls.size()) {
+                writer.write(";");
+            }
+            writer.write(EOL);
+        }
+        for (String line : closingMethodPart) {
+            writer.write(line);
+        }
+
         writer.write(EOL);
         writer.write(HEADER_DATABASE_FIELDS_GETTERS_SETTERS);
         writer.write(EOL);

@@ -52,26 +52,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
  
     public QrtzTriggersDto() {}
 
-    public QrtzTriggersDto(IQrtzTriggers value) {
-        this.setSCHED_NAME(value.getSCHED_NAME());
-        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
-        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-        this.setJOB_NAME(value.getJOB_NAME());
-        this.setJOB_GROUP(value.getJOB_GROUP());
-        this.setDESCRIPTION(value.getDESCRIPTION());
-        this.setNEXT_FIRE_TIME(value.getNEXT_FIRE_TIME());
-        this.setPREV_FIRE_TIME(value.getPREV_FIRE_TIME());
-        this.setPRIORITY(value.getPRIORITY());
-        this.setTRIGGER_STATE(value.getTRIGGER_STATE());
-        this.setTRIGGER_TYPE(value.getTRIGGER_TYPE());
-        this.setSTART_TIME(value.getSTART_TIME());
-        this.setEND_TIME(value.getEND_TIME());
-        this.setCALENDAR_NAME(value.getCALENDAR_NAME());
-        this.setMISFIRE_INSTR(value.getMISFIRE_INSTR());
-        this.setJOB_DATA(value.getJOB_DATA());
-    }
-
-    public QrtzTriggersDto(
+    public static QrtzTriggersDto create(
         String SCHED_NAME,
         String TRIGGER_NAME,
         String TRIGGER_GROUP,
@@ -89,22 +70,23 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
         Short MISFIRE_INSTR,
         byte[] JOB_DATA
     ) {
-        this.setSCHED_NAME(SCHED_NAME);
-        this.setTRIGGER_NAME(TRIGGER_NAME);
-        this.setTRIGGER_GROUP(TRIGGER_GROUP);
-        this.setJOB_NAME(JOB_NAME);
-        this.setJOB_GROUP(JOB_GROUP);
-        this.setDESCRIPTION(DESCRIPTION);
-        this.setNEXT_FIRE_TIME(NEXT_FIRE_TIME);
-        this.setPREV_FIRE_TIME(PREV_FIRE_TIME);
-        this.setPRIORITY(PRIORITY);
-        this.setTRIGGER_STATE(TRIGGER_STATE);
-        this.setTRIGGER_TYPE(TRIGGER_TYPE);
-        this.setSTART_TIME(START_TIME);
-        this.setEND_TIME(END_TIME);
-        this.setCALENDAR_NAME(CALENDAR_NAME);
-        this.setMISFIRE_INSTR(MISFIRE_INSTR);
-        this.setJOB_DATA(JOB_DATA);
+        return new QrtzTriggersDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_NAME(TRIGGER_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP)
+            .setJOB_NAME(JOB_NAME)
+            .setJOB_GROUP(JOB_GROUP)
+            .setDESCRIPTION(DESCRIPTION)
+            .setNEXT_FIRE_TIME(NEXT_FIRE_TIME)
+            .setPREV_FIRE_TIME(PREV_FIRE_TIME)
+            .setPRIORITY(PRIORITY)
+            .setTRIGGER_STATE(TRIGGER_STATE)
+            .setTRIGGER_TYPE(TRIGGER_TYPE)
+            .setSTART_TIME(START_TIME)
+            .setEND_TIME(END_TIME)
+            .setCALENDAR_NAME(CALENDAR_NAME)
+            .setMISFIRE_INSTR(MISFIRE_INSTR)
+            .setJOB_DATA(JOB_DATA);
     }
 
     // -------------------------------------------------------------------------

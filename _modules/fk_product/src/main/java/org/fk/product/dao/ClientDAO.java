@@ -14,9 +14,4 @@ public class ClientDAO extends AbstractDAO<ClientRecord, IClient, Integer> {
     public ClientDAO(DSLContext dsl) {
         super(dsl, Client.CLIENT);
     }
-
-    @Override
-    public Integer getId(ClientRecord object) {
-        return object.getClientId();
-    }
 }

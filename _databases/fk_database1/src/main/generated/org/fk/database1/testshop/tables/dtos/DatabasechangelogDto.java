@@ -52,24 +52,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
  
     public DatabasechangelogDto() {}
 
-    public DatabasechangelogDto(IDatabasechangelog value) {
-        this.setID(value.getID());
-        this.setAUTHOR(value.getAUTHOR());
-        this.setFILENAME(value.getFILENAME());
-        this.setDATEEXECUTED(value.getDATEEXECUTED());
-        this.setORDEREXECUTED(value.getORDEREXECUTED());
-        this.setEXECTYPE(value.getEXECTYPE());
-        this.setMD5SUM(value.getMD5SUM());
-        this.setDESCRIPTION(value.getDESCRIPTION());
-        this.setCOMMENTS(value.getCOMMENTS());
-        this.setTAG(value.getTAG());
-        this.setLIQUIBASE(value.getLIQUIBASE());
-        this.setCONTEXTS(value.getCONTEXTS());
-        this.setLABELS(value.getLABELS());
-        this.setDEPLOYMENT_ID(value.getDEPLOYMENT_ID());
-    }
-
-    public DatabasechangelogDto(
+    public static DatabasechangelogDto create(
         String ID,
         String AUTHOR,
         String FILENAME,
@@ -85,20 +68,21 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
         String LABELS,
         String DEPLOYMENT_ID
     ) {
-        this.setID(ID);
-        this.setAUTHOR(AUTHOR);
-        this.setFILENAME(FILENAME);
-        this.setDATEEXECUTED(DATEEXECUTED);
-        this.setORDEREXECUTED(ORDEREXECUTED);
-        this.setEXECTYPE(EXECTYPE);
-        this.setMD5SUM(MD5SUM);
-        this.setDESCRIPTION(DESCRIPTION);
-        this.setCOMMENTS(COMMENTS);
-        this.setTAG(TAG);
-        this.setLIQUIBASE(LIQUIBASE);
-        this.setCONTEXTS(CONTEXTS);
-        this.setLABELS(LABELS);
-        this.setDEPLOYMENT_ID(DEPLOYMENT_ID);
+        return new DatabasechangelogDto()
+            .setID(ID)
+            .setAUTHOR(AUTHOR)
+            .setFILENAME(FILENAME)
+            .setDATEEXECUTED(DATEEXECUTED)
+            .setORDEREXECUTED(ORDEREXECUTED)
+            .setEXECTYPE(EXECTYPE)
+            .setMD5SUM(MD5SUM)
+            .setDESCRIPTION(DESCRIPTION)
+            .setCOMMENTS(COMMENTS)
+            .setTAG(TAG)
+            .setLIQUIBASE(LIQUIBASE)
+            .setCONTEXTS(CONTEXTS)
+            .setLABELS(LABELS)
+            .setDEPLOYMENT_ID(DEPLOYMENT_ID);
     }
 
     // -------------------------------------------------------------------------

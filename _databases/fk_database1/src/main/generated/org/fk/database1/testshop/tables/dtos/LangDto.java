@@ -38,20 +38,15 @@ public class LangDto implements ILang, DTO {
  
     public LangDto() {}
 
-    public LangDto(ILang value) {
-        this.setLangId(value.getLangId());
-        this.setCode(value.getCode());
-        this.setDescription(value.getDescription());
-    }
-
-    public LangDto(
+    public static LangDto create(
         Integer langId,
         String code,
         String description
     ) {
-        this.setLangId(langId);
-        this.setCode(code);
-        this.setDescription(description);
+        return new LangDto()
+            .setLangId(langId)
+            .setCode(code)
+            .setDescription(description);
     }
 
     // -------------------------------------------------------------------------

@@ -40,26 +40,19 @@ public class UserDto implements IUser, DTO {
  
     public UserDto() {}
 
-    public UserDto(IUser value) {
-        this.setUserId(value.getUserId());
-        this.setClientId(value.getClientId());
-        this.setEmail(value.getEmail());
-        this.setFirstname(value.getFirstname());
-        this.setLastname(value.getLastname());
-    }
-
-    public UserDto(
+    public static UserDto create(
         Integer userId,
         Integer clientId,
         String email,
         String firstname,
         String lastname
     ) {
-        this.setUserId(userId);
-        this.setClientId(clientId);
-        this.setEmail(email);
-        this.setFirstname(firstname);
-        this.setLastname(lastname);
+        return new UserDto()
+            .setUserId(userId)
+            .setClientId(clientId)
+            .setEmail(email)
+            .setFirstname(firstname)
+            .setLastname(lastname);
     }
 
     // -------------------------------------------------------------------------

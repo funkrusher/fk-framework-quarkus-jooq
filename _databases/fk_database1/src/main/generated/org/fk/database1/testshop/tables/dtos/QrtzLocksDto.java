@@ -37,17 +37,13 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
  
     public QrtzLocksDto() {}
 
-    public QrtzLocksDto(IQrtzLocks value) {
-        this.setSCHED_NAME(value.getSCHED_NAME());
-        this.setLOCK_NAME(value.getLOCK_NAME());
-    }
-
-    public QrtzLocksDto(
+    public static QrtzLocksDto create(
         String SCHED_NAME,
         String LOCK_NAME
     ) {
-        this.setSCHED_NAME(SCHED_NAME);
-        this.setLOCK_NAME(LOCK_NAME);
+        return new QrtzLocksDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setLOCK_NAME(LOCK_NAME);
     }
 
     // -------------------------------------------------------------------------

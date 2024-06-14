@@ -14,9 +14,4 @@ public class ProductDAO extends AbstractDAO<ProductRecord, IProduct, Long> {
     public ProductDAO(DSLContext dsl) {
         super(dsl, Product.PRODUCT);
     }
-
-    @Override
-    public Long getId(ProductRecord object) {
-        return object.getProductId();
-    }
 }

@@ -51,24 +51,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
  
     public QrtzSimpropTriggersDto() {}
 
-    public QrtzSimpropTriggersDto(IQrtzSimpropTriggers value) {
-        this.setSCHED_NAME(value.getSCHED_NAME());
-        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
-        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-        this.setSTR_PROP_1(value.getSTR_PROP_1());
-        this.setSTR_PROP_2(value.getSTR_PROP_2());
-        this.setSTR_PROP_3(value.getSTR_PROP_3());
-        this.setINT_PROP_1(value.getINT_PROP_1());
-        this.setINT_PROP_2(value.getINT_PROP_2());
-        this.setLONG_PROP_1(value.getLONG_PROP_1());
-        this.setLONG_PROP_2(value.getLONG_PROP_2());
-        this.setDEC_PROP_1(value.getDEC_PROP_1());
-        this.setDEC_PROP_2(value.getDEC_PROP_2());
-        this.setBOOL_PROP_1(value.getBOOL_PROP_1());
-        this.setBOOL_PROP_2(value.getBOOL_PROP_2());
-    }
-
-    public QrtzSimpropTriggersDto(
+    public static QrtzSimpropTriggersDto create(
         String SCHED_NAME,
         String TRIGGER_NAME,
         String TRIGGER_GROUP,
@@ -84,20 +67,21 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
         String BOOL_PROP_1,
         String BOOL_PROP_2
     ) {
-        this.setSCHED_NAME(SCHED_NAME);
-        this.setTRIGGER_NAME(TRIGGER_NAME);
-        this.setTRIGGER_GROUP(TRIGGER_GROUP);
-        this.setSTR_PROP_1(STR_PROP_1);
-        this.setSTR_PROP_2(STR_PROP_2);
-        this.setSTR_PROP_3(STR_PROP_3);
-        this.setINT_PROP_1(INT_PROP_1);
-        this.setINT_PROP_2(INT_PROP_2);
-        this.setLONG_PROP_1(LONG_PROP_1);
-        this.setLONG_PROP_2(LONG_PROP_2);
-        this.setDEC_PROP_1(DEC_PROP_1);
-        this.setDEC_PROP_2(DEC_PROP_2);
-        this.setBOOL_PROP_1(BOOL_PROP_1);
-        this.setBOOL_PROP_2(BOOL_PROP_2);
+        return new QrtzSimpropTriggersDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_NAME(TRIGGER_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP)
+            .setSTR_PROP_1(STR_PROP_1)
+            .setSTR_PROP_2(STR_PROP_2)
+            .setSTR_PROP_3(STR_PROP_3)
+            .setINT_PROP_1(INT_PROP_1)
+            .setINT_PROP_2(INT_PROP_2)
+            .setLONG_PROP_1(LONG_PROP_1)
+            .setLONG_PROP_2(LONG_PROP_2)
+            .setDEC_PROP_1(DEC_PROP_1)
+            .setDEC_PROP_2(DEC_PROP_2)
+            .setBOOL_PROP_1(BOOL_PROP_1)
+            .setBOOL_PROP_2(BOOL_PROP_2);
     }
 
     // -------------------------------------------------------------------------

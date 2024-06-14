@@ -33,14 +33,11 @@ public class ClientDto implements IClient, DTO {
  
     public ClientDto() {}
 
-    public ClientDto(IClient value) {
-        this.setClientId(value.getClientId());
-    }
-
-    public ClientDto(
+    public static ClientDto create(
         Integer clientId
     ) {
-        this.setClientId(clientId);
+        return new ClientDto()
+            .setClientId(clientId);
     }
 
     // -------------------------------------------------------------------------

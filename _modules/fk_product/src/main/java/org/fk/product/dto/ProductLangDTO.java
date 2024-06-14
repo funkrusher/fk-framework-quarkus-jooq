@@ -38,25 +38,17 @@ public class ProductLangDTO implements IProductLang, DTO {
 
     public ProductLangDTO() {}
 
-    public ProductLangDTO(IProductLang value) {
-        this.setProductId(value.getProductId());
-        this.setLangId(value.getLangId());
-        this.setName(value.getName());
-        this.setDescription(value.getDescription());
-    }
-
-    public ProductLangDTO(
+    public static ProductLangDTO create(
         Long productId,
         Integer langId,
         String name,
-        String description,
-        LangDTO lang
+        String description
     ) {
-        this.setProductId(productId);
-        this.setLangId(langId);
-        this.setName(name);
-        this.setDescription(description);
-        this.setLang(lang);
+        return new ProductLangDTO()
+            .setProductId(productId)
+            .setLangId(langId)
+            .setName(name)
+            .setDescription(description);
     }
 
     // -------------------------------------------------------------------------

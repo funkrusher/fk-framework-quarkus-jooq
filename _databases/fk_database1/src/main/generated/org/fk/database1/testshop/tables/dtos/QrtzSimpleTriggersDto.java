@@ -41,16 +41,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
  
     public QrtzSimpleTriggersDto() {}
 
-    public QrtzSimpleTriggersDto(IQrtzSimpleTriggers value) {
-        this.setSCHED_NAME(value.getSCHED_NAME());
-        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
-        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-        this.setREPEAT_COUNT(value.getREPEAT_COUNT());
-        this.setREPEAT_INTERVAL(value.getREPEAT_INTERVAL());
-        this.setTIMES_TRIGGERED(value.getTIMES_TRIGGERED());
-    }
-
-    public QrtzSimpleTriggersDto(
+    public static QrtzSimpleTriggersDto create(
         String SCHED_NAME,
         String TRIGGER_NAME,
         String TRIGGER_GROUP,
@@ -58,12 +49,13 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
         Long REPEAT_INTERVAL,
         Long TIMES_TRIGGERED
     ) {
-        this.setSCHED_NAME(SCHED_NAME);
-        this.setTRIGGER_NAME(TRIGGER_NAME);
-        this.setTRIGGER_GROUP(TRIGGER_GROUP);
-        this.setREPEAT_COUNT(REPEAT_COUNT);
-        this.setREPEAT_INTERVAL(REPEAT_INTERVAL);
-        this.setTIMES_TRIGGERED(TIMES_TRIGGERED);
+        return new QrtzSimpleTriggersDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_NAME(TRIGGER_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP)
+            .setREPEAT_COUNT(REPEAT_COUNT)
+            .setREPEAT_INTERVAL(REPEAT_INTERVAL)
+            .setTIMES_TRIGGERED(TIMES_TRIGGERED);
     }
 
     // -------------------------------------------------------------------------

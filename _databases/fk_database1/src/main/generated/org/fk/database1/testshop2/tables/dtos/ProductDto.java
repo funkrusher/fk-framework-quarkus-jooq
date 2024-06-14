@@ -48,18 +48,7 @@ public class ProductDto implements IProduct, DTO {
  
     public ProductDto() {}
 
-    public ProductDto(IProduct value) {
-        this.setProductId(value.getProductId());
-        this.setClientId(value.getClientId());
-        this.setPrice(value.getPrice());
-        this.setTypeId(value.getTypeId());
-        this.setCreatedAt(value.getCreatedAt());
-        this.setUpdatedAt(value.getUpdatedAt());
-        this.setDeleted(value.getDeleted());
-        this.setCreatorId(value.getCreatorId());
-    }
-
-    public ProductDto(
+    public static ProductDto create(
         Long productId,
         Integer clientId,
         BigDecimal price,
@@ -69,14 +58,15 @@ public class ProductDto implements IProduct, DTO {
         Boolean deleted,
         Integer creatorId
     ) {
-        this.setProductId(productId);
-        this.setClientId(clientId);
-        this.setPrice(price);
-        this.setTypeId(typeId);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
-        this.setDeleted(deleted);
-        this.setCreatorId(creatorId);
+        return new ProductDto()
+            .setProductId(productId)
+            .setClientId(clientId)
+            .setPrice(price)
+            .setTypeId(typeId)
+            .setCreatedAt(createdAt)
+            .setUpdatedAt(updatedAt)
+            .setDeleted(deleted)
+            .setCreatorId(creatorId);
     }
 
     // -------------------------------------------------------------------------

@@ -43,16 +43,7 @@ public class BookDto implements IBook, DTO {
  
     public BookDto() {}
 
-    public BookDto(IBook value) {
-        this.setBook_id(value.getBook_id());
-        this.setTitle(value.getTitle());
-        this.setAuthor_id(value.getAuthor_id());
-        this.setGenre(value.getGenre());
-        this.setPublication_date(value.getPublication_date());
-        this.setIsbn(value.getIsbn());
-    }
-
-    public BookDto(
+    public static BookDto create(
         Integer book_id,
         String title,
         Integer author_id,
@@ -60,12 +51,13 @@ public class BookDto implements IBook, DTO {
         LocalDate publication_date,
         String isbn
     ) {
-        this.setBook_id(book_id);
-        this.setTitle(title);
-        this.setAuthor_id(author_id);
-        this.setGenre(genre);
-        this.setPublication_date(publication_date);
-        this.setIsbn(isbn);
+        return new BookDto()
+            .setBook_id(book_id)
+            .setTitle(title)
+            .setAuthor_id(author_id)
+            .setGenre(genre)
+            .setPublication_date(publication_date)
+            .setIsbn(isbn);
     }
 
     // -------------------------------------------------------------------------
@@ -228,6 +220,7 @@ public class BookDto implements IBook, DTO {
         setPublication_date(from.getPublication_date());
         setIsbn(from.getIsbn());
     }
+
     @Override
     public <E extends IBook> E into(E into) {
         into.from(this);

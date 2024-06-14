@@ -37,17 +37,13 @@ public class UserRoleDto implements IUserRole, DTO {
  
     public UserRoleDto() {}
 
-    public UserRoleDto(IUserRole value) {
-        this.setUserId(value.getUserId());
-        this.setRoleId(value.getRoleId());
-    }
-
-    public UserRoleDto(
+    public static UserRoleDto create(
         Integer userId,
         String roleId
     ) {
-        this.setUserId(userId);
-        this.setRoleId(roleId);
+        return new UserRoleDto()
+            .setUserId(userId)
+            .setRoleId(roleId);
     }
 
     // -------------------------------------------------------------------------

@@ -16,9 +16,4 @@ public class PostDAO extends AbstractDAO<PostRecord, IPost, UUID> {
     public PostDAO(DSLContext dsl) {
         super(dsl, Post.POST);
     }
-
-    @Override
-    public UUID getId(PostRecord object) {
-        return object.getId();
-    }
 }

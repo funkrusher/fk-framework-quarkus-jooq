@@ -39,17 +39,13 @@ public class PostDto implements IPost, DTO {
  
     public PostDto() {}
 
-    public PostDto(IPost value) {
-        this.setId(value.getId());
-        this.setTitle(value.getTitle());
-    }
-
-    public PostDto(
+    public static PostDto create(
         UUID id,
         String title
     ) {
-        this.setId(id);
-        this.setTitle(title);
+        return new PostDto()
+            .setId(id)
+            .setTitle(title);
     }
 
     // -------------------------------------------------------------------------

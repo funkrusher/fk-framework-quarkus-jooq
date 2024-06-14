@@ -4,7 +4,6 @@ import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;
 import jakarta.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.fk.database1.testshop.tables.interfaces.IClient;
 
 /**
@@ -30,14 +29,11 @@ public class ClientDTO implements IClient, DTO {
 
     public ClientDTO() {}
 
-    public ClientDTO(IClient value) {
-        this.setClientId(value.getClientId());
-    }
-
-    public ClientDTO(
+    public static ClientDTO create(
         Integer clientId
     ) {
-        this.setClientId(clientId);
+        return new ClientDTO()
+            .setClientId(clientId);
     }
 
     // -------------------------------------------------------------------------

@@ -37,17 +37,13 @@ public class QrtzPausedTriggerGrpsDto implements IQrtzPausedTriggerGrps, DTO {
  
     public QrtzPausedTriggerGrpsDto() {}
 
-    public QrtzPausedTriggerGrpsDto(IQrtzPausedTriggerGrps value) {
-        this.setSCHED_NAME(value.getSCHED_NAME());
-        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-    }
-
-    public QrtzPausedTriggerGrpsDto(
+    public static QrtzPausedTriggerGrpsDto create(
         String SCHED_NAME,
         String TRIGGER_GROUP
     ) {
-        this.setSCHED_NAME(SCHED_NAME);
-        this.setTRIGGER_GROUP(TRIGGER_GROUP);
+        return new QrtzPausedTriggerGrpsDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP);
     }
 
     // -------------------------------------------------------------------------

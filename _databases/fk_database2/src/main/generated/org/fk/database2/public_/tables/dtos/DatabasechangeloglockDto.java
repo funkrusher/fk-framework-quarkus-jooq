@@ -42,23 +42,17 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
  
     public DatabasechangeloglockDto() {}
 
-    public DatabasechangeloglockDto(IDatabasechangeloglock value) {
-        this.setId(value.getId());
-        this.setLocked(value.getLocked());
-        this.setLockgranted(value.getLockgranted());
-        this.setLockedby(value.getLockedby());
-    }
-
-    public DatabasechangeloglockDto(
+    public static DatabasechangeloglockDto create(
         Integer id,
         Boolean locked,
         LocalDateTime lockgranted,
         String lockedby
     ) {
-        this.setId(id);
-        this.setLocked(locked);
-        this.setLockgranted(lockgranted);
-        this.setLockedby(lockedby);
+        return new DatabasechangeloglockDto()
+            .setId(id)
+            .setLocked(locked)
+            .setLockgranted(lockgranted)
+            .setLockedby(lockedby);
     }
 
     // -------------------------------------------------------------------------
@@ -181,6 +175,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
         setLockgranted(from.getLockgranted());
         setLockedby(from.getLockedby());
     }
+
     @Override
     public <E extends IDatabasechangeloglock> E into(E into) {
         into.from(this);

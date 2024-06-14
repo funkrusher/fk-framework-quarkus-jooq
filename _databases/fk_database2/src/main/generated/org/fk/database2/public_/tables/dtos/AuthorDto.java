@@ -42,26 +42,19 @@ public class AuthorDto implements IAuthor, DTO {
  
     public AuthorDto() {}
 
-    public AuthorDto(IAuthor value) {
-        this.setAuthor_id(value.getAuthor_id());
-        this.setName(value.getName());
-        this.setNationality(value.getNationality());
-        this.setBirth_date(value.getBirth_date());
-        this.setBiography(value.getBiography());
-    }
-
-    public AuthorDto(
+    public static AuthorDto create(
         Integer author_id,
         String name,
         String nationality,
         LocalDate birth_date,
         String biography
     ) {
-        this.setAuthor_id(author_id);
-        this.setName(name);
-        this.setNationality(nationality);
-        this.setBirth_date(birth_date);
-        this.setBiography(biography);
+        return new AuthorDto()
+            .setAuthor_id(author_id)
+            .setName(name)
+            .setNationality(nationality)
+            .setBirth_date(birth_date)
+            .setBiography(biography);
     }
 
     // -------------------------------------------------------------------------
@@ -203,6 +196,7 @@ public class AuthorDto implements IAuthor, DTO {
         setBirth_date(from.getBirth_date());
         setBiography(from.getBiography());
     }
+
     @Override
     public <E extends IAuthor> E into(E into) {
         into.from(this);

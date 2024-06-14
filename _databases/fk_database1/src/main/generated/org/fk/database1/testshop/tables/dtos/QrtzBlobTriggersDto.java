@@ -40,23 +40,17 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
  
     public QrtzBlobTriggersDto() {}
 
-    public QrtzBlobTriggersDto(IQrtzBlobTriggers value) {
-        this.setSCHED_NAME(value.getSCHED_NAME());
-        this.setTRIGGER_NAME(value.getTRIGGER_NAME());
-        this.setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-        this.setBLOB_DATA(value.getBLOB_DATA());
-    }
-
-    public QrtzBlobTriggersDto(
+    public static QrtzBlobTriggersDto create(
         String SCHED_NAME,
         String TRIGGER_NAME,
         String TRIGGER_GROUP,
         byte[] BLOB_DATA
     ) {
-        this.setSCHED_NAME(SCHED_NAME);
-        this.setTRIGGER_NAME(TRIGGER_NAME);
-        this.setTRIGGER_GROUP(TRIGGER_GROUP);
-        this.setBLOB_DATA(BLOB_DATA);
+        return new QrtzBlobTriggersDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_NAME(TRIGGER_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP)
+            .setBLOB_DATA(BLOB_DATA);
     }
 
     // -------------------------------------------------------------------------

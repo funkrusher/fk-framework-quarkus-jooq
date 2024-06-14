@@ -52,24 +52,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
  
     public DatabasechangelogDto() {}
 
-    public DatabasechangelogDto(IDatabasechangelog value) {
-        this.setId(value.getId());
-        this.setAuthor(value.getAuthor());
-        this.setFilename(value.getFilename());
-        this.setDateexecuted(value.getDateexecuted());
-        this.setOrderexecuted(value.getOrderexecuted());
-        this.setExectype(value.getExectype());
-        this.setMd5sum(value.getMd5sum());
-        this.setDescription(value.getDescription());
-        this.setComments(value.getComments());
-        this.setTag(value.getTag());
-        this.setLiquibase(value.getLiquibase());
-        this.setContexts(value.getContexts());
-        this.setLabels(value.getLabels());
-        this.setDeployment_id(value.getDeployment_id());
-    }
-
-    public DatabasechangelogDto(
+    public static DatabasechangelogDto create(
         String id,
         String author,
         String filename,
@@ -85,20 +68,21 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
         String labels,
         String deployment_id
     ) {
-        this.setId(id);
-        this.setAuthor(author);
-        this.setFilename(filename);
-        this.setDateexecuted(dateexecuted);
-        this.setOrderexecuted(orderexecuted);
-        this.setExectype(exectype);
-        this.setMd5sum(md5sum);
-        this.setDescription(description);
-        this.setComments(comments);
-        this.setTag(tag);
-        this.setLiquibase(liquibase);
-        this.setContexts(contexts);
-        this.setLabels(labels);
-        this.setDeployment_id(deployment_id);
+        return new DatabasechangelogDto()
+            .setId(id)
+            .setAuthor(author)
+            .setFilename(filename)
+            .setDateexecuted(dateexecuted)
+            .setOrderexecuted(orderexecuted)
+            .setExectype(exectype)
+            .setMd5sum(md5sum)
+            .setDescription(description)
+            .setComments(comments)
+            .setTag(tag)
+            .setLiquibase(liquibase)
+            .setContexts(contexts)
+            .setLabels(labels)
+            .setDeployment_id(deployment_id);
     }
 
     // -------------------------------------------------------------------------
@@ -426,6 +410,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
         setLabels(from.getLabels());
         setDeployment_id(from.getDeployment_id());
     }
+
     @Override
     public <E extends IDatabasechangelog> E into(E into) {
         into.from(this);

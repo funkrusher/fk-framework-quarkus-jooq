@@ -40,17 +40,13 @@ public class DatainitDto implements IDatainit, DTO {
  
     public DatainitDto() {}
 
-    public DatainitDto(IDatainit value) {
-        this.setDatainitid(value.getDatainitid());
-        this.setCreatedat(value.getCreatedat());
-    }
-
-    public DatainitDto(
+    public static DatainitDto create(
         String datainitid,
         LocalDateTime createdat
     ) {
-        this.setDatainitid(datainitid);
-        this.setCreatedat(createdat);
+        return new DatainitDto()
+            .setDatainitid(datainitid)
+            .setCreatedat(createdat);
     }
 
     // -------------------------------------------------------------------------
@@ -134,6 +130,7 @@ public class DatainitDto implements IDatainit, DTO {
         setDatainitid(from.getDatainitid());
         setCreatedat(from.getCreatedat());
     }
+
     @Override
     public <E extends IDatainit> E into(E into) {
         into.from(this);

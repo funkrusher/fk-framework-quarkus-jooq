@@ -15,11 +15,6 @@ public class ProductLangDAO extends AbstractDAO<ProductLangRecord, IProductLang,
         super(dsl, ProductLang.PRODUCT_LANG);
     }
 
-    @Override
-    public Record2<Long, Integer> getId(ProductLangRecord object) {
-        return compositeKeyRecord(object.getProductId(), object.getLangId());
-    }
-
     /**
      * Delete all by productId
      *

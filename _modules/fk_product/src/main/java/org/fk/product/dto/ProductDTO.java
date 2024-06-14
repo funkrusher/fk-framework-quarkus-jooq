@@ -64,18 +64,7 @@ public class ProductDTO implements IProduct, DTO {
 
     public ProductDTO() {}
 
-    public ProductDTO(IProduct value) {
-        this.setProductId(value.getProductId());
-        this.setClientId(value.getClientId());
-        this.setPrice(value.getPrice());
-        this.setTypeId(value.getTypeId());
-        this.setCreatedAt(value.getCreatedAt());
-        this.setUpdatedAt(value.getUpdatedAt());
-        this.setDeleted(value.getDeleted());
-        this.setCreatorId(value.getCreatorId());
-    }
-
-    public ProductDTO(
+    public static ProductDTO create(
         Long productId,
         Integer clientId,
         BigDecimal price,
@@ -87,16 +76,17 @@ public class ProductDTO implements IProduct, DTO {
         UserDTO creator,
         List<ProductLangDTO> langs
     ) {
-        this.setProductId(productId);
-        this.setClientId(clientId);
-        this.setPrice(price);
-        this.setTypeId(typeId);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
-        this.setDeleted(deleted);
-        this.setCreatorId(creatorId);
-        this.setCreator(creator);
-        this.setLangs(langs);
+        return new ProductDTO()
+            .setProductId(productId)
+            .setClientId(clientId)
+            .setPrice(price)
+            .setTypeId(typeId)
+            .setCreatedAt(createdAt)
+            .setUpdatedAt(updatedAt)
+            .setDeleted(deleted)
+            .setCreatorId(creatorId)
+            .setCreator(creator)
+            .setLangs(langs);
     }
 
     // -------------------------------------------------------------------------
@@ -262,9 +252,10 @@ public class ProductDTO implements IProduct, DTO {
     // -------------------------------------------------------------------------
 
     @JsonIgnore
-    public void setCreator(UserDTO creator) {
+    public ProductDTO setCreator(UserDTO creator) {
         this.creator = creator;
         keeper.touch("creator");
+        return this;
     }
 
     @JsonProperty
@@ -323,9 +314,10 @@ public class ProductDTO implements IProduct, DTO {
         return langs;
     }
 
-    public void setLangs(List<ProductLangDTO> langs) {
+    public ProductDTO setLangs(List<ProductLangDTO> langs) {
         this.langs = langs;
         keeper.touch("langs");
+        return this;
     }
 
     // -------------------------------------------------------------------------
