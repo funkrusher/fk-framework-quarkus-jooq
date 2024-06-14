@@ -60,18 +60,18 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                         PRODUCT.creator().LASTNAME,
                         multiset(
                             selectDistinct(
-                                PRODUCT.creator().role().ROLEID
-                            ).from(PRODUCT.creator().role())
+                                PRODUCT.creator().user_role().ROLEID
+                            ).from(PRODUCT.creator().user_role())
                         ).convertFrom(r -> r.map(mapping(RoleDTO::create)))
                     ).convertFrom(nullOnFirstNull(mapping(UserDTO::create))),
                     // langs
                     multiset(
                         selectDistinct(
-                            PRODUCT.product().PRODUCTID,
-                            PRODUCT.product().LANGID,
-                            PRODUCT.product().NAME,
-                            PRODUCT.product().DESCRIPTION
-                        ).from(PRODUCT.product())
+                            PRODUCT.product_lang().PRODUCTID,
+                            PRODUCT.product_lang().LANGID,
+                            PRODUCT.product_lang().NAME,
+                            PRODUCT.product_lang().DESCRIPTION
+                        ).from(PRODUCT.product_lang())
                     ).convertFrom(r -> r.map(mapping(ProductLangDTO::create)))
                 ).convertFrom(mapping(ProductDTO::create))
             )

@@ -1,11 +1,9 @@
 package org.fk.core.jooq;
 
 import org.jooq.codegen.DefaultGeneratorStrategy;
-import org.jooq.meta.Definition;
-import org.jooq.meta.ForeignKeyDefinition;
-import org.jooq.meta.InverseForeignKeyDefinition;
-import org.jooq.meta.ManyToManyKeyDefinition;
+import org.jooq.meta.*;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,9 +23,9 @@ public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        if (definition instanceof ForeignKeyDefinition
-            || definition instanceof ManyToManyKeyDefinition
-            || definition instanceof InverseForeignKeyDefinition) {
+        if (definition instanceof ForeignKeyDefinition) {
+            ForeignKeyDefinition def = (ForeignKeyDefinition) definition;
+
             Matcher matcher = FK_PATTERN.matcher(definition.getOutputName());
             if (matcher.matches()) {
                 return matcher.group(2);
@@ -35,6 +33,15 @@ public final class FkGeneratorStrategy extends DefaultGeneratorStrategy {
                 return definition.getOutputName();
             }
         } else {
+            if (definition instanceof InverseForeignKeyDefinition) {
+                InverseForeignKeyDefinition def = (InverseForeignKeyDefinition) definition;
+                TableDefinition def3 = def.getReferencingTable();
+                return def3.getName();
+            } else if (definition instanceof ManyToManyKeyDefinition) {
+                ManyToManyKeyDefinition def = (ManyToManyKeyDefinition) definition;
+                TableDefinition def3 = def.getTable();
+                return def3.getName();
+            }
             return definition.getOutputName();
         }
     }

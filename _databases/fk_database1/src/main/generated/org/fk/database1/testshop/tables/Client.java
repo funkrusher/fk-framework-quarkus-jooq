@@ -10,6 +10,7 @@ import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
 import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop.tables.records.ClientRecord;
+import org.fk.database1.testshop2.tables.Product.ProductPath;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -136,17 +137,30 @@ public class Client extends TableImpl<ClientRecord> {
         return Keys.KEY_CLIENT_PRIMARY;
     }
 
-    private transient UserPath _client;
+    private transient UserPath _user;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user</code>
      * table
      */
-    public UserPath client() {
-        if (_client == null)
-            _client = new UserPath(this, null, Keys.FK_USER_CLIENTID.getInverseKey());
+    public UserPath user() {
+        if (_user == null)
+            _user = new UserPath(this, null, Keys.FK_USER_CLIENTID.getInverseKey());
 
-        return _client;
+        return _user;
+    }
+
+    private transient ProductPath _product;
+
+    /**
+     * Get the implicit to-many join path to the <code>testshop2.product</code>
+     * table
+     */
+    public ProductPath product() {
+        if (_product == null)
+            _product = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CLIENTID.getInverseKey());
+
+        return _product;
     }
 
     @Override

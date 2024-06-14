@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.fk.database1.testshop.tables.Client.ClientPath;
-import org.fk.database1.testshop.tables.Lang.LangPath;
 import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop2.Keys;
 import org.fk.database1.testshop2.Testshop2;
@@ -210,25 +209,17 @@ public class Product extends TableImpl<ProductRecord> {
         return _creator;
     }
 
-    private transient ProductLangPath _product;
+    private transient ProductLangPath _product_lang;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop2.product_lang</code> table
      */
-    public ProductLangPath product() {
-        if (_product == null)
-            _product = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
+    public ProductLangPath product_lang() {
+        if (_product_lang == null)
+            _product_lang = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
 
-        return _product;
-    }
-
-    /**
-     * Get the implicit many-to-many join path to the <code>testshop.lang</code>
-     * table
-     */
-    public LangPath lang() {
-        return product().lang();
+        return _product_lang;
     }
 
     @Override

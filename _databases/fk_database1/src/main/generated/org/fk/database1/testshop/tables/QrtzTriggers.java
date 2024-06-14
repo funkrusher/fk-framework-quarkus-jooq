@@ -11,7 +11,11 @@ import java.util.List;
 import org.fk.database1.testshop.Indexes;
 import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
+import org.fk.database1.testshop.tables.QrtzBlobTriggers.QrtzBlobTriggersPath;
+import org.fk.database1.testshop.tables.QrtzCronTriggers.QrtzCronTriggersPath;
 import org.fk.database1.testshop.tables.QrtzJobDetails.QrtzJobDetailsPath;
+import org.fk.database1.testshop.tables.QrtzSimpleTriggers.QrtzSimpleTriggersPath;
+import org.fk.database1.testshop.tables.QrtzSimpropTriggers.QrtzSimpropTriggersPath;
 import org.fk.database1.testshop.tables.records.QrtzTriggersRecord;
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -230,6 +234,58 @@ public class QrtzTriggers extends TableImpl<QrtzTriggersRecord> {
             __1 = new QrtzJobDetailsPath(this, Keys.QRTZ_TRIGGERS_IBFK_1, null);
 
         return __1;
+    }
+
+    private transient QrtzBlobTriggersPath _QRTZ_BLOB_TRIGGERS;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>testshop.QRTZ_BLOB_TRIGGERS</code> table
+     */
+    public QrtzBlobTriggersPath QRTZ_BLOB_TRIGGERS() {
+        if (_QRTZ_BLOB_TRIGGERS == null)
+            _QRTZ_BLOB_TRIGGERS = new QrtzBlobTriggersPath(this, null, Keys.QRTZ_BLOB_TRIGGERS_IBFK_1.getInverseKey());
+
+        return _QRTZ_BLOB_TRIGGERS;
+    }
+
+    private transient QrtzCronTriggersPath _QRTZ_CRON_TRIGGERS;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>testshop.QRTZ_CRON_TRIGGERS</code> table
+     */
+    public QrtzCronTriggersPath QRTZ_CRON_TRIGGERS() {
+        if (_QRTZ_CRON_TRIGGERS == null)
+            _QRTZ_CRON_TRIGGERS = new QrtzCronTriggersPath(this, null, Keys.QRTZ_CRON_TRIGGERS_IBFK_1.getInverseKey());
+
+        return _QRTZ_CRON_TRIGGERS;
+    }
+
+    private transient QrtzSimpleTriggersPath _QRTZ_SIMPLE_TRIGGERS;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>testshop.QRTZ_SIMPLE_TRIGGERS</code> table
+     */
+    public QrtzSimpleTriggersPath QRTZ_SIMPLE_TRIGGERS() {
+        if (_QRTZ_SIMPLE_TRIGGERS == null)
+            _QRTZ_SIMPLE_TRIGGERS = new QrtzSimpleTriggersPath(this, null, Keys.QRTZ_SIMPLE_TRIGGERS_IBFK_1.getInverseKey());
+
+        return _QRTZ_SIMPLE_TRIGGERS;
+    }
+
+    private transient QrtzSimpropTriggersPath _QRTZ_SIMPROP_TRIGGERS;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>testshop.QRTZ_SIMPROP_TRIGGERS</code> table
+     */
+    public QrtzSimpropTriggersPath QRTZ_SIMPROP_TRIGGERS() {
+        if (_QRTZ_SIMPROP_TRIGGERS == null)
+            _QRTZ_SIMPROP_TRIGGERS = new QrtzSimpropTriggersPath(this, null, Keys.QRTZ_SIMPROP_TRIGGERS_IBFK_1.getInverseKey());
+
+        return _QRTZ_SIMPROP_TRIGGERS;
     }
 
     @Override
