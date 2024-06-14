@@ -51,6 +51,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                     PRODUCT.UPDATEDAT,
                     PRODUCT.DELETED,
                     PRODUCT.CREATORID,
+
                     // creator
                     row(
                         PRODUCT.creator().USERID,
@@ -59,20 +60,22 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                         PRODUCT.creator().FIRSTNAME,
                         PRODUCT.creator().LASTNAME,
                         multiset(
-                            selectDistinct(
+                            select(
                                 PRODUCT.creator().user_role().ROLEID
                             ).from(PRODUCT.creator().user_role())
                         ).convertFrom(r -> r.map(mapping(RoleDTO::create)))
                     ).convertFrom(nullOnFirstNull(mapping(UserDTO::create))),
+
                     // langs
                     multiset(
-                        selectDistinct(
+                        select(
                             PRODUCT.product_lang().PRODUCTID,
                             PRODUCT.product_lang().LANGID,
                             PRODUCT.product_lang().NAME,
                             PRODUCT.product_lang().DESCRIPTION
                         ).from(PRODUCT.product_lang())
                     ).convertFrom(r -> r.map(mapping(ProductLangDTO::create)))
+
                 ).convertFrom(mapping(ProductDTO::create))
             )
             .from(PRODUCT
