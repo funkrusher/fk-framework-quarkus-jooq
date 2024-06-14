@@ -60,7 +60,7 @@ public class ProductManager extends AbstractManager {
     public ProductPaginateDTO query(DSLContext dsl, final FkQuery fkQuery) throws InvalidDataException {
         final ProductRepository productRepository = new ProductRepository(dsl);
 
-        int count = productRepository.count(fkQuery);
+        int count = productRepository.count(fkQuery.getFilters());
         List<ProductDTO> products = productRepository.query(fkQuery);
 
         ProductPaginateDTO paginate = new ProductPaginateDTO();

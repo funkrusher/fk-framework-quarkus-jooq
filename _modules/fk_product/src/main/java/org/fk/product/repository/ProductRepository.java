@@ -3,6 +3,7 @@ package org.fk.product.repository;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.jooq.FkQueryJooqMapper;
 
+import static org.fk.core.jooq.FkJooqHelper.nullOnFirstNull;
 import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.fk.database1.testshop.tables.User.USER;
@@ -16,7 +17,6 @@ import org.fk.product.dto.ProductLangDTO;
 import org.fk.product.dto.RoleDTO;
 import org.fk.product.dto.UserDTO;
 import org.jooq.*;
-import org.jooq.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,10 +30,11 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
     }
 
     @Override
-    protected SelectFinalStep<? extends Record> prepareQuery(FkQuery fkQuery) throws InvalidDataException {
+    protected SelectFinalStep<Record1<ProductDTO>> prepareQuery(FkQuery fkQuery) throws InvalidDataException {
         FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(fkQuery, PRODUCT)
             .addMappableFields(PRODUCT.fields())
             .addMappableFields(PRODUCT_LANG.fields());
+
 
         // experiment: try to wrap the SELECT into a "container"-row,
         // to be able to use convertFrom on the ProductDTO for mapping everything beforehand.
@@ -63,7 +64,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                                 PRODUCT.creator().role().ROLEID
                             ).from(PRODUCT.creator().role())
                         ).convertFrom(r -> r.map(mapping(RoleDTO::create)))
-                    ).convertFrom(r -> (r.get(PRODUCT.creator().USERID) == null) ? null : mapping(UserDTO::create).apply(r)),
+                    ).convertFrom(nullOnFirstNull(mapping(UserDTO::create))),
 
                     multiset(
                         selectDistinct(
@@ -79,14 +80,9 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                 ).convertFrom(mapping(ProductDTO::create))
             )
             .from(PRODUCT
-                .leftJoin(PRODUCT_LANG)
-                .on(PRODUCT_LANG.PRODUCTID
-                    .eq(PRODUCT.PRODUCTID))
-                .leftJoin(LANG)
-                .on(LANG.LANGID
-                    .eq(PRODUCT_LANG.LANGID))
-                .leftJoin(USER)
-                .on(USER.USERID.eq(PRODUCT.CREATORID)))
+                .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))
+                .leftJoin(LANG).on(LANG.LANGID.eq(PRODUCT_LANG.LANGID))
+                .leftJoin(USER).on(USER.USERID.eq(PRODUCT.CREATORID)))
             .where(queryJooqMapper.getFilters())
             .and(PRODUCT.CLIENTID.eq(request().getClientId()))
             .groupBy(PRODUCT.PRODUCTID)
