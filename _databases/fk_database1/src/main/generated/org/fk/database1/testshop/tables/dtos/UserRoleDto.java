@@ -35,7 +35,16 @@ public class UserRoleDto implements IUserRole, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public UserRoleDto() { this.keeper = new BookKeeper(this); }
+    public UserRoleDto() {}
+
+    public static UserRoleDto create(
+        Integer userId,
+        String roleId
+    ) {
+        return new UserRoleDto()
+            .setUserId(userId)
+            .setRoleId(roleId);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -119,6 +128,7 @@ public class UserRoleDto implements IUserRole, DTO {
         setUserId(from.getUserId());
         setRoleId(from.getRoleId());
     }
+
     @Override
     public <E extends IUserRole> E into(E into) {
         into.from(this);
@@ -131,7 +141,7 @@ public class UserRoleDto implements IUserRole, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

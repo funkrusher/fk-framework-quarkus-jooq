@@ -15,9 +15,4 @@ public class UserRoleDAO extends AbstractDAO<UserRoleRecord, IUserRole, Record2<
     public UserRoleDAO(DSLContext dsl) {
         super(dsl, UserRole.USER_ROLE);
     }
-
-    @Override
-    public Record2<Integer, String> getId(UserRoleRecord object) {
-        return compositeKeyRecord(object.getUserId(), object.getRoleId());
-    }
 }

@@ -27,6 +27,8 @@ public class FkPojoFilePostProcessor {
     private static final Pattern DTO_CLAZZ_PATTERN = Pattern.compile("public class\\s+(\\w+)\\s+implements\\s+(\\w+)\\s*\\{");
     private static final Pattern DTO_FIELD_PATTERN = Pattern.compile("private\\s+(\\w+)\\s+(\\w+)\\s*;");
     private static final Pattern DTO_SETTER_PATTERN = Pattern.compile("public\\s+(\\w+)\\s+set(\\w+)\\(([^)]+)\\)\\s*\\{");
+    private static final Pattern DTO_CONSTRUCTOR_PATTERN = Pattern.compile("public\\s+(\\w+)\\((.*)");
+    private static final Pattern DTO_FIELD_INIT_PATTERN = Pattern.compile("this.(\\w+)\\s+(.*)");
 
     public static final String DTO_NAME = "Dto";
     private static final String PACKAGE = "package";
@@ -114,7 +116,7 @@ public class FkPojoFilePostProcessor {
     private static final String BLOCK_BOOK_KEEPER = """
             \s   @JsonIgnore
             \s   @XmlTransient
-            \s   protected transient BookKeeper keeper;
+            \s   protected transient BookKeeper keeper = new BookKeeper(this);
             \s   
             \s   @JsonIgnore
             \s   @XmlTransient
@@ -139,7 +141,7 @@ public class FkPojoFilePostProcessor {
             public class %s implements %s, %s {""";
     @SuppressWarnings({ "all"})
     private static final String BLOCK_CONSTRUCTOR_DEFINITION = """
-            \s   public %s() { this.keeper = new BookKeeper(this); }
+            \s   public %s() {}
             """;
     @SuppressWarnings({ "all"})
     private static final String BLOCK_TOUCH = """
@@ -269,7 +271,6 @@ public class FkPojoFilePostProcessor {
         }
     }
 
-
     /**
      * Rewrite the Default Constructor
      *
@@ -286,6 +287,84 @@ public class FkPojoFilePostProcessor {
         writer.write(HEADER_CONSTRUCTOR);
         writer.write(EOL);
         writer.write(BLOCK_CONSTRUCTOR_DEFINITION.formatted(clazzName + DTO_NAME));
+        writer.write(EOL);
+    }
+
+    /**
+     * Rewrite the From-Interface Constructor
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @param configs configs
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteCollectedInterfaceConstructorBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        // we don't need that one for now.
+    }
+
+    /**
+     * Rewrite the From-Fields Constructor
+     *
+     * @param linesCollected linesCollected
+     * @param writer writer
+     * @param configs configs
+     * @throws IOException internal-error during io.
+     */
+    private void rewriteCollectedFieldsConstructorBlock(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
+        String constructorName = null;
+
+        List<String> openMethodPart = new ArrayList<>();
+        List<String> setterCalls = new ArrayList<>();
+        List<String> closingMethodPart = new ArrayList<>();
+
+        int step = 0;
+        for (String collectedLine : linesCollected) {
+            Matcher constructorMatcher = DTO_CONSTRUCTOR_PATTERN.matcher(collectedLine);
+            if (constructorMatcher.find()) {
+                // we arrived at a constructor-method.
+                constructorName = constructorMatcher.group(1);
+                openMethodPart.add(collectedLine.replaceFirst(constructorName, "static " + constructorName + DTO_NAME + " create"));
+            } else if (collectedLine.contains("{")) {
+                openMethodPart.add(collectedLine);
+                openMethodPart.add("        return new " + constructorName + DTO_NAME + "()");
+                openMethodPart.add(EOL);
+            } else {
+                Matcher fieldInitMatcher = DTO_FIELD_INIT_PATTERN.matcher(collectedLine);
+                if (fieldInitMatcher.find()) {
+                    step = 1;
+                    // we arrived at a field-init
+                    String fieldInitName = fieldInitMatcher.group(1);
+                    String fieldInitNameCC = Character.toUpperCase(fieldInitName.charAt(0)) + fieldInitName.substring(1);
+                    String setterName = "            .set" + fieldInitNameCC + "(" + fieldInitName + ")";
+                    setterCalls.add(setterName);
+                } else {
+                    if (step == 1) {
+                        step = 2;
+                    }
+                    if (step == 0) {
+                        openMethodPart.add(collectedLine);
+                    } else if (step == 2) {
+                        closingMethodPart.add(collectedLine);
+                    }
+                }
+            }
+        }
+
+        for (String line : openMethodPart) {
+            writer.write(line);
+        }
+        for (int i=0; i < setterCalls.size(); i++) {
+            String setterCall = setterCalls.get(i);
+            writer.write(setterCall);
+            if ((i+1) == setterCalls.size()) {
+                writer.write(";");
+            }
+            writer.write(EOL);
+        }
+        for (String line : closingMethodPart) {
+            writer.write(line);
+        }
+
         writer.write(EOL);
         writer.write(HEADER_DATABASE_FIELDS_GETTERS_SETTERS);
         writer.write(EOL);
@@ -436,21 +515,28 @@ public class FkPojoFilePostProcessor {
             rewriteAtEndOfClassDefinition(linesCollected, writer);
             eventFinished = true;
         } else if (event == COLLECTED_CONSTRUCTOR_BLOCK && line.contains(CURLY_CLOSE)) {
-            boolean isDefaultConstructor = linesCollected
-                    .stream()
-                    .anyMatch(x -> x.contains("() {}"));
-            if (isDefaultConstructor) {
-                // we dont need the other jOOQ generated constructors, just swallow them.
-                // we only overwrite the default constructor here.
+            final String firstLine = linesCollected.getFirst();
+            if (firstLine.contains("() {}")) {
                 rewriteCollectedDefaultConstructorBlock(writer, configs);
+            } else if (firstLine.contains("{")){
+                rewriteCollectedInterfaceConstructorBlock(linesCollected, writer, configs);
+            } else {
+                rewriteCollectedFieldsConstructorBlock(linesCollected, writer, configs);
             }
             eventFinished = true;
         } else if (event == COLLECTED_OVERRIDE_BLOCK && line.contains(CURLY_CLOSE)) {
-            boolean isToStringMethod = linesCollected
-                    .stream()
-                    .anyMatch(x -> x.contains("public String toString() {"));
-            if (isToStringMethod) {
+            final String secondLine = linesCollected.get(1);
+            if (secondLine.contains("public String toString() {")) {
                 rewriteCollectedToStringBlock(writer);
+            } else if (secondLine.contains("from(")) {
+                for (String collectedLine : linesCollected) {
+                    writer.write(collectedLine);
+                }
+                writer.write(EOL);
+            } else if (secondLine.contains("into(")) {
+                for (String collectedLine : linesCollected) {
+                    writer.write(collectedLine);
+                }
             } else {
                 // we assume that the other case here is the setter-block.
                 rewriteCollectedSetterBlock(linesCollected, writer, configs);
@@ -495,8 +581,8 @@ public class FkPojoFilePostProcessor {
                 if (writeEnabled && (lastLine == null || !(lastLine.equals(EMPTY_STRING) && line.equals(EMPTY_STRING)))) {
                     // ignore double empty lines, but write everything else.
                     writer.write(line + EOL);
-                    lastLine = line;
                 }
+                lastLine = line;
             } else {
                 // event given, use the custom write-logic.
                 event = processOngoingEvent(event, line, linesCollected, writer, configs);

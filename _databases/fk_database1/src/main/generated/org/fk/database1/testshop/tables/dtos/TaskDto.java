@@ -35,7 +35,16 @@ public class TaskDto implements ITask, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public TaskDto() { this.keeper = new BookKeeper(this); }
+    public TaskDto() {}
+
+    public static TaskDto create(
+        Long taskId,
+        LocalDateTime createdAt
+    ) {
+        return new TaskDto()
+            .setTaskId(taskId)
+            .setCreatedAt(createdAt);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -116,6 +125,7 @@ public class TaskDto implements ITask, DTO {
         setTaskId(from.getTaskId());
         setCreatedAt(from.getCreatedAt());
     }
+
     @Override
     public <E extends ITask> E into(E into) {
         into.from(this);
@@ -128,7 +138,7 @@ public class TaskDto implements ITask, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

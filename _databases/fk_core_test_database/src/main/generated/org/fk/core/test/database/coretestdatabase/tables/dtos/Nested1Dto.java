@@ -46,7 +46,28 @@ public class Nested1Dto implements INested1, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public Nested1Dto() { this.keeper = new BookKeeper(this); }
+    public Nested1Dto() {}
+
+    public static Nested1Dto create(
+        Integer autoIncId,
+        UUID uuidId,
+        String string1,
+        String string2,
+        Integer integer1,
+        Long long1,
+        BigDecimal decimal1,
+        LocalDateTime dateTime1
+    ) {
+        return new Nested1Dto()
+            .setAutoIncId(autoIncId)
+            .setUuidId(uuidId)
+            .setString1(string1)
+            .setString2(string2)
+            .setInteger1(integer1)
+            .setLong1(long1)
+            .setDecimal1(decimal1)
+            .setDateTime1(dateTime1);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -245,6 +266,7 @@ public class Nested1Dto implements INested1, DTO {
         setDecimal1(from.getDecimal1());
         setDateTime1(from.getDateTime1());
     }
+
     @Override
     public <E extends INested1> E into(E into) {
         into.from(this);
@@ -257,7 +279,7 @@ public class Nested1Dto implements INested1, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

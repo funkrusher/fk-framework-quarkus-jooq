@@ -159,17 +159,17 @@ public class QrtzCronTriggers extends TableImpl<QrtzCronTriggersRecord> {
         return Arrays.asList(Keys.QRTZ_CRON_TRIGGERS_IBFK_1);
     }
 
-    private transient QrtzTriggersPath _QRTZ_CRON_TRIGGERS_ibfk_1;
+    private transient QrtzTriggersPath __1;
 
     /**
      * Get the implicit join path to the <code>testshop.QRTZ_TRIGGERS</code>
      * table.
      */
-    public QrtzTriggersPath QRTZ_CRON_TRIGGERS_ibfk_1() {
-        if (_QRTZ_CRON_TRIGGERS_ibfk_1 == null)
-            _QRTZ_CRON_TRIGGERS_ibfk_1 = new QrtzTriggersPath(this, Keys.QRTZ_CRON_TRIGGERS_IBFK_1, null);
+    public QrtzTriggersPath _1() {
+        if (__1 == null)
+            __1 = new QrtzTriggersPath(this, Keys.QRTZ_CRON_TRIGGERS_IBFK_1, null);
 
-        return _QRTZ_CRON_TRIGGERS_ibfk_1;
+        return __1;
     }
 
     @Override

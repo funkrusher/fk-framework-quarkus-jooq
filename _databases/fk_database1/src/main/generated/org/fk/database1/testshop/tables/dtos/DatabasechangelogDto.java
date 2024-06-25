@@ -50,7 +50,40 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public DatabasechangelogDto() { this.keeper = new BookKeeper(this); }
+    public DatabasechangelogDto() {}
+
+    public static DatabasechangelogDto create(
+        String ID,
+        String AUTHOR,
+        String FILENAME,
+        LocalDateTime DATEEXECUTED,
+        Integer ORDEREXECUTED,
+        String EXECTYPE,
+        String MD5SUM,
+        String DESCRIPTION,
+        String COMMENTS,
+        String TAG,
+        String LIQUIBASE,
+        String CONTEXTS,
+        String LABELS,
+        String DEPLOYMENT_ID
+    ) {
+        return new DatabasechangelogDto()
+            .setID(ID)
+            .setAUTHOR(AUTHOR)
+            .setFILENAME(FILENAME)
+            .setDATEEXECUTED(DATEEXECUTED)
+            .setORDEREXECUTED(ORDEREXECUTED)
+            .setEXECTYPE(EXECTYPE)
+            .setMD5SUM(MD5SUM)
+            .setDESCRIPTION(DESCRIPTION)
+            .setCOMMENTS(COMMENTS)
+            .setTAG(TAG)
+            .setLIQUIBASE(LIQUIBASE)
+            .setCONTEXTS(CONTEXTS)
+            .setLABELS(LABELS)
+            .setDEPLOYMENT_ID(DEPLOYMENT_ID);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -377,6 +410,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
         setLABELS(from.getLABELS());
         setDEPLOYMENT_ID(from.getDEPLOYMENT_ID());
     }
+
     @Override
     public <E extends IDatabasechangelog> E into(E into) {
         into.from(this);
@@ -389,7 +423,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

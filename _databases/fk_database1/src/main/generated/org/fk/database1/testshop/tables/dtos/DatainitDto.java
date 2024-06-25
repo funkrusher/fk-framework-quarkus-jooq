@@ -38,7 +38,16 @@ public class DatainitDto implements IDatainit, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public DatainitDto() { this.keeper = new BookKeeper(this); }
+    public DatainitDto() {}
+
+    public static DatainitDto create(
+        String dataInitId,
+        LocalDateTime createdAt
+    ) {
+        return new DatainitDto()
+            .setDataInitId(dataInitId)
+            .setCreatedAt(createdAt);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -121,6 +130,7 @@ public class DatainitDto implements IDatainit, DTO {
         setDataInitId(from.getDataInitId());
         setCreatedAt(from.getCreatedAt());
     }
+
     @Override
     public <E extends IDatainit> E into(E into) {
         into.from(this);
@@ -133,7 +143,7 @@ public class DatainitDto implements IDatainit, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

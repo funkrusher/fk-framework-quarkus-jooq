@@ -223,69 +223,69 @@ public class QrtzTriggers extends TableImpl<QrtzTriggersRecord> {
         return Arrays.asList(Keys.QRTZ_TRIGGERS_IBFK_1);
     }
 
-    private transient QrtzJobDetailsPath _QRTZ_TRIGGERS_ibfk_1;
+    private transient QrtzJobDetailsPath __1;
 
     /**
      * Get the implicit join path to the <code>testshop.QRTZ_JOB_DETAILS</code>
      * table.
      */
-    public QrtzJobDetailsPath QRTZ_TRIGGERS_ibfk_1() {
-        if (_QRTZ_TRIGGERS_ibfk_1 == null)
-            _QRTZ_TRIGGERS_ibfk_1 = new QrtzJobDetailsPath(this, Keys.QRTZ_TRIGGERS_IBFK_1, null);
+    public QrtzJobDetailsPath _1() {
+        if (__1 == null)
+            __1 = new QrtzJobDetailsPath(this, Keys.QRTZ_TRIGGERS_IBFK_1, null);
 
-        return _QRTZ_TRIGGERS_ibfk_1;
+        return __1;
     }
 
-    private transient QrtzBlobTriggersPath _QRTZ_BLOB_TRIGGERS_ibfk_1;
+    private transient QrtzBlobTriggersPath _QRTZ_BLOB_TRIGGERS;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop.QRTZ_BLOB_TRIGGERS</code> table
      */
-    public QrtzBlobTriggersPath QRTZ_BLOB_TRIGGERS_ibfk_1() {
-        if (_QRTZ_BLOB_TRIGGERS_ibfk_1 == null)
-            _QRTZ_BLOB_TRIGGERS_ibfk_1 = new QrtzBlobTriggersPath(this, null, Keys.QRTZ_BLOB_TRIGGERS_IBFK_1.getInverseKey());
+    public QrtzBlobTriggersPath QRTZ_BLOB_TRIGGERS() {
+        if (_QRTZ_BLOB_TRIGGERS == null)
+            _QRTZ_BLOB_TRIGGERS = new QrtzBlobTriggersPath(this, null, Keys.QRTZ_BLOB_TRIGGERS_IBFK_1.getInverseKey());
 
-        return _QRTZ_BLOB_TRIGGERS_ibfk_1;
+        return _QRTZ_BLOB_TRIGGERS;
     }
 
-    private transient QrtzCronTriggersPath _QRTZ_CRON_TRIGGERS_ibfk_1;
+    private transient QrtzCronTriggersPath _QRTZ_CRON_TRIGGERS;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop.QRTZ_CRON_TRIGGERS</code> table
      */
-    public QrtzCronTriggersPath QRTZ_CRON_TRIGGERS_ibfk_1() {
-        if (_QRTZ_CRON_TRIGGERS_ibfk_1 == null)
-            _QRTZ_CRON_TRIGGERS_ibfk_1 = new QrtzCronTriggersPath(this, null, Keys.QRTZ_CRON_TRIGGERS_IBFK_1.getInverseKey());
+    public QrtzCronTriggersPath QRTZ_CRON_TRIGGERS() {
+        if (_QRTZ_CRON_TRIGGERS == null)
+            _QRTZ_CRON_TRIGGERS = new QrtzCronTriggersPath(this, null, Keys.QRTZ_CRON_TRIGGERS_IBFK_1.getInverseKey());
 
-        return _QRTZ_CRON_TRIGGERS_ibfk_1;
+        return _QRTZ_CRON_TRIGGERS;
     }
 
-    private transient QrtzSimpleTriggersPath _QRTZ_SIMPLE_TRIGGERS_ibfk_1;
+    private transient QrtzSimpleTriggersPath _QRTZ_SIMPLE_TRIGGERS;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop.QRTZ_SIMPLE_TRIGGERS</code> table
      */
-    public QrtzSimpleTriggersPath QRTZ_SIMPLE_TRIGGERS_ibfk_1() {
-        if (_QRTZ_SIMPLE_TRIGGERS_ibfk_1 == null)
-            _QRTZ_SIMPLE_TRIGGERS_ibfk_1 = new QrtzSimpleTriggersPath(this, null, Keys.QRTZ_SIMPLE_TRIGGERS_IBFK_1.getInverseKey());
+    public QrtzSimpleTriggersPath QRTZ_SIMPLE_TRIGGERS() {
+        if (_QRTZ_SIMPLE_TRIGGERS == null)
+            _QRTZ_SIMPLE_TRIGGERS = new QrtzSimpleTriggersPath(this, null, Keys.QRTZ_SIMPLE_TRIGGERS_IBFK_1.getInverseKey());
 
-        return _QRTZ_SIMPLE_TRIGGERS_ibfk_1;
+        return _QRTZ_SIMPLE_TRIGGERS;
     }
 
-    private transient QrtzSimpropTriggersPath _QRTZ_SIMPROP_TRIGGERS_ibfk_1;
+    private transient QrtzSimpropTriggersPath _QRTZ_SIMPROP_TRIGGERS;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop.QRTZ_SIMPROP_TRIGGERS</code> table
      */
-    public QrtzSimpropTriggersPath QRTZ_SIMPROP_TRIGGERS_ibfk_1() {
-        if (_QRTZ_SIMPROP_TRIGGERS_ibfk_1 == null)
-            _QRTZ_SIMPROP_TRIGGERS_ibfk_1 = new QrtzSimpropTriggersPath(this, null, Keys.QRTZ_SIMPROP_TRIGGERS_IBFK_1.getInverseKey());
+    public QrtzSimpropTriggersPath QRTZ_SIMPROP_TRIGGERS() {
+        if (_QRTZ_SIMPROP_TRIGGERS == null)
+            _QRTZ_SIMPROP_TRIGGERS = new QrtzSimpropTriggersPath(this, null, Keys.QRTZ_SIMPROP_TRIGGERS_IBFK_1.getInverseKey());
 
-        return _QRTZ_SIMPROP_TRIGGERS_ibfk_1;
+        return _QRTZ_SIMPROP_TRIGGERS;
     }
 
     @Override

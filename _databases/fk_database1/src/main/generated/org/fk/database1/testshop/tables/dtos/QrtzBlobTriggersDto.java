@@ -38,7 +38,20 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzBlobTriggersDto() { this.keeper = new BookKeeper(this); }
+    public QrtzBlobTriggersDto() {}
+
+    public static QrtzBlobTriggersDto create(
+        String SCHED_NAME,
+        String TRIGGER_NAME,
+        String TRIGGER_GROUP,
+        byte[] BLOB_DATA
+    ) {
+        return new QrtzBlobTriggersDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_NAME(TRIGGER_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP)
+            .setBLOB_DATA(BLOB_DATA);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -164,6 +177,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
         setTRIGGER_GROUP(from.getTRIGGER_GROUP());
         setBLOB_DATA(from.getBLOB_DATA());
     }
+
     @Override
     public <E extends IQrtzBlobTriggers> E into(E into) {
         into.from(this);
@@ -176,7 +190,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

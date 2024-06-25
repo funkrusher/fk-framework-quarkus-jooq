@@ -66,12 +66,11 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    protected abstract SelectFinalStep<? extends Record> prepareQuery(FkQuery query) throws InvalidDataException;
+    protected abstract SelectFinalStep<Record1<D>> prepareQuery(FkQuery query) throws InvalidDataException;
 
     /**
      * You can override this method if specific result mappings are needed / different from the default.
      * But only do this, if you really need it.
-     *
      * @param rec rec
      * @return dto
      */
@@ -112,12 +111,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      */
     public List<D> query(FkQuery query) throws InvalidDataException {
         return prepareQuery(query)
-                .fetch().map(new RecordMapper<Record, D>() {
-                    @Override
-                    public @Nullable D map(Record record) {
-                        return mapResult(record);
-                    }
-                });
+            .fetch().map(x -> (D) x.get(0));
     }
 
     /**
@@ -142,13 +136,8 @@ public abstract class AbstractRepository<D extends DTO, T> {
      */
     public Stream<D> stream(FkQuery query) throws InvalidDataException {
         return prepareQuery(query)
-                .fetchSize(250)
-                .fetchStream().map(new RecordMapper<Record, D>() {
-                    @Override
-                    public @Nullable D map(Record record) {
-                        return mapResult(record);
-                    }
-                });
+            .fetchSize(250)
+            .fetchStream().map(x -> (D) x.get(0));
     }
 
     /**

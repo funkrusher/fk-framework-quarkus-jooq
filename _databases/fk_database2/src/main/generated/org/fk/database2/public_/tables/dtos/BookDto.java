@@ -41,7 +41,24 @@ public class BookDto implements IBook, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public BookDto() { this.keeper = new BookKeeper(this); }
+    public BookDto() {}
+
+    public static BookDto create(
+        Integer book_id,
+        String title,
+        Integer author_id,
+        String genre,
+        LocalDate publication_date,
+        String isbn
+    ) {
+        return new BookDto()
+            .setBook_id(book_id)
+            .setTitle(title)
+            .setAuthor_id(author_id)
+            .setGenre(genre)
+            .setPublication_date(publication_date)
+            .setIsbn(isbn);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -203,6 +220,7 @@ public class BookDto implements IBook, DTO {
         setPublication_date(from.getPublication_date());
         setIsbn(from.getIsbn());
     }
+
     @Override
     public <E extends IBook> E into(E into) {
         into.from(this);
@@ -215,7 +233,7 @@ public class BookDto implements IBook, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

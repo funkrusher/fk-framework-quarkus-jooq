@@ -40,7 +40,22 @@ public class AuthorDto implements IAuthor, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public AuthorDto() { this.keeper = new BookKeeper(this); }
+    public AuthorDto() {}
+
+    public static AuthorDto create(
+        Integer author_id,
+        String name,
+        String nationality,
+        LocalDate birth_date,
+        String biography
+    ) {
+        return new AuthorDto()
+            .setAuthor_id(author_id)
+            .setName(name)
+            .setNationality(nationality)
+            .setBirth_date(birth_date)
+            .setBiography(biography);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -181,6 +196,7 @@ public class AuthorDto implements IAuthor, DTO {
         setBirth_date(from.getBirth_date());
         setBiography(from.getBiography());
     }
+
     @Override
     public <E extends IAuthor> E into(E into) {
         into.from(this);
@@ -193,7 +209,7 @@ public class AuthorDto implements IAuthor, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

@@ -8,7 +8,6 @@ import java.util.Collection;
 
 import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
-import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop.tables.UserRole.UserRolePath;
 import org.fk.database1.testshop.tables.records.RoleRecord;
 import org.jooq.Condition;
@@ -131,25 +130,17 @@ public class Role extends TableImpl<RoleRecord> {
         return Keys.KEY_ROLE_PRIMARY;
     }
 
-    private transient UserRolePath _fk_user_role_roleId;
+    private transient UserRolePath _user_role;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user_role</code>
      * table
      */
-    public UserRolePath fk_user_role_roleId() {
-        if (_fk_user_role_roleId == null)
-            _fk_user_role_roleId = new UserRolePath(this, null, Keys.FK_USER_ROLE_ROLEID.getInverseKey());
+    public UserRolePath user_role() {
+        if (_user_role == null)
+            _user_role = new UserRolePath(this, null, Keys.FK_USER_ROLE_ROLEID.getInverseKey());
 
-        return _fk_user_role_roleId;
-    }
-
-    /**
-     * Get the implicit many-to-many join path to the <code>testshop.user</code>
-     * table
-     */
-    public UserPath fk_user_role_userId() {
-        return fk_user_role_roleId().fk_user_role_userId();
+        return _user_role;
     }
 
     @Override

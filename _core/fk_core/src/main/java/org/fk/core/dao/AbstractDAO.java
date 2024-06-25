@@ -240,7 +240,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return condition that must be used for all common Update and Delete Statements on this rec.
      */
     private Condition getRecordCondition(final R rec) {
-        Condition condition = getPrimaryKeyCondition(getId(rec));
+        Condition condition = getPrimaryKeyCondition(rec.key());
         if (this.clientIdField != null && request != null) {
             condition = condition.and(this.clientIdField.eq(request.getClientId()));
         }
@@ -262,6 +262,20 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             return (fields[0]).equal(fields[0].getDataType().convert(value));
         else
             return DSL.row(fields).equal((Record) value);
+    }
+
+    /**
+     * Resolves the Primary-Key Condition for the given pk-value
+     * The Primary-Key may be a single field, but also can consist of multiple fields.
+     *
+     * @param value primary-key value
+     * @return Condition for the given id
+     */
+    private Condition getPrimaryKeyCondition(final Record value) {
+        // we can safely cast '?' to Object, as we need Object here for calling equal as '?' is not viable for this.
+        //noinspection unchecked
+        final TableField<R, Object>[] fields = (TableField<R, Object>[]) this.pk.getFieldsArray();
+        return DSL.row(fields).equal((Record) value);
     }
 
     /**
@@ -294,23 +308,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     // Template methods for subclasses
     // ------------------------------------------------------------------------
 
-    /**
-     * Extract the ID value of the given rec
-     * You need to provide this function in your DTO, and define the correct mapping.
-     *
-     * @param rec rec of the table
-     * @return value of the id field(s) of the given rec.
-     */
-    protected abstract T getId(final R rec);
-
-
     // ------------------------------------------------------------------------
     // Helper methods for subclasses, for extracting/resolving common meta.
     // ------------------------------------------------------------------------
 
     /**
-     * Helper-function needed to be used together with {@link #getId(UpdatableRecord)} in your DTO implementation,
-     * if your getId implementation needs to provide the rec for a primary-key that consists of more than one field.
+     * Helper-function which can be used together with {@link #deleteById(Object[])}, {@link #fetch(Object)}, ...
+     * when this DAO works with a Record that has a primary-key that consists of more than one field.
+     * You can use this function to generate combination-ids to use with those functions.
      *
      * @param values values that must be mappable to the T-class.
      * @return instance of T (combined primary-key)
@@ -576,14 +581,14 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             // batch delete (performance gain)
             final List<DeleteConditionStep<R>> conditions = new ArrayList<>();
             for (R rec : deletes) {
-                final Condition deleteCondition = getRecordCondition(rec).and(getPrimaryKeyCondition(getId(rec)));
+                final Condition deleteCondition = getRecordCondition(rec).and(getPrimaryKeyCondition(rec.key()));
                 conditions.add(dsl().delete(table()).where(deleteCondition));
             }
             dsl().batch(conditions).execute();
         } else {
             // single delete
             final R rec = deletes.getFirst();
-            final Condition deleteCondition = getRecordCondition(rec).and(getPrimaryKeyCondition(getId(rec)));
+            final Condition deleteCondition = getRecordCondition(rec).and(getPrimaryKeyCondition(rec.key()));
             dsl().delete(table()).where(deleteCondition).execute();
         }
     }

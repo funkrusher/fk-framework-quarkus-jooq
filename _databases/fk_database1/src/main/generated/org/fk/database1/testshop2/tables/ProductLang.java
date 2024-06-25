@@ -153,28 +153,28 @@ public class ProductLang extends TableImpl<ProductLangRecord> {
         return Arrays.asList(Keys.FK_PRODUCT_LANG_PRODUCTID, Keys.FK_PRODUCT_LANG_LANGID);
     }
 
-    private transient ProductPath _fk_product_lang_productId;
+    private transient ProductPath _product;
 
     /**
      * Get the implicit join path to the <code>testshop2.product</code> table.
      */
-    public ProductPath fk_product_lang_productId() {
-        if (_fk_product_lang_productId == null)
-            _fk_product_lang_productId = new ProductPath(this, Keys.FK_PRODUCT_LANG_PRODUCTID, null);
+    public ProductPath product() {
+        if (_product == null)
+            _product = new ProductPath(this, Keys.FK_PRODUCT_LANG_PRODUCTID, null);
 
-        return _fk_product_lang_productId;
+        return _product;
     }
 
-    private transient LangPath _fk_product_lang_langId;
+    private transient LangPath _lang;
 
     /**
      * Get the implicit join path to the <code>testshop.lang</code> table.
      */
-    public LangPath fk_product_lang_langId() {
-        if (_fk_product_lang_langId == null)
-            _fk_product_lang_langId = new LangPath(this, Keys.FK_PRODUCT_LANG_LANGID, null);
+    public LangPath lang() {
+        if (_lang == null)
+            _lang = new LangPath(this, Keys.FK_PRODUCT_LANG_LANGID, null);
 
-        return _fk_product_lang_langId;
+        return _lang;
     }
 
     @Override

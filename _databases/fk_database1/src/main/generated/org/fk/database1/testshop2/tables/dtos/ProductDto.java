@@ -46,7 +46,28 @@ public class ProductDto implements IProduct, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public ProductDto() { this.keeper = new BookKeeper(this); }
+    public ProductDto() {}
+
+    public static ProductDto create(
+        Long productId,
+        Integer clientId,
+        BigDecimal price,
+        String typeId,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        Boolean deleted,
+        Integer creatorId
+    ) {
+        return new ProductDto()
+            .setProductId(productId)
+            .setClientId(clientId)
+            .setPrice(price)
+            .setTypeId(typeId)
+            .setCreatedAt(createdAt)
+            .setUpdatedAt(updatedAt)
+            .setDeleted(deleted)
+            .setCreatorId(creatorId);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -251,6 +272,7 @@ public class ProductDto implements IProduct, DTO {
         setDeleted(from.getDeleted());
         setCreatorId(from.getCreatorId());
     }
+
     @Override
     public <E extends IProduct> E into(E into) {
         into.from(this);
@@ -263,7 +285,7 @@ public class ProductDto implements IProduct, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

@@ -871,11 +871,6 @@ class AbstractDAOTest {
         public Basic1DAO(DSLContext dsl) {
             super(dsl, Basic1.BASIC1);
         }
-
-        @Override
-        public Integer getId(Basic1Record object) {
-            return object.getAutoIncId();
-        }
     }
 
     /**
@@ -886,11 +881,6 @@ class AbstractDAOTest {
         public Basic2DAO(DSLContext dsl) {
             super(dsl, Basic2.BASIC2);
         }
-
-        @Override
-        public UUID getId(Basic2Record object) {
-            return object.getUuidId();
-        }
     }
 
     /**
@@ -900,11 +890,6 @@ class AbstractDAOTest {
 
         public Nested1DAO(DSLContext dsl) {
             super(dsl, Nested1.NESTED1);
-        }
-
-        @Override
-        public Record2<Integer, UUID> getId(Nested1Record object) {
-            return this.compositeKeyRecord(object.getAutoIncId(), object.getUuidId());
         }
     }
 }

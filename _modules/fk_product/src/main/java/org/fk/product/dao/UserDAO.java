@@ -14,9 +14,4 @@ public class UserDAO extends AbstractDAO<UserRecord, IUser, Integer> {
     public UserDAO(DSLContext dsl) {
         super(dsl, User.USER);
     }
-
-    @Override
-    public Integer getId(UserRecord object) {
-        return object.getUserId();
-    }
 }

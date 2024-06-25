@@ -45,7 +45,28 @@ public class Basic1Dto implements IBasic1, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public Basic1Dto() { this.keeper = new BookKeeper(this); }
+    public Basic1Dto() {}
+
+    public static Basic1Dto create(
+        Integer autoIncId,
+        String string1,
+        String string2,
+        Integer integer1,
+        Long long1,
+        BigDecimal decimal1,
+        LocalDateTime dateTime1,
+        Integer clientId
+    ) {
+        return new Basic1Dto()
+            .setAutoIncId(autoIncId)
+            .setString1(string1)
+            .setString2(string2)
+            .setInteger1(integer1)
+            .setLong1(long1)
+            .setDecimal1(decimal1)
+            .setDateTime1(dateTime1)
+            .setClientId(clientId);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -243,6 +264,7 @@ public class Basic1Dto implements IBasic1, DTO {
         setDateTime1(from.getDateTime1());
         setClientId(from.getClientId());
     }
+
     @Override
     public <E extends IBasic1> E into(E into) {
         into.from(this);
@@ -255,7 +277,7 @@ public class Basic1Dto implements IBasic1, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

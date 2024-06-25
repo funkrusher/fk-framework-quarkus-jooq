@@ -234,7 +234,7 @@ class AbstractRepositoryTest {
         }
 
         @Override
-        public SelectFinalStep<Record> prepareQuery(FkQuery query) throws InvalidDataException {
+        public SelectFinalStep<? extends Record> prepareQuery(FkQuery query) throws InvalidDataException {
             final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Basic1.BASIC1)
                     .addMappableFields(Basic1.BASIC1.fields())
                     .addMappableFields(Basic2.BASIC2.fields())
@@ -243,11 +243,14 @@ class AbstractRepositoryTest {
             // typical multiset query for 1:n relationships.
             return dsl()
                     .select(
-                            asterisk(),
+                        row(
+                            Basic1.BASIC1.fields(),
                             multiset(
                                     selectDistinct(asterisk())
                                             .where(Nested1.NESTED1.AUTOINCID.eq(Basic1.BASIC1.AUTOINCID))
-                            ).as("nested1s"))
+                            ).as("nested1s")
+                        ).convertFrom(r -> r.into(Basic1Record.class).into(Basic1DTO.class))
+                    )
                     .from(Basic1.BASIC1)
                             .leftJoin(Nested1.NESTED1)
                             .on(Nested1.NESTED1.AUTOINCID

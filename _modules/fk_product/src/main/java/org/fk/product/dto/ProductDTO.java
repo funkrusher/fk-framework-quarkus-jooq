@@ -9,11 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
-import org.fk.database1.testshop2.tables.dtos.ProductDto;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.product.type.ProductTypeId;
-
-import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +20,6 @@ import java.util.List;
  */
 public class ProductDTO implements IProduct, DTO {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------
@@ -33,7 +29,6 @@ public class ProductDTO implements IProduct, DTO {
     private Long productId;
     private Integer clientId;
     private BigDecimal price;
-    @Schema(example = "book", type = SchemaType.STRING, format = "string", description = "type of product (one of: book, ...)")
     private String typeId;
     @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
     private LocalDateTime createdAt;
@@ -67,7 +62,32 @@ public class ProductDTO implements IProduct, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public ProductDTO() { this.keeper = new BookKeeper(this); }
+    public ProductDTO() {}
+
+    public static ProductDTO create(
+        Long productId,
+        Integer clientId,
+        BigDecimal price,
+        String typeId,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        Boolean deleted,
+        Integer creatorId,
+        UserDTO creator,
+        List<ProductLangDTO> langs
+    ) {
+        return new ProductDTO()
+            .setProductId(productId)
+            .setClientId(clientId)
+            .setPrice(price)
+            .setTypeId(typeId)
+            .setCreatedAt(createdAt)
+            .setUpdatedAt(updatedAt)
+            .setDeleted(deleted)
+            .setCreatorId(creatorId)
+            .setCreator(creator)
+            .setLangs(langs);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -148,13 +168,10 @@ public class ProductDTO implements IProduct, DTO {
      */
     @Override
     public ProductDTO setTypeId(String typeId) {
-        this.productTypeId = ProductTypeId.fromValue(typeId);
         this.typeId = typeId;
-        this.keeper.touch("productTypeId");
         this.keeper.touch("typeId");
         return this;
     }
-
 
     /**
      * Getter for <code>testshop2.product.createdAt</code>.
@@ -235,9 +252,10 @@ public class ProductDTO implements IProduct, DTO {
     // -------------------------------------------------------------------------
 
     @JsonIgnore
-    public void setCreator(UserDTO creator) {
+    public ProductDTO setCreator(UserDTO creator) {
         this.creator = creator;
         keeper.touch("creator");
+        return this;
     }
 
     @JsonProperty
@@ -296,9 +314,10 @@ public class ProductDTO implements IProduct, DTO {
         return langs;
     }
 
-    public void setLangs(List<ProductLangDTO> langs) {
+    public ProductDTO setLangs(List<ProductLangDTO> langs) {
         this.langs = langs;
         keeper.touch("langs");
+        return this;
     }
 
     // -------------------------------------------------------------------------
@@ -340,7 +359,9 @@ public class ProductDTO implements IProduct, DTO {
         setCreatedAt(from.getCreatedAt());
         setUpdatedAt(from.getUpdatedAt());
         setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
     }
+
     @Override
     public <E extends IProduct> E into(E into) {
         into.from(this);
@@ -353,7 +374,7 @@ public class ProductDTO implements IProduct, DTO {
 
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
 
     @JsonIgnore
     @XmlTransient

@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.fk.database1.testshop.tables.Client.ClientPath;
-import org.fk.database1.testshop.tables.Lang.LangPath;
 import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop2.Keys;
 import org.fk.database1.testshop2.Testshop2;
@@ -186,49 +185,41 @@ public class Product extends TableImpl<ProductRecord> {
         return Arrays.asList(Keys.FK_PRODUCT_CLIENTID, Keys.FK_PRODUCT_CREATORID);
     }
 
-    private transient ClientPath _fk_product_clientId;
+    private transient ClientPath _client;
 
     /**
      * Get the implicit join path to the <code>testshop.client</code> table.
      */
-    public ClientPath fk_product_clientId() {
-        if (_fk_product_clientId == null)
-            _fk_product_clientId = new ClientPath(this, Keys.FK_PRODUCT_CLIENTID, null);
+    public ClientPath client() {
+        if (_client == null)
+            _client = new ClientPath(this, Keys.FK_PRODUCT_CLIENTID, null);
 
-        return _fk_product_clientId;
+        return _client;
     }
 
-    private transient UserPath _fk_product_creatorId;
+    private transient UserPath _creator;
 
     /**
      * Get the implicit join path to the <code>testshop.user</code> table.
      */
-    public UserPath fk_product_creatorId() {
-        if (_fk_product_creatorId == null)
-            _fk_product_creatorId = new UserPath(this, Keys.FK_PRODUCT_CREATORID, null);
+    public UserPath creator() {
+        if (_creator == null)
+            _creator = new UserPath(this, Keys.FK_PRODUCT_CREATORID, null);
 
-        return _fk_product_creatorId;
+        return _creator;
     }
 
-    private transient ProductLangPath _fk_product_lang_productId;
+    private transient ProductLangPath _product_lang;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop2.product_lang</code> table
      */
-    public ProductLangPath fk_product_lang_productId() {
-        if (_fk_product_lang_productId == null)
-            _fk_product_lang_productId = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
+    public ProductLangPath product_lang() {
+        if (_product_lang == null)
+            _product_lang = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
 
-        return _fk_product_lang_productId;
-    }
-
-    /**
-     * Get the implicit many-to-many join path to the <code>testshop.lang</code>
-     * table
-     */
-    public LangPath fk_product_lang_langId() {
-        return fk_product_lang_productId().fk_product_lang_langId();
+        return _product_lang;
     }
 
     @Override

@@ -2,22 +2,17 @@ package org.fk.product.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.f4b6a3.ulid.Ulid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlTransient;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
-import org.fk.database1.testshop.tables.interfaces.IPost;
-
-import java.util.UUID;
+import org.fk.database1.testshop.tables.interfaces.IRole;
 
 /**
- * PostDTO
+ * RoleDTO
  */
-public class PostDTO implements IPost, DTO {
+public class RoleDTO implements IRole, DTO {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,29 +20,23 @@ public class PostDTO implements IPost, DTO {
     // Database-Fields (must exist in the associated database table)
     // -------------------------------------------------------------------------
 
-    private UUID id;
-    private String title;
+    private String roleId;
 
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
     // -------------------------------------------------------------------------
-    // ULID string of the UUID id (readable for user)
-    @Schema(writeOnly = true)
-    private String idEnc;
 
     // -------------------------------------------------------------------------
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public PostDTO() {}
+    public RoleDTO() {}
 
-    public static PostDTO create(
-        UUID id,
-        String title
+    public static RoleDTO create(
+        String roleId
     ) {
-        return new PostDTO()
-            .setId(id)
-            .setTitle(title);
+        return new RoleDTO()
+            .setRoleId(roleId);
     }
 
     // -------------------------------------------------------------------------
@@ -55,50 +44,28 @@ public class PostDTO implements IPost, DTO {
     // -------------------------------------------------------------------------
 
     /**
-     * Getter for <code>testshop.post.id</code>.
+     * Getter for <code>testshop.role.roleId</code>.
      */
     @NotNull
+    @Size(max = 50)
     @Override
-    public UUID getId() {
-        return this.id;
+    public String getRoleId() {
+        return this.roleId;
     }
 
     /**
-     * Setter for <code>testshop.post.id</code>.
+     * Setter for <code>testshop.role.roleId</code>.
      */
     @Override
-    public PostDTO setId(UUID id) {
-        this.id = id;
-        this.keeper.touch("id");
-        return this;
-    }
-
-    /**
-     * Getter for <code>testshop.post.title</code>.
-     */
-    @Size(max = 255)
-    @Override
-    public String getTitle() {
-        return this.title;
-    }
-
-    /**
-     * Setter for <code>testshop.post.title</code>.
-     */
-    @Override
-    public PostDTO setTitle(String title) {
-        this.title = title;
-        this.keeper.touch("title");
+    public RoleDTO setRoleId(String roleId) {
+        this.roleId = roleId;
+        this.keeper.touch("roleId");
         return this;
     }
 
     // -------------------------------------------------------------------------
     // Non-Database-Fields Setters/Getters (please define here)
     // -------------------------------------------------------------------------
-    @JsonProperty
-    String getIdEnc() {
-        return Ulid.from(this.getId()).toString();
-    }
 
     // -------------------------------------------------------------------------
     // ToString, Equals, HashCode
@@ -131,13 +98,12 @@ public class PostDTO implements IPost, DTO {
     // -------------------------------------------------------------------------
 
     @Override
-    public void from(IPost from) {
-        setId(from.getId());
-        setTitle(from.getTitle());
+    public void from(IRole from) {
+        setRoleId(from.getRoleId());
     }
 
     @Override
-    public <E extends IPost> E into(E into) {
+    public <E extends IRole> E into(E into) {
         into.from(this);
         return into;
     }

@@ -37,7 +37,20 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzSchedulerStateDto() { this.keeper = new BookKeeper(this); }
+    public QrtzSchedulerStateDto() {}
+
+    public static QrtzSchedulerStateDto create(
+        String SCHED_NAME,
+        String INSTANCE_NAME,
+        Long LAST_CHECKIN_TIME,
+        Long CHECKIN_INTERVAL
+    ) {
+        return new QrtzSchedulerStateDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setINSTANCE_NAME(INSTANCE_NAME)
+            .setLAST_CHECKIN_TIME(LAST_CHECKIN_TIME)
+            .setCHECKIN_INTERVAL(CHECKIN_INTERVAL);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -162,6 +175,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
         setLAST_CHECKIN_TIME(from.getLAST_CHECKIN_TIME());
         setCHECKIN_INTERVAL(from.getCHECKIN_INTERVAL());
     }
+
     @Override
     public <E extends IQrtzSchedulerState> E into(E into) {
         into.from(this);
@@ -174,7 +188,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

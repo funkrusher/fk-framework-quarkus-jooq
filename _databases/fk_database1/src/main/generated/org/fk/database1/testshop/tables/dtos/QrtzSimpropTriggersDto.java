@@ -49,7 +49,40 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
     // Constructor(s)
     // -------------------------------------------------------------------------
  
-    public QrtzSimpropTriggersDto() { this.keeper = new BookKeeper(this); }
+    public QrtzSimpropTriggersDto() {}
+
+    public static QrtzSimpropTriggersDto create(
+        String SCHED_NAME,
+        String TRIGGER_NAME,
+        String TRIGGER_GROUP,
+        String STR_PROP_1,
+        String STR_PROP_2,
+        String STR_PROP_3,
+        Integer INT_PROP_1,
+        Integer INT_PROP_2,
+        Long LONG_PROP_1,
+        Long LONG_PROP_2,
+        BigDecimal DEC_PROP_1,
+        BigDecimal DEC_PROP_2,
+        String BOOL_PROP_1,
+        String BOOL_PROP_2
+    ) {
+        return new QrtzSimpropTriggersDto()
+            .setSCHED_NAME(SCHED_NAME)
+            .setTRIGGER_NAME(TRIGGER_NAME)
+            .setTRIGGER_GROUP(TRIGGER_GROUP)
+            .setSTR_PROP_1(STR_PROP_1)
+            .setSTR_PROP_2(STR_PROP_2)
+            .setSTR_PROP_3(STR_PROP_3)
+            .setINT_PROP_1(INT_PROP_1)
+            .setINT_PROP_2(INT_PROP_2)
+            .setLONG_PROP_1(LONG_PROP_1)
+            .setLONG_PROP_2(LONG_PROP_2)
+            .setDEC_PROP_1(DEC_PROP_1)
+            .setDEC_PROP_2(DEC_PROP_2)
+            .setBOOL_PROP_1(BOOL_PROP_1)
+            .setBOOL_PROP_2(BOOL_PROP_2);
+    }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
@@ -369,6 +402,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
         setBOOL_PROP_1(from.getBOOL_PROP_1());
         setBOOL_PROP_2(from.getBOOL_PROP_2());
     }
+
     @Override
     public <E extends IQrtzSimpropTriggers> E into(E into) {
         into.from(this);
@@ -381,7 +415,7 @@ public class QrtzSimpropTriggersDto implements IQrtzSimpropTriggers, DTO {
      
     @JsonIgnore
     @XmlTransient
-    protected transient BookKeeper keeper;
+    protected transient BookKeeper keeper = new BookKeeper(this);
  
     @JsonIgnore
     @XmlTransient

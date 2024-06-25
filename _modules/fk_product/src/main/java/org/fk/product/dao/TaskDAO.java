@@ -14,9 +14,4 @@ public class TaskDAO extends AbstractDAO<TaskRecord, ITask, Long> {
     public TaskDAO(DSLContext dsl) {
         super(dsl, Task.TASK);
     }
-
-    @Override
-    public Long getId(TaskRecord object) {
-        return object.getTaskId();
-    }
 }

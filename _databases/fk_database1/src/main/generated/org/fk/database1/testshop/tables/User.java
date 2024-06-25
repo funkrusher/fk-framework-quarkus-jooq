@@ -11,7 +11,6 @@ import java.util.List;
 import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
 import org.fk.database1.testshop.tables.Client.ClientPath;
-import org.fk.database1.testshop.tables.Role.RolePath;
 import org.fk.database1.testshop.tables.UserRole.UserRolePath;
 import org.fk.database1.testshop.tables.records.UserRecord;
 import org.fk.database1.testshop2.tables.Product.ProductPath;
@@ -166,50 +165,42 @@ public class User extends TableImpl<UserRecord> {
         return Arrays.asList(Keys.FK_USER_CLIENTID);
     }
 
-    private transient ClientPath _fk_user_clientId;
+    private transient ClientPath _client;
 
     /**
      * Get the implicit join path to the <code>testshop.client</code> table.
      */
-    public ClientPath fk_user_clientId() {
-        if (_fk_user_clientId == null)
-            _fk_user_clientId = new ClientPath(this, Keys.FK_USER_CLIENTID, null);
+    public ClientPath client() {
+        if (_client == null)
+            _client = new ClientPath(this, Keys.FK_USER_CLIENTID, null);
 
-        return _fk_user_clientId;
+        return _client;
     }
 
-    private transient UserRolePath _fk_user_role_userId;
+    private transient UserRolePath _user_role;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user_role</code>
      * table
      */
-    public UserRolePath fk_user_role_userId() {
-        if (_fk_user_role_userId == null)
-            _fk_user_role_userId = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
+    public UserRolePath user_role() {
+        if (_user_role == null)
+            _user_role = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
 
-        return _fk_user_role_userId;
+        return _user_role;
     }
 
-    private transient ProductPath _fk_product_creatorId;
+    private transient ProductPath _product;
 
     /**
      * Get the implicit to-many join path to the <code>testshop2.product</code>
      * table
      */
-    public ProductPath fk_product_creatorId() {
-        if (_fk_product_creatorId == null)
-            _fk_product_creatorId = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CREATORID.getInverseKey());
+    public ProductPath product() {
+        if (_product == null)
+            _product = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CREATORID.getInverseKey());
 
-        return _fk_product_creatorId;
-    }
-
-    /**
-     * Get the implicit many-to-many join path to the <code>testshop.role</code>
-     * table
-     */
-    public RolePath fk_user_role_roleId() {
-        return fk_user_role_userId().fk_user_role_roleId();
+        return _product;
     }
 
     @Override

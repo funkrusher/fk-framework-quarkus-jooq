@@ -14,9 +14,4 @@ public class LangDAO extends AbstractDAO<LangRecord, ILang, Integer> {
     public LangDAO(DSLContext dsl) {
         super(dsl, Lang.LANG);
     }
-
-    @Override
-    public Integer getId(LangRecord object) {
-        return object.getLangId();
-    }
 }
