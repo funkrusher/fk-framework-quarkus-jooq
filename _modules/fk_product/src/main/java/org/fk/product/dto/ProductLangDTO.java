@@ -7,7 +7,10 @@ import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlTransient;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
+import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.fk.database1.testshop2.tables.interfaces.IProductLang;
+import org.fk.database1.testshop2.tables.records.ProductLangRecord;
+import org.jooq.Record1;
 
 /**
  * ProductLangDTO
@@ -37,6 +40,12 @@ public class ProductLangDTO implements IProductLang, DTO {
     // -------------------------------------------------------------------------
 
     public ProductLangDTO() {}
+
+    public static ProductLangDTO create(
+        Record1<ProductLangRecord> r
+    ) {
+        return r.value1().into(ProductLangDTO.class);
+    }
 
     public static ProductLangDTO create(
         Long productId,

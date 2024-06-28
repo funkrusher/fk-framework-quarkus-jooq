@@ -3,19 +3,14 @@ package org.fk.product.repository;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.jooq.FkQueryJooqMapper;
 
-import static org.fk.core.jooq.FkJooqHelper.nullOnFirstNull;
 import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.fk.database1.testshop.tables.User.USER;
 import static org.fk.database1.testshop.tables.Lang.LANG;
-import static org.jooq.Records.mapping;
 
 import org.fk.core.repository.AbstractRepository;
 import org.fk.core.query.model.FkQuery;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductLangDTO;
-import org.fk.product.dto.RoleDTO;
-import org.fk.product.dto.UserDTO;
+import org.fk.product.dto.*;
 import org.jooq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,48 +30,24 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
             .addMappableFields(PRODUCT.fields())
             .addMappableFields(PRODUCT_LANG.fields());
 
-
-        // experiment: try to wrap the SELECT into a "container"-row,
-        // to be able to use convertFrom on the ProductDTO for mapping everything beforehand.
-        // After fetching, unwrap the "container"-row and extract the contents.
-        // benefit: abstractions can work and expect the "container"-row, and type-safety still guaranteed.
         return dsl()
             .select(
                 row(
-                    PRODUCT.PRODUCTID,
-                    PRODUCT.CLIENTID,
-                    PRODUCT.PRICE,
-                    PRODUCT.TYPEID,
-                    PRODUCT.CREATEDAT,
-                    PRODUCT.UPDATEDAT,
-                    PRODUCT.DELETED,
-                    PRODUCT.CREATORID,
-
-                    // creator
+                    PRODUCT,
                     row(
-                        PRODUCT.creator().USERID,
-                        PRODUCT.creator().CLIENTID,
-                        PRODUCT.creator().EMAIL,
-                        PRODUCT.creator().FIRSTNAME,
-                        PRODUCT.creator().LASTNAME,
+                        PRODUCT.creator(),
                         multiset(
                             select(
-                                PRODUCT.creator().user_role().ROLEID
+                                PRODUCT.creator().user_role()
                             ).from(PRODUCT.creator().user_role())
-                        ).convertFrom(r -> r.map(mapping(RoleDTO::create)))
-                    ).convertFrom(nullOnFirstNull(mapping(UserDTO::create))),
-
-                    // langs
+                        ).convertFrom(r -> r.map(RoleDTO::create))
+                    ).convertFrom(UserDTO::createOrNull),
                     multiset(
                         select(
-                            PRODUCT.product_lang().PRODUCTID,
-                            PRODUCT.product_lang().LANGID,
-                            PRODUCT.product_lang().NAME,
-                            PRODUCT.product_lang().DESCRIPTION
+                            PRODUCT.product_lang()
                         ).from(PRODUCT.product_lang())
-                    ).convertFrom(r -> r.map(mapping(ProductLangDTO::create)))
-
-                ).convertFrom(mapping(ProductDTO::create))
+                    ).convertFrom(r -> r.map(ProductLangDTO::create))
+                ).convertFrom(ProductDTO::create)
             )
             .from(PRODUCT
                 .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))

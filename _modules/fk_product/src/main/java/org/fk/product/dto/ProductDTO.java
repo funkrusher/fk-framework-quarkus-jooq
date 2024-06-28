@@ -10,7 +10,10 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
+import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.type.ProductTypeId;
+import org.jooq.Record3;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,6 +66,16 @@ public class ProductDTO implements IProduct, DTO {
     // -------------------------------------------------------------------------
 
     public ProductDTO() {}
+
+    public static ProductDTO create(
+        Record3<ProductRecord, UserDTO, List<ProductLangDTO>> r
+    ) {
+        ProductRecord rec = r.value1();
+        ProductDTO product = rec.into(ProductDTO.class);
+        product.setCreator(r.value2());
+        product.setLangs(r.value3());
+        return product;
+    }
 
     public static ProductDTO create(
         Long productId,
