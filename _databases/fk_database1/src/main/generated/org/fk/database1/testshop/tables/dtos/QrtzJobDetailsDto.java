@@ -46,30 +46,7 @@ public class QrtzJobDetailsDto implements IQrtzJobDetails, DTO {
  
     public QrtzJobDetailsDto() {}
 
-    public static QrtzJobDetailsDto create(
-        String SCHED_NAME,
-        String JOB_NAME,
-        String JOB_GROUP,
-        String DESCRIPTION,
-        String JOB_CLASS_NAME,
-        String IS_DURABLE,
-        String IS_NONCONCURRENT,
-        String IS_UPDATE_DATA,
-        String REQUESTS_RECOVERY,
-        byte[] JOB_DATA
-    ) {
-        return new QrtzJobDetailsDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setJOB_NAME(JOB_NAME)
-            .setJOB_GROUP(JOB_GROUP)
-            .setDESCRIPTION(DESCRIPTION)
-            .setJOB_CLASS_NAME(JOB_CLASS_NAME)
-            .setIS_DURABLE(IS_DURABLE)
-            .setIS_NONCONCURRENT(IS_NONCONCURRENT)
-            .setIS_UPDATE_DATA(IS_UPDATE_DATA)
-            .setREQUESTS_RECOVERY(REQUESTS_RECOVERY)
-            .setJOB_DATA(JOB_DATA);
-    }
+    public QrtzJobDetailsDto(IQrtzJobDetails value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

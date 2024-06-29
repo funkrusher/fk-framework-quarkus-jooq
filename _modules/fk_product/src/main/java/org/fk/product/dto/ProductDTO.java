@@ -67,39 +67,12 @@ public class ProductDTO implements IProduct, DTO {
 
     public ProductDTO() {}
 
-    public static ProductDTO create(
-        Record3<ProductRecord, UserDTO, List<ProductLangDTO>> r
-    ) {
-        ProductRecord rec = r.value1();
-        ProductDTO product = rec.into(ProductDTO.class);
-        product.setCreator(r.value2());
-        product.setLangs(r.value3());
-        return product;
-    }
+    public ProductDTO(IProduct value) { this.from(value); }
 
-    public static ProductDTO create(
-        Long productId,
-        Integer clientId,
-        BigDecimal price,
-        String typeId,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-        Boolean deleted,
-        Integer creatorId,
-        UserDTO creator,
-        List<ProductLangDTO> langs
-    ) {
-        return new ProductDTO()
-            .setProductId(productId)
-            .setClientId(clientId)
-            .setPrice(price)
-            .setTypeId(typeId)
-            .setCreatedAt(createdAt)
-            .setUpdatedAt(updatedAt)
-            .setDeleted(deleted)
-            .setCreatorId(creatorId)
-            .setCreator(creator)
-            .setLangs(langs);
+    public static ProductDTO create(Record3<ProductRecord, UserDTO, List<ProductLangDTO>> r) {
+        return new ProductDTO(r.value1())
+            .setCreator(r.value2())
+            .setLangs(r.value3());
     }
 
     // -------------------------------------------------------------------------

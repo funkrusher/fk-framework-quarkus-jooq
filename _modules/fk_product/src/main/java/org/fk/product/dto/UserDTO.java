@@ -13,6 +13,7 @@ import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.jooq.Record2;
 import org.jooq.Record3;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,35 +45,17 @@ public class UserDTO implements IUser, DTO {
 
     public UserDTO() {}
 
-    public static UserDTO createOrNull(
-        Record2<UserRecord, List<RoleDTO>> r
-    ) {
-        UserRecord rec = r.value1();
-        if (rec.getUserId() == null) {
+    public UserDTO(IUser value) { this.from(value); }
+
+    public static @Nullable UserDTO createOrNull(Record2<UserRecord, List<RoleDTO>> r) {
+        if (r.value1().getUserId() == null) {
             return null;
+        } else {
+            return new UserDTO(r.value1())
+                .setRoles(r.value2());
         }
-        UserDTO user = r.value1().into(UserDTO.class);
-        user.setRoles(r.value2());
-        return user;
     }
 
-    public static UserDTO create(
-        Integer userId,
-        Integer clientId,
-        String email,
-        String firstname,
-        String lastname,
-        List<RoleDTO> roles
-    ) {
-        return new UserDTO()
-            .setUserId(userId)
-            .setClientId(clientId)
-            .setEmail(email)
-            .setFirstname(firstname)
-            .setLastname(lastname)
-            .setRoles(roles);
-    }
-    
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
     // -------------------------------------------------------------------------

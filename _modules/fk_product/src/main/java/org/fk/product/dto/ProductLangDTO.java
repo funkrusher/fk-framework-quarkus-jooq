@@ -41,23 +41,10 @@ public class ProductLangDTO implements IProductLang, DTO {
 
     public ProductLangDTO() {}
 
-    public static ProductLangDTO create(
-        Record1<ProductLangRecord> r
-    ) {
-        return r.value1().into(ProductLangDTO.class);
-    }
+    public ProductLangDTO(IProductLang value) { this.from(value); }
 
-    public static ProductLangDTO create(
-        Long productId,
-        Integer langId,
-        String name,
-        String description
-    ) {
-        return new ProductLangDTO()
-            .setProductId(productId)
-            .setLangId(langId)
-            .setName(name)
-            .setDescription(description);
+    public static ProductLangDTO create(Record1<ProductLangRecord> r) {
+        return new ProductLangDTO(r.value1());
     }
 
     // -------------------------------------------------------------------------

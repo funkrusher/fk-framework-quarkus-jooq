@@ -33,12 +33,7 @@ public class ClientDto implements IClient, DTO {
  
     public ClientDto() {}
 
-    public static ClientDto create(
-        Integer clientId
-    ) {
-        return new ClientDto()
-            .setClientId(clientId);
-    }
+    public ClientDto(IClient value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

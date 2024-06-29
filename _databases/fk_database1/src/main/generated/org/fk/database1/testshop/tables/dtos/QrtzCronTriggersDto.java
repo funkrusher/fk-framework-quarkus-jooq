@@ -40,20 +40,7 @@ public class QrtzCronTriggersDto implements IQrtzCronTriggers, DTO {
  
     public QrtzCronTriggersDto() {}
 
-    public static QrtzCronTriggersDto create(
-        String SCHED_NAME,
-        String TRIGGER_NAME,
-        String TRIGGER_GROUP,
-        String CRON_EXPRESSION,
-        String TIME_ZONE_ID
-    ) {
-        return new QrtzCronTriggersDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setTRIGGER_NAME(TRIGGER_NAME)
-            .setTRIGGER_GROUP(TRIGGER_GROUP)
-            .setCRON_EXPRESSION(CRON_EXPRESSION)
-            .setTIME_ZONE_ID(TIME_ZONE_ID);
-    }
+    public QrtzCronTriggersDto(IQrtzCronTriggers value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

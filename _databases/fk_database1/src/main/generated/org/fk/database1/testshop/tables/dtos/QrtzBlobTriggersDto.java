@@ -40,18 +40,7 @@ public class QrtzBlobTriggersDto implements IQrtzBlobTriggers, DTO {
  
     public QrtzBlobTriggersDto() {}
 
-    public static QrtzBlobTriggersDto create(
-        String SCHED_NAME,
-        String TRIGGER_NAME,
-        String TRIGGER_GROUP,
-        byte[] BLOB_DATA
-    ) {
-        return new QrtzBlobTriggersDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setTRIGGER_NAME(TRIGGER_NAME)
-            .setTRIGGER_GROUP(TRIGGER_GROUP)
-            .setBLOB_DATA(BLOB_DATA);
-    }
+    public QrtzBlobTriggersDto(IQrtzBlobTriggers value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

@@ -33,16 +33,7 @@ public class LangDTO implements ILang, DTO {
 
     public LangDTO() {}
 
-    public static LangDTO create(
-        Integer langId,
-        String code,
-        String description
-    ) {
-        return new LangDTO()
-            .setLangId(langId)
-            .setCode(code)
-            .setDescription(description);
-    }
+    public LangDTO(ILang value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

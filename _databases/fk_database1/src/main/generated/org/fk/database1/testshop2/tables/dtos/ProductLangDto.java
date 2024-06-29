@@ -39,18 +39,7 @@ public class ProductLangDto implements IProductLang, DTO {
  
     public ProductLangDto() {}
 
-    public static ProductLangDto create(
-        Long productId,
-        Integer langId,
-        String name,
-        String description
-    ) {
-        return new ProductLangDto()
-            .setProductId(productId)
-            .setLangId(langId)
-            .setName(name)
-            .setDescription(description);
-    }
+    public ProductLangDto(IProductLang value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

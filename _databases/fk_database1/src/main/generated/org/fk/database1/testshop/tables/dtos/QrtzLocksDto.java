@@ -37,14 +37,7 @@ public class QrtzLocksDto implements IQrtzLocks, DTO {
  
     public QrtzLocksDto() {}
 
-    public static QrtzLocksDto create(
-        String SCHED_NAME,
-        String LOCK_NAME
-    ) {
-        return new QrtzLocksDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setLOCK_NAME(LOCK_NAME);
-    }
+    public QrtzLocksDto(IQrtzLocks value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

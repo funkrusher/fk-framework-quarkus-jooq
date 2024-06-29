@@ -52,42 +52,7 @@ public class QrtzTriggersDto implements IQrtzTriggers, DTO {
  
     public QrtzTriggersDto() {}
 
-    public static QrtzTriggersDto create(
-        String SCHED_NAME,
-        String TRIGGER_NAME,
-        String TRIGGER_GROUP,
-        String JOB_NAME,
-        String JOB_GROUP,
-        String DESCRIPTION,
-        Long NEXT_FIRE_TIME,
-        Long PREV_FIRE_TIME,
-        Integer PRIORITY,
-        String TRIGGER_STATE,
-        String TRIGGER_TYPE,
-        Long START_TIME,
-        Long END_TIME,
-        String CALENDAR_NAME,
-        Short MISFIRE_INSTR,
-        byte[] JOB_DATA
-    ) {
-        return new QrtzTriggersDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setTRIGGER_NAME(TRIGGER_NAME)
-            .setTRIGGER_GROUP(TRIGGER_GROUP)
-            .setJOB_NAME(JOB_NAME)
-            .setJOB_GROUP(JOB_GROUP)
-            .setDESCRIPTION(DESCRIPTION)
-            .setNEXT_FIRE_TIME(NEXT_FIRE_TIME)
-            .setPREV_FIRE_TIME(PREV_FIRE_TIME)
-            .setPRIORITY(PRIORITY)
-            .setTRIGGER_STATE(TRIGGER_STATE)
-            .setTRIGGER_TYPE(TRIGGER_TYPE)
-            .setSTART_TIME(START_TIME)
-            .setEND_TIME(END_TIME)
-            .setCALENDAR_NAME(CALENDAR_NAME)
-            .setMISFIRE_INSTR(MISFIRE_INSTR)
-            .setJOB_DATA(JOB_DATA);
-    }
+    public QrtzTriggersDto(IQrtzTriggers value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

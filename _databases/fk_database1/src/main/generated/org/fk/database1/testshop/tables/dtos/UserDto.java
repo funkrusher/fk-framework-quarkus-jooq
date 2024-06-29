@@ -40,20 +40,7 @@ public class UserDto implements IUser, DTO {
  
     public UserDto() {}
 
-    public static UserDto create(
-        Integer userId,
-        Integer clientId,
-        String email,
-        String firstname,
-        String lastname
-    ) {
-        return new UserDto()
-            .setUserId(userId)
-            .setClientId(clientId)
-            .setEmail(email)
-            .setFirstname(firstname)
-            .setLastname(lastname);
-    }
+    public UserDto(IUser value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

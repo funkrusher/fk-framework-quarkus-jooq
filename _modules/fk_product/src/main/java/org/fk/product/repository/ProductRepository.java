@@ -38,8 +38,8 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                         PRODUCT.creator(),
                         multiset(
                             select(
-                                PRODUCT.creator().user_role()
-                            ).from(PRODUCT.creator().user_role())
+                                PRODUCT.creator().user_role().role()
+                            ).from(PRODUCT.creator().user_role().role())
                         ).convertFrom(r -> r.map(RoleDTO::create))
                     ).convertFrom(UserDTO::createOrNull),
                     multiset(

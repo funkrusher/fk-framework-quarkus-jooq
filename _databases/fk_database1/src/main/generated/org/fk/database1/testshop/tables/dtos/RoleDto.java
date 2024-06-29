@@ -36,12 +36,7 @@ public class RoleDto implements IRole, DTO {
  
     public RoleDto() {}
 
-    public static RoleDto create(
-        String roleId
-    ) {
-        return new RoleDto()
-            .setRoleId(roleId);
-    }
+    public RoleDto(IRole value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

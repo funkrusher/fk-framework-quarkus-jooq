@@ -48,36 +48,7 @@ public class QrtzFiredTriggersDto implements IQrtzFiredTriggers, DTO {
  
     public QrtzFiredTriggersDto() {}
 
-    public static QrtzFiredTriggersDto create(
-        String SCHED_NAME,
-        String ENTRY_ID,
-        String TRIGGER_NAME,
-        String TRIGGER_GROUP,
-        String INSTANCE_NAME,
-        Long FIRED_TIME,
-        Long SCHED_TIME,
-        Integer PRIORITY,
-        String STATE,
-        String JOB_NAME,
-        String JOB_GROUP,
-        String IS_NONCONCURRENT,
-        String REQUESTS_RECOVERY
-    ) {
-        return new QrtzFiredTriggersDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setENTRY_ID(ENTRY_ID)
-            .setTRIGGER_NAME(TRIGGER_NAME)
-            .setTRIGGER_GROUP(TRIGGER_GROUP)
-            .setINSTANCE_NAME(INSTANCE_NAME)
-            .setFIRED_TIME(FIRED_TIME)
-            .setSCHED_TIME(SCHED_TIME)
-            .setPRIORITY(PRIORITY)
-            .setSTATE(STATE)
-            .setJOB_NAME(JOB_NAME)
-            .setJOB_GROUP(JOB_GROUP)
-            .setIS_NONCONCURRENT(IS_NONCONCURRENT)
-            .setREQUESTS_RECOVERY(REQUESTS_RECOVERY);
-    }
+    public QrtzFiredTriggersDto(IQrtzFiredTriggers value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

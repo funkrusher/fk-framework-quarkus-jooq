@@ -39,14 +39,7 @@ public class PostDto implements IPost, DTO {
  
     public PostDto() {}
 
-    public static PostDto create(
-        UUID id,
-        String title
-    ) {
-        return new PostDto()
-            .setId(id)
-            .setTitle(title);
-    }
+    public PostDto(IPost value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

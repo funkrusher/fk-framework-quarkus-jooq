@@ -8,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
 import org.fk.database1.testshop.tables.interfaces.IRole;
+import org.fk.database1.testshop.tables.records.RoleRecord;
 import org.fk.database1.testshop.tables.records.UserRecord;
 import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.jooq.Record1;
@@ -38,17 +39,10 @@ public class RoleDTO implements IRole, DTO {
 
     public RoleDTO() {}
 
-    public static RoleDTO create(
-        Record1<UserRoleRecord> r
-    ) {
-        return r.value1().into(RoleDTO.class);
-    }
+    public RoleDTO(IRole value) { this.from(value); }
 
-    public static RoleDTO create(
-        String roleId
-    ) {
-        return new RoleDTO()
-            .setRoleId(roleId);
+    public static RoleDTO create(Record1<RoleRecord> r) {
+        return new RoleDTO(r.value1());
     }
 
     // -------------------------------------------------------------------------

@@ -191,6 +191,15 @@ class AbstractRepositoryTest {
 
         private List<Nested1DTO> nested1s;
 
+        public Basic1DTO() { }
+
+        public Basic1DTO(IBasic1 value) { this.from(value); }
+
+        public static Basic1DTO create(Record2<Basic1Record, List<Nested1DTO>> r) {
+            return new Basic1DTO(r.value1())
+                .setNested1s(r.value2());
+        }
+
         public Basic1DTO setNested1s(List<Nested1DTO> nested1s) {
             this.nested1s = nested1s;
             this.keeper.touch("nested1s");
@@ -214,6 +223,14 @@ class AbstractRepositoryTest {
     public static class Nested1DTO extends Nested1Dto implements INested1 {
         private List<Basic2DTO> basic2s;
 
+        public Nested1DTO() { }
+
+        public Nested1DTO(INested1 value) { this.from(value); }
+
+        public static Nested1DTO create(Record1<Nested1Record> r) {
+            return new Nested1DTO(r.value1());
+        }
+
         public Nested1DTO setBasic2s(List<Basic2DTO> basic2s) {
             this.basic2s = basic2s;
             this.keeper.touch("basic2s");
@@ -234,7 +251,7 @@ class AbstractRepositoryTest {
         }
 
         @Override
-        public SelectFinalStep<? extends Record> prepareQuery(FkQuery query) throws InvalidDataException {
+        public SelectFinalStep<Record1<Basic1DTO>> prepareQuery(FkQuery query) throws InvalidDataException {
             final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Basic1.BASIC1)
                     .addMappableFields(Basic1.BASIC1.fields())
                     .addMappableFields(Basic2.BASIC2.fields())
@@ -244,12 +261,13 @@ class AbstractRepositoryTest {
             return dsl()
                     .select(
                         row(
-                            Basic1.BASIC1.fields(),
+                            Basic1.BASIC1,
                             multiset(
-                                    selectDistinct(asterisk())
-                                            .where(Nested1.NESTED1.AUTOINCID.eq(Basic1.BASIC1.AUTOINCID))
-                            ).as("nested1s")
-                        ).convertFrom(r -> r.into(Basic1Record.class).into(Basic1DTO.class))
+                                select(Nested1.NESTED1)
+                                    .from(Nested1.NESTED1)
+                                    .where(Nested1.NESTED1.AUTOINCID.eq(Basic1.BASIC1.AUTOINCID))
+                            ).convertFrom(r -> r.map(Nested1DTO::create))
+                        ).convertFrom(Basic1DTO::create)
                     )
                     .from(Basic1.BASIC1)
                             .leftJoin(Nested1.NESTED1)

@@ -37,14 +37,7 @@ public class UserRoleDto implements IUserRole, DTO {
  
     public UserRoleDto() {}
 
-    public static UserRoleDto create(
-        Integer userId,
-        String roleId
-    ) {
-        return new UserRoleDto()
-            .setUserId(userId)
-            .setRoleId(roleId);
-    }
+    public UserRoleDto(IUserRole value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

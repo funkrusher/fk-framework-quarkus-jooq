@@ -37,14 +37,7 @@ public class TaskDto implements ITask, DTO {
  
     public TaskDto() {}
 
-    public static TaskDto create(
-        Long taskId,
-        LocalDateTime createdAt
-    ) {
-        return new TaskDto()
-            .setTaskId(taskId)
-            .setCreatedAt(createdAt);
-    }
+    public TaskDto(ITask value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

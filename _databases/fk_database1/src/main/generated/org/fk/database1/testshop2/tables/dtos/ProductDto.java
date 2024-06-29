@@ -48,26 +48,7 @@ public class ProductDto implements IProduct, DTO {
  
     public ProductDto() {}
 
-    public static ProductDto create(
-        Long productId,
-        Integer clientId,
-        BigDecimal price,
-        String typeId,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-        Boolean deleted,
-        Integer creatorId
-    ) {
-        return new ProductDto()
-            .setProductId(productId)
-            .setClientId(clientId)
-            .setPrice(price)
-            .setTypeId(typeId)
-            .setCreatedAt(createdAt)
-            .setUpdatedAt(updatedAt)
-            .setDeleted(deleted)
-            .setCreatorId(creatorId);
-    }
+    public ProductDto(IProduct value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

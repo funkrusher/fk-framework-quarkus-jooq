@@ -39,16 +39,7 @@ public class QrtzCalendarsDto implements IQrtzCalendars, DTO {
  
     public QrtzCalendarsDto() {}
 
-    public static QrtzCalendarsDto create(
-        String SCHED_NAME,
-        String CALENDAR_NAME,
-        byte[] CALENDAR
-    ) {
-        return new QrtzCalendarsDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setCALENDAR_NAME(CALENDAR_NAME)
-            .setCALENDAR(CALENDAR);
-    }
+    public QrtzCalendarsDto(IQrtzCalendars value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

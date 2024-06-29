@@ -39,18 +39,7 @@ public class QrtzSchedulerStateDto implements IQrtzSchedulerState, DTO {
  
     public QrtzSchedulerStateDto() {}
 
-    public static QrtzSchedulerStateDto create(
-        String SCHED_NAME,
-        String INSTANCE_NAME,
-        Long LAST_CHECKIN_TIME,
-        Long CHECKIN_INTERVAL
-    ) {
-        return new QrtzSchedulerStateDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setINSTANCE_NAME(INSTANCE_NAME)
-            .setLAST_CHECKIN_TIME(LAST_CHECKIN_TIME)
-            .setCHECKIN_INTERVAL(CHECKIN_INTERVAL);
-    }
+    public QrtzSchedulerStateDto(IQrtzSchedulerState value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

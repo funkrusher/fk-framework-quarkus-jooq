@@ -41,22 +41,7 @@ public class QrtzSimpleTriggersDto implements IQrtzSimpleTriggers, DTO {
  
     public QrtzSimpleTriggersDto() {}
 
-    public static QrtzSimpleTriggersDto create(
-        String SCHED_NAME,
-        String TRIGGER_NAME,
-        String TRIGGER_GROUP,
-        Long REPEAT_COUNT,
-        Long REPEAT_INTERVAL,
-        Long TIMES_TRIGGERED
-    ) {
-        return new QrtzSimpleTriggersDto()
-            .setSCHED_NAME(SCHED_NAME)
-            .setTRIGGER_NAME(TRIGGER_NAME)
-            .setTRIGGER_GROUP(TRIGGER_GROUP)
-            .setREPEAT_COUNT(REPEAT_COUNT)
-            .setREPEAT_INTERVAL(REPEAT_INTERVAL)
-            .setTIMES_TRIGGERED(TIMES_TRIGGERED);
-    }
+    public QrtzSimpleTriggersDto(IQrtzSimpleTriggers value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
