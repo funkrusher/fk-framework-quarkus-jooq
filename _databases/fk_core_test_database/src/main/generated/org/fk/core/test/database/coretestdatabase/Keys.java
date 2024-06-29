@@ -12,6 +12,7 @@ import org.fk.core.test.database.coretestdatabase.tables.records.Basic1Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic2Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.DatabasechangeloglockRecord;
 import org.fk.core.test.database.coretestdatabase.tables.records.Nested1Record;
+import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -33,4 +34,11 @@ public class Keys {
     public static final UniqueKey<Basic2Record> KEY_BASIC2_PRIMARY = Internal.createUniqueKey(Basic2.BASIC2, DSL.name("KEY_Basic2_PRIMARY"), new TableField[] { Basic2.BASIC2.UUIDID }, true);
     public static final UniqueKey<DatabasechangeloglockRecord> KEY_DATABASECHANGELOGLOCK_PRIMARY = Internal.createUniqueKey(Databasechangeloglock.DATABASECHANGELOGLOCK, DSL.name("KEY_DATABASECHANGELOGLOCK_PRIMARY"), new TableField[] { Databasechangeloglock.DATABASECHANGELOGLOCK.ID }, true);
     public static final UniqueKey<Nested1Record> KEY_NESTED1_PRIMARY = Internal.createUniqueKey(Nested1.NESTED1, DSL.name("KEY_Nested1_PRIMARY"), new TableField[] { Nested1.NESTED1.AUTOINCID, Nested1.NESTED1.UUIDID }, true);
+
+    // -------------------------------------------------------------------------
+    // FOREIGN KEY definitions
+    // -------------------------------------------------------------------------
+
+    public static final ForeignKey<Nested1Record, Basic1Record> FK_NESTED1_AUTOINCID = Internal.createForeignKey(Nested1.NESTED1, DSL.name("fk_nested1_autoIncId"), new TableField[] { Nested1.NESTED1.AUTOINCID }, Keys.KEY_BASIC1_PRIMARY, new TableField[] { Basic1.BASIC1.AUTOINCID }, true);
+    public static final ForeignKey<Nested1Record, Basic2Record> FK_NESTED1_UUIDID = Internal.createForeignKey(Nested1.NESTED1, DSL.name("fk_nested1_uuidId"), new TableField[] { Nested1.NESTED1.UUIDID }, Keys.KEY_BASIC2_PRIMARY, new TableField[] { Basic2.BASIC2.UUIDID }, true);
 }

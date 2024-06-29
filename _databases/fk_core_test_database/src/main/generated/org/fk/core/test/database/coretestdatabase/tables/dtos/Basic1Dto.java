@@ -47,26 +47,7 @@ public class Basic1Dto implements IBasic1, DTO {
  
     public Basic1Dto() {}
 
-    public static Basic1Dto create(
-        Integer autoIncId,
-        String string1,
-        String string2,
-        Integer integer1,
-        Long long1,
-        BigDecimal decimal1,
-        LocalDateTime dateTime1,
-        Integer clientId
-    ) {
-        return new Basic1Dto()
-            .setAutoIncId(autoIncId)
-            .setString1(string1)
-            .setString2(string2)
-            .setInteger1(integer1)
-            .setLong1(long1)
-            .setDecimal1(decimal1)
-            .setDateTime1(dateTime1)
-            .setClientId(clientId);
-    }
+    public Basic1Dto(IBasic1 value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

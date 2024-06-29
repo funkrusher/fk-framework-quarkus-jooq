@@ -6,17 +6,25 @@ package org.fk.core.test.database.coretestdatabase.tables;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.fk.core.test.database.coretestdatabase.Coretestdatabase;
 import org.fk.core.test.database.coretestdatabase.Keys;
+import org.fk.core.test.database.coretestdatabase.tables.Basic1.Basic1Path;
+import org.fk.core.test.database.coretestdatabase.tables.Basic2.Basic2Path;
 import org.fk.core.test.database.coretestdatabase.tables.records.Nested1Record;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -120,6 +128,39 @@ public class Nested1 extends TableImpl<Nested1Record> {
         this(DSL.name("Nested1"), null);
     }
 
+    public <O extends Record> Nested1(Table<O> path, ForeignKey<O, Nested1Record> childPath, InverseForeignKey<O, Nested1Record> parentPath) {
+        super(path, childPath, parentPath, NESTED1);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class Nested1Path extends Nested1 implements Path<Nested1Record> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> Nested1Path(Table<O> path, ForeignKey<O, Nested1Record> childPath, InverseForeignKey<O, Nested1Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private Nested1Path(Name alias, Table<Nested1Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public Nested1Path as(String alias) {
+            return new Nested1Path(DSL.name(alias), this);
+        }
+
+        @Override
+        public Nested1Path as(Name alias) {
+            return new Nested1Path(alias, this);
+        }
+
+        @Override
+        public Nested1Path as(Table<?> alias) {
+            return new Nested1Path(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Coretestdatabase.CORETESTDATABASE;
@@ -128,6 +169,37 @@ public class Nested1 extends TableImpl<Nested1Record> {
     @Override
     public UniqueKey<Nested1Record> getPrimaryKey() {
         return Keys.KEY_NESTED1_PRIMARY;
+    }
+
+    @Override
+    public List<ForeignKey<Nested1Record, ?>> getReferences() {
+        return Arrays.asList(Keys.FK_NESTED1_AUTOINCID, Keys.FK_NESTED1_UUIDID);
+    }
+
+    private transient Basic1Path _autoInc;
+
+    /**
+     * Get the implicit join path to the <code>coreTestDatabase.Basic1</code>
+     * table.
+     */
+    public Basic1Path autoInc() {
+        if (_autoInc == null)
+            _autoInc = new Basic1Path(this, Keys.FK_NESTED1_AUTOINCID, null);
+
+        return _autoInc;
+    }
+
+    private transient Basic2Path _uuid;
+
+    /**
+     * Get the implicit join path to the <code>coreTestDatabase.Basic2</code>
+     * table.
+     */
+    public Basic2Path uuid() {
+        if (_uuid == null)
+            _uuid = new Basic2Path(this, Keys.FK_NESTED1_UUIDID, null);
+
+        return _uuid;
     }
 
     @Override

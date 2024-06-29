@@ -9,12 +9,17 @@ import java.util.UUID;
 
 import org.fk.core.test.database.coretestdatabase.Coretestdatabase;
 import org.fk.core.test.database.coretestdatabase.Keys;
+import org.fk.core.test.database.coretestdatabase.tables.Nested1.Nested1Path;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic2Record;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -98,6 +103,39 @@ public class Basic2 extends TableImpl<Basic2Record> {
         this(DSL.name("Basic2"), null);
     }
 
+    public <O extends Record> Basic2(Table<O> path, ForeignKey<O, Basic2Record> childPath, InverseForeignKey<O, Basic2Record> parentPath) {
+        super(path, childPath, parentPath, BASIC2);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class Basic2Path extends Basic2 implements Path<Basic2Record> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> Basic2Path(Table<O> path, ForeignKey<O, Basic2Record> childPath, InverseForeignKey<O, Basic2Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private Basic2Path(Name alias, Table<Basic2Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public Basic2Path as(String alias) {
+            return new Basic2Path(DSL.name(alias), this);
+        }
+
+        @Override
+        public Basic2Path as(Name alias) {
+            return new Basic2Path(alias, this);
+        }
+
+        @Override
+        public Basic2Path as(Table<?> alias) {
+            return new Basic2Path(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Coretestdatabase.CORETESTDATABASE;
@@ -106,6 +144,19 @@ public class Basic2 extends TableImpl<Basic2Record> {
     @Override
     public UniqueKey<Basic2Record> getPrimaryKey() {
         return Keys.KEY_BASIC2_PRIMARY;
+    }
+
+    private transient Nested1Path _Nested1;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>coreTestDatabase.Nested1</code> table
+     */
+    public Nested1Path Nested1() {
+        if (_Nested1 == null)
+            _Nested1 = new Nested1Path(this, null, Keys.FK_NESTED1_UUIDID.getInverseKey());
+
+        return _Nested1;
     }
 
     @Override

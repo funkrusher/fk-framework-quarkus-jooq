@@ -42,18 +42,7 @@ public class DatabasechangeloglockDto implements IDatabasechangeloglock, DTO {
  
     public DatabasechangeloglockDto() {}
 
-    public static DatabasechangeloglockDto create(
-        Integer ID,
-        Boolean LOCKED,
-        LocalDateTime LOCKGRANTED,
-        String LOCKEDBY
-    ) {
-        return new DatabasechangeloglockDto()
-            .setID(ID)
-            .setLOCKED(LOCKED)
-            .setLOCKGRANTED(LOCKGRANTED)
-            .setLOCKEDBY(LOCKEDBY);
-    }
+    public DatabasechangeloglockDto(IDatabasechangeloglock value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

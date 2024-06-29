@@ -41,18 +41,7 @@ public class Basic2Dto implements IBasic2, DTO {
  
     public Basic2Dto() {}
 
-    public static Basic2Dto create(
-        UUID uuidId,
-        String string1,
-        String string2,
-        Integer clientId
-    ) {
-        return new Basic2Dto()
-            .setUuidId(uuidId)
-            .setString1(string1)
-            .setString2(string2)
-            .setClientId(clientId);
-    }
+    public Basic2Dto(IBasic2 value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

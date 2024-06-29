@@ -263,9 +263,8 @@ class AbstractRepositoryTest {
                         row(
                             Basic1.BASIC1,
                             multiset(
-                                select(Nested1.NESTED1)
-                                    .from(Nested1.NESTED1)
-                                    .where(Nested1.NESTED1.AUTOINCID.eq(Basic1.BASIC1.AUTOINCID))
+                                select(Basic1.BASIC1.Nested1())
+                                    .from(Basic1.BASIC1.Nested1())
                             ).convertFrom(r -> r.map(Nested1DTO::create))
                         ).convertFrom(Basic1DTO::create)
                     )

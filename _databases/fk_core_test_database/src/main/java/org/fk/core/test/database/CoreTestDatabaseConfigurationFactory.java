@@ -49,7 +49,7 @@ public class CoreTestDatabaseConfigurationFactory {
                             .withRenderCatalog(false)
                             .withRenderSchema(false)
                             .withMaxRows(Integer.MAX_VALUE)
-                            .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)
+                            .withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED)
                             .withRenderNameCase(RenderNameCase.AS_IS)
                     );
         }
