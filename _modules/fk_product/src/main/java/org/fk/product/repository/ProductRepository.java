@@ -27,8 +27,8 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
     @Override
     protected SelectFinalStep<Record1<ProductDTO>> prepareQuery(FkQuery fkQuery) throws InvalidDataException {
         FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(fkQuery, PRODUCT)
-            .addMappableFields(PRODUCT.fields())
-            .addMappableFields(PRODUCT_LANG.fields());
+            .addMappableFields(PRODUCT)
+            .addMappableFields(PRODUCT_LANG);
 
         return dsl()
             .select(

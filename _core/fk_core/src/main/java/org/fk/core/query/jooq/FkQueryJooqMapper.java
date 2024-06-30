@@ -92,6 +92,9 @@ public class FkQueryJooqMapper {
         return addMappableFields(asList(mappableFields));
     }
 
+    public FkQueryJooqMapper addMappableFields(Table<?> table) {
+        return addMappableFields(table.fields());
+    }
 
     /**
      * Maps the given @{@link FkSorter} contained in the queryParameters to Jooq @{@link SortField}s
