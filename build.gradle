@@ -52,6 +52,12 @@ subprojects {
         mavenLocal()
     }
 
+    // needed for qute-typesafe templates. See: https://github.com/quarkusio/quarkus/issues/35331
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.compilerArgs.add("-parameters")
+    }
+
     // quarkus-specific workaround, see: https://quarkus.io/guides/gradle-tooling#publishing-your-application
     tasks.withType(GenerateModuleMetadata).configureEach {
         suppressedValidationErrors.add('enforced-platform')

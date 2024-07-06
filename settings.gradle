@@ -26,10 +26,15 @@ dependencyResolutionManagement {
             version('awssdk', '2.25.40')
             version('ulid', '5.2.3')
             version('reflections', '0.10.2')
+            version('flyingsaucer', '9.8.0')
 
             // fk-framework self-dependencies (sticky versions)
             // this should mostly be stable core-libraries / shared modules that don't change often.
             library('fkCore', 'org.fk', 'fk-core').versionRef('fk-core')
+
+            // flyingsaucer
+            library('flyingSaucerCore', 'org.xhtmlrenderer', 'flying-saucer-core').versionRef('flyingsaucer')
+            library('flyingSaucerPdf', 'org.xhtmlrenderer', 'flying-saucer-pdf').versionRef('flyingsaucer')
 
             // ulid identifiers
             library('ulid', 'com.github.f4b6a3', 'ulid-creator').versionRef('ulid')
@@ -52,6 +57,7 @@ dependencyResolutionManagement {
             library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')
             library('quarkusJdbcPostgres', 'io.quarkus', 'quarkus-jdbc-postgresql').versionRef('quarkus')
             library('quarkusRestJackson', 'io.quarkus', 'quarkus-rest-jackson').versionRef('quarkus')
+            library('quarkusRestQute', 'io.quarkus', 'quarkus-rest-qute').versionRef('quarkus')
             library('quarkusSmallryeOpenapi', 'io.quarkus', 'quarkus-smallrye-openapi').versionRef('quarkus')
             library('quarkusSmallryeMetrics', 'io.quarkus', 'quarkus-smallrye-metrics').versionRef('quarkus')
             library('quarkusJunit5', 'io.quarkus', 'quarkus-junit5').versionRef('quarkus')
@@ -88,10 +94,11 @@ dependencyResolutionManagement {
             library('testcontainersJunitJupiter', 'org.testcontainers', 'junit-jupiter').versionRef('testcontainers')
 
             // bundles
-            bundle('quarkus', ['quarkusJdbcMariadb', 'quarkusJdbcPostgres', 'quarkusRestJackson', 'quarkusLiquibase', 'quarkusSmallryeOpenapi', 'quarkusSmallryeMetrics', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc', 'quarkusReactiveMysqlClient', 'quarkusQuartz'])
+            bundle('quarkus', ['quarkusJdbcMariadb', 'quarkusJdbcPostgres', 'quarkusRestJackson', 'quarkusRestQute', 'quarkusLiquibase', 'quarkusSmallryeOpenapi', 'quarkusSmallryeMetrics', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc', 'quarkusReactiveMysqlClient', 'quarkusQuartz'])
             bundle('testcontainers', ['testcontainers', 'testcontainersMariadb', 'testcontainersPostgres'])
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])
             bundle('aws', ['awssdk', 'awssdkCognitoIdentityProvider'])
+            bundle('flyingsaucer', ['flyingSaucerCore', 'flyingSaucerPdf'])
 
             // test-bundles
             bundle('test.quarkus', ['restAssured', 'quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
