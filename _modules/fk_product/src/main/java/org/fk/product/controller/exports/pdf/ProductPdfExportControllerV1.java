@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.fk.core.exception.InvalidDataException;
+import org.fk.core.flyingsaucer.MediaReplacedElementFactory;
 import org.fk.core.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.product.dto.ProductDTO;
@@ -65,6 +66,7 @@ public class ProductPdfExportControllerV1 {
                 List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> x.setTypeId(generateLorem())).toList();
 
                 String html = Templates.productsTemplate(productsChunkWithData).render();
+                renderer.getSharedContext().setReplacedElementFactory(new MediaReplacedElementFactory(renderer, renderer.getSharedContext().getReplacedElementFactory()));
                 renderer.setDocumentFromString(html);
                 renderer.layout();
                 renderer.writeNextDocument();
@@ -76,12 +78,12 @@ public class ProductPdfExportControllerV1 {
 
         return Response
             .ok(streamingOutput, MediaType.APPLICATION_OCTET_STREAM)
-            .header("Content-Disposition", "attachment; filename=product_export.json")
+            .header("Content-Disposition", "attachment; filename=product_export.pdf")
             .build();
     }
 
     private String generateLorem() {
-        String generatedString = RandomStringUtils.randomAlphanumeric(50000);
+        String generatedString = RandomStringUtils.randomAlphanumeric(100);
         return generatedString;
     }
 

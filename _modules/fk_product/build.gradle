@@ -8,7 +8,6 @@ plugins {
 dependencies {
     implementation enforcedPlatform(libs.quarkusPlatform)
     api project(':_databases:fk_database1')
-    api libs.bundles.flyingsaucer
 
     // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
     api project(':_core:fk_core')

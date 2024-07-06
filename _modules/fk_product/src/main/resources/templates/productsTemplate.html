@@ -1,8 +1,32 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <style type="text/css" media="all">
+        div.header {
+            display: block; text-align: center;
+            position: running(header);
+        }
+        div.footer {
+            display: block; text-align: center;
+            position: running(footer);
+        }
+        @page {
+            @top-center { content: element(header) }
+        }
+        @page {
+            @bottom-center { content: element(footer) }
+        }
+    </style>
+</head>
+
 <body>
+<div class='header'>Header</div>
+<div class='footer'>Footer</div>
+<div id="logo" class="media" data-src="META-INF/resources/keyboardcat.jpg"  />
+
 {#for product in products}
 {product.productId}: {product.typeId} <br/>
 {/for}
+
 </body>
 </html>

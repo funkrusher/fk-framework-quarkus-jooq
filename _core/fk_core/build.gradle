@@ -11,6 +11,7 @@ dependencies {
     api libs.bundles.jooq
     api libs.bundles.aws
     api libs.bundles.testcontainers
+    api libs.bundles.flyingsaucer
     api libs.jacksonCsv
     api libs.jacksonJsr310
     api libs.ulid
