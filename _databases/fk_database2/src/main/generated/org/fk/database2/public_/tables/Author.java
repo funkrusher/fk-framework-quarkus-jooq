@@ -157,16 +157,16 @@ public class Author extends TableImpl<AuthorRecord> {
         return Keys.AUTHOR_PKEY;
     }
 
-    private transient BookPath _fkey;
+    private transient BookPath _book;
 
     /**
      * Get the implicit to-many join path to the <code>public.book</code> table
      */
-    public BookPath fkey() {
-        if (_fkey == null)
-            _fkey = new BookPath(this, null, Keys.BOOK__BOOK_AUTHOR_ID_FKEY.getInverseKey());
+    public BookPath book() {
+        if (_book == null)
+            _book = new BookPath(this, null, Keys.BOOK__BOOK_AUTHOR_ID_FKEY.getInverseKey());
 
-        return _fkey;
+        return _book;
     }
 
     @Override

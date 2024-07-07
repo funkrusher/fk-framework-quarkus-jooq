@@ -42,20 +42,7 @@ public class AuthorDto implements IAuthor, DTO {
  
     public AuthorDto() {}
 
-    public static AuthorDto create(
-        Integer author_id,
-        String name,
-        String nationality,
-        LocalDate birth_date,
-        String biography
-    ) {
-        return new AuthorDto()
-            .setAuthor_id(author_id)
-            .setName(name)
-            .setNationality(nationality)
-            .setBirth_date(birth_date)
-            .setBiography(biography);
-    }
+    public AuthorDto(IAuthor value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

@@ -10,13 +10,7 @@ import org.jooq.DSLContext;
  * BookDAO
  */
 public class BookDAO extends AbstractDAO<BookRecord, IBook, Integer> {
-
     public BookDAO(DSLContext dsl) {
         super(dsl, Book.BOOK);
-    }
-
-    @Override
-    public Integer getId(BookRecord object) {
-        return object.getBook_id();
     }
 }

@@ -10,13 +10,7 @@ import org.jooq.DSLContext;
  * AuthorDAO
  */
 public class AuthorDAO extends AbstractDAO<AuthorRecord, IAuthor, Integer> {
-
     public AuthorDAO(DSLContext dsl) {
         super(dsl, Author.AUTHOR);
-    }
-
-    @Override
-    public Integer getId(AuthorRecord object) {
-        return object.getAuthor_id();
     }
 }

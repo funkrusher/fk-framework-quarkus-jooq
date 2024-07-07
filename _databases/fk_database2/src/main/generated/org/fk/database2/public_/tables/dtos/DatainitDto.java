@@ -40,14 +40,7 @@ public class DatainitDto implements IDatainit, DTO {
  
     public DatainitDto() {}
 
-    public static DatainitDto create(
-        String datainitid,
-        LocalDateTime createdat
-    ) {
-        return new DatainitDto()
-            .setDatainitid(datainitid)
-            .setCreatedat(createdat);
-    }
+    public DatainitDto(IDatainit value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

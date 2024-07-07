@@ -43,22 +43,7 @@ public class BookDto implements IBook, DTO {
  
     public BookDto() {}
 
-    public static BookDto create(
-        Integer book_id,
-        String title,
-        Integer author_id,
-        String genre,
-        LocalDate publication_date,
-        String isbn
-    ) {
-        return new BookDto()
-            .setBook_id(book_id)
-            .setTitle(title)
-            .setAuthor_id(author_id)
-            .setGenre(genre)
-            .setPublication_date(publication_date)
-            .setIsbn(isbn);
-    }
+    public BookDto(IBook value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters

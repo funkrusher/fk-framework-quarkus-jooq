@@ -13,7 +13,7 @@ services:
       context: .
       dockerfile: src/main/docker/Dockerfile.jvm
     ports:
-      - 9050:8080
+      - 9050:8000
     networks:
       - fk-framework
 

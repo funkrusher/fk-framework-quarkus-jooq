@@ -52,38 +52,7 @@ public class DatabasechangelogDto implements IDatabasechangelog, DTO {
  
     public DatabasechangelogDto() {}
 
-    public static DatabasechangelogDto create(
-        String id,
-        String author,
-        String filename,
-        LocalDateTime dateexecuted,
-        Integer orderexecuted,
-        String exectype,
-        String md5sum,
-        String description,
-        String comments,
-        String tag,
-        String liquibase,
-        String contexts,
-        String labels,
-        String deployment_id
-    ) {
-        return new DatabasechangelogDto()
-            .setId(id)
-            .setAuthor(author)
-            .setFilename(filename)
-            .setDateexecuted(dateexecuted)
-            .setOrderexecuted(orderexecuted)
-            .setExectype(exectype)
-            .setMd5sum(md5sum)
-            .setDescription(description)
-            .setComments(comments)
-            .setTag(tag)
-            .setLiquibase(liquibase)
-            .setContexts(contexts)
-            .setLabels(labels)
-            .setDeployment_id(deployment_id);
-    }
+    public DatabasechangelogDto(IDatabasechangelog value) { this.from(value); }
 
     // -------------------------------------------------------------------------
     // Database-Fields Setters/Getters
