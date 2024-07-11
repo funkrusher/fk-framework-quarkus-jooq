@@ -17,8 +17,10 @@ import org.fk.product.dto.ProductDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.product.template.Templates;
 import org.jooq.DSLContext;
+import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +51,9 @@ public class ProductPdfExportControllerV1 {
             Iterator<List<ProductDTO>> it = chunkStream.iterator();
 
             ITextRenderer renderer = new ITextRenderer();
+
+            ITextFontResolver fontResolver = renderer.getFontResolver();
+            fontResolver.addFont("META-INF/resources/cmuntt.ttf", true);
 
             // we need to create the target PDF
             // we'll create one page per input string, but we call layout for the first
