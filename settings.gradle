@@ -27,6 +27,7 @@ dependencyResolutionManagement {
             version('ulid', '5.2.3')
             version('reflections', '0.10.2')
             version('flyingsaucer', '9.8.0')
+            version('apache-poi', '5.3.0')
 
             // fk-framework self-dependencies (sticky versions)
             // this should mostly be stable core-libraries / shared modules that don't change often.
@@ -35,6 +36,9 @@ dependencyResolutionManagement {
             // flyingsaucer
             library('flyingSaucerCore', 'org.xhtmlrenderer', 'flying-saucer-core').versionRef('flyingsaucer')
             library('flyingSaucerPdf', 'org.xhtmlrenderer', 'flying-saucer-pdf').versionRef('flyingsaucer')
+
+            // apache poi
+            library('poiOoxml', 'org.apache.poi', 'poi-ooxml').versionRef('apache-poi')
 
             // ulid identifiers
             library('ulid', 'com.github.f4b6a3', 'ulid-creator').versionRef('ulid')
@@ -99,6 +103,7 @@ dependencyResolutionManagement {
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])
             bundle('aws', ['awssdk', 'awssdkCognitoIdentityProvider'])
             bundle('flyingsaucer', ['flyingSaucerCore', 'flyingSaucerPdf'])
+            bundle('apachePoi', ['poiOoxml'])
 
             // test-bundles
             bundle('test.quarkus', ['restAssured', 'quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
