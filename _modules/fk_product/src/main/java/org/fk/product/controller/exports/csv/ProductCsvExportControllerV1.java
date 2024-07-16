@@ -9,13 +9,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.fk.core.exception.InvalidDataException;
+import org.fk.core.transfer.csv.CsvWriter;
+import org.fk.core.transfer.xlsx.XlsxWriter;
 import org.fk.database1.Database1;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductLangDTO;
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.manager.ProductManager;
-import org.fk.core.jackson.TransferCsvMapper;
 import org.fk.core.request.RequestContext;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -32,10 +33,6 @@ public class ProductCsvExportControllerV1 {
     ProductManager productManager;
 
     @Inject
-    @TransferCsvMapper
-    CsvMapper csvMapper;
-
-    @Inject
     Database1 database1;
 
     @GET
@@ -45,31 +42,20 @@ public class ProductCsvExportControllerV1 {
         DSLContext dsl = database1.dsl(new RequestContext(1, 1));
         var productStream = productManager.streamAll(dsl);
 
-        StreamingOutput streamingOutput = outputStream -> {
+        StreamingOutput streamingOutput = os -> {
+            // Resolve fields for export.
             ProductRecord pc = new ProductRecord();
             List<String> fieldNames = new ArrayList<>();
             for (Field<?> field : pc.fields()) {
                 fieldNames.add(field.getName());
             }
 
-            CsvSchema.Builder builder = CsvSchema.builder();
-            for (String nextHeader : fieldNames) {
-                builder = builder.addColumn(nextHeader);
-            }
-            CsvSchema schema = builder.setUseHeader(true).build();
-
-            Iterator<ProductDTO> it = productStream.iterator();
-
-            SequenceWriter sequenceWriter = csvMapper.writer(schema).writeValues(outputStream);
-            while (it.hasNext()) {
-                ProductDTO product = it.next();
-                ProductRecord rec = product.into(new ProductRecord());
-
-                Map<String, String> map = new LinkedHashMap<>();
-                for (String fieldName: fieldNames) {
-                    map.put(fieldName, rec.getValue(fieldName).toString());
+            try (CsvWriter<ProductDTO> csvWriter = new CsvWriter<>(os, fieldNames)) {
+                final Iterator<ProductDTO> it = productStream.iterator();
+                while (it.hasNext()) {
+                    ProductDTO product = it.next();
+                    csvWriter.writeItem(product);
                 }
-                sequenceWriter.write(map);
             }
         };
 
@@ -86,32 +72,21 @@ public class ProductCsvExportControllerV1 {
         DSLContext dsl = database1.dsl(new RequestContext(1, 1));
         var productStream = productManager.streamAll(dsl);
 
-        StreamingOutput streamingOutput = outputStream -> {
+        StreamingOutput streamingOutput = os -> {
+            // Resolve fields for export.
             ProductLangRecord pc = new ProductLangRecord();
             List<String> fieldNames = new ArrayList<>();
             for (Field<?> field : pc.fields()) {
                 fieldNames.add(field.getName());
             }
 
-            CsvSchema.Builder builder = CsvSchema.builder();
-            for (String nextHeader : fieldNames) {
-                builder = builder.addColumn(nextHeader);
-            }
-            CsvSchema schema = builder.setUseHeader(true).build();
-
-            Iterator<ProductDTO> it = productStream.iterator();
-
-            SequenceWriter sequenceWriter = csvMapper.writer(schema).writeValues(outputStream);
-            while (it.hasNext()) {
-                ProductDTO product = it.next();
-                for (ProductLangDTO productLangDTO : product.getLangs()) {
-                    ProductLangRecord rec = productLangDTO.into(new ProductLangRecord());
-
-                    Map<String, String> map = new LinkedHashMap<>();
-                    for (String fieldName: fieldNames) {
-                        map.put(fieldName, rec.getValue(fieldName).toString());
+            try (CsvWriter<ProductLangDTO> csvWriter = new CsvWriter<>(os, fieldNames)) {
+                final Iterator<ProductDTO> it = productStream.iterator();
+                while (it.hasNext()) {
+                    ProductDTO product = it.next();
+                    for (ProductLangDTO productLangDTO : product.getLangs()) {
+                        csvWriter.writeItem(productLangDTO);
                     }
-                    sequenceWriter.write(map);
                 }
             }
         };
