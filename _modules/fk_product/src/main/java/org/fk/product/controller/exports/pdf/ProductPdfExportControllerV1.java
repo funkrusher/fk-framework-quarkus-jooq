@@ -64,6 +64,8 @@ public class ProductPdfExportControllerV1 {
             renderer.layout();
             renderer.createPDF(outputStream, false);
 
+            int pageNumber = renderer.getWriter().getPageNumber();
+
             // each page after the first we add using layout() followed by writeNextDocument()
             while (it.hasNext()) {
                 List<ProductDTO> productsChunk = it.next();
@@ -74,8 +76,13 @@ public class ProductPdfExportControllerV1 {
                 renderer.getSharedContext().setReplacedElementFactory(new MediaReplacedElementFactory(renderer, renderer.getSharedContext().getReplacedElementFactory()));
                 renderer.setDocumentFromString(html);
                 renderer.layout();
-                renderer.writeNextDocument();
+
+                pageNumber = renderer.getWriter().getPageNumber();
+
+                renderer.writeNextDocument(pageNumber);
             }
+
+
 
             // complete the PDF
             renderer.finishPDF();
@@ -88,7 +95,7 @@ public class ProductPdfExportControllerV1 {
     }
 
     private String generateLorem() {
-        String generatedString = RandomStringUtils.randomAlphanumeric(100);
+        String generatedString = RandomStringUtils.randomAlphanumeric(10);
         return generatedString;
     }
 
