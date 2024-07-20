@@ -23,17 +23,13 @@ public class PostControllerV1 {
     @Inject
     PostManager postManager;
 
-    @Inject
-    Database1 database1;
-
     @GET
     @Operation(summary = "creates a new post")
     @APIResponse(responseCode = "201", description = "post creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public Response create() throws ValidationException {
-        DSLContext dsl = database1.dsl(new RequestContext(1, 1));
-        PostDTO created = postManager.create(dsl);
+        PostDTO created = postManager.create(new RequestContext(1, 1));
         return Response.ok(created).status(201).build();
     }
 }

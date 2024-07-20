@@ -1,4 +1,4 @@
-package org.fk.product.message;
+package org.fk.product.qute;
 
 import io.quarkus.qute.i18n.Message;
 import io.quarkus.qute.i18n.MessageBundle;

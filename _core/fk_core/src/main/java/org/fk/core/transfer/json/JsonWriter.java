@@ -23,7 +23,7 @@ public class JsonWriter<T extends DTO> implements AutoCloseable {
 
     private SequenceWriter sequenceWriter;
 
-    public JsonWriter(OutputStream os, Class<T> clazz) throws IOException {
+    public JsonWriter(OutputStream os, Class<T> clazz) throws MappingException {
         ObjectMapper jsonMapper = new ObjectMapper();
         jsonMapper.findAndRegisterModules();
         jsonMapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -50,7 +50,7 @@ public class JsonWriter<T extends DTO> implements AutoCloseable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws MappingException {
         // note: we must leave the original outputStream open.
         // jax-rs needs the stream still open / expects it to be open because it closes it.
         // see: https://stackoverflow.com/questions/39572872/closing-jax-rs-streamingoutputs-outputstream

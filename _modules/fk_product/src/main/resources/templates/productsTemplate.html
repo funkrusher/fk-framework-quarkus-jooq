@@ -3,17 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style type="text/css" media="all">
-        body {
-            font-family: "CMU Typewriter Text", serif;
-        }
-        @page {
-            @bottom-right {
-                content: "Page " counter(page);
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="custom://META-INF/resources/pdf.css" media="all"></link>
 </head>
 
 <body>
@@ -23,6 +13,10 @@
 <div class="myPage" />
 
 {@String name = "Quarkus"}
+
+{! Note: this is valid HTML, but flyingsaucer needs XHTML, so this would be invalid if we not convert to XHTML !}
+<br>
+<br>
 
 <div id="logo" class="media" data-src="META-INF/resources/keyboardcat.jpg"  />
 

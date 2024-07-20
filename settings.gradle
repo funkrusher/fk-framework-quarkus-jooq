@@ -27,6 +27,7 @@ dependencyResolutionManagement {
             version('ulid', '5.2.3')
             version('reflections', '0.10.2')
             version('flyingsaucer', '9.8.0')
+            version('jsoup', '1.18.1')
             version('apache-poi', '5.3.0')
 
             // fk-framework self-dependencies (sticky versions)
@@ -36,6 +37,9 @@ dependencyResolutionManagement {
             // flyingsaucer
             library('flyingSaucerCore', 'org.xhtmlrenderer', 'flying-saucer-core').versionRef('flyingsaucer')
             library('flyingSaucerPdf', 'org.xhtmlrenderer', 'flying-saucer-pdf').versionRef('flyingsaucer')
+
+            // jsoup - we only need jsoup to transform HTML to XHTML for use with flyingsaucer.
+            library('jsoup', 'org.jsoup', 'jsoup').versionRef('jsoup')
 
             // apache poi
             library('poiOoxml', 'org.apache.poi', 'poi-ooxml').versionRef('apache-poi')

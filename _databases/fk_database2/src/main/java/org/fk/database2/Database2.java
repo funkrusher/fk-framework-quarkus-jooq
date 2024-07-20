@@ -30,22 +30,6 @@ public class Database2 {
     @Inject
     FkSecurityIdentity fkSecurityIdentity;
 
-    @Produces
-    @DSLContext2
-    public DSLContext dsl() {
-        try {
-            DSLContext dsl = DSL.using(configurationFactory.getConfiguration());
-
-            // put request into dsl (to make tenant-checks, and provide other layers with access to it)
-            RequestContext request = new RequestContext(fkSecurityIdentity, 1);
-            dsl.data(DSL_DATA_KEY, request);
-            return dsl;
-
-        } catch (Exception e) {
-            throw new MappingException(e);
-        }
-    }
-
     public DSLContext dsl(RequestContext customRequest) {
         try {
             DSLContext dsl = DSL.using(configurationFactory.getConfiguration());
