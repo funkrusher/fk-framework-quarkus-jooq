@@ -1,3 +1,5 @@
+{@java.util.List<org.fk.product.dto.ProductDTO> products}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,10 +22,14 @@
 
 <div class="myPage" />
 
+{@String name = "Quarkus"}
+
 <div id="logo" class="media" data-src="META-INF/resources/keyboardcat.jpg"  />
 
+
 {#for product in products}
-{product.productId}: {product.typeId} <br/>
+    {! Note: Code completion in Intellij only works directly after the Dot ".", not with CTRL+Space as usual !}
+    {product.getProductId()}: {product.getTypeId()} {name}<br/>
 {/for}
 
 </body>
