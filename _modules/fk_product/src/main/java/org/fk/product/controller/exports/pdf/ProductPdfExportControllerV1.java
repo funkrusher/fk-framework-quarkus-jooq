@@ -1,5 +1,7 @@
 package org.fk.product.controller.exports.pdf;
 
+import io.quarkus.qute.i18n.Localized;
+import io.quarkus.qute.i18n.MessageBundles;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -15,6 +17,7 @@ import org.fk.core.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.manager.ProductManager;
+import org.fk.product.message.ProductMessages;
 import org.fk.product.template.Templates;
 import org.jooq.DSLContext;
 import org.xhtmlrenderer.pdf.ITextFontResolver;
@@ -24,6 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -40,14 +44,26 @@ public class ProductPdfExportControllerV1 {
 
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    @Path("/{chunkSize}")
-    public Response streamRootPdfInChunksFile(int chunkSize) throws InvalidDataException {
+    @Path("/{chunkSize}/{language}")
+    public Response streamRootPdfInChunksFile(int chunkSize, String language) throws InvalidDataException {
+
         DSLContext dsl = database1.dsl(new RequestContext(1, 1));
         var productStream = productManager.streamAll(dsl);
 
         Stream<List<ProductDTO>> chunkStream = chunk(productStream, chunkSize);
 
         StreamingOutput streamingOutput = outputStream -> {
+            Locale locale = null;
+            if (language.equals("de")) {
+                locale = Locale.GERMANY;
+            } else {
+                locale = Locale.US;
+            }
+
+            ProductMessages productMessages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
+
+            String test = productMessages.product_paginate_localizationTest();
+
             Iterator<List<ProductDTO>> it = chunkStream.iterator();
 
             ITextRenderer renderer = new ITextRenderer();
@@ -72,7 +88,7 @@ public class ProductPdfExportControllerV1 {
 
                 List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> x.setTypeId(generateLorem())).toList();
 
-                String html = Templates.productsTemplate(productsChunkWithData).render();
+                String html = Templates.productsTemplate(productsChunkWithData).setLocale(locale).render();
                 renderer.getSharedContext().setReplacedElementFactory(new MediaReplacedElementFactory(renderer, renderer.getSharedContext().getReplacedElementFactory()));
                 renderer.setDocumentFromString(html);
                 renderer.layout();
@@ -81,8 +97,6 @@ public class ProductPdfExportControllerV1 {
 
                 renderer.writeNextDocument(pageNumber);
             }
-
-
 
             // complete the PDF
             renderer.finishPDF();

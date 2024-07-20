@@ -5,7 +5,7 @@ pluginManagement {
         mavenLocal()
     }
     plugins {
-        id "io.quarkus" version '3.9.5'
+        id "io.quarkus" version '3.12.3'
         id "org.liquibase.gradle" version "2.0.2"
     }
 }
@@ -15,7 +15,7 @@ dependencyResolutionManagement {
         libs {
             // versions
             version('fk-core', '1.0.0-SNAPSHOT')
-            version('quarkus', '3.9.5')
+            version('quarkus', '3.12.3')
             version('mariadb-java-client', '3.3.3')
             version('postgres-java-client', '42.7.3')
             version('testcontainers', '1.19.7')
