@@ -86,10 +86,10 @@ public class ProductManager extends AbstractManager {
             paginate.setCount(count);
 
             // test localization here.
-            // Locale locale = Locale.of("en");
-            // String localizationTest = ResourceBundle.getBundle("messages", locale)
-//                 .getString("product.paginate.localizationTest");
-            paginate.setLocalizationTest(null);
+            Locale locale = Locale.GERMANY;
+            ProductMessages messages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
+            String localizationTest = messages.product_paginate_localizationTest();
+            paginate.setLocalizationTest(localizationTest);
 
             return paginate;
         });
