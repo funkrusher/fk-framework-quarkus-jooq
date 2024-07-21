@@ -1,18 +1,8 @@
 package org.fk.core.jooq;
 
-import org.jooq.Field;
-import org.jooq.UniqueKey;
-import org.jooq.codegen.DefaultGeneratorStrategy;
 import org.jooq.codegen.JavaWriter;
 import org.jooq.meta.*;
 import org.jooq.codegen.JavaGenerator;
-import org.jooq.codegen.JavaWriter;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.jooq.codegen.GeneratorStrategy.Mode;
 
 public final class FkCustomJavaGenerator extends JavaGenerator {
 

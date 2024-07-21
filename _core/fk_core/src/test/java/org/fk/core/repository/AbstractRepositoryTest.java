@@ -5,7 +5,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.jooq.FkQueryJooqMapper;
+import org.fk.core.query.jooq.QueryJooqMapper;
 import org.fk.core.query.model.*;
 import org.fk.core.request.RequestContext;
 import org.fk.core.test.CoreTestLifecycleManager;
@@ -26,7 +26,6 @@ import org.fk.core.test.database.coretestdatabase.tables.records.Basic1Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic2Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Nested1Record;
 import org.jooq.*;
-import org.jooq.Record;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
@@ -48,13 +47,13 @@ class AbstractRepositoryTest {
 
     private DSLContext dsl;
 
-    private MyRepository myRepository;
+    private MyRepository repo;
 
     @BeforeEach
     void setup() {
         RequestContext request = new RequestContext(1, 1);
         this.dsl = database.dsl(request);
-        this.myRepository = new MyRepository(dsl);
+        this.repo = new MyRepository(dsl);
 
         List<Basic1Record> basic1s = new ArrayList<>();
         List<Nested1Record> nested1s = new ArrayList<>();
@@ -137,45 +136,45 @@ class AbstractRepositoryTest {
                 .setFilters(List.of(nestedFilter1))
                 .setSorter(nestedSorter2);
 
-        List<Basic1DTO> result1 = myRepository.query(paginateQuery);
+        List<Basic1DTO> result1 = repo.query(repo::getFullQuery, paginateQuery);
         assertEquals(10, result1.size());
-        assertEquals(200, myRepository.count(paginateQuery.getFilters()));
+        assertEquals(200, repo.count(repo::getFullQuery, paginateQuery.getFilters()));
 
-        List<Basic1DTO> result2 = myRepository.query(paginateFilterQuery);
+        List<Basic1DTO> result2 = repo.query(repo::getFullQuery, paginateFilterQuery);
         assertEquals(3, result2.size());
         assertTrue(result2.stream().anyMatch(x -> x.getAutoIncId().equals(40)));
         assertTrue(result2.stream().anyMatch(x -> x.getAutoIncId().equals(45)));
         assertTrue(result2.stream().anyMatch(x -> x.getAutoIncId().equals(78)));
-        assertEquals(3, myRepository.count(paginateFilterQuery.getFilters()));
+        assertEquals(3, repo.count(repo::getFullQuery, paginateFilterQuery.getFilters()));
 
-        List<Basic1DTO> result3 = myRepository.query(paginateFilterSortedQuery1);
+        List<Basic1DTO> result3 = repo.query(repo::getFullQuery, paginateFilterSortedQuery1);
         assertEquals(3, result3.size());
         assertEquals(40, (int) result3.get(0).getAutoIncId());
         assertEquals(45, (int) result3.get(1).getAutoIncId());
         assertEquals(78, (int) result3.get(2).getAutoIncId());
-        assertEquals(3, myRepository.count(paginateFilterSortedQuery1.getFilters()));
+        assertEquals(3, repo.count(repo::getFullQuery, paginateFilterSortedQuery1.getFilters()));
 
-        List<Basic1DTO> result4 = myRepository.query(paginateFilterSortedQuery2);
+        List<Basic1DTO> result4 = repo.query(repo::getFullQuery, paginateFilterSortedQuery2);
         assertEquals(3, result4.size());
         assertEquals(78, (int) result4.get(0).getAutoIncId());
         assertEquals(45, (int) result4.get(1).getAutoIncId());
         assertEquals(40, (int) result4.get(2).getAutoIncId());
-        assertEquals(3, myRepository.count(paginateFilterSortedQuery2.getFilters()));
+        assertEquals(3, repo.count(repo::getFullQuery, paginateFilterSortedQuery2.getFilters()));
 
-        List<Basic1DTO> result5 = myRepository.query(paginateFilterNestedQuery1);
+        List<Basic1DTO> result5 = repo.query(repo::getFullQuery, paginateFilterNestedQuery1);
         assertEquals(3, result5.size());
         assertEquals(192, (int) result5.get(0).getAutoIncId());
         assertEquals(195, (int) result5.get(1).getAutoIncId());
         assertEquals(197, (int) result5.get(2).getAutoIncId());
 
-        assertEquals(3, myRepository.count(paginateFilterNestedQuery1.getFilters()));
+        assertEquals(3, repo.count(repo::getFullQuery, paginateFilterNestedQuery1.getFilters()));
 
-        List<Basic1DTO> result6 = myRepository.query(paginateFilterNestedQuery2);
+        List<Basic1DTO> result6 = repo.query(repo::getFullQuery, paginateFilterNestedQuery2);
         assertEquals(3, result6.size());
         assertEquals(197, (int) result6.get(0).getAutoIncId());
         assertEquals(195, (int) result6.get(1).getAutoIncId());
         assertEquals(192, (int) result6.get(2).getAutoIncId());
-        assertEquals(3, myRepository.count(paginateFilterNestedQuery2.getFilters()));
+        assertEquals(3, repo.count(repo::getFullQuery, paginateFilterNestedQuery2.getFilters()));
 
 
     }
@@ -247,12 +246,11 @@ class AbstractRepositoryTest {
      */
     public class MyRepository extends AbstractRepository<Basic1DTO, Integer> {
         public MyRepository(DSLContext dsl) {
-            super(dsl, Basic1DTO.class, Basic1.BASIC1.AUTOINCID);
+            super(dsl, Basic1.BASIC1.AUTOINCID);
         }
 
-        @Override
-        public SelectFinalStep<Record1<Basic1DTO>> prepareQuery(FkQuery query) throws InvalidDataException {
-            final FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(query, Basic1.BASIC1)
+        public SelectFinalStep<Record1<Basic1DTO>> getFullQuery(FkQuery query) throws InvalidDataException {
+            final QueryJooqMapper queryJooqMapper = new QueryJooqMapper(query, Basic1.BASIC1)
                     .addMappableFields(Basic1.BASIC1.fields())
                     .addMappableFields(Basic2.BASIC2.fields())
                     .addMappableFields(Nested1.NESTED1.fields());

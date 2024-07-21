@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.fk.core.query.jooq.QueryExecutor;
 import org.fk.core.request.RequestContext;
 import org.fk.core.transfer.csv.CsvWriter;
 import org.fk.core.transfer.json.JsonWriter;
@@ -75,20 +76,20 @@ public class ProductManager extends AbstractManager {
 
     public ProductPaginateDTO query(RequestContext requestContext, final FkQuery fkQuery) throws InvalidDataException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
-            final ProductRepository productRepository = new ProductRepository(tsx.dsl());
+            final ProductRepository repo = new ProductRepository(tsx.dsl());
 
-            int count = productRepository.count(fkQuery.getFilters());
-            List<ProductDTO> products = productRepository.query(fkQuery);
+            List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+            int count = repo.count(repo::getFullQuery, fkQuery.getFilters());
 
             ProductPaginateDTO paginate = new ProductPaginateDTO();
             paginate.setProducts(products);
             paginate.setCount(count);
 
             // test localization here.
-            Locale locale = Locale.of("en");
-            String localizationTest = ResourceBundle.getBundle("messages", locale)
-                .getString("product.paginate.localizationTest");
-            paginate.setLocalizationTest(localizationTest);
+            // Locale locale = Locale.of("en");
+            // String localizationTest = ResourceBundle.getBundle("messages", locale)
+//                 .getString("product.paginate.localizationTest");
+            paginate.setLocalizationTest(null);
 
             return paginate;
         });
@@ -96,8 +97,8 @@ public class ProductManager extends AbstractManager {
 
     public Optional<ProductDTO> getOne(RequestContext requestContext, final Long productId) throws DataAccessException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
-            final ProductRepository productRepository = new ProductRepository(tsx.dsl());
-            List<ProductDTO> result = productRepository.fetch(List.of(productId));
+            final ProductRepository repo = new ProductRepository(tsx.dsl());
+            List<ProductDTO> result = repo.fetch(repo::getFullQuery, List.of(productId));
             if (result == null || result.isEmpty()) {
                 return Optional.empty();
             } else {
@@ -131,8 +132,8 @@ public class ProductManager extends AbstractManager {
                 fkQuery.getFilters().add(filter1);
                 fkQuery.getFilters().add(filter2);
 
-                final ProductRepository productRepository = new ProductRepository(tsx.dsl());
-                List<ProductDTO> products = productRepository.query(fkQuery);
+                final ProductRepository repo = new ProductRepository(tsx.dsl());
+                List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
 
                 tsx.dsl().transaction(tx2 -> {
                     // transaction2
@@ -174,7 +175,8 @@ public class ProductManager extends AbstractManager {
                 }
                 productLangRecordDAO.insert(productLangInserts);
 
-                return new ProductRepository(tsx.dsl()).fetch(product.getProductId());
+                final ProductRepository repo = new ProductRepository(tsx.dsl());
+                return repo.fetch(repo::getFullQuery, product.getProductId());
             });
         } catch (Exception e) {
             if (e.getCause() instanceof ValidationException ve) {
@@ -215,7 +217,8 @@ public class ProductManager extends AbstractManager {
         productLangRecordDAO.insert(insertXLangs);
         productLangRecordDAO.update(updateXLangs);
 
-        return new ProductRepository(dsl).fetch(product.getProductId());
+        final ProductRepository repo = new ProductRepository(dsl);
+        return repo.fetch(repo::getFullQuery, product.getProductId());
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
@@ -243,8 +246,8 @@ public class ProductManager extends AbstractManager {
         fkQuery.setPageSize(100000);
 
         return database1.dsl(requestContext).transactionResult(tsx -> {
-            final ProductRepository productRepository = new ProductRepository(tsx.dsl());
-            Stream<ProductDTO> stream1 = productRepository.stream(fkQuery);
+            final ProductRepository repo = new ProductRepository(tsx.dsl());
+            Stream<ProductDTO> stream1 = repo.stream(repo::getFullQuery, fkQuery);
             Stream<List<ProductDTO>> chunkStream = chunk(stream1, 250);
 
             // the "parallel" is important here, as it really pushes performance.

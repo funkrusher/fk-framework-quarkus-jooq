@@ -1,19 +1,18 @@
 package org.fk.core.repository;
 
 import org.fk.core.dto.DTO;
-import org.fk.core.query.model.*;
-import org.fk.core.request.RequestContext;
 import org.fk.core.exception.InvalidDataException;
+import org.fk.core.query.jooq.QueryFunction;
+import org.fk.core.query.jooq.QueryExecutor;
+import org.fk.core.query.model.FkFilter;
+import org.fk.core.query.model.FkQuery;
+import org.fk.core.request.RequestContext;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.*;
-import org.jooq.Record;
-import org.jooq.exception.DataAccessException;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
 import static org.jooq.impl.DSL.key;
 
@@ -30,7 +29,6 @@ import static org.jooq.impl.DSL.key;
  */
 public abstract class AbstractRepository<D extends DTO, T> {
     private final DSLContext dsl;
-    private final Class<D> dtoClazz;
     private final Field<T> idField;
     private final RequestContext request;
 
@@ -38,9 +36,8 @@ public abstract class AbstractRepository<D extends DTO, T> {
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    protected AbstractRepository(DSLContext dsl, Class<D> dtoClazz, Field<T> idField) {
+    protected AbstractRepository(DSLContext dsl, Field<T> idField) {
         this.dsl = dsl;
-        this.dtoClazz = dtoClazz;
         this.idField = idField;
         this.request = (RequestContext) dsl.data(DSL_DATA_KEY);
     }
@@ -60,22 +57,6 @@ public abstract class AbstractRepository<D extends DTO, T> {
      */
     protected JSONEntry<?>[] asJsonEntries(Field<?>[] fields) {
         return Arrays.stream(fields).map(f -> key(f.getName()).value(f)).toArray(JSONEntry[]::new);
-    }
-
-    // ------------------------------------------------------------------------
-    // Template methods for subclasses
-    // ------------------------------------------------------------------------
-
-    protected abstract SelectFinalStep<Record1<D>> prepareQuery(FkQuery query) throws InvalidDataException;
-
-    /**
-     * You can override this method if specific result mappings are needed / different from the default.
-     * But only do this, if you really need it.
-     * @param rec rec
-     * @return dto
-     */
-    protected D mapResult(Record rec) {
-        return rec.into(dtoClazz);
     }
 
     // -------------------------------------------------------------------------
@@ -101,81 +82,80 @@ public abstract class AbstractRepository<D extends DTO, T> {
     }
 
     /**
-     * Paginate the given @{@link FkQuery} and return
-     * a list of sorted, filtered, page-sized DTOs that match all criteria defined in the given query-parameters.
-     * This will be a list that is only as large as the page-size defined in the given query-parameters.
+     * Create a @{@link QueryExecutor} from the given @{@link QueryFunction}
+     * - You can define functions in your repository that have a @{@link FkQuery} as parameter,
+     * and return a @{@link SelectFinalStep<Record1<D>>} as a result.
+     * Such functions can be used as @{@link QueryFunction} via the "::" notation.
      *
+     * @param query query
+     * @return @{@link QueryExecutor}
+     */
+    public QueryExecutor<D, T> executor(QueryFunction<D> query) {
+        return new QueryExecutor<>(idField, query);
+    }
+
+    /**
+     * Execute Query on the given @{@link QueryFunction}, by applying the given @{@link FkQuery} to it.
+     *
+     * @param f f
      * @param query query
      * @return list of sorted, filtered, page-sized DTOs
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public List<D> query(FkQuery query) throws InvalidDataException {
-        return prepareQuery(query)
-            .fetch().map(x -> (D) x.get(0));
+    public List<D> query(final QueryFunction<D> f, final FkQuery query) throws InvalidDataException {
+        return executor(f).query(query);
     }
 
     /**
-     * Count the given @{@link FkFilter}s and return
-     * the total count of all items that would match the filters of the given query-parameters
+     * Execute Count on the given @{@link QueryFunction}, by applying the given @{@link FkFilter}s to it.
      *
+     * @param f f
      * @param filters filters
      * @return total count of items, matching the given filters
      * @throws InvalidDataException invalid data in the given filters
      */
-    public int count(@Nullable List<FkFilter> filters) throws InvalidDataException {
-        return dsl().fetchCount(prepareQuery(new FkQuery().setFilters(filters == null ? new ArrayList<>() : filters)));
+    public int count(final QueryFunction<D> f, final List<FkFilter> filters) throws InvalidDataException {
+        return executor(f).count(filters);
     }
 
     /**
-     * Streams the given @{@link FkQuery} and return
-     * a stream of sorted, filtered DTOs that match all criteria defined in the given query-parameters.
+     * Execute Stream on the given @{@link QueryFunction}, by applying the given @{@link FkQuery} to it.
      *
-     * @param query query
      * @return stream of sorted, filtered Ids
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public Stream<D> stream(FkQuery query) throws InvalidDataException {
-        return prepareQuery(query)
-            .fetchSize(250)
-            .fetchStream().map(x -> (D) x.get(0));
+    public Stream<D> stream(final QueryFunction<D> f, final FkQuery query) throws InvalidDataException {
+        return executor(f).stream(query);
     }
 
     /**
-     * Fetches the DTOs for the given Ids
+     * Execute Fetch on the given @{@link QueryFunction}, by selecting the given ids.
      *
      * @param ids ids
      * @return dtos dtos for given ids
      */
-    public final List<D> fetch(final List<T> ids) {
-        final FkFilter filter = new FkFilter(idField.getName(), FkFilterOperator.IN, ids.stream().map(Object::toString).toList());
-        return query(new FkQuery().setFilters(List.of(filter)));
+    public final List<D> fetch(final QueryFunction<D> f, final List<T> ids) {
+        return executor(f).fetch(ids);
     }
 
     /**
-     * Fetch DTO by ID.
+     * Execute Fetch on the given @{@link QueryFunction}, by selecting the given id.
      *
-     * @param id The ID of a rec in the underlying table
-     * @return A dto with all children resolved, given its ID, or
-     * <code>null</code> if no dto was found.
-     * @throws DataAccessException if something went wrong executing the query
+     * @param id id
+     * @return dto for given id
      */
-    public @Nullable D fetch(final T id) {
-        List<D> result = fetch(singletonList(id));
-        if (!result.isEmpty()) {
-            return result.getFirst();
-        }
-        return null;
+    public @Nullable D fetch(final QueryFunction<D> f, final T id) {
+        return executor(f).fetch(id);
     }
 
-
     /**
-     * Fetches the DTOs for the given Ids
+     * Execute Fetch on the given @{@link QueryFunction}, by selecting the given ids.
      *
      * @param ids ids
      * @return dtos dtos for given ids
      */
     @SafeVarargs
-    public final List<D> fetch(final T... ids) {
-        return fetch(asList(ids));
+    public final List<D> fetch(final QueryFunction<D> f, final T... ids) {
+        return executor(f).fetch(ids);
     }
 }

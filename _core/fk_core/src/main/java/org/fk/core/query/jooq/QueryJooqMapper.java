@@ -22,7 +22,7 @@ import static org.jooq.impl.DSL.*;
  * <p>
  * As the name states it maps the {@link FkQuery} object to Jooq-Usable Statements.
  */
-public class FkQueryJooqMapper {
+public class QueryJooqMapper {
     private final FkQuery fkQuery;
     private final Table<?> defaultTable;
     private final List<Field<?>> mappableFields = new ArrayList<>();
@@ -31,7 +31,7 @@ public class FkQueryJooqMapper {
     // Constructors and initialisation
     // -------------------------------------------------------------------------
 
-    public FkQueryJooqMapper(FkQuery fkQuery, Table<?> defaultTable) {
+    public QueryJooqMapper(FkQuery fkQuery, Table<?> defaultTable) {
         this.fkQuery = fkQuery;
         this.defaultTable = defaultTable;
     }
@@ -83,16 +83,16 @@ public class FkQueryJooqMapper {
      * @param mappableFields mappableFields
      * @return this
      */
-    public FkQueryJooqMapper addMappableFields(List<Field<?>> mappableFields) {
+    public QueryJooqMapper addMappableFields(List<Field<?>> mappableFields) {
         this.mappableFields.addAll(mappableFields);
         return this;
     }
 
-    public FkQueryJooqMapper addMappableFields(Field<?>... mappableFields) {
+    public QueryJooqMapper addMappableFields(Field<?>... mappableFields) {
         return addMappableFields(asList(mappableFields));
     }
 
-    public FkQueryJooqMapper addMappableFields(Table<?> table) {
+    public QueryJooqMapper addMappableFields(Table<?> table) {
         return addMappableFields(table.fields());
     }
 

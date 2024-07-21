@@ -1,5 +1,6 @@
 package org.fk.product.controller;
 
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -29,6 +30,15 @@ public class ProductControllerV1 {
 
     @Inject
     ProductManager productManager;
+
+    @GET
+    @Operation(summary = "returns the product with the specified id")
+    @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @Path("/{productId}")
+    public ProductDTO getOne(Long productId) throws NotFoundException {
+        return productManager.getOne(new RequestContext(1, 1), productId).orElseThrow(NotFoundException::new);
+    }
 
     @GET
     @Operation(summary = "returns a list of all products")

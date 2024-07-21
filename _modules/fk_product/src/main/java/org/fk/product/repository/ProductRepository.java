@@ -1,15 +1,15 @@
 package org.fk.product.repository;
 
 import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.jooq.FkQueryJooqMapper;
+import org.fk.core.query.jooq.QueryJooqMapper;
 
 import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.fk.database1.testshop.tables.User.USER;
 import static org.fk.database1.testshop.tables.Lang.LANG;
 
-import org.fk.core.repository.AbstractRepository;
 import org.fk.core.query.model.FkQuery;
+import org.fk.core.repository.AbstractRepository;
 import org.fk.product.dto.*;
 import org.jooq.*;
 import org.slf4j.Logger;
@@ -18,15 +18,15 @@ import org.slf4j.LoggerFactory;
 import static org.jooq.impl.DSL.*;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
-    private static final Logger log = LoggerFactory.getLogger(ProductRepository.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
 
     public ProductRepository(DSLContext dsl) {
-        super(dsl, ProductDTO.class, PRODUCT.PRODUCTID);
+        super(dsl, PRODUCT.PRODUCTID);
     }
 
-    @Override
-    protected SelectFinalStep<Record1<ProductDTO>> prepareQuery(FkQuery fkQuery) throws InvalidDataException {
-        FkQueryJooqMapper queryJooqMapper = new FkQueryJooqMapper(fkQuery, PRODUCT)
+    public SelectFinalStep<Record1<ProductDTO>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
+        final QueryJooqMapper queryJooqMapper = new QueryJooqMapper(fkQuery, PRODUCT)
             .addMappableFields(PRODUCT)
             .addMappableFields(PRODUCT_LANG);
 
