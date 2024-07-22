@@ -14,6 +14,7 @@ import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.jooq.Record1;
 import org.jooq.Record2;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class RoleDTO implements IRole, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

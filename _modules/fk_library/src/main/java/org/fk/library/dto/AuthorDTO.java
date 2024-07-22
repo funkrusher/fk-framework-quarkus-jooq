@@ -3,6 +3,7 @@ package org.fk.library.dto;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.database2.public_.tables.interfaces.IAuthor;
 
+import java.io.Serial;
 import java.util.List;
 
 import org.fk.core.dto.DTO;
@@ -28,6 +29,7 @@ import org.jooq.Record3;
 @Schema(name = "AuthorDTO", description = "Represents an author")
 public class AuthorDTO implements IAuthor, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

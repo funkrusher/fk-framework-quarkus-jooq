@@ -8,6 +8,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
 import org.fk.database1.testshop.tables.interfaces.ITask;
+
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
  */
 public class TaskDTO implements ITask, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

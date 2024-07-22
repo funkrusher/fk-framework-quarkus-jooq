@@ -12,11 +12,14 @@ import org.fk.database1.testshop2.tables.interfaces.IProductLang;
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
 import org.jooq.Record1;
 
+import java.io.Serial;
+
 /**
  * ProductLangDTO
  */
 public class ProductLangDTO implements IProductLang, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

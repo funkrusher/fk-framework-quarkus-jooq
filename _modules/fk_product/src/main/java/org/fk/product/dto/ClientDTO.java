@@ -6,11 +6,14 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.fk.database1.testshop.tables.interfaces.IClient;
 
+import java.io.Serial;
+
 /**
  * ClientDTO
  */
 public class ClientDTO implements IClient, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

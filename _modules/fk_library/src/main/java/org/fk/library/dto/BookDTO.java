@@ -15,6 +15,7 @@ import org.fk.database2.public_.tables.records.BookRecord;
 import org.jooq.Record1;
 import org.jooq.Record2;
 
+import java.io.Serial;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
 @Schema(name = "Book", description = "Represents a book")
 public class BookDTO implements IBook, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

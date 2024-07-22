@@ -58,13 +58,10 @@ public class MediaReplacedElementFactory implements ReplacedElementFactory {
 
                 image.scaleAbsolute(image.getPlainWidth() * factor, image.getPlainHeight() * factor);
                 final FSImage fsImage = new ITextFSImage(image);
-
-                if (fsImage != null) {
-                    if ((cssWidth != -1) || (cssHeight != -1)) {
-                        fsImage.scale(cssWidth, cssHeight);
-                    }
-                    return new ITextImageElement(fsImage);
+                if ((cssWidth != -1) || (cssHeight != -1)) {
+                    fsImage.scale(cssWidth, cssHeight);
                 }
+                return new ITextImageElement(fsImage);
             } catch (Exception e) {
                 throw new RuntimeException("There was a problem trying to read a template embedded graphic.", e);
             } finally {

@@ -14,6 +14,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 
 import javax.annotation.Nullable;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
  */
 public class UserDTO implements IUser, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

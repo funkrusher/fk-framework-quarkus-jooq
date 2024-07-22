@@ -12,6 +12,7 @@ import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
 import org.fk.database1.testshop.tables.interfaces.IPost;
 
+import java.io.Serial;
 import java.util.UUID;
 
 /**
@@ -19,6 +20,7 @@ import java.util.UUID;
  */
 public class PostDTO implements IPost, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------

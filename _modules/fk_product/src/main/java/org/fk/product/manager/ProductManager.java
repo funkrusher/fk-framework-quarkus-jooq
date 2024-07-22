@@ -98,11 +98,11 @@ public class ProductManager extends AbstractManager {
     public Optional<ProductDTO> getOne(RequestContext requestContext, final Long productId) throws DataAccessException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            List<ProductDTO> result = repo.fetch(repo::getFullQuery, List.of(productId));
-            if (result == null || result.isEmpty()) {
+            ProductDTO result = repo.fetch(repo::getFullQuery, productId);
+            if (result == null) {
                 return Optional.empty();
             } else {
-                return Optional.of(result.getFirst());
+                return Optional.of(result);
             }
         });
     }
@@ -305,7 +305,7 @@ public class ProductManager extends AbstractManager {
     }
 
     public void exportPdf(RequestContext requestContext, OutputStream os, String language, Integer chunkSize) {
-        Locale locale = null;
+        final Locale locale;
         if (language.equals("de")) {
             locale = Locale.GERMANY;
         } else {

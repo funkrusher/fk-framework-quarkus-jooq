@@ -9,11 +9,14 @@ import org.fk.core.dto.BookKeeper;
 import org.fk.core.dto.DTO;
 import org.fk.database1.testshop.tables.interfaces.IUserRole;
 
+import java.io.Serial;
+
 /**
  * UserRoleDTO
  */
 public class UserRoleDTO implements IUserRole, DTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // -------------------------------------------------------------------------
