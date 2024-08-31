@@ -11,6 +11,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.request.RequestContext;
 import org.fk.database1.Database1;
+import org.fk.database1.testshop2.tables.dtos.ProductDto;
 import org.fk.product.dto.ProductDTO;
 import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
@@ -54,7 +55,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "201", description = "product creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public Response create(ProductDTO product) throws ValidationException {
+    public Response create(ProductDto product) throws ValidationException {
         ProductDTO created = productManager.create(new RequestContext(1, 1), product);
         return Response.ok(created).status(201).build();
     }
@@ -64,7 +65,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "product update successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO update(ProductDTO product) throws ValidationException {
+    public ProductDTO update(ProductDto product) throws ValidationException {
         return productManager.update(new RequestContext(1, 1), product);
     }
 

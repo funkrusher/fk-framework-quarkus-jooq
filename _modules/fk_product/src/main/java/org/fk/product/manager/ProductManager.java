@@ -19,6 +19,7 @@ import org.fk.core.query.model.FkFilter;
 import org.fk.core.query.model.FkFilterOperator;
 import org.fk.core.query.model.FkQuery;
 import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.dtos.ProductDto;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.database1.testshop2.tables.interfaces.IProductLang;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
@@ -138,7 +139,7 @@ public class ProductManager extends AbstractManager {
                 tsx.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tsx.dsl());
-                    aProductRecordDAO.deleteById(products.stream().map(ProductDTO::getProductId).toList());
+                    aProductRecordDAO.deleteById(products.stream().map(ProductDTO::productId).toList());
                 });
 
                 try {
@@ -156,24 +157,15 @@ public class ProductManager extends AbstractManager {
         }
     }
 
-    public ProductDTO create(RequestContext requestContext, final ProductDTO product) throws ValidationException {
+    public ProductDTO create(RequestContext requestContext, final ProductDto product) throws ValidationException {
         try {
             return database1.dsl(requestContext).transactionResult(tsx -> {
                 ProductDAO productRecordDAO = new ProductDAO(tsx.dsl());
-                ProductLangDAO productLangRecordDAO = new ProductLangDAO(tsx.dsl());
 
                 // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
                 // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
                 this.validateInsert(product);
                 productRecordDAO.insert(product);
-
-                List<IProductLang> productLangInserts = new ArrayList<>();
-                for (ProductLangDTO xLang : product.getLangs()) {
-                    xLang.setProductId(product.getProductId());
-                    this.validateInsert(xLang);
-                    productLangInserts.add(xLang);
-                }
-                productLangRecordDAO.insert(productLangInserts);
 
                 final ProductRepository repo = new ProductRepository(tsx.dsl());
                 return repo.fetch(repo::getFullQuery, product.getProductId());
@@ -190,7 +182,7 @@ public class ProductManager extends AbstractManager {
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public ProductDTO update(RequestContext requestContext, final ProductDTO product) throws ValidationException {
+    public ProductDTO update(RequestContext requestContext, final ProductDto product) throws ValidationException {
         DSLContext dsl = database1.dsl(requestContext);
 
         ProductDAO productRecordDAO = new ProductDAO(dsl);
@@ -198,24 +190,6 @@ public class ProductManager extends AbstractManager {
 
         this.validateUpdate(product);
         productRecordDAO.update(product);
-
-        List<IProductLang> insertXLangs = new ArrayList<>();
-        List<IProductLang> updateXLangs = new ArrayList<>();
-        List<IProductLang> deleteXLangs = new ArrayList<>();
-        for (ProductLangDTO xLang : product.getLangs()) {
-            xLang.setProductId(product.getProductId());
-            if (xLang.getDeleteFlag() != null && xLang.getDeleteFlag()) {
-                deleteXLangs.add(xLang);
-            } else if (xLang.getInsertFlag() != null && xLang.getInsertFlag()) {
-                insertXLangs.add(xLang);
-            } else {
-                updateXLangs.add(xLang);
-            }
-            this.validateUpdate(xLang);
-        }
-        productLangRecordDAO.delete(deleteXLangs);
-        productLangRecordDAO.insert(insertXLangs);
-        productLangRecordDAO.update(updateXLangs);
 
         final ProductRepository repo = new ProductRepository(dsl);
         return repo.fetch(repo::getFullQuery, product.getProductId());
@@ -225,7 +199,7 @@ public class ProductManager extends AbstractManager {
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public void delete(RequestContext requestContext, final ProductDTO product) {
+    public void delete(RequestContext requestContext, final ProductDto product) {
         DSLContext dsl = database1.dsl(requestContext);
 
         ProductDAO productRecordDAO = new ProductDAO(dsl);
@@ -298,7 +272,6 @@ public class ProductManager extends AbstractManager {
             final Iterator<ProductDTO> it = productStream.iterator();
             while (it.hasNext()) {
                 ProductDTO product = it.next();
-                product.setTypeId(generateLorem());
                 xlsxWriter.writeItem(product);
             }
         }
@@ -330,7 +303,7 @@ public class ProductManager extends AbstractManager {
             while (it.hasNext()) {
                 List<ProductDTO> productsChunk = it.next();
 
-                List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> x.setTypeId(generateLorem())).toList();
+                List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> x).toList();
 
                 String html = ProductTemplates.productsTemplate(productsChunkWithData).setLocale(locale).render();
                 pdfWriter.writeItem(html);

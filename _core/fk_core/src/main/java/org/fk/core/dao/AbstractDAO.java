@@ -138,9 +138,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                 rec.changed(false);
                 for (Field<?> field : rec.fields()) {
                     // we need to transfer the DTO-changed markers to the Record-changed markers.
-                    if (dto.getBookKeeper().touched().containsKey(field.getName())) {
-                        rec.changed(field.getName(), true);
-                    }
+//                    if (dto.getBookKeeper().touched().containsKey(field.getName())) {
+//                        rec.changed(field.getName(), true);
+//                    }
                 }
                 recs.add(rec);
             }

@@ -7,8 +7,5 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public interface DTO extends Serializable {
-    @JsonIgnore
-    @XmlTransient
-    BookKeeper getBookKeeper();
+public interface DTO {
 }
