@@ -330,7 +330,7 @@ public class ProductManager extends AbstractManager {
             while (it.hasNext()) {
                 List<ProductDTO> productsChunk = it.next();
 
-                List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> x.setTypeId(generateLorem())).toList();
+                List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> (ProductDTO) x.setTypeId(generateLorem())).toList();
 
                 String html = ProductTemplates.productsTemplate(productsChunkWithData).setLocale(locale).render();
                 pdfWriter.writeItem(html);
