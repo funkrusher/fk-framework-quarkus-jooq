@@ -8,7 +8,7 @@ import java.util.List;
 @Schema(name = "ProductPaginate", description = "Represents the pagination result of products")
 public class ProductPaginateDTO {
 
-    private List<ProductDTO> products;
+    private String products;
 
     private Integer count;
 
@@ -18,11 +18,11 @@ public class ProductPaginateDTO {
         super();
     }
 
-    public List<ProductDTO> getProducts() {
+    public String getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDTO> products) {
+    public void setProducts(String products) {
         this.products = products;
     }
 

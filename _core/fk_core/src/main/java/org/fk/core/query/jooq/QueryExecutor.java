@@ -18,9 +18,9 @@ import static java.util.Collections.singletonList;
 public class QueryExecutor<D extends DTO, T> {
 
     private final Field<?> idField;
-    private final QueryFunction<D> queryFunction;
+    private final QueryFunction queryFunction;
 
-    public QueryExecutor(Field<T> idField, QueryFunction<D> queryFunction) {
+    public QueryExecutor(Field<T> idField, QueryFunction queryFunction) {
         this.idField = idField;
         this.queryFunction = queryFunction;
     }
@@ -33,10 +33,10 @@ public class QueryExecutor<D extends DTO, T> {
      * @return list of sorted, filtered, page-sized DTOs
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public List<D> query(final FkQuery query) throws InvalidDataException {
+    public String query(final FkQuery query) throws InvalidDataException {
         return queryFunction.apply(query)
             .fetch()
-            .map(Record1::value1);
+            .formatJSON(new JSONFormat().wrapSingleColumnRecords(false).header(false));
     }
 
     /**
@@ -47,7 +47,7 @@ public class QueryExecutor<D extends DTO, T> {
      * @throws InvalidDataException invalid data in the given filters
      */
     public int count(final List<FkFilter> filters) throws InvalidDataException {
-        final SelectFinalStep<Record1<D>> select = queryFunction.apply(new FkQuery().setFilters(filters));
+        final SelectFinalStep<Record1<JSON>> select = queryFunction.apply(new FkQuery().setFilters(filters));
         return Objects.requireNonNull(select.configuration()).dsl().fetchCount(select);
     }
 
@@ -58,11 +58,11 @@ public class QueryExecutor<D extends DTO, T> {
      * @return stream of sorted, filtered Ids
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public Stream<D> stream(final FkQuery query) throws InvalidDataException {
+    public Stream<Object> stream(final FkQuery query) throws InvalidDataException {
         return queryFunction.apply(query)
             .fetchSize(250)
             .fetchStream()
-            .map(Record1::value1);
+            .map(x -> x.value1());
     }
 
     /**
@@ -71,11 +71,15 @@ public class QueryExecutor<D extends DTO, T> {
      * @param ids ids
      * @return dtos dtos for given ids
      */
-    public final List<D> fetch(final List<T> ids) {
-        final SelectFinalStep<Record1<D>> select = queryFunction.apply(new FkQuery());
+    public final String fetch(final List<T> ids) {
+        final SelectFinalStep<Record1<JSON>> select = queryFunction.apply(new FkQuery());
         select.getQuery().addConditions(idField.in(ids));
-        return select.fetch().map(Record1::value1);
 
+        if (ids.size() == 1) {
+            return select.fetchOne().formatJSON(new JSONFormat().wrapSingleColumnRecords(false).header(false));
+        } else {
+            return select.fetch().formatJSON(new JSONFormat().header(false));
+        }
     }
 
     /**
@@ -86,12 +90,9 @@ public class QueryExecutor<D extends DTO, T> {
      * <code>null</code> if no dto was found.
      * @throws DataAccessException if something went wrong executing the query
      */
-    public @Nullable D fetch(final T id) {
-        List<D> result = fetch(singletonList(id));
-        if (!result.isEmpty()) {
-            return result.getFirst();
-        }
-        return null;
+    public @Nullable String fetch(final T id) {
+        String result = fetch(singletonList(id));
+        return result;
     }
 
 
@@ -102,7 +103,7 @@ public class QueryExecutor<D extends DTO, T> {
      * @return dtos dtos for given ids
      */
     @SafeVarargs
-    public final List<D> fetch(final T... ids) {
+    public final String fetch(final T... ids) {
         return fetch(asList(ids));
     }
 }

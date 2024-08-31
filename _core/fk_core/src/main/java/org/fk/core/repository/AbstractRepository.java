@@ -90,7 +90,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @param query query
      * @return @{@link QueryExecutor}
      */
-    public QueryExecutor<D, T> executor(QueryFunction<D> query) {
+    public QueryExecutor<D, T> executor(QueryFunction query) {
         return new QueryExecutor<>(idField, query);
     }
 
@@ -102,7 +102,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @return list of sorted, filtered, page-sized DTOs
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public List<D> query(final QueryFunction<D> f, final FkQuery query) throws InvalidDataException {
+    public String query(final QueryFunction f, final FkQuery query) throws InvalidDataException {
         return executor(f).query(query);
     }
 
@@ -114,7 +114,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @return total count of items, matching the given filters
      * @throws InvalidDataException invalid data in the given filters
      */
-    public int count(final QueryFunction<D> f, final List<FkFilter> filters) throws InvalidDataException {
+    public int count(final QueryFunction f, final List<FkFilter> filters) throws InvalidDataException {
         return executor(f).count(filters);
     }
 
@@ -124,7 +124,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @return stream of sorted, filtered Ids
      * @throws InvalidDataException invalid data in the given queryParameters
      */
-    public Stream<D> stream(final QueryFunction<D> f, final FkQuery query) throws InvalidDataException {
+    public Stream<Object> stream(final QueryFunction f, final FkQuery query) throws InvalidDataException {
         return executor(f).stream(query);
     }
 
@@ -134,7 +134,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @param ids ids
      * @return dtos dtos for given ids
      */
-    public final List<D> fetch(final QueryFunction<D> f, final List<T> ids) {
+    public final String fetch(final QueryFunction f, final List<T> ids) {
         return executor(f).fetch(ids);
     }
 
@@ -144,7 +144,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @param id id
      * @return dto for given id
      */
-    public @Nullable D fetch(final QueryFunction<D> f, final T id) {
+    public @Nullable String fetch(final QueryFunction f, final T id) {
         return executor(f).fetch(id);
     }
 
@@ -155,7 +155,7 @@ public abstract class AbstractRepository<D extends DTO, T> {
      * @return dtos dtos for given ids
      */
     @SafeVarargs
-    public final List<D> fetch(final QueryFunction<D> f, final T... ids) {
+    public final String fetch(final QueryFunction f, final T... ids) {
         return executor(f).fetch(ids);
     }
 }

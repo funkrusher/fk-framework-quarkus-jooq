@@ -37,7 +37,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+    public String query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         return productManager.query(new RequestContext(securityIdentity, 1), fkQuery);
     }
 
@@ -47,7 +47,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO getOne(Long productId) throws NotFoundException {
+    public String getOne(Long productId) throws NotFoundException {
         return productManager.getOne(new RequestContext(securityIdentity, 1), productId).orElseThrow(NotFoundException::new);
     }
 
@@ -59,7 +59,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public Response create(ProductDTO product) throws ValidationException {
-        ProductDTO created = productManager.create(new RequestContext(securityIdentity, 1), product);
+        String created = productManager.create(new RequestContext(securityIdentity, 1), product);
         return Response.ok(created).status(201).build();
     }
 
@@ -69,7 +69,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "product update successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO update(ProductDTO product) throws ValidationException {
+    public String update(ProductDTO product) throws ValidationException {
         return productManager.update(new RequestContext(securityIdentity, 1), product);
     }
 
