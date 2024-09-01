@@ -1,4 +1,4 @@
-package org.fk.product.dto;
+package org.fk.product.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,35 +13,35 @@ import java.util.List;
 /**
  * Client-specific Products
  */
-public class ProductDTO extends ProductDto {
+public class ProductAPI extends ProductDto {
 
     @Schema(writeOnly = true)
     private Boolean deleteFlag;
 
     @Schema(readOnly = true)
-    private ProductLangDTO lang;
+    private ProductLangAPI lang;
 
-    private List<ProductLangDTO> langs;
+    private List<ProductLangAPI> langs;
 
     @Schema(readOnly = true)
-    private ProductLangDTO mylang;
+    private ProductLangAPI mylang;
 
     @Schema(hidden = true)
     private ProductTypeId productTypeId;
 
     @Schema(hidden = true)
-    private UserDTO creator;
+    private UserAPI creator;
 
     // -------------------------------------------------------------------------
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public ProductDTO() {}
+    public ProductAPI() {}
 
-    public ProductDTO(IProduct value) { this.from(value); }
+    public ProductAPI(IProduct value) { this.from(value); }
 
-    public static ProductDTO create(Record3<ProductRecord, UserDTO, List<ProductLangDTO>> r) {
-        return new ProductDTO(r.value1())
+    public static ProductAPI create(Record3<ProductRecord, UserAPI, List<ProductLangAPI>> r) {
+        return new ProductAPI(r.value1())
             .setCreator(r.value2())
             .setLangs(r.value3());
     }
@@ -51,14 +51,14 @@ public class ProductDTO extends ProductDto {
     // -------------------------------------------------------------------------
 
     @JsonIgnore
-    public ProductDTO setCreator(UserDTO creator) {
+    public ProductAPI setCreator(UserAPI creator) {
         this.creator = creator;
         keeper.touch("creator");
         return this;
     }
 
     @JsonProperty
-    public UserDTO getCreator() {
+    public UserAPI getCreator() {
         return creator;
     }
 
@@ -68,14 +68,14 @@ public class ProductDTO extends ProductDto {
     }
 
     @JsonIgnore
-    public ProductDTO setProductTypeId(ProductTypeId productTypeId) {
+    public ProductAPI setProductTypeId(ProductTypeId productTypeId) {
         this.productTypeId = productTypeId;
         this.keeper.touch("productTypeId");
         return this;
     }
 
     @JsonProperty
-    public ProductDTO setDeleteFlag(Boolean deleteFlag) {
+    public ProductAPI setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
         this.keeper.touch("deleteFlag");
         return this;
@@ -87,35 +87,35 @@ public class ProductDTO extends ProductDto {
     }
 
     @JsonIgnore
-    public ProductDTO setMylang(ProductLangDTO lang) {
+    public ProductAPI setMylang(ProductLangAPI lang) {
         this.mylang = mylang;
         keeper.touch("mylang");
         return this;
     }
 
     @JsonProperty
-    public ProductLangDTO getMylang() {
+    public ProductLangAPI getMylang() {
         return mylang;
     }
 
 
     @JsonIgnore
-    public ProductDTO setLang(ProductLangDTO lang) {
+    public ProductAPI setLang(ProductLangAPI lang) {
         this.lang = lang;
         keeper.touch("lang");
         return this;
     }
 
     @JsonProperty
-    public ProductLangDTO getLang() {
+    public ProductLangAPI getLang() {
         return lang;
     }
 
-    public List<ProductLangDTO> getLangs() {
+    public List<ProductLangAPI> getLangs() {
         return langs;
     }
 
-    public ProductDTO setLangs(List<ProductLangDTO> langs) {
+    public ProductAPI setLangs(List<ProductLangAPI> langs) {
         this.langs = langs;
         keeper.touch("langs");
         return this;

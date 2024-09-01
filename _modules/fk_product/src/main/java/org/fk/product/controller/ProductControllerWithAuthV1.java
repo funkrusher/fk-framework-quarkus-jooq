@@ -8,8 +8,9 @@ import org.fk.core.exception.ValidationException;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.fk.core.request.RequestContext;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductPaginateDTO;
+import org.fk.database1.testshop2.tables.dtos.ProductDto;
+import org.fk.product.api.ProductAPI;
+import org.fk.product.api.ProductPaginateAPI;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.query.model.FkQuery;
 
@@ -37,7 +38,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+    public ProductPaginateAPI query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         return productManager.query(new RequestContext(securityIdentity, 1), fkQuery);
     }
 
@@ -47,7 +48,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO getOne(Long productId) throws NotFoundException {
+    public ProductAPI getOne(Long productId) throws NotFoundException {
         return productManager.getOne(new RequestContext(securityIdentity, 1), productId).orElseThrow(NotFoundException::new);
     }
 
@@ -58,8 +59,8 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "201", description = "product creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public Response create(ProductDTO product) throws ValidationException {
-        ProductDTO created = productManager.create(new RequestContext(securityIdentity, 1), product);
+    public Response create(ProductDto product) throws ValidationException {
+        ProductDto created = productManager.create(new RequestContext(securityIdentity, 1), product);
         return Response.ok(created).status(201).build();
     }
 
@@ -69,7 +70,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "product update successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO update(ProductDTO product) throws ValidationException {
+    public ProductDto update(ProductDto product) throws ValidationException {
         return productManager.update(new RequestContext(securityIdentity, 1), product);
     }
 
@@ -78,7 +79,7 @@ public class ProductControllerWithAuthV1 {
     @Operation(summary = "deletes an existing product")
     @APIResponse(responseCode = "204", description = "product delete successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
-    public Response delete(ProductDTO product) {
+    public Response delete(ProductAPI product) {
         productManager.delete(new RequestContext(securityIdentity, 1), product);
         return Response.status(204).build();
     }

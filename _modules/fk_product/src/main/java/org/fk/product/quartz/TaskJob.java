@@ -6,7 +6,7 @@ import jakarta.inject.Inject;
 import org.fk.core.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.product.dao.TaskDAO;
-import org.fk.product.dto.TaskDTO;
+import org.fk.product.api.TaskAPI;
 import org.jooq.DSLContext;
 
 @ApplicationScoped
@@ -20,7 +20,7 @@ public class TaskJob {
         // either use Transactional annotation of quarkus, or DSLContext.transaction, to make sure we commit.
         DSLContext dsl = database1.dsl(new RequestContext(1, 1));
         dsl.transaction(trx -> {
-            TaskDTO task = new TaskDTO();
+            TaskAPI task = new TaskAPI();
             TaskDAO taskDAO = new TaskDAO(trx.dsl());
             taskDAO.insert(task);
         });

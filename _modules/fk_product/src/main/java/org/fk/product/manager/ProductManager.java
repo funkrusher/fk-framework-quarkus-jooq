@@ -6,7 +6,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.fk.core.query.jooq.QueryExecutor;
 import org.fk.core.request.RequestContext;
 import org.fk.core.transfer.csv.CsvWriter;
 import org.fk.core.transfer.json.JsonWriter;
@@ -19,15 +18,16 @@ import org.fk.core.query.model.FkFilter;
 import org.fk.core.query.model.FkFilterOperator;
 import org.fk.core.query.model.FkQuery;
 import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.dtos.ProductDto;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.database1.testshop2.tables.interfaces.IProductLang;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dao.ProductDAO;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductLangDTO;
+import org.fk.product.api.ProductAPI;
+import org.fk.product.api.ProductLangAPI;
 import org.fk.core.exception.ValidationException;
-import org.fk.product.dto.ProductPaginateDTO;
+import org.fk.product.api.ProductPaginateAPI;
 import org.fk.product.qute.ProductMessages;
 import org.fk.product.repository.ProductRepository;
 import org.fk.product.qute.ProductTemplates;
@@ -55,7 +55,7 @@ public class ProductManager extends AbstractManager {
     @Inject
     Database1 database1;
 
-    public List<ProductDTO> testMultiset(RequestContext requestContext) {
+    public List<ProductAPI> testMultiset(RequestContext requestContext) {
         List<Field<?>> fields = new ArrayList<>(List.of(table().fields()));
 
         // note: for MULTISET to work, we need to activate allowMultiQueries=true in mariadb via jdbc-url.
@@ -70,18 +70,18 @@ public class ProductManager extends AbstractManager {
             return tsx.dsl().select(fields)
                 .from(Product.PRODUCT)
                 .limit(10)
-                .fetchInto(ProductDTO.class);
+                .fetchInto(ProductAPI.class);
         });
     }
 
-    public ProductPaginateDTO query(RequestContext requestContext, final FkQuery fkQuery) throws InvalidDataException {
+    public ProductPaginateAPI query(RequestContext requestContext, final FkQuery fkQuery) throws InvalidDataException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
 
-            List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+            List<ProductAPI> products = repo.query(repo::getFullQuery, fkQuery);
             int count = repo.count(repo::getFullQuery, fkQuery.getFilters());
 
-            ProductPaginateDTO paginate = new ProductPaginateDTO();
+            ProductPaginateAPI paginate = new ProductPaginateAPI();
             paginate.setProducts(products);
             paginate.setCount(count);
 
@@ -95,10 +95,10 @@ public class ProductManager extends AbstractManager {
         });
     }
 
-    public Optional<ProductDTO> getOne(RequestContext requestContext, final Long productId) throws DataAccessException {
+    public Optional<ProductAPI> getOne(RequestContext requestContext, final Long productId) throws DataAccessException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            ProductDTO result = repo.fetch(repo::getFullQuery, productId);
+            ProductAPI result = repo.fetch(repo::getFullQuery, productId);
             if (result == null) {
                 return Optional.empty();
             } else {
@@ -133,12 +133,12 @@ public class ProductManager extends AbstractManager {
                 fkQuery.getFilters().add(filter2);
 
                 final ProductRepository repo = new ProductRepository(tsx.dsl());
-                List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+                List<ProductAPI> products = repo.query(repo::getFullQuery, fkQuery);
 
                 tsx.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tsx.dsl());
-                    aProductRecordDAO.deleteById(products.stream().map(ProductDTO::getProductId).toList());
+                    aProductRecordDAO.deleteById(products.stream().map(ProductAPI::getProductId).toList());
                 });
 
                 try {
@@ -156,27 +156,13 @@ public class ProductManager extends AbstractManager {
         }
     }
 
-    public ProductDTO create(RequestContext requestContext, final ProductDTO product) throws ValidationException {
+    public ProductDto create(RequestContext requestContext, final ProductDto product) throws ValidationException {
         try {
             return database1.dsl(requestContext).transactionResult(tsx -> {
                 ProductDAO productRecordDAO = new ProductDAO(tsx.dsl());
-                ProductLangDAO productLangRecordDAO = new ProductLangDAO(tsx.dsl());
-
-                // we first use insertAndReturn() to insert the product and get the autoincrement-id for it
-                // afterwards we use insert() to insert the productLanguages in the most performant (batching) way.
                 this.validateInsert(product);
                 productRecordDAO.insert(product);
-
-                List<IProductLang> productLangInserts = new ArrayList<>();
-                for (ProductLangDTO xLang : product.getLangs()) {
-                    xLang.setProductId(product.getProductId());
-                    this.validateInsert(xLang);
-                    productLangInserts.add(xLang);
-                }
-                productLangRecordDAO.insert(productLangInserts);
-
-                final ProductRepository repo = new ProductRepository(tsx.dsl());
-                return repo.fetch(repo::getFullQuery, product.getProductId());
+                return product;
             });
         } catch (Exception e) {
             if (e.getCause() instanceof ValidationException ve) {
@@ -190,42 +176,21 @@ public class ProductManager extends AbstractManager {
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public ProductDTO update(RequestContext requestContext, final ProductDTO product) throws ValidationException {
+    public ProductDto update(RequestContext requestContext, final ProductDto product) throws ValidationException {
         DSLContext dsl = database1.dsl(requestContext);
 
         ProductDAO productRecordDAO = new ProductDAO(dsl);
-        ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
         this.validateUpdate(product);
         productRecordDAO.update(product);
-
-        List<IProductLang> insertXLangs = new ArrayList<>();
-        List<IProductLang> updateXLangs = new ArrayList<>();
-        List<IProductLang> deleteXLangs = new ArrayList<>();
-        for (ProductLangDTO xLang : product.getLangs()) {
-            xLang.setProductId(product.getProductId());
-            if (xLang.getDeleteFlag() != null && xLang.getDeleteFlag()) {
-                deleteXLangs.add(xLang);
-            } else if (xLang.getInsertFlag() != null && xLang.getInsertFlag()) {
-                insertXLangs.add(xLang);
-            } else {
-                updateXLangs.add(xLang);
-            }
-            this.validateUpdate(xLang);
-        }
-        productLangRecordDAO.delete(deleteXLangs);
-        productLangRecordDAO.insert(insertXLangs);
-        productLangRecordDAO.update(updateXLangs);
-
-        final ProductRepository repo = new ProductRepository(dsl);
-        return repo.fetch(repo::getFullQuery, product.getProductId());
+        return product;
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public void delete(RequestContext requestContext, final ProductDTO product) {
+    public void delete(RequestContext requestContext, final ProductAPI product) {
         DSLContext dsl = database1.dsl(requestContext);
 
         ProductDAO productRecordDAO = new ProductDAO(dsl);
@@ -240,15 +205,15 @@ public class ProductManager extends AbstractManager {
      * Trying out streaming
      * @return stream
      */
-    public Stream<ProductDTO> streamAll(RequestContext requestContext) throws InvalidDataException {
+    public Stream<ProductAPI> streamAll(RequestContext requestContext) throws InvalidDataException {
         FkQuery fkQuery = new FkQuery();
         fkQuery.setPage(0);
         fkQuery.setPageSize(100000);
 
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            Stream<ProductDTO> stream1 = repo.stream(repo::getFullQuery, fkQuery);
-            Stream<List<ProductDTO>> chunkStream = chunk(stream1, 250);
+            Stream<ProductAPI> stream1 = repo.stream(repo::getFullQuery, fkQuery);
+            Stream<List<ProductAPI>> chunkStream = chunk(stream1, 250);
 
             // the "parallel" is important here, as it really pushes performance.
             return chunkStream.parallel().flatMap(List::stream);
@@ -258,10 +223,10 @@ public class ProductManager extends AbstractManager {
     public void exportJson(RequestContext requestContext, OutputStream os) {
         var productStream = streamAll(requestContext);
 
-        try (JsonWriter<ProductDTO> jsonWriter = new JsonWriter<>(os, ProductDTO.class)) {
-            final Iterator<ProductDTO> it = productStream.iterator();
+        try (JsonWriter<ProductAPI> jsonWriter = new JsonWriter<>(os, ProductAPI.class)) {
+            final Iterator<ProductAPI> it = productStream.iterator();
             while (it.hasNext()) {
-                ProductDTO product = it.next();
+                ProductAPI product = it.next();
                 jsonWriter.writeItem(product);
             }
         }
@@ -276,10 +241,10 @@ public class ProductManager extends AbstractManager {
         for (Field<?> field : pc.fields()) {
             fieldNames.add(field.getName());
         }
-        try (CsvWriter<ProductDTO> csvWriter = new CsvWriter<>(os, fieldNames)) {
-            final Iterator<ProductDTO> it = productStream.iterator();
+        try (CsvWriter<ProductAPI> csvWriter = new CsvWriter<>(os, fieldNames)) {
+            final Iterator<ProductAPI> it = productStream.iterator();
             while (it.hasNext()) {
-                ProductDTO product = it.next();
+                ProductAPI product = it.next();
                 csvWriter.writeItem(product);
             }
         }
@@ -294,10 +259,10 @@ public class ProductManager extends AbstractManager {
         for (Field<?> field : pc.fields()) {
             fieldNames.add(field.getName());
         }
-        try (XlsxWriter<ProductDTO> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
-            final Iterator<ProductDTO> it = productStream.iterator();
+        try (XlsxWriter<ProductAPI> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
+            final Iterator<ProductAPI> it = productStream.iterator();
             while (it.hasNext()) {
-                ProductDTO product = it.next();
+                ProductAPI product = it.next();
                 product.setTypeId(generateLorem());
                 xlsxWriter.writeItem(product);
             }
@@ -312,7 +277,7 @@ public class ProductManager extends AbstractManager {
             locale = Locale.US;
         }
         var productStream = streamAll(requestContext);
-        Stream<List<ProductDTO>> chunkStream = chunk(productStream, chunkSize);
+        Stream<List<ProductAPI>> chunkStream = chunk(productStream, chunkSize);
 
         ProductMessages productMessages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
         String test = productMessages.product_paginate_localizationTest();
@@ -326,11 +291,11 @@ public class ProductManager extends AbstractManager {
             pdfWriter.writeItem(introductionPage);
 
             // each page after the first we add using layout() followed by writeNextDocument()
-            Iterator<List<ProductDTO>> it = chunkStream.iterator();
+            Iterator<List<ProductAPI>> it = chunkStream.iterator();
             while (it.hasNext()) {
-                List<ProductDTO> productsChunk = it.next();
+                List<ProductAPI> productsChunk = it.next();
 
-                List<ProductDTO> productsChunkWithData = productsChunk.stream().map(x -> (ProductDTO) x.setTypeId(generateLorem())).toList();
+                List<ProductAPI> productsChunkWithData = productsChunk.stream().map(x -> (ProductAPI) x.setTypeId(generateLorem())).toList();
 
                 String html = ProductTemplates.productsTemplate(productsChunkWithData).setLocale(locale).render();
                 pdfWriter.writeItem(html);

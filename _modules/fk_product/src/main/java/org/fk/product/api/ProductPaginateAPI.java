@@ -1,4 +1,4 @@
-package org.fk.product.dto;
+package org.fk.product.api;
 
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -6,23 +6,23 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "ProductPaginate", description = "Represents the pagination result of products")
-public class ProductPaginateDTO {
+public class ProductPaginateAPI {
 
-    private List<ProductDTO> products;
+    private List<ProductAPI> products;
 
     private Integer count;
 
     private String localizationTest;
 
-    public ProductPaginateDTO() {
+    public ProductPaginateAPI() {
         super();
     }
 
-    public List<ProductDTO> getProducts() {
+    public List<ProductAPI> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDTO> products) {
+    public void setProducts(List<ProductAPI> products) {
         this.products = products;
     }
 

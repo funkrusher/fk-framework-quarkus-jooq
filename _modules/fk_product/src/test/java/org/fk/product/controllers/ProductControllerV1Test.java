@@ -12,8 +12,8 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import jakarta.inject.Inject;
 import org.fk.core.auth.TenantCredential;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductLangDTO;
+import org.fk.product.api.ProductAPI;
+import org.fk.product.api.ProductLangAPI;
 import org.fk.core.dto.DTOMapper;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.ProductLang;
@@ -79,8 +79,8 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(1)
     void testCreate() throws IOException {
-        List<ProductLangDTO> xLangs = new ArrayList<>();
-        ProductLangDTO xLangDTO = new ProductLangDTO();
+        List<ProductLangAPI> xLangs = new ArrayList<>();
+        ProductLangAPI xLangDTO = new ProductLangAPI();
         xLangDTO.setLangId(1);
         xLangDTO.setName("Mein Produkt1");
         xLangDTO.setDescription("Meine Description 1");
@@ -88,7 +88,7 @@ class ProductControllerV1Test {
 
         long milliSince = 1713099217899L;
 
-        ProductDTO productDTO = new ProductDTO();
+        ProductAPI productDTO = new ProductAPI();
         productDTO.setClientId(1);
         productDTO.setProductTypeId(ProductTypeId.BOOK);
         productDTO.setPrice(new BigDecimal("10.00"));
@@ -106,7 +106,7 @@ class ProductControllerV1Test {
                 .then()
                 .statusCode(201)
                 .extract();
-        ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
+        ProductAPI responseDTO = serializer.deserializePojo(er.body().asString(), ProductAPI.class);
 
         assertEquals(productDTO.getCreatedAt(), LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
         assertEquals(productDTO.getUpdatedAt(), LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
@@ -133,22 +133,22 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(2)
     void testUpdate() throws IOException {
-        List<ProductLangDTO> xLangs = new ArrayList<>();
+        List<ProductLangAPI> xLangs = new ArrayList<>();
 
-        ProductLangDTO xLangDTO = new ProductLangDTO();
+        ProductLangAPI xLangDTO = new ProductLangAPI();
         xLangDTO.setLangId(1);
         xLangDTO.setName("Mein Produkt1 Change");
         xLangDTO.setDescription("Meine Description 1 Change");
         xLangs.add(xLangDTO);
 
-        ProductLangDTO xLang2DTO = new ProductLangDTO();
+        ProductLangAPI xLang2DTO = new ProductLangAPI();
         xLang2DTO.setLangId(2);
         xLang2DTO.setInsertFlag(true);
         xLang2DTO.setName("Extra Language Name");
         xLang2DTO.setDescription("Extra Language Description");
         xLangs.add(xLang2DTO);
 
-        ProductDTO productDTO = new ProductDTO();
+        ProductAPI productDTO = new ProductAPI();
         productDTO.setProductId(insertedId);
         productDTO.setClientId(1);
         productDTO.setProductTypeId(ProductTypeId.CLOTHING);
@@ -166,7 +166,7 @@ class ProductControllerV1Test {
                 .then()
                 .statusCode(200)
                 .extract();
-        ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
+        ProductAPI responseDTO = serializer.deserializePojo(er.body().asString(), ProductAPI.class);
 
         // verify rest-result is as expected...
         assertEquals(productDTO.getClientId(), responseDTO.getClientId());
@@ -212,7 +212,7 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(4)
     void testDelete() throws IOException {
-        ProductDTO productDTO = new ProductDTO();
+        ProductAPI productDTO = new ProductAPI();
         productDTO.setProductId(1L);
         productDTO.setClientId(1);
 
