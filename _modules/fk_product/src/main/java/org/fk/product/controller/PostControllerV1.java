@@ -10,7 +10,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.ValidationException;
 import org.fk.database1.testshop.tables.dtos.PostDto;
-import org.fk.product.api.PostAPI;
 import org.fk.product.manager.PostManager;
 
 @Path("/api/v1/posts")

@@ -6,6 +6,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import jakarta.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.fk.core.dto.AbstractDTO;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +20,7 @@ import org.fk.database1.testshop2.tables.interfaces.IProduct;
  * Client-specific Products
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-public class ProductDto implements IProduct, DTO {
+public class ProductDto<T extends ProductDto> extends AbstractDTO implements IProduct {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,10 +39,6 @@ public class ProductDto implements IProduct, DTO {
     private Boolean deleted;
     private Integer creatorId;
 
-    // -------------------------------------------------------------------------
-    // Non-Database-Fields (please define your additional fields here)
-    // -------------------------------------------------------------------------
- 
     // -------------------------------------------------------------------------
     // Constructor(s)
     // -------------------------------------------------------------------------
@@ -66,10 +63,10 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.productId</code>. productId
      */
     @Override
-    public ProductDto setProductId(Long productId) {
+    public T setProductId(Long productId) {
         this.productId = productId;
         this.keeper.touch("productId");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -85,10 +82,10 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.clientId</code>. clientId
      */
     @Override
-    public ProductDto setClientId(Integer clientId) {
+    public T setClientId(Integer clientId) {
         this.clientId = clientId;
         this.keeper.touch("clientId");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -106,10 +103,10 @@ public class ProductDto implements IProduct, DTO {
      * Euro
      */
     @Override
-    public ProductDto setPrice(BigDecimal price) {
+    public T setPrice(BigDecimal price) {
         this.price = price;
         this.keeper.touch("price");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -128,10 +125,10 @@ public class ProductDto implements IProduct, DTO {
      * one of: books,...
      */
     @Override
-    public ProductDto setTypeId(String typeId) {
+    public T setTypeId(String typeId) {
         this.typeId = typeId;
         this.keeper.touch("typeId");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -146,10 +143,10 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.createdAt</code>.
      */
     @Override
-    public ProductDto setCreatedAt(LocalDateTime createdAt) {
+    public T setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
         this.keeper.touch("createdAt");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -164,10 +161,10 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.updatedAt</code>.
      */
     @Override
-    public ProductDto setUpdatedAt(LocalDateTime updatedAt) {
+    public T setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
         this.keeper.touch("updatedAt");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -184,10 +181,10 @@ public class ProductDto implements IProduct, DTO {
      * marked as deleted
      */
     @Override
-    public ProductDto setDeleted(Boolean deleted) {
+    public T setDeleted(Boolean deleted) {
         this.deleted = deleted;
         this.keeper.touch("deleted");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -202,42 +199,12 @@ public class ProductDto implements IProduct, DTO {
      * Setter for <code>testshop2.product.creatorId</code>.
      */
     @Override
-    public ProductDto setCreatorId(Integer creatorId) {
+    public T setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
         this.keeper.touch("creatorId");
-        return this;
+        return (T) this;
     }
 
-    // -------------------------------------------------------------------------
-    // Non-Database-Fields Setters/Getters (please define here)
-    // -------------------------------------------------------------------------
- 
-    // -------------------------------------------------------------------------
-    // ToString, Equals, HashCode
-    // -------------------------------------------------------------------------
- 
-    @Override
-    public String toString() {
-        return keeper.touchedToString();
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final DTO other = (DTO) obj;
-        return this.keeper.touchedEquals(other);
-    }
- 
-    @Override
-    public int hashCode() {
-        return this.keeper.touchedHashCode();
-    }
- 
     // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
@@ -260,17 +227,4 @@ public class ProductDto implements IProduct, DTO {
         return into;
     }
 
-    // -------------------------------------------------------------------------
-    // BookKeeper (Patching Updates Support)
-    // -------------------------------------------------------------------------
-     
-    @JsonIgnore
-    @XmlTransient
-    protected transient BookKeeper keeper = new BookKeeper(this);
- 
-    @JsonIgnore
-    @XmlTransient
-    public BookKeeper getBookKeeper() {
-        return keeper;
-    }
 }

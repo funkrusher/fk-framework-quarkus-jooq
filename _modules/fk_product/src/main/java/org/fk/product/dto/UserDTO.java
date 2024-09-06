@@ -1,4 +1,4 @@
-package org.fk.product.api;
+package org.fk.product.dto;
 
 
 import org.fk.database1.testshop.tables.dtos.UserDto;
@@ -11,30 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * UserAPI
+ * UserDTO
  */
-public class UserAPI extends UserDto {
+public class UserDTO extends UserDto<UserDTO> {
 
-    private List<RoleAPI> roles = new ArrayList<RoleAPI>();
+    private List<RoleDTO> roles = new ArrayList<RoleDTO>();
 
-    public UserAPI() {}
+    public UserDTO() {}
 
-    public UserAPI(IUser value) { this.from(value); }
+    public UserDTO(IUser value) { this.from(value); }
 
-    public static @Nullable UserAPI createOrNull(Record2<UserRecord, List<RoleAPI>> r) {
+    public static @Nullable UserDTO createOrNull(Record2<UserRecord, List<RoleDTO>> r) {
         if (r.value1().getUserId() == null) {
             return null;
         } else {
-            return new UserAPI(r.value1())
+            return new UserDTO(r.value1())
                 .setRoles(r.value2());
         }
     }
 
-    public List<RoleAPI> getRoles() {
+    public List<RoleDTO> getRoles() {
         return roles;
     }
 
-    public UserAPI setRoles(List<RoleAPI> roles) {
+    public UserDTO setRoles(List<RoleDTO> roles) {
         this.roles = roles;
         keeper.touch("roles");
         return this;

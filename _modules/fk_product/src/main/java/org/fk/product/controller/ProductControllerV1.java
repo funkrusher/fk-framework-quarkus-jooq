@@ -10,8 +10,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.request.RequestContext;
 import org.fk.database1.testshop2.tables.dtos.ProductDto;
-import org.fk.product.api.ProductAPI;
-import org.fk.product.api.ProductPaginateAPI;
+import org.fk.product.dto.ProductDTO;
+import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.exception.ValidationException;
@@ -34,7 +34,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductAPI getOne(Long productId) throws NotFoundException {
+    public ProductDTO getOne(Long productId) throws NotFoundException {
         return productManager.getOne(new RequestContext(1, 1), productId).orElseThrow(NotFoundException::new);
     }
 
@@ -43,7 +43,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateAPI query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         return productManager.query(new RequestContext(1, 1), fkQuery);
     }
 
@@ -81,7 +81,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/multiset")
-    public List<ProductAPI> testMultiset() {
+    public List<ProductDTO> testMultiset() {
         return productManager.testMultiset(new RequestContext(1, 1));
     }
 

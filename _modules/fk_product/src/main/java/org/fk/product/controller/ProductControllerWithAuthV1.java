@@ -9,8 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.fk.core.request.RequestContext;
 import org.fk.database1.testshop2.tables.dtos.ProductDto;
-import org.fk.product.api.ProductAPI;
-import org.fk.product.api.ProductPaginateAPI;
+import org.fk.product.dto.ProductDTO;
+import org.fk.product.dto.ProductPaginateDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.query.model.FkQuery;
 
@@ -38,7 +38,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateAPI query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         return productManager.query(new RequestContext(securityIdentity, 1), fkQuery);
     }
 
@@ -48,7 +48,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductAPI getOne(Long productId) throws NotFoundException {
+    public ProductDTO getOne(Long productId) throws NotFoundException {
         return productManager.getOne(new RequestContext(securityIdentity, 1), productId).orElseThrow(NotFoundException::new);
     }
 
@@ -79,7 +79,7 @@ public class ProductControllerWithAuthV1 {
     @Operation(summary = "deletes an existing product")
     @APIResponse(responseCode = "204", description = "product delete successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
-    public Response delete(ProductAPI product) {
+    public Response delete(ProductDTO product) {
         productManager.delete(new RequestContext(securityIdentity, 1), product);
         return Response.status(204).build();
     }

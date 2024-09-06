@@ -1,4 +1,4 @@
-package org.fk.product.api;
+package org.fk.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,26 +10,26 @@ import org.jooq.Record1;
 /**
  * ProductLangDTO
  */
-public class ProductLangAPI extends ProductLangDto {
+public class ProductLangDTO extends ProductLangDto<ProductLangDTO> {
 
     private Boolean insertFlag;
     private Boolean deleteFlag;
-    private LangAPI lang;
+    private LangDTO lang;
 
-    public ProductLangAPI() {}
+    public ProductLangDTO() {}
 
-    public ProductLangAPI(IProductLang value) { this.from(value); }
+    public ProductLangDTO(IProductLang value) { this.from(value); }
 
-    public static ProductLangAPI create(Record1<ProductLangRecord> r) {
-        return new ProductLangAPI(r.value1());
+    public static ProductLangDTO create(Record1<ProductLangRecord> r) {
+        return new ProductLangDTO(r.value1());
     }
 
-    public void setLang(LangAPI lang) {
+    public void setLang(LangDTO lang) {
         this.lang = lang;
         keeper.touch("lang");
     }
 
-    public LangAPI getLang() {
+    public LangDTO getLang() {
         return lang;
     }
 

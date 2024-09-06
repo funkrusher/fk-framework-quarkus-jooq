@@ -10,8 +10,8 @@ import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.fk.core.manager.AbstractManager;
 import org.fk.product.dao.UserDAO;
 import org.fk.product.dao.UserRoleDAO;
-import org.fk.product.api.UserAPI;
-import org.fk.product.api.UserRoleAPI;
+import org.fk.product.dto.UserDTO;
+import org.fk.product.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
 import org.fk.core.request.RequestContext;
 import org.jooq.DSLContext;
@@ -72,18 +72,18 @@ public class CognitoLocalManager extends AbstractManager {
         UserDAO userRecordDAO = new UserDAO(dsl);
         UserRoleDAO userRoleRecordDAO = new UserRoleDAO(dsl);
 
-        UserAPI user = new UserAPI();
+        UserDTO user = new UserDTO();
         user.setClientId(clientId);
         user.setEmail(email);
         user.setFirstname(firstname);
         user.setLastname(lastname);
 
-        UserRoleAPI userRole = null;
+        UserRoleDTO userRole = null;
         String userSub = null;
         try {
             userRecordDAO.insert(user);
 
-            userRole = new UserRoleAPI();
+            userRole = new UserRoleDTO();
             userRole.setUserId(user.getUserId());
             userRole.setRoleId(roleId);
             userRoleRecordDAO.insert(userRole);
