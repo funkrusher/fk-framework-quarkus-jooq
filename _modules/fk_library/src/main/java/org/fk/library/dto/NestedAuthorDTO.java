@@ -4,20 +4,16 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.database2.public_.tables.dtos.AuthorDto;
 import org.fk.database2.public_.tables.interfaces.IAuthor;
 
-import java.io.Serial;
 import java.util.List;
 
 import org.fk.database2.public_.tables.records.AuthorRecord;
 import org.jooq.Record2;
 
 /**
- * AuthorDTO
+ * NestedAuthorDTO
  */
-@Schema(name = "AuthorDTO", description = "Represents an author")
-public class AuthorDTO extends AuthorDto<AuthorDTO> {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+@Schema(name = "NestedAuthorDTO", description = "Represents an author")
+public class NestedAuthorDTO extends AuthorDto<NestedAuthorDTO> {
 
     // -------------------------------------------------------------------------
     // Non-Database-Fields (please define your additional fields here)
@@ -29,12 +25,12 @@ public class AuthorDTO extends AuthorDto<AuthorDTO> {
     // Constructor(s)
     // -------------------------------------------------------------------------
 
-    public AuthorDTO() {}
+    public NestedAuthorDTO() {}
 
-    public AuthorDTO(IAuthor value) { this.from(value); }
+    public NestedAuthorDTO(IAuthor value) { this.from(value); }
 
-    public static AuthorDTO create(Record2<AuthorRecord, List<BookDTO>> r) {
-        return new AuthorDTO(r.value1())
+    public static NestedAuthorDTO create(Record2<AuthorRecord, List<BookDTO>> r) {
+        return new NestedAuthorDTO(r.value1())
             .setBooks(r.value2());
     }
 
@@ -46,7 +42,7 @@ public class AuthorDTO extends AuthorDto<AuthorDTO> {
         return books;
     }
 
-    public AuthorDTO setBooks(List<BookDTO> books) {
+    public NestedAuthorDTO setBooks(List<BookDTO> books) {
         this.books = books;
         this.keeper.touch("books");
         return this;

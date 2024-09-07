@@ -1,9 +1,9 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.fk.core.dto.AbstractDTO;
@@ -28,7 +28,8 @@ public class DatainitDto<T extends DatainitDto> extends AbstractDTO implements I
     // -------------------------------------------------------------------------
  
     private String dataInitId;
-    @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
+    @Schema(readOnly = true, example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime createdAt;
 
     // -------------------------------------------------------------------------

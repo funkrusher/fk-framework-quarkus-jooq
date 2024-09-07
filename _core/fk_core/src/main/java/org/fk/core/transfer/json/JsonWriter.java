@@ -3,21 +3,15 @@ package org.fk.core.transfer.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.fk.core.dto.DTO;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
-import org.fk.core.transfer.csv.CsvWriter;
 import org.jboss.logging.Logger;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
-public class JsonWriter<T extends DTO> implements AutoCloseable {
+public class JsonWriter<T extends AbstractDTO> implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(JsonWriter.class);
 

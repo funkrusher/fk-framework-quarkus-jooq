@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.fk.core.liquibase.FkLiquibase.FkLiquibaseChangesetContext.DDL_CONTEXT;
+import static org.fk.core.liquibase.FkLiquibase.FkLiquibaseChangesetContext.DML_CONTEXT;
 
 public class Database1Testcontainer implements AutoCloseable {
 
@@ -25,7 +26,7 @@ public class Database1Testcontainer implements AutoCloseable {
         }
         // execute liquibase-update
         try (Connection connection = fkMariaDb.createConnection()) {
-            FkLiquibase fkLiquibase = new FkLiquibase("database1/liquibase/changelog.xml", DDL_CONTEXT);
+            FkLiquibase fkLiquibase = new FkLiquibase("database1/liquibase/changelog.xml", DDL_CONTEXT, DML_CONTEXT);
             fkLiquibase.executeUpdate(connection);
         }
     }

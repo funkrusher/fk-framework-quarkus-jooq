@@ -11,9 +11,16 @@ import org.jooq.Record1;
  */
 public class RoleDTO extends RoleDto<RoleDTO> {
 
-    public RoleDTO() {}
+    // -------------------------------------------------------------------------
+    // Constructor(s)
+    // -------------------------------------------------------------------------
 
-    public RoleDTO(IRole value) { this.from(value); }
+    public RoleDTO() {
+    }
+
+    public RoleDTO(IRole value) {
+        this.from(value);
+    }
 
     public static RoleDTO create(Record1<RoleRecord> r) {
         return new RoleDTO(r.value1());

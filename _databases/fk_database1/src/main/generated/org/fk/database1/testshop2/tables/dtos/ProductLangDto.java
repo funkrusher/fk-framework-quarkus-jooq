@@ -1,9 +1,9 @@
 package org.fk.database1.testshop2.tables.dtos;
 
-import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.fk.core.dto.AbstractDTO;

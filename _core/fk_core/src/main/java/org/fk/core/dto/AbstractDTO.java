@@ -3,7 +3,7 @@ package org.fk.core.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlTransient;
 
-public class AbstractDTO implements DTO {
+public class AbstractDTO {
 
     // -------------------------------------------------------------------------
     // ToString, Equals, HashCode
@@ -22,7 +22,7 @@ public class AbstractDTO implements DTO {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final DTO other = (DTO) obj;
+        final AbstractDTO other = (AbstractDTO) obj;
         return this.keeper.touchedEquals(other);
     }
 

@@ -15,13 +15,6 @@ import java.io.Serial;
 @Schema(name = "BookDTO", description = "Represents a book")
 public class BookDTO extends BookDto<BookDTO> {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    // -------------------------------------------------------------------------
-    // Constructor(s)
-    // -------------------------------------------------------------------------
-
     public BookDTO() {}
 
     public BookDTO(IBook value) { this.from(value); }

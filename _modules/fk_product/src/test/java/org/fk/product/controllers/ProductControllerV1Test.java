@@ -12,8 +12,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import jakarta.inject.Inject;
 import org.fk.core.auth.TenantCredential;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductLangDTO;
+import org.fk.product.dto.*;
 import org.fk.core.dto.DTOMapper;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.ProductLang;
@@ -79,22 +78,11 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(1)
     void testCreate() throws IOException {
-        List<ProductLangDTO> xLangs = new ArrayList<>();
-        ProductLangDTO xLangDTO = new ProductLangDTO();
-        xLangDTO.setLangId(1);
-        xLangDTO.setName("Mein Produkt1");
-        xLangDTO.setDescription("Meine Description 1");
-        xLangs.add(xLangDTO);
 
-        long milliSince = 1713099217899L;
-
-        ProductDTO productDTO = new ProductDTO();
+        InsertProductDTO productDTO = new InsertProductDTO();
         productDTO.setClientId(1);
-        productDTO.setProductTypeId(ProductTypeId.BOOK);
+        productDTO.setTypeId(ProductTypeId.BOOK.getValue());
         productDTO.setPrice(new BigDecimal("10.00"));
-        productDTO.setCreatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
-        productDTO.setUpdatedAt(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
-        productDTO.setLangs(xLangs);
 
         String json = serializer.serializePojo(productDTO);
 
@@ -108,9 +96,6 @@ class ProductControllerV1Test {
                 .extract();
         ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
 
-        assertEquals(productDTO.getCreatedAt(), LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
-        assertEquals(productDTO.getUpdatedAt(), LocalDateTime.ofInstant(Instant.ofEpochMilli(milliSince), UTC));
-
         // verify rest-result is as expected...
         assertEquals(productDTO.getClientId(), responseDTO.getClientId());
 
@@ -120,12 +105,6 @@ class ProductControllerV1Test {
         assertNotNull(record);
         assertEquals(record.getProductId(), responseDTO.getProductId());
 
-        Result<org.jooq.Record> xLangRecords = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).fetch();
-        ProductLangRecord productLangRecord1 = xLangRecords.getFirst().into(new ProductLangRecord());
-        assertEquals(productLangRecord1.getProductId(), responseDTO.getProductId());
-        assertEquals(productLangRecord1.getName(), xLangDTO.getName());
-        assertEquals(productLangRecord1.getDescription(), xLangDTO.getDescription());
-
         insertedId = record.getProductId();
     }
 
@@ -133,28 +112,12 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(2)
     void testUpdate() throws IOException {
-        List<ProductLangDTO> xLangs = new ArrayList<>();
-
-        ProductLangDTO xLangDTO = new ProductLangDTO();
-        xLangDTO.setLangId(1);
-        xLangDTO.setName("Mein Produkt1 Change");
-        xLangDTO.setDescription("Meine Description 1 Change");
-        xLangs.add(xLangDTO);
-
-        ProductLangDTO xLang2DTO = new ProductLangDTO();
-        xLang2DTO.setLangId(2);
-        xLang2DTO.setInsertFlag(true);
-        xLang2DTO.setName("Extra Language Name");
-        xLang2DTO.setDescription("Extra Language Description");
-        xLangs.add(xLang2DTO);
 
         ProductDTO productDTO = new ProductDTO();
         productDTO.setProductId(insertedId);
         productDTO.setClientId(1);
-        productDTO.setProductTypeId(ProductTypeId.CLOTHING);
+        productDTO.setTypeId(ProductTypeId.CLOTHING.getValue());
         productDTO.setPrice(new BigDecimal("22.00"));
-        productDTO.setDeleted(false);
-        productDTO.setLangs(xLangs);
 
         String json = serializer.serializePojo(productDTO);
 
@@ -177,18 +140,6 @@ class ProductControllerV1Test {
         assertNotNull(record);
         assertEquals(record.getProductId(), responseDTO.getProductId());
         assertEquals(record.getPrice(), responseDTO.getPrice());
-
-        ProductLangRecord existingXLang1 = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).and(ProductLang.PRODUCT_LANG.LANGID.eq(1)).fetchOneInto(ProductLangRecord.class);
-        ProductLangRecord existingXLang2 = dslContext.select().from(ProductLang.PRODUCT_LANG).where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(responseDTO.getProductId())).and(ProductLang.PRODUCT_LANG.LANGID.eq(2)).fetchOneInto(ProductLangRecord.class);
-
-        assertNotNull(existingXLang1);
-        assertEquals(existingXLang1.getProductId(), responseDTO.getProductId());
-        assertEquals(existingXLang1.getName(), xLangDTO.getName());
-        assertEquals(existingXLang1.getDescription(), xLangDTO.getDescription());
-        assertNotNull(existingXLang2);
-        assertEquals(existingXLang2.getProductId(), responseDTO.getProductId());
-        assertEquals(existingXLang2.getName(), xLang2DTO.getName());
-        assertEquals(existingXLang2.getDescription(), xLang2DTO.getDescription());
     }
 
 

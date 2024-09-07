@@ -10,7 +10,9 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.ValidationException;
 import org.fk.database1.testshop.tables.dtos.PostDto;
+import org.fk.product.dto.PostDTO;
 import org.fk.product.manager.PostManager;
+import org.jboss.resteasy.reactive.ResponseStatus;
 
 @Path("/api/v1/posts")
 @Produces(MediaType.APPLICATION_JSON)
@@ -26,8 +28,8 @@ public class PostControllerV1 {
     @APIResponse(responseCode = "201", description = "post creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public Response create() throws ValidationException {
-        PostDto created = postManager.create(new RequestContext(1, 1));
-        return Response.ok(created).status(201).build();
+    @ResponseStatus(201)
+    public PostDTO create() throws ValidationException {
+        return postManager.create(new RequestContext(1, 1));
     }
 }

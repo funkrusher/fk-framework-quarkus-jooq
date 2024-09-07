@@ -1,12 +1,12 @@
 package org.fk.core.jooq;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlTransient;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.AbstractDTO;
 import org.fk.core.dto.BookKeeper;
-import org.fk.core.dto.DTO;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -74,6 +74,18 @@ public class FkPojoFilePostProcessor {
             \s   @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
             """;
     @SuppressWarnings({ "all"})
+    private static final String ANNOTATION_SCHEMA_CREATEDAT_UPDATEDAT = """
+            \s   @Schema(readOnly = true, example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
+            """;
+    @SuppressWarnings({ "all"})
+    private static final String ANNOTATION_SCHEMA_READONLY = """
+            \s   @Schema(readOnly = true)
+            """;
+    @SuppressWarnings({ "all"})
+    private static final String ANNOTATION_JSON_PROPERTY_READONLY = """
+            \s   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+            """;
+    @SuppressWarnings({ "all"})
     private static final String BLOCK_CLAZZ_DEFINITION = """
             public class %s<T extends %s> extends AbstractDTO implements %s {""";
     @SuppressWarnings({ "all"})
@@ -122,10 +134,10 @@ public class FkPojoFilePostProcessor {
         // TODO: try to resolve only those packages, that are really! needed in the DTO (unused-imports problem)
         // TODO: afterwards remove the SuppressWarnings Annotation, as we want to have Warnings when we copy the DTOs into our project.
         writer.write(EOL);
-        writer.write(BLOCK_IMPORT_DEFINITION.formatted(DTO.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(BookKeeper.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(Schema.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(SchemaType.class.getName()));
+        writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonProperty.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(XmlTransient.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonIgnore.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(AbstractDTO.class.getName()));
@@ -182,8 +194,17 @@ public class FkPojoFilePostProcessor {
      */
     private void rewriteAtStartOfFieldDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
         String fieldType = configs.get(FIELD_TYPE);
+        String fieldName = configs.get(FIELD_NAME);
         if (fieldType.contains(LOCAL_DATE_TIME)) {
-            writer.write(ANNOTATION_SCHEMA_LOCALDATETIME);
+            if (fieldName.equalsIgnoreCase("createdAt") || fieldName.equalsIgnoreCase("updatedAt")) {
+                writer.write(ANNOTATION_SCHEMA_CREATEDAT_UPDATEDAT);
+                writer.write(ANNOTATION_JSON_PROPERTY_READONLY);
+            } else {
+                writer.write(ANNOTATION_SCHEMA_LOCALDATETIME);
+            }
+        } else if (fieldName.equalsIgnoreCase("deleted")) {
+            writer.write(ANNOTATION_SCHEMA_READONLY);
+            writer.write(ANNOTATION_JSON_PROPERTY_READONLY);
         }
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);

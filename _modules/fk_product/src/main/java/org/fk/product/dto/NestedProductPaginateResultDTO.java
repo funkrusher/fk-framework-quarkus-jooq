@@ -5,24 +5,24 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.List;
 
-@Schema(name = "ProductPaginate", description = "Represents the pagination result of products")
-public class ProductPaginateDTO {
+@Schema(name = "NestedProductPaginateResultDTO", description = "Represents the pagination result of products")
+public class NestedProductPaginateResultDTO {
 
-    private List<ProductDTO> products;
+    private List<NestedProductDTO> products;
 
     private Integer count;
 
     private String localizationTest;
 
-    public ProductPaginateDTO() {
+    public NestedProductPaginateResultDTO() {
         super();
     }
 
-    public List<ProductDTO> getProducts() {
+    public List<NestedProductDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDTO> products) {
+    public void setProducts(List<NestedProductDTO> products) {
         this.products = products;
     }
 

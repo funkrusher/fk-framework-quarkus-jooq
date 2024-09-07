@@ -28,7 +28,7 @@ public class DTOMapper {
         return objectMapper.readValue(value, valueType);
     }
 
-    public String serializePojo(DTO pojo) throws IOException {
+    public String serializePojo(AbstractDTO pojo) throws IOException {
         StringWriter writer = new StringWriter();
         JsonGenerator gen = objectMapper.getFactory().createGenerator(writer);
         serializePojo(pojo, gen, objectMapper);
@@ -36,7 +36,7 @@ public class DTOMapper {
         return writer.toString();
     }
 
-    private void serializePojo(DTO value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
+    private void serializePojo(AbstractDTO value, JsonGenerator gen, ObjectMapper mapper) throws IOException {
         if (value == null) {
             gen.writeNull();
             return;
@@ -44,7 +44,7 @@ public class DTOMapper {
         gen.writeStartObject();
         for (Map.Entry<String, Object> entry : value.getBookKeeper().touched().entrySet()) {
             gen.writeFieldName(entry.getKey());
-            if (entry.getValue() instanceof DTO dto) {
+            if (entry.getValue() instanceof AbstractDTO dto) {
                 serializePojo(dto, gen, mapper);
             } else {
                 serializeValue(entry.getValue(), gen, mapper);
@@ -66,8 +66,8 @@ public class DTOMapper {
         gen.writeStartObject();
         for (Map.Entry<?, ?> entry : map.entrySet()) {
             gen.writeFieldName(entry.getKey().toString());
-            if (entry.getValue() instanceof DTO) {
-                serializePojo((DTO) entry.getValue(), gen, mapper);
+            if (entry.getValue() instanceof AbstractDTO) {
+                serializePojo((AbstractDTO) entry.getValue(), gen, mapper);
             } else {
                 serializeValue(entry.getValue(), gen, mapper);
             }
@@ -78,7 +78,7 @@ public class DTOMapper {
     private void serializeList(List<?> list, JsonGenerator gen, ObjectMapper mapper) throws IOException {
         gen.writeStartArray();
         for (Object item : list) {
-            if (item instanceof DTO dto) {
+            if (item instanceof AbstractDTO dto) {
                 serializePojo(dto, gen, mapper);
             } else {
                 serializeValue(item, gen, mapper);
@@ -90,7 +90,7 @@ public class DTOMapper {
     private void serializeIterable(Iterable<?> iterable, JsonGenerator gen, ObjectMapper mapper) throws IOException {
         gen.writeStartArray();
         for (Object item : iterable) {
-            if (item instanceof DTO dto) {
+            if (item instanceof AbstractDTO dto) {
                 serializePojo(dto, gen, mapper);
             } else {
                 serializeValue(item, gen, mapper);

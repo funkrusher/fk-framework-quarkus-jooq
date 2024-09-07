@@ -5,7 +5,7 @@ import org.fk.core.query.jooq.QueryJooqMapper;
 import org.fk.core.query.model.FkQuery;
 import org.fk.core.repository.AbstractRepository;
 import org.fk.core.exception.InvalidDataException;
-import org.fk.library.dto.AuthorDTO;
+import org.fk.library.dto.NestedAuthorDTO;
 import org.fk.library.dto.BookDTO;
 import org.jooq.*;
 
@@ -13,13 +13,12 @@ import static org.fk.database2.public_.Tables.AUTHOR;
 import static org.fk.database2.public_.Tables.BOOK;
 import static org.jooq.impl.DSL.*;
 
-public class AuthorRepository extends AbstractRepository<AuthorDTO, Integer> {
+public class AuthorRepository extends AbstractRepository<NestedAuthorDTO, Integer> {
     public AuthorRepository(DSLContext dsl) {
         super(dsl, AUTHOR.AUTHOR_ID);
-
     }
 
-    public SelectFinalStep<Record1<AuthorDTO>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
+    public SelectFinalStep<Record1<NestedAuthorDTO>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
         final QueryJooqMapper queryJooqMapper = new QueryJooqMapper(fkQuery, AUTHOR)
             .addMappableFields(AUTHOR)
             .addMappableFields(BOOK);
@@ -33,7 +32,7 @@ public class AuthorRepository extends AbstractRepository<AuthorDTO, Integer> {
                             AUTHOR.book()
                         ).from(AUTHOR.book())
                     ).convertFrom(r -> r.map(BookDTO::create))
-                ).convertFrom(AuthorDTO::create)
+                ).convertFrom(NestedAuthorDTO::create)
             )
             .from(AUTHOR)
             .leftJoin(BOOK).on(BOOK.AUTHOR_ID.eq(AUTHOR.AUTHOR_ID))

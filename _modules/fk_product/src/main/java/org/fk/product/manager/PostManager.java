@@ -8,6 +8,7 @@ import org.fk.core.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.database1.testshop.tables.dtos.PostDto;
 import org.fk.product.dao.PostDAO;
+import org.fk.product.dto.PostDTO;
 
 /**
  * PostManager
@@ -18,10 +19,10 @@ public class PostManager extends AbstractManager {
     @Inject
     Database1 database1;
 
-    public PostDto create(RequestContext requestContext) throws ValidationException {
+    public PostDTO create(RequestContext requestContext) throws ValidationException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             // post will be given a ULID uuid automatically during the insert call on the dao.
-            PostDto post = new PostDto();
+            PostDTO post = new PostDTO();
             PostDAO postDAO = new PostDAO(tsx.dsl());
             postDAO.insert(post);
             return post;

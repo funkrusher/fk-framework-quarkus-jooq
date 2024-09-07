@@ -5,23 +5,22 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.List;
 
-@Schema(name = "AuthorPaginate", description = "Represents the pagination result of authors")
+@Schema(name = "NestedAuthorPaginateResultDTO", description = "Represents the pagination result of authors")
+public class NestedAuthorPaginateResultDTO {
 
-public class AuthorPaginateDTO {
-
-    private List<AuthorDTO> authors;
+    private List<NestedAuthorDTO> authors;
 
     private Integer count;
 
-    public AuthorPaginateDTO() {
+    public NestedAuthorPaginateResultDTO() {
         super();
     }
 
-    public List<AuthorDTO> getAuthors() {
+    public List<NestedAuthorDTO> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<AuthorDTO> products) {
+    public void setAuthors(List<NestedAuthorDTO> products) {
         this.authors = products;
     }
 

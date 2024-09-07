@@ -1,6 +1,6 @@
 package org.fk.core.dao;
 
-import org.fk.core.dto.DTO;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 import org.fk.core.request.RequestContext;
 import org.fk.core.ulid.UlidGenerator;
@@ -129,11 +129,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         } else if (items.getFirst() instanceof UpdatableRecord<?>) {
             //noinspection unchecked
             return (List<R>) items;
-        } else if (items.getFirst() instanceof DTO) {
+        } else if (items.getFirst() instanceof AbstractDTO) {
             final List<R> recs = new ArrayList<>();
             for (final Y item : items) {
                 // transform DTO to Record.
-                final DTO dto = (DTO) item;
+                final AbstractDTO dto = (AbstractDTO) item;
                 final R rec= dsl().newRecord(table(), dto);
                 rec.changed(false);
                 for (Field<?> field : rec.fields()) {
