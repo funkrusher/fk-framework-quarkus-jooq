@@ -20,6 +20,14 @@ dependencies {
     testImplementation project(':_databases:fk_database1')
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir project(':_databases:fk_database1').file('src/main/generated')
+        }
+    }
+}
+
 // publishing
 publishing {
     publications {

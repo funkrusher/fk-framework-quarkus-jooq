@@ -33,12 +33,16 @@ idea {
     }
 }
 
+
 // jooqCodeGenerator task
 task generateDatabase1JooqCode(type: JavaExec) {
     group = 'application'
     description = 'Runs JooqCodeGenerator Java Application'
     mainClass = 'org.fk.database1.Database1CodeGenerator'
     classpath = sourceSets.main.runtimeClasspath
+}
+tasks.named('build').configure {
+    dependsOn generateDatabase1JooqCode
 }
 
 // publishing
