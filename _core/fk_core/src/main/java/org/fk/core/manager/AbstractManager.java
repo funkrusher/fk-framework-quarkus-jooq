@@ -3,7 +3,7 @@ package org.fk.core.manager;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import org.fk.core.dto.DTO;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.ValidationException;
 
 import java.util.*;
@@ -22,17 +22,17 @@ public abstract class AbstractManager {
     @Inject
     Validator validator;
 
-    private void validateModifiedFields(DTO dto, Set<ConstraintViolation<DTO>> violations) {
+    private void validateModifiedFields(AbstractDTO dto, Set<ConstraintViolation<AbstractDTO>> violations) {
         for (Map.Entry<String, Object> entry : dto.getBookKeeper().touched().entrySet()) {
             // we only validate the modified fields.
             String key = entry.getKey();
             Object value = entry.getValue();
-            if (value instanceof DTO) {
+            if (value instanceof AbstractDTO) {
                 // ignore, as we are not validating recursive.
-            } else if (value instanceof List<?> list && !list.isEmpty() && list.getFirst() instanceof DTO) {
+            } else if (value instanceof List<?> list && !list.isEmpty() && list.getFirst() instanceof AbstractDTO) {
                 // ignore, as we are not validating recursive.
             } else {
-                Set<ConstraintViolation<DTO>> fieldViolations = validator.validateProperty(dto, key);
+                Set<ConstraintViolation<AbstractDTO>> fieldViolations = validator.validateProperty(dto, key);
                 violations.addAll(fieldViolations);
             }
         }
@@ -47,8 +47,8 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException invalid dto
      */
-    protected void validateInsert(DTO dto) throws ValidationException {
-        Set<ConstraintViolation<DTO>> violations = validator.validate(dto);
+    protected void validateInsert(AbstractDTO dto) throws ValidationException {
+        Set<ConstraintViolation<AbstractDTO>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);
         }
@@ -62,8 +62,8 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException invalid dto
      */
-    protected void validateUpdate(DTO dto) throws ValidationException {
-        Set<ConstraintViolation<DTO>> violations = new HashSet<>();
+    protected void validateUpdate(AbstractDTO dto) throws ValidationException {
+        Set<ConstraintViolation<AbstractDTO>> violations = new HashSet<>();
         validateModifiedFields(dto, violations);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);

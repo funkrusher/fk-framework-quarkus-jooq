@@ -39,17 +39,17 @@ public class DTOValidityScanner {
         LOGGER.debug("validating all DTOs...");
 
         Reflections reflections = new Reflections("org.fk"); // base package to look in
-        Set<Class<? extends DTO>> dtoClasses = reflections.getSubTypesOf(DTO.class);
+        Set<Class<? extends AbstractDTO>> dtoClasses = reflections.getSubTypesOf(AbstractDTO.class);
 
         List<Boolean> dtoValids = dtoClasses.stream().map(this::isDTOValid).toList();
         return !dtoValids.contains(false);
     }
 
-    private boolean isDTOValid(Class<? extends DTO> dtoClazz) {
+    private boolean isDTOValid(Class<? extends AbstractDTO> dtoClazz) {
         boolean isDTOValid = true;
         try {
             LOGGER.debug("validating: " + dtoClazz.getName());
-            DTO dtoInstance = dtoClazz.getDeclaredConstructor().newInstance();
+            AbstractDTO dtoInstance = dtoClazz.getDeclaredConstructor().newInstance();
             Method[] methods = dtoClazz.getDeclaredMethods();
 
             List<Method> setterMethods = new ArrayList<>();
@@ -76,7 +76,7 @@ public class DTOValidityScanner {
         return isDTOValid;
     }
 
-    private boolean isSetterValid(DTO dtoInstance, Method setterMethod) {
+    private boolean isSetterValid(AbstractDTO dtoInstance, Method setterMethod) {
         try {
             setterMethod.invoke(dtoInstance, (Object) null);
         } catch (InvocationTargetException e) {

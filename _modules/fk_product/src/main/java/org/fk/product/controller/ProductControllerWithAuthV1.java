@@ -8,8 +8,11 @@ import org.fk.core.exception.ValidationException;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.fk.core.request.RequestContext;
+import org.fk.database1.testshop2.tables.dtos.ProductDto;
+import org.fk.product.dto.InsertProductDTO;
+import org.fk.product.dto.NestedProductDTO;
 import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductPaginateDTO;
+import org.fk.product.dto.NestedProductPaginateResultDTO;
 import org.fk.product.manager.ProductManager;
 import org.fk.core.query.model.FkQuery;
 
@@ -17,6 +20,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.ResponseStatus;
 
 
 @Path("/api/v1/auth/products")
@@ -37,8 +41,8 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public ProductPaginateDTO query(@BeanParam FkQuery fkQuery) throws InvalidDataException {
-        return productManager.query(new RequestContext(securityIdentity, 1), fkQuery);
+    public NestedProductPaginateResultDTO queryNested(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+        return productManager.queryNested(new RequestContext(securityIdentity, 1), fkQuery);
     }
 
     @GET
@@ -47,8 +51,8 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO getOne(Long productId) throws NotFoundException {
-        return productManager.getOne(new RequestContext(securityIdentity, 1), productId).orElseThrow(NotFoundException::new);
+    public NestedProductDTO getOneNested(Long productId) throws NotFoundException {
+        return productManager.getOneNested(new RequestContext(securityIdentity, 1), productId).orElseThrow(NotFoundException::new);
     }
 
 
@@ -58,9 +62,9 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "201", description = "product creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public Response create(ProductDTO product) throws ValidationException {
-        ProductDTO created = productManager.create(new RequestContext(securityIdentity, 1), product);
-        return Response.ok(created).status(201).build();
+    @ResponseStatus(201)
+    public ProductDTO create(InsertProductDTO product) throws ValidationException {
+        return productManager.create(new RequestContext(securityIdentity, 1), product);
     }
 
     @PUT

@@ -1,11 +1,12 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.DTO;
 import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.fk.core.dto.AbstractDTO;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,7 +17,7 @@ import org.fk.database1.testshop.tables.interfaces.ILang;
  * Lang contains available languages of the app
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-public class LangDto implements ILang, DTO {
+public class LangDto<T extends LangDto> extends AbstractDTO implements ILang {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,10 +29,6 @@ public class LangDto implements ILang, DTO {
     private String code;
     private String description;
 
-    // -------------------------------------------------------------------------
-    // Non-Database-Fields (please define your additional fields here)
-    // -------------------------------------------------------------------------
- 
     // -------------------------------------------------------------------------
     // Constructor(s)
     // -------------------------------------------------------------------------
@@ -56,10 +53,10 @@ public class LangDto implements ILang, DTO {
      * Setter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public LangDto setLangId(Integer langId) {
+    public T setLangId(Integer langId) {
         this.langId = langId;
         this.keeper.touch("langId");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -76,10 +73,10 @@ public class LangDto implements ILang, DTO {
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code
      */
     @Override
-    public LangDto setCode(String code) {
+    public T setCode(String code) {
         this.code = code;
         this.keeper.touch("code");
-        return this;
+        return (T) this;
     }
 
     /**
@@ -97,42 +94,12 @@ public class LangDto implements ILang, DTO {
      * of language
      */
     @Override
-    public LangDto setDescription(String description) {
+    public T setDescription(String description) {
         this.description = description;
         this.keeper.touch("description");
-        return this;
+        return (T) this;
     }
 
-    // -------------------------------------------------------------------------
-    // Non-Database-Fields Setters/Getters (please define here)
-    // -------------------------------------------------------------------------
- 
-    // -------------------------------------------------------------------------
-    // ToString, Equals, HashCode
-    // -------------------------------------------------------------------------
- 
-    @Override
-    public String toString() {
-        return keeper.touchedToString();
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final DTO other = (DTO) obj;
-        return this.keeper.touchedEquals(other);
-    }
- 
-    @Override
-    public int hashCode() {
-        return this.keeper.touchedHashCode();
-    }
- 
     // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
@@ -150,17 +117,4 @@ public class LangDto implements ILang, DTO {
         return into;
     }
 
-    // -------------------------------------------------------------------------
-    // BookKeeper (Patching Updates Support)
-    // -------------------------------------------------------------------------
-     
-    @JsonIgnore
-    @XmlTransient
-    protected transient BookKeeper keeper = new BookKeeper(this);
- 
-    @JsonIgnore
-    @XmlTransient
-    public BookKeeper getBookKeeper() {
-        return keeper;
-    }
 }

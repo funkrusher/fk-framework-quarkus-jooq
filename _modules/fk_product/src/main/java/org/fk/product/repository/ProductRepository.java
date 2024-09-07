@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.jooq.impl.DSL.*;
 
-public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
+public class ProductRepository extends AbstractRepository<NestedProductDTO, Long> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
 
@@ -25,7 +25,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
         super(dsl, PRODUCT.PRODUCTID);
     }
 
-    public SelectFinalStep<Record1<ProductDTO>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
+    public SelectFinalStep<Record1<NestedProductDTO>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
         final QueryJooqMapper queryJooqMapper = new QueryJooqMapper(fkQuery, PRODUCT)
             .addMappableFields(PRODUCT)
             .addMappableFields(PRODUCT_LANG);
@@ -41,13 +41,13 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                                 PRODUCT.creator().user_role().role()
                             ).from(PRODUCT.creator().user_role().role())
                         ).convertFrom(r -> r.map(RoleDTO::create))
-                    ).convertFrom(UserDTO::createOrNull),
+                    ).convertFrom(NestedUserDTO::createOrNull),
                     multiset(
                         select(
                             PRODUCT.product_lang()
                         ).from(PRODUCT.product_lang())
-                    ).convertFrom(r -> r.map(ProductLangDTO::create))
-                ).convertFrom(ProductDTO::create)
+                    ).convertFrom(r -> r.map(NestedProductLangDTO::create))
+                ).convertFrom(NestedProductDTO::create)
             )
             .from(PRODUCT
                 .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))

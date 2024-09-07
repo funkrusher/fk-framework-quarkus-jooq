@@ -1,11 +1,12 @@
 package org.fk.core.jooq;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlTransient;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.fk.core.dto.AbstractDTO;
 import org.fk.core.dto.BookKeeper;
-import org.fk.core.dto.DTO;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -48,12 +49,6 @@ public class FkPojoFilePostProcessor {
             \s   // -------------------------------------------------------------------------
             \s   """;
     @SuppressWarnings({ "all"})
-    private static final String HEADER_NON_DATABASE_FIELDS = """
-            \s   // -------------------------------------------------------------------------
-            \s   // Non-Database-Fields (please define your additional fields here)
-            \s   // -------------------------------------------------------------------------
-            \s   """;
-    @SuppressWarnings({ "all"})
     private static final String HEADER_CONSTRUCTOR = """
             \s   // -------------------------------------------------------------------------
             \s   // Constructor(s)
@@ -65,80 +60,34 @@ public class FkPojoFilePostProcessor {
             \s   // Database-Fields Setters/Getters
             \s   // -------------------------------------------------------------------------
             \s   """;
-    @SuppressWarnings({ "all"})
-    private static final String HEADER_NON_DATABASE_FIELDS_GETTERS_SETTERS = """
-            \s   // -------------------------------------------------------------------------
-            \s   // Non-Database-Fields Setters/Getters (please define here)
-            \s   // -------------------------------------------------------------------------
-            \s   """;
-    @SuppressWarnings({ "all"})
-    private static final String HEADER_TOSTRING_EQUALS_HASHCODE = """
-            \s   // -------------------------------------------------------------------------
-            \s   // ToString, Equals, HashCode
-            \s   // -------------------------------------------------------------------------
-            \s   """;
-    @SuppressWarnings({ "all"})
-    private static final String HEADER_BOOK_KEEPER = """
-            \s   // -------------------------------------------------------------------------
-            \s   // BookKeeper (Patching Updates Support)
-            \s   // -------------------------------------------------------------------------
-            \s   """;
 
-    @SuppressWarnings({ "all"})
-    private static final String BLOCK_TOSTRING = """
-            \s   @Override
-            \s   public String toString() {
-            \s       return keeper.touchedToString();
-            \s   }
-            \s   """;
-    @SuppressWarnings({ "all"})
-    private static final String BLOCK_EQUALS = """
-            \s   @Override
-            \s   public boolean equals(Object obj) {
-            \s       if (this == obj)
-            \s           return true;
-            \s       if (obj == null)
-            \s           return false;
-            \s       if (getClass() != obj.getClass())
-            \s           return false;
-            \s       final DTO other = (DTO) obj;
-            \s       return this.keeper.touchedEquals(other);
-            \s   }
-            \s   """;
-    @SuppressWarnings({ "all"})
-    private static final String BLOCK_HASHCODE = """
-            \s   @Override
-            \s   public int hashCode() {
-            \s       return this.keeper.touchedHashCode();
-            \s   }
-            \s   """;
-    @SuppressWarnings({ "all"})
-    private static final String BLOCK_BOOK_KEEPER = """
-            \s   @JsonIgnore
-            \s   @XmlTransient
-            \s   protected transient BookKeeper keeper = new BookKeeper(this);
-            \s   
-            \s   @JsonIgnore
-            \s   @XmlTransient
-            \s   public BookKeeper getBookKeeper() {
-            \s       return keeper;
-            \s   }
-            """;
     @SuppressWarnings({ "all"})
     private static final String BLOCK_IMPORT_DEFINITION = """
             import %s;
             """;
     @SuppressWarnings({ "all"})
     private static final String BLOCK_SETTER_DEFINITION = """
-            \s   public %s set%s(%s) {
+            \s   public T set%s(%s) {
             """;
     @SuppressWarnings({ "all"})
     private static final String ANNOTATION_SCHEMA_LOCALDATETIME = """
             \s   @Schema(example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
             """;
     @SuppressWarnings({ "all"})
+    private static final String ANNOTATION_SCHEMA_CREATEDAT_UPDATEDAT = """
+            \s   @Schema(readOnly = true, example = "1618312800000", type = SchemaType.NUMBER, format = "date-time", description = "Timestamp in milliseconds since 1970-01-01T00:00:00Z")
+            """;
+    @SuppressWarnings({ "all"})
+    private static final String ANNOTATION_SCHEMA_READONLY = """
+            \s   @Schema(readOnly = true)
+            """;
+    @SuppressWarnings({ "all"})
+    private static final String ANNOTATION_JSON_PROPERTY_READONLY = """
+            \s   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+            """;
+    @SuppressWarnings({ "all"})
     private static final String BLOCK_CLAZZ_DEFINITION = """
-            public class %s implements %s, %s {""";
+            public class %s<T extends %s> extends AbstractDTO implements %s {""";
     @SuppressWarnings({ "all"})
     private static final String BLOCK_CONSTRUCTOR_DEFINITION = """
             \s   public %s() {}
@@ -185,12 +134,13 @@ public class FkPojoFilePostProcessor {
         // TODO: try to resolve only those packages, that are really! needed in the DTO (unused-imports problem)
         // TODO: afterwards remove the SuppressWarnings Annotation, as we want to have Warnings when we copy the DTOs into our project.
         writer.write(EOL);
-        writer.write(BLOCK_IMPORT_DEFINITION.formatted(DTO.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(BookKeeper.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(Schema.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(SchemaType.class.getName()));
+        writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonProperty.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(XmlTransient.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonIgnore.class.getName()));
+        writer.write(BLOCK_IMPORT_DEFINITION.formatted(AbstractDTO.class.getName()));
     }
 
     /**
@@ -207,8 +157,8 @@ public class FkPojoFilePostProcessor {
         String interfaceName = configs.get(INTERFACE_NAME);
         writer.write(BLOCK_CLAZZ_DEFINITION.formatted(
                 clazzName + DTO_NAME,
-                interfaceName,
-                DTO.class.getSimpleName()
+                clazzName + DTO_NAME,
+                interfaceName
         ));
         writer.write(EOL);
     }
@@ -244,8 +194,17 @@ public class FkPojoFilePostProcessor {
      */
     private void rewriteAtStartOfFieldDefinition(final List<String> linesCollected, final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
         String fieldType = configs.get(FIELD_TYPE);
+        String fieldName = configs.get(FIELD_NAME);
         if (fieldType.contains(LOCAL_DATE_TIME)) {
-            writer.write(ANNOTATION_SCHEMA_LOCALDATETIME);
+            if (fieldName.equalsIgnoreCase("createdAt") || fieldName.equalsIgnoreCase("updatedAt")) {
+                writer.write(ANNOTATION_SCHEMA_CREATEDAT_UPDATEDAT);
+                writer.write(ANNOTATION_JSON_PROPERTY_READONLY);
+            } else {
+                writer.write(ANNOTATION_SCHEMA_LOCALDATETIME);
+            }
+        } else if (fieldName.equalsIgnoreCase("deleted")) {
+            writer.write(ANNOTATION_SCHEMA_READONLY);
+            writer.write(ANNOTATION_JSON_PROPERTY_READONLY);
         }
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
@@ -266,9 +225,6 @@ public class FkPojoFilePostProcessor {
      */
     private void rewriteAtEndOfClassDefinition(final List<String> linesCollected, final FileWriter writer) throws IOException {
         writer.write(EOL);
-        writer.write(HEADER_BOOK_KEEPER);
-        writer.write("    " + EOL);
-        writer.write(BLOCK_BOOK_KEEPER);
         for (String collectedLine : linesCollected) {
             writer.write(collectedLine);
         }
@@ -284,8 +240,6 @@ public class FkPojoFilePostProcessor {
     private void rewriteCollectedDefaultConstructorBlock(final FileWriter writer, final Map<PojoProcessingConfig, String> configs) throws IOException {
         // we override the default constructor generated by jOOQ.
         String clazzName = configs.get(CLASS_NAME);
-        writer.write(EOL);
-        writer.write(HEADER_NON_DATABASE_FIELDS);
         writer.write(EOL);
         writer.write(HEADER_CONSTRUCTOR);
         writer.write(EOL);
@@ -331,16 +285,6 @@ public class FkPojoFilePostProcessor {
     private void rewriteCollectedToStringBlock(final FileWriter writer) throws IOException {
         // we override the default toString method generated by jOOQ,
         // and also add an equals and hashCode method in this place.
-        writer.write(HEADER_NON_DATABASE_FIELDS_GETTERS_SETTERS);
-        writer.write(EOL);
-        writer.write(HEADER_TOSTRING_EQUALS_HASHCODE);
-        writer.write(EOL);
-        writer.write(BLOCK_TOSTRING);
-        writer.write(EOL);
-        writer.write(BLOCK_EQUALS);
-        writer.write(EOL);
-        writer.write(BLOCK_HASHCODE);
-        writer.write(EOL);
     }
 
     /**
@@ -361,7 +305,7 @@ public class FkPojoFilePostProcessor {
             if (setterFieldName != null && collectedLine.contains("return ")) {
                 // add touch() call for book-keeping support.
                 writer.write(BLOCK_TOUCH.formatted(setterFieldName));
-                writer.write(collectedLine);
+                writer.write(collectedLine.replace("return ", "return (T) "));
                 configs.put(SETTER_FIELD_NAME, null);
             } else {
                 Matcher setterMatcher = DTO_SETTER_PATTERN.matcher(collectedLine);
@@ -378,7 +322,6 @@ public class FkPojoFilePostProcessor {
                         configs.put(SETTER_FIELD_NAME, Character.toLowerCase(capitalFieldName.charAt(0)) + capitalFieldName.substring(1));
                     }
                     writer.write(BLOCK_SETTER_DEFINITION.formatted(
-                            fluentSetterReturnType + DTO_NAME,
                             capitalFieldName,
                             setterParameterType
                     ));

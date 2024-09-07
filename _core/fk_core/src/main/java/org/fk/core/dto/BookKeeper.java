@@ -68,7 +68,7 @@ public class BookKeeper {
         return this.touchedFields;
     }
 
-    public boolean touchedEquals(DTO other) {
+    public boolean touchedEquals(AbstractDTO other) {
         // Get the touched fields map from the other BookKeeper instance
         Map<String, Object> otherTouchedFields = other.getBookKeeper().touched();
 
@@ -138,7 +138,7 @@ public class BookKeeper {
                 sb.append("[\n");
                 List<Object> list = (List<Object>) value;
                 for (Object obj : list) {
-                    if (obj instanceof DTO dto) {
+                    if (obj instanceof AbstractDTO dto) {
                         dto.getBookKeeper().toStringHelper(sb, dto.getBookKeeper().touchedFields, level + 1);
                     } else {
                         sb.append(indentation).append("    ").append(obj).append(",\n");
