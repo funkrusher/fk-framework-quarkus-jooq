@@ -23,6 +23,18 @@ task backend1Database1Liquibase(type: JavaExec) {
             project.properties['rollbackTag'] ? project.properties['rollbackTag'] : ''
 }
 
+tasks.register('generatePartnerOpenApi') {
+    group = 'openapi'
+    description = 'Generate OpenAPI spec for partner with filtered endpoints'
+    doLast {
+        def gradlew = System.getProperty('os.name').toLowerCase().contains('windows') ? 'gradlew.bat' : './gradlew'
+        exec {
+            workingDir project.rootDir  // Ensure we are in the root directory
+            commandLine gradlew, 'build', '-Dquarkus.profile=partnerapi'
+        }
+    }
+}
+
 // publishing
 publishing {
     publications {

@@ -1,0 +1,174 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "fk_backend1 API",
+    "version" : "1.0.0-SNAPSHOT"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8000",
+    "description" : "Auto generated value"
+  }, {
+    "url" : "http://0.0.0.0:8000",
+    "description" : "Auto generated value"
+  } ],
+  "paths" : {
+    "/api/v1/cognitoLocal/find" : {
+      "post" : {
+        "tags" : [ "Cognito Local Controller V 1" ],
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cognitoLocal/protected-by-quarkus" : {
+      "get" : {
+        "tags" : [ "Cognito Local Controller V 1" ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "access_token" : [ ]
+        } ]
+      }
+    },
+    "/api/v1/cognitoLocal/signin" : {
+      "post" : {
+        "tags" : [ "Cognito Local Controller V 1" ],
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cognitoLocal/signup" : {
+      "post" : {
+        "tags" : [ "Cognito Local Controller V 1" ],
+        "requestBody" : {
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "clientId" : {
+                    "format" : "int32",
+                    "type" : "integer"
+                  },
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  },
+                  "firstname" : {
+                    "type" : "string"
+                  },
+                  "lastname" : {
+                    "type" : "string"
+                  },
+                  "roleId" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hello" : {
+      "get" : {
+        "tags" : [ "Greeting Controller" ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "access_token" : {
+        "type" : "http",
+        "scheme" : "Bearer"
+      },
+      "SecurityScheme" : {
+        "type" : "openIdConnect",
+        "description" : "Authentication",
+        "openIdConnectUrl" : "http://localhost:9229/xxx/.well-known/openid-configuration"
+      }
+    }
+  }
+}
