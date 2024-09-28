@@ -4,6 +4,7 @@ import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.fk.core.request.RequestContext;
+import org.fk.core.task.TaskDispatcher;
 import org.fk.database1.Database1;
 import org.fk.product.dao.TaskDAO;
 import org.fk.product.dto.TaskDTO;
@@ -15,6 +16,10 @@ public class TaskJob {
     @Inject
     Database1 database1;
 
+    @Inject
+    TaskDispatcher taskDispatcher;
+
+
     @Scheduled(every = "300s", identity = "task-job")
     void schedule() {
         // either use Transactional annotation of quarkus, or DSLContext.transaction, to make sure we commit.
@@ -24,5 +29,9 @@ public class TaskJob {
             TaskDAO taskDAO = new TaskDAO(trx.dsl());
             taskDAO.insert(task);
         });
+
+        taskDispatcher.dispatch(new FiledItemTaskDTO()
+            .setClientId(1)
+            .setName("test"));
     }
 }

@@ -13,6 +13,10 @@ public class ObjectMapperProducer {
 
     @Produces
     public ObjectMapper configureObjectMapper() {
+        return ObjectMapperProducer.create();
+    }
+
+    public static ObjectMapper create() {
         ObjectMapper objectMapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
 

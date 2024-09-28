@@ -49,6 +49,9 @@ public class DTOValidityScanner {
         boolean isDTOValid = true;
         try {
             LOGGER.debug("validating: " + dtoClazz.getName());
+            if (dtoClazz.getSimpleName().startsWith("Abstract")) {
+                return true;
+            }
             AbstractDTO dtoInstance = dtoClazz.getDeclaredConstructor().newInstance();
             Method[] methods = dtoClazz.getDeclaredMethods();
 
