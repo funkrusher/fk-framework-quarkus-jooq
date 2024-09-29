@@ -1,8 +1,8 @@
-package org.fk.product.quartz;
+package org.fk.product.dto;
 
-import org.fk.core.task.AbstractTaskDTO;
+import org.fk.core.dto.AbstractDTO;
 
-public class FiledItemTaskDTO extends AbstractTaskDTO {
+public class FiledItemActorDTO extends AbstractDTO {
 
     private Integer clientId;
     private String name;
@@ -11,7 +11,7 @@ public class FiledItemTaskDTO extends AbstractTaskDTO {
         return this.clientId;
     }
 
-    public FiledItemTaskDTO setClientId(Integer clientId) {
+    public FiledItemActorDTO setClientId(Integer clientId) {
         this.clientId = clientId;
         this.keeper.touch("clientId");
         return this;
@@ -19,14 +19,9 @@ public class FiledItemTaskDTO extends AbstractTaskDTO {
 
     public String getName() {return this.name;}
 
-    public FiledItemTaskDTO setName(String name) {
+    public FiledItemActorDTO setName(String name) {
         this.name = name;
         this.keeper.touch("name");
         return this;
-    }
-
-    @Override
-    public Class getExecutorClass() {
-        return FiledItemTask.class;
     }
 }

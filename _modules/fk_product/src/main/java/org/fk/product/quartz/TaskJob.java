@@ -3,10 +3,13 @@ package org.fk.product.quartz;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.fk.core.actor.ActorDispatchBuilder;
 import org.fk.core.request.RequestContext;
-import org.fk.core.task.TaskDispatcher;
+import org.fk.core.actor.ActorDispatcher;
 import org.fk.database1.Database1;
+import org.fk.product.actor.FiledItemActor;
 import org.fk.product.dao.TaskDAO;
+import org.fk.product.dto.FiledItemActorDTO;
 import org.fk.product.dto.TaskDTO;
 import org.jooq.DSLContext;
 
@@ -17,10 +20,9 @@ public class TaskJob {
     Database1 database1;
 
     @Inject
-    TaskDispatcher taskDispatcher;
+    ActorDispatcher actorDispatcher;
 
-
-    @Scheduled(every = "300s", identity = "task-job")
+    @Scheduled(every = "10s", identity = "task-job")
     void schedule() {
         // either use Transactional annotation of quarkus, or DSLContext.transaction, to make sure we commit.
         DSLContext dsl = database1.dsl(new RequestContext(1, 1));
@@ -30,8 +32,19 @@ public class TaskJob {
             taskDAO.insert(task);
         });
 
-        taskDispatcher.dispatch(new FiledItemTaskDTO()
-            .setClientId(1)
-            .setName("test"));
+        // example of the actor dispatcher, that can be used everywhere in the codebase,
+        // to dispatch async tasks, that will be processed with quartz.
+        actorDispatcher
+            .withActor(FiledItemActor.class)
+            .withData(new FiledItemActorDTO().setClientId(1).setName("test1"))
+            .dispatchNowConcurrently();
+        actorDispatcher
+            .withActor(FiledItemActor.class)
+            .withData(new FiledItemActorDTO().setClientId(2).setName("test2"))
+            .dispatchNowConcurrently();
+        actorDispatcher
+            .withActor(FiledItemActor.class)
+            .withData(new FiledItemActorDTO().setClientId(3).setName("test3"))
+            .dispatchNowConcurrently();
     }
 }
