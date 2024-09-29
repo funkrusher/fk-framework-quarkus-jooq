@@ -7,9 +7,11 @@ import org.fk.core.exception.MappingException;
 import org.fk.database1.Database1;
 import org.fk.product.dto.FiledItemActorDTO;
 import org.jboss.logging.Logger;
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+@DisallowConcurrentExecution
 @ApplicationScoped
 public class FiledItemActor extends AbstractActor<FiledItemActorDTO> {
 

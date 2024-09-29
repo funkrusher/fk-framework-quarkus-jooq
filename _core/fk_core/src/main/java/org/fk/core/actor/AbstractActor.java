@@ -28,7 +28,8 @@ public abstract class AbstractActor<T extends AbstractDTO> implements Job {
     protected abstract void execute(T data, JobExecutionContext context) throws JobExecutionException;
 
     protected T deserializeData(JobExecutionContext context) throws JobExecutionException {
-        JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+        // TODO: do we also need basic job data from getJobDetail in addition to the one from getTrigger() ?
+        JobDataMap jobDataMap = context.getTrigger().getJobDataMap();
         String jobData = jobDataMap.getString("data");
         try {
             return jsonMapper.readValue(jobData, dataClazz);

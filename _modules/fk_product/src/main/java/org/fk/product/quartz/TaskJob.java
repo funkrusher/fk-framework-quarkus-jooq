@@ -3,7 +3,6 @@ package org.fk.product.quartz;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.actor.ActorDispatchBuilder;
 import org.fk.core.request.RequestContext;
 import org.fk.core.actor.ActorDispatcher;
 import org.fk.database1.Database1;
@@ -37,14 +36,14 @@ public class TaskJob {
         actorDispatcher
             .withActor(FiledItemActor.class)
             .withData(new FiledItemActorDTO().setClientId(1).setName("test1"))
-            .dispatchNowConcurrently();
+            .dispatchNow();
         actorDispatcher
             .withActor(FiledItemActor.class)
             .withData(new FiledItemActorDTO().setClientId(2).setName("test2"))
-            .dispatchNowConcurrently();
+            .dispatchNow();
         actorDispatcher
             .withActor(FiledItemActor.class)
             .withData(new FiledItemActorDTO().setClientId(3).setName("test3"))
-            .dispatchNowConcurrently();
+            .dispatchNow();
     }
 }
