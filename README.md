@@ -540,6 +540,12 @@ quarkus.datasource.database2.db-kind=postgresql
 See also:
 - https://stackoverflow.com/questions/78245861/quarkus-gradle-multi-project-build-modular-testing-build-problem
 
+## Testing MTSL
+
+```
+curl -v -k --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem https://localhost:8443/api/v1/products/1
+```
+
 ## Related Guides
 - Liquibase ([guide](https://docs.liquibase.com/concepts/home.html)): Handle your database schema migrations
 - Gradle+Quarkus ([guide](https://quarkus.io/guides/gradle-tooling)): Building quarkus apps with gradle
