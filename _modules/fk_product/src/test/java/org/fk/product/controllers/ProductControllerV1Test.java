@@ -15,7 +15,8 @@ import org.fk.core.auth.TenantCredential;
 import org.fk.core.jackson.ObjectMapperProducer;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
-import org.fk.product.dto.old.ProductDTO;
+import org.fk.product.dto.CreateProductResponse;
+import org.fk.product.dto.UpdateProductResponse;
 import org.fk.product.test.InjectProductTestUtil;
 import org.fk.product.test.ProductTestProfile;
 import org.fk.product.test.ProductTestLifecycleManager;
@@ -84,16 +85,16 @@ class ProductControllerV1Test {
             .then()
             .statusCode(201)
             .extract();
-        ProductDTO responseDTO = jsonMapper.readValue(er.body().asString(), ProductDTO.class);
+        CreateProductResponse responseDTO = jsonMapper.readValue(er.body().asString(), CreateProductResponse.class);
 
         // verify rest-result is as expected...
-        assertEquals(1, responseDTO.getClientId());
+        assertEquals(1, responseDTO.clientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.getProductId());
+        assertEquals(record.getProductId(), responseDTO.productId());
 
         insertedId = record.getProductId();
     }
@@ -118,17 +119,17 @@ class ProductControllerV1Test {
             .then()
             .statusCode(200)
             .extract();
-        ProductDTO responseDTO = jsonMapper.readValue(er.body().asString(), ProductDTO.class);
+        UpdateProductResponse responseDTO = jsonMapper.readValue(er.body().asString(), UpdateProductResponse.class);
 
         // verify rest-result is as expected...
-        assertEquals(1, responseDTO.getClientId());
+        assertEquals(1, responseDTO.clientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.getProductId());
-        assertEquals(record.getPrice(), responseDTO.getPrice());
+        assertEquals(record.getProductId(), responseDTO.productId());
+        assertEquals(record.getPrice(), responseDTO.price());
     }
 
 
@@ -152,16 +153,9 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(4)
     void testDelete() throws IOException {
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setProductId(1L);
-        productDTO.setClientId(1);
-
-        String json = jsonMapper.writeValueAsString(productDTO);
-
         given()
             .contentType(ContentType.JSON)
-            .body(json)
-            .when().delete("/api/v1/products")
+            .when().delete("/api/v1/products/" + 1L)
             .then()
             .statusCode(204);
 

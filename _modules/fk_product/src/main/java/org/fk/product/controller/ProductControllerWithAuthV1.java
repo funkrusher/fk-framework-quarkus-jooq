@@ -78,8 +78,9 @@ public class ProductControllerWithAuthV1 {
     @Operation(summary = "deletes an existing product")
     @APIResponse(responseCode = "204", description = "product delete successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
-    public Response delete(ProductDTO product) {
-        productManager.delete(new RequestContext(securityIdentity, 1), product);
+    @Path("/{productId}")
+    public Response delete(Long productId) {
+        productManager.delete(new RequestContext(securityIdentity, 1), productId);
         return Response.status(204).build();
     }
 }

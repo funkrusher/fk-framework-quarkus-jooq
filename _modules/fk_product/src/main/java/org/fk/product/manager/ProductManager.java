@@ -166,15 +166,15 @@ public class ProductManager extends AbstractManager {
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public void delete(RequestContext requestContext, final ProductDTO product) {
+    public void delete(RequestContext requestContext, final Long productId) {
         DSLContext dsl = database1.dsl(requestContext);
 
         ProductDAO productRecordDAO = new ProductDAO(dsl);
         ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
         // we do use the explicit delete-by-id methods here, because they are the most performant.
-        productLangRecordDAO.deleteByProductId(product.productId());
-        productRecordDAO.deleteById(product.productId());
+        productLangRecordDAO.deleteByProductId(productId);
+        productRecordDAO.deleteById(productId);
     }
 
     /**

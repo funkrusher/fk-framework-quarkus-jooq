@@ -1,4 +1,4 @@
-package org.fk.product.dto.old;
+package org.fk.product.dto;
 
 import org.fk.core.dto.AbstractDTO;
 

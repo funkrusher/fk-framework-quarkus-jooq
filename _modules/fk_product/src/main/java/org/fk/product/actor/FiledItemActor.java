@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import org.fk.core.actor.AbstractActor;
 import org.fk.core.exception.MappingException;
 import org.fk.database1.Database1;
-import org.fk.product.dto.old.FiledItemActorDTO;
+import org.fk.product.dto.FiledItemActorDTO;
 import org.jboss.logging.Logger;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;

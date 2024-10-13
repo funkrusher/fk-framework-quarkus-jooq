@@ -70,8 +70,9 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "204", description = "product delete successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @ResponseStatus(204)
-    public Response delete(ProductDTO product) {
-        productManager.delete(new RequestContext(1, 1), product);
+    @Path("/{productId}")
+    public Response delete(Long productId) {
+        productManager.delete(new RequestContext(1, 1), productId);
         return Response.status(204).build();
     }
 
