@@ -201,7 +201,6 @@ class AbstractRepositoryTest {
 
         public Basic1DTO setNested1s(List<Nested1DTO> nested1s) {
             this.nested1s = nested1s;
-            this.keeper.touch("nested1s");
             return this;
         }
 
@@ -232,7 +231,6 @@ class AbstractRepositoryTest {
 
         public Nested1DTO setBasic2s(List<Basic2DTO> basic2s) {
             this.basic2s = basic2s;
-            this.keeper.touch("basic2s");
             return this;
         }
 

@@ -1,6 +1,5 @@
 package org.fk.core.test.database.coretestdatabase.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -71,7 +70,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setID(String ID) {
         this.ID = ID;
-        this.keeper.touch("ID");
         return (T) this;
     }
 
@@ -91,7 +89,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setAUTHOR(String AUTHOR) {
         this.AUTHOR = AUTHOR;
-        this.keeper.touch("AUTHOR");
         return (T) this;
     }
 
@@ -111,7 +108,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setFILENAME(String FILENAME) {
         this.FILENAME = FILENAME;
-        this.keeper.touch("FILENAME");
         return (T) this;
     }
 
@@ -130,7 +126,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setDATEEXECUTED(LocalDateTime DATEEXECUTED) {
         this.DATEEXECUTED = DATEEXECUTED;
-        this.keeper.touch("DATEEXECUTED");
         return (T) this;
     }
 
@@ -149,7 +144,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setORDEREXECUTED(Integer ORDEREXECUTED) {
         this.ORDEREXECUTED = ORDEREXECUTED;
-        this.keeper.touch("ORDEREXECUTED");
         return (T) this;
     }
 
@@ -169,7 +163,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setEXECTYPE(String EXECTYPE) {
         this.EXECTYPE = EXECTYPE;
-        this.keeper.touch("EXECTYPE");
         return (T) this;
     }
 
@@ -188,7 +181,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setMD5SUM(String MD5SUM) {
         this.MD5SUM = MD5SUM;
-        this.keeper.touch("MD5SUM");
         return (T) this;
     }
 
@@ -207,7 +199,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("DESCRIPTION");
         return (T) this;
     }
 
@@ -226,7 +217,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setCOMMENTS(String COMMENTS) {
         this.COMMENTS = COMMENTS;
-        this.keeper.touch("COMMENTS");
         return (T) this;
     }
 
@@ -245,7 +235,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setTAG(String TAG) {
         this.TAG = TAG;
-        this.keeper.touch("TAG");
         return (T) this;
     }
 
@@ -264,7 +253,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setLIQUIBASE(String LIQUIBASE) {
         this.LIQUIBASE = LIQUIBASE;
-        this.keeper.touch("LIQUIBASE");
         return (T) this;
     }
 
@@ -283,7 +271,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setCONTEXTS(String CONTEXTS) {
         this.CONTEXTS = CONTEXTS;
-        this.keeper.touch("CONTEXTS");
         return (T) this;
     }
 
@@ -302,7 +289,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setLABELS(String LABELS) {
         this.LABELS = LABELS;
-        this.keeper.touch("LABELS");
         return (T) this;
     }
 
@@ -321,7 +307,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setDEPLOYMENT_ID(String DEPLOYMENT_ID) {
         this.DEPLOYMENT_ID = DEPLOYMENT_ID;
-        this.keeper.touch("DEPLOYMENT_ID");
         return (T) this;
     }
 

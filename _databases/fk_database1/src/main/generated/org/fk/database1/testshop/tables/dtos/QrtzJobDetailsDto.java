@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -65,7 +64,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return (T) this;
     }
 
@@ -85,7 +83,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("JOB_NAME");
         return (T) this;
     }
 
@@ -105,7 +102,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("JOB_GROUP");
         return (T) this;
     }
 
@@ -124,7 +120,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("DESCRIPTION");
         return (T) this;
     }
 
@@ -144,7 +139,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setJOB_CLASS_NAME(String JOB_CLASS_NAME) {
         this.JOB_CLASS_NAME = JOB_CLASS_NAME;
-        this.keeper.touch("JOB_CLASS_NAME");
         return (T) this;
     }
 
@@ -164,7 +158,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setIS_DURABLE(String IS_DURABLE) {
         this.IS_DURABLE = IS_DURABLE;
-        this.keeper.touch("IS_DURABLE");
         return (T) this;
     }
 
@@ -184,7 +177,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.keeper.touch("IS_NONCONCURRENT");
         return (T) this;
     }
 
@@ -204,7 +196,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setIS_UPDATE_DATA(String IS_UPDATE_DATA) {
         this.IS_UPDATE_DATA = IS_UPDATE_DATA;
-        this.keeper.touch("IS_UPDATE_DATA");
         return (T) this;
     }
 
@@ -224,7 +215,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.keeper.touch("REQUESTS_RECOVERY");
         return (T) this;
     }
 
@@ -243,7 +233,6 @@ public class QrtzJobDetailsDto<T extends QrtzJobDetailsDto> extends AbstractDTO 
     @Override
     public T setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.keeper.touch("JOB_DATA");
         return (T) this;
     }
 

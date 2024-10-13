@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -55,7 +54,6 @@ public class UserRoleDto<T extends UserRoleDto> extends AbstractDTO implements I
     @Override
     public T setUserId(Integer userId) {
         this.userId = userId;
-        this.keeper.touch("userId");
         return (T) this;
     }
 
@@ -75,7 +73,6 @@ public class UserRoleDto<T extends UserRoleDto> extends AbstractDTO implements I
     @Override
     public T setRoleId(String roleId) {
         this.roleId = roleId;
-        this.keeper.touch("roleId");
         return (T) this;
     }
 

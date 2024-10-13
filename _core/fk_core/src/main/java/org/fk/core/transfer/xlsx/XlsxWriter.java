@@ -92,9 +92,7 @@ public class XlsxWriter<T extends AbstractDTO> implements AutoCloseable {
         alternateDataCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
     }
 
-    public void writeItem(T item) {
-        Map<String, Object> map = item.getBookKeeper().touched();
-
+    public void writeItem(Map<String, Object> map) {
         Row row = sheet.createRow(rowIndex++);
         for (int i = 0; i < fieldNames.size(); i++) {
             Cell cell = row.createCell(i);

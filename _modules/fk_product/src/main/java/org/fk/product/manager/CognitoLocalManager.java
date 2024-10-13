@@ -6,6 +6,7 @@ import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.fk.database1.Database1;
+import org.fk.database1.testshop.tables.records.UserRecord;
 import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.fk.core.manager.AbstractManager;
 import org.fk.product.dao.UserDAO;
@@ -72,18 +73,18 @@ public class CognitoLocalManager extends AbstractManager {
         UserDAO userRecordDAO = new UserDAO(dsl);
         UserRoleDAO userRoleRecordDAO = new UserRoleDAO(dsl);
 
-        UserDTO user = new UserDTO();
+        UserRecord user = new UserRecord();
         user.setClientId(clientId);
         user.setEmail(email);
         user.setFirstname(firstname);
         user.setLastname(lastname);
 
-        UserRoleDTO userRole = null;
+        UserRoleRecord userRole = null;
         String userSub = null;
         try {
             userRecordDAO.insert(user);
 
-            userRole = new UserRoleDTO();
+            userRole = new UserRoleRecord();
             userRole.setUserId(user.getUserId());
             userRole.setRoleId(roleId);
             userRoleRecordDAO.insert(userRole);

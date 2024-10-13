@@ -54,7 +54,6 @@ public class NestedProductDTO extends ProductDto<NestedProductDTO> {
     @JsonIgnore
     public NestedProductDTO setCreator(NestedUserDTO creator) {
         this.creator = creator;
-        keeper.touch("creator");
         return this;
     }
 
@@ -71,14 +70,12 @@ public class NestedProductDTO extends ProductDto<NestedProductDTO> {
     @JsonIgnore
     public NestedProductDTO setProductTypeId(ProductTypeId productTypeId) {
         this.productTypeId = productTypeId;
-        this.keeper.touch("productTypeId");
         return this;
     }
 
     @JsonProperty
     public NestedProductDTO setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-        this.keeper.touch("deleteFlag");
         return this;
     }
 
@@ -90,7 +87,6 @@ public class NestedProductDTO extends ProductDto<NestedProductDTO> {
     @JsonIgnore
     public NestedProductDTO setMylang(NestedProductLangDTO lang) {
         this.mylang = mylang;
-        keeper.touch("mylang");
         return this;
     }
 
@@ -103,7 +99,6 @@ public class NestedProductDTO extends ProductDto<NestedProductDTO> {
     @JsonIgnore
     public NestedProductDTO setLang(NestedProductLangDTO lang) {
         this.lang = lang;
-        keeper.touch("lang");
         return this;
     }
 
@@ -118,7 +113,6 @@ public class NestedProductDTO extends ProductDto<NestedProductDTO> {
 
     public NestedProductDTO setLangs(List<NestedProductLangDTO> langs) {
         this.langs = langs;
-        keeper.touch("langs");
         return this;
     }
 }

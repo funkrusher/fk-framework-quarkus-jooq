@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,7 +57,6 @@ public class QrtzCalendarsDto<T extends QrtzCalendarsDto> extends AbstractDTO im
     @Override
     public T setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return (T) this;
     }
 
@@ -78,7 +76,6 @@ public class QrtzCalendarsDto<T extends QrtzCalendarsDto> extends AbstractDTO im
     @Override
     public T setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
-        this.keeper.touch("CALENDAR_NAME");
         return (T) this;
     }
 
@@ -98,7 +95,6 @@ public class QrtzCalendarsDto<T extends QrtzCalendarsDto> extends AbstractDTO im
     @Override
     public T setCALENDAR(byte[] CALENDAR) {
         this.CALENDAR = CALENDAR;
-        this.keeper.touch("CALENDAR");
         return (T) this;
     }
 

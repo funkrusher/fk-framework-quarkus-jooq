@@ -1,6 +1,5 @@
 package org.fk.core.test.database.coretestdatabase.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -64,7 +63,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setAutoIncId(Integer autoIncId) {
         this.autoIncId = autoIncId;
-        this.keeper.touch("autoIncId");
         return (T) this;
     }
 
@@ -83,7 +81,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setString1(String string1) {
         this.string1 = string1;
-        this.keeper.touch("string1");
         return (T) this;
     }
 
@@ -102,7 +99,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setString2(String string2) {
         this.string2 = string2;
-        this.keeper.touch("string2");
         return (T) this;
     }
 
@@ -120,7 +116,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setInteger1(Integer integer1) {
         this.integer1 = integer1;
-        this.keeper.touch("integer1");
         return (T) this;
     }
 
@@ -138,7 +133,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setLong1(Long long1) {
         this.long1 = long1;
-        this.keeper.touch("long1");
         return (T) this;
     }
 
@@ -156,7 +150,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setDecimal1(BigDecimal decimal1) {
         this.decimal1 = decimal1;
-        this.keeper.touch("decimal1");
         return (T) this;
     }
 
@@ -174,7 +167,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setDateTime1(LocalDateTime dateTime1) {
         this.dateTime1 = dateTime1;
-        this.keeper.touch("dateTime1");
         return (T) this;
     }
 
@@ -193,7 +185,6 @@ public class Basic1Dto<T extends Basic1Dto> extends AbstractDTO implements IBasi
     @Override
     public T setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return (T) this;
     }
 

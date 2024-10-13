@@ -1,6 +1,5 @@
 package org.fk.database1.testshop2.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -69,7 +68,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setProductId(Long productId) {
         this.productId = productId;
-        this.keeper.touch("productId");
         return (T) this;
     }
 
@@ -88,7 +86,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return (T) this;
     }
 
@@ -109,7 +106,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setPrice(BigDecimal price) {
         this.price = price;
-        this.keeper.touch("price");
         return (T) this;
     }
 
@@ -131,7 +127,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setTypeId(String typeId) {
         this.typeId = typeId;
-        this.keeper.touch("typeId");
         return (T) this;
     }
 
@@ -149,7 +144,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        this.keeper.touch("createdAt");
         return (T) this;
     }
 
@@ -167,7 +161,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-        this.keeper.touch("updatedAt");
         return (T) this;
     }
 
@@ -187,7 +180,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setDeleted(Boolean deleted) {
         this.deleted = deleted;
-        this.keeper.touch("deleted");
         return (T) this;
     }
 
@@ -205,7 +197,6 @@ public class ProductDto<T extends ProductDto> extends AbstractDTO implements IPr
     @Override
     public T setCreatorId(Integer creatorId) {
         this.creatorId = creatorId;
-        this.keeper.touch("creatorId");
         return (T) this;
     }
 

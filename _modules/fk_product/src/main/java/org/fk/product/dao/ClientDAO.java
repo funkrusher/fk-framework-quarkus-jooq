@@ -9,7 +9,7 @@ import org.jooq.DSLContext;
 /**
  * ClientRecordDAO
  */
-public class ClientDAO extends AbstractDAO<ClientRecord, IClient, Integer> {
+public class ClientDAO extends AbstractDAO<ClientRecord, Integer> {
 
     public ClientDAO(DSLContext dsl) {
         super(dsl, Client.CLIENT);

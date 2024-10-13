@@ -1,6 +1,5 @@
 package org.fk.database2.public_.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -71,7 +70,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setId(String id) {
         this.id = id;
-        this.keeper.touch("id");
         return (T) this;
     }
 
@@ -91,7 +89,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setAuthor(String author) {
         this.author = author;
-        this.keeper.touch("author");
         return (T) this;
     }
 
@@ -111,7 +108,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setFilename(String filename) {
         this.filename = filename;
-        this.keeper.touch("filename");
         return (T) this;
     }
 
@@ -130,7 +126,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setDateexecuted(LocalDateTime dateexecuted) {
         this.dateexecuted = dateexecuted;
-        this.keeper.touch("dateexecuted");
         return (T) this;
     }
 
@@ -149,7 +144,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setOrderexecuted(Integer orderexecuted) {
         this.orderexecuted = orderexecuted;
-        this.keeper.touch("orderexecuted");
         return (T) this;
     }
 
@@ -169,7 +163,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setExectype(String exectype) {
         this.exectype = exectype;
-        this.keeper.touch("exectype");
         return (T) this;
     }
 
@@ -188,7 +181,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setMd5sum(String md5sum) {
         this.md5sum = md5sum;
-        this.keeper.touch("md5sum");
         return (T) this;
     }
 
@@ -207,7 +199,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setDescription(String description) {
         this.description = description;
-        this.keeper.touch("description");
         return (T) this;
     }
 
@@ -226,7 +217,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setComments(String comments) {
         this.comments = comments;
-        this.keeper.touch("comments");
         return (T) this;
     }
 
@@ -245,7 +235,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setTag(String tag) {
         this.tag = tag;
-        this.keeper.touch("tag");
         return (T) this;
     }
 
@@ -264,7 +253,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setLiquibase(String liquibase) {
         this.liquibase = liquibase;
-        this.keeper.touch("liquibase");
         return (T) this;
     }
 
@@ -283,7 +271,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setContexts(String contexts) {
         this.contexts = contexts;
-        this.keeper.touch("contexts");
         return (T) this;
     }
 
@@ -302,7 +289,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setLabels(String labels) {
         this.labels = labels;
-        this.keeper.touch("labels");
         return (T) this;
     }
 
@@ -321,7 +307,6 @@ public class DatabasechangelogDto<T extends DatabasechangelogDto> extends Abstra
     @Override
     public T setDeployment_id(String deployment_id) {
         this.deployment_id = deployment_id;
-        this.keeper.touch("deployment_id");
         return (T) this;
     }
 

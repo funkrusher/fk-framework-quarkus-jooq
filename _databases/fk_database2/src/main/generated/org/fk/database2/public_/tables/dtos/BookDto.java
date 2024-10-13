@@ -1,6 +1,5 @@
 package org.fk.database2.public_.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -60,7 +59,6 @@ public class BookDto<T extends BookDto> extends AbstractDTO implements IBook {
     @Override
     public T setBook_id(Integer book_id) {
         this.book_id = book_id;
-        this.keeper.touch("book_id");
         return (T) this;
     }
 
@@ -80,7 +78,6 @@ public class BookDto<T extends BookDto> extends AbstractDTO implements IBook {
     @Override
     public T setTitle(String title) {
         this.title = title;
-        this.keeper.touch("title");
         return (T) this;
     }
 
@@ -99,7 +96,6 @@ public class BookDto<T extends BookDto> extends AbstractDTO implements IBook {
     @Override
     public T setAuthor_id(Integer author_id) {
         this.author_id = author_id;
-        this.keeper.touch("author_id");
         return (T) this;
     }
 
@@ -118,7 +114,6 @@ public class BookDto<T extends BookDto> extends AbstractDTO implements IBook {
     @Override
     public T setGenre(String genre) {
         this.genre = genre;
-        this.keeper.touch("genre");
         return (T) this;
     }
 
@@ -136,7 +131,6 @@ public class BookDto<T extends BookDto> extends AbstractDTO implements IBook {
     @Override
     public T setPublication_date(LocalDate publication_date) {
         this.publication_date = publication_date;
-        this.keeper.touch("publication_date");
         return (T) this;
     }
 
@@ -155,7 +149,6 @@ public class BookDto<T extends BookDto> extends AbstractDTO implements IBook {
     @Override
     public T setIsbn(String isbn) {
         this.isbn = isbn;
-        this.keeper.touch("isbn");
         return (T) this;
     }
 

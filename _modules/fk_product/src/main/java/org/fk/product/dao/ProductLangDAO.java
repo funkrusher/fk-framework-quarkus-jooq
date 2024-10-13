@@ -9,7 +9,7 @@ import org.jooq.*;
 /**
  * ProductLangRecordDAO
  */
-public class ProductLangDAO extends AbstractDAO<ProductLangRecord, IProductLang, Record2<Long, Integer>> {
+public class ProductLangDAO extends AbstractDAO<ProductLangRecord, Record2<Long, Integer>> {
 
     public ProductLangDAO(DSLContext dsl) {
         super(dsl, ProductLang.PRODUCT_LANG);

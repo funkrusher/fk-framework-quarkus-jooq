@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -70,7 +69,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return (T) this;
     }
 
@@ -90,7 +88,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("TRIGGER_NAME");
         return (T) this;
     }
 
@@ -110,7 +107,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("TRIGGER_GROUP");
         return (T) this;
     }
 
@@ -129,7 +125,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setSTR_PROP_1(String STR_PROP_1) {
         this.STR_PROP_1 = STR_PROP_1;
-        this.keeper.touch("STR_PROP_1");
         return (T) this;
     }
 
@@ -148,7 +143,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setSTR_PROP_2(String STR_PROP_2) {
         this.STR_PROP_2 = STR_PROP_2;
-        this.keeper.touch("STR_PROP_2");
         return (T) this;
     }
 
@@ -167,7 +161,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setSTR_PROP_3(String STR_PROP_3) {
         this.STR_PROP_3 = STR_PROP_3;
-        this.keeper.touch("STR_PROP_3");
         return (T) this;
     }
 
@@ -185,7 +178,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setINT_PROP_1(Integer INT_PROP_1) {
         this.INT_PROP_1 = INT_PROP_1;
-        this.keeper.touch("INT_PROP_1");
         return (T) this;
     }
 
@@ -203,7 +195,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setINT_PROP_2(Integer INT_PROP_2) {
         this.INT_PROP_2 = INT_PROP_2;
-        this.keeper.touch("INT_PROP_2");
         return (T) this;
     }
 
@@ -221,7 +212,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setLONG_PROP_1(Long LONG_PROP_1) {
         this.LONG_PROP_1 = LONG_PROP_1;
-        this.keeper.touch("LONG_PROP_1");
         return (T) this;
     }
 
@@ -239,7 +229,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setLONG_PROP_2(Long LONG_PROP_2) {
         this.LONG_PROP_2 = LONG_PROP_2;
-        this.keeper.touch("LONG_PROP_2");
         return (T) this;
     }
 
@@ -257,7 +246,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setDEC_PROP_1(BigDecimal DEC_PROP_1) {
         this.DEC_PROP_1 = DEC_PROP_1;
-        this.keeper.touch("DEC_PROP_1");
         return (T) this;
     }
 
@@ -275,7 +263,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setDEC_PROP_2(BigDecimal DEC_PROP_2) {
         this.DEC_PROP_2 = DEC_PROP_2;
-        this.keeper.touch("DEC_PROP_2");
         return (T) this;
     }
 
@@ -294,7 +281,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setBOOL_PROP_1(String BOOL_PROP_1) {
         this.BOOL_PROP_1 = BOOL_PROP_1;
-        this.keeper.touch("BOOL_PROP_1");
         return (T) this;
     }
 
@@ -313,7 +299,6 @@ public class QrtzSimpropTriggersDto<T extends QrtzSimpropTriggersDto> extends Ab
     @Override
     public T setBOOL_PROP_2(String BOOL_PROP_2) {
         this.BOOL_PROP_2 = BOOL_PROP_2;
-        this.keeper.touch("BOOL_PROP_2");
         return (T) this;
     }
 

@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -67,7 +66,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return (T) this;
     }
 
@@ -87,7 +85,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setENTRY_ID(String ENTRY_ID) {
         this.ENTRY_ID = ENTRY_ID;
-        this.keeper.touch("ENTRY_ID");
         return (T) this;
     }
 
@@ -107,7 +104,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("TRIGGER_NAME");
         return (T) this;
     }
 
@@ -127,7 +123,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("TRIGGER_GROUP");
         return (T) this;
     }
 
@@ -147,7 +142,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.keeper.touch("INSTANCE_NAME");
         return (T) this;
     }
 
@@ -166,7 +160,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setFIRED_TIME(Long FIRED_TIME) {
         this.FIRED_TIME = FIRED_TIME;
-        this.keeper.touch("FIRED_TIME");
         return (T) this;
     }
 
@@ -185,7 +178,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setSCHED_TIME(Long SCHED_TIME) {
         this.SCHED_TIME = SCHED_TIME;
-        this.keeper.touch("SCHED_TIME");
         return (T) this;
     }
 
@@ -204,7 +196,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
-        this.keeper.touch("PRIORITY");
         return (T) this;
     }
 
@@ -224,7 +215,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setSTATE(String STATE) {
         this.STATE = STATE;
-        this.keeper.touch("STATE");
         return (T) this;
     }
 
@@ -243,7 +233,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("JOB_NAME");
         return (T) this;
     }
 
@@ -262,7 +251,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("JOB_GROUP");
         return (T) this;
     }
 
@@ -281,7 +269,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setIS_NONCONCURRENT(String IS_NONCONCURRENT) {
         this.IS_NONCONCURRENT = IS_NONCONCURRENT;
-        this.keeper.touch("IS_NONCONCURRENT");
         return (T) this;
     }
 
@@ -300,7 +287,6 @@ public class QrtzFiredTriggersDto<T extends QrtzFiredTriggersDto> extends Abstra
     @Override
     public T setREQUESTS_RECOVERY(String REQUESTS_RECOVERY) {
         this.REQUESTS_RECOVERY = REQUESTS_RECOVERY;
-        this.keeper.touch("REQUESTS_RECOVERY");
         return (T) this;
     }
 

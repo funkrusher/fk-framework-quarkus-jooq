@@ -36,7 +36,6 @@ public class NestedUserDTO extends UserDto<NestedUserDTO> {
 
     public NestedUserDTO setRoles(List<RoleDTO> roles) {
         this.roles = roles;
-        keeper.touch("roles");
         return this;
     }
 }

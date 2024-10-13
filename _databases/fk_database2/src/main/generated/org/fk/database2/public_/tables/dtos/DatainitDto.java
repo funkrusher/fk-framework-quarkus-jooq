@@ -1,6 +1,5 @@
 package org.fk.database2.public_.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -60,7 +59,6 @@ public class DatainitDto<T extends DatainitDto> extends AbstractDTO implements I
     @Override
     public T setDatainitid(String datainitid) {
         this.datainitid = datainitid;
-        this.keeper.touch("datainitid");
         return (T) this;
     }
 
@@ -78,7 +76,6 @@ public class DatainitDto<T extends DatainitDto> extends AbstractDTO implements I
     @Override
     public T setCreatedat(LocalDateTime createdat) {
         this.createdat = createdat;
-        this.keeper.touch("createdat");
         return (T) this;
     }
 

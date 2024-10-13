@@ -6,7 +6,6 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.core.dto.AbstractDTO;
-import org.fk.core.dto.BookKeeper;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -95,10 +94,6 @@ public class FkPojoFilePostProcessor {
     private static final String BLOCK_CONSTRUCTOR_FROM_DEFINITION = """
             \s   public %s(%s value) { this.from(value); }
             """;
-    @SuppressWarnings({ "all"})
-    private static final String BLOCK_TOUCH = """
-            \s       this.keeper.touch("%s");
-            """;
 
     public enum PojoProcessingEvent {
         COLLECTED_OVERRIDE_BLOCK,
@@ -134,7 +129,6 @@ public class FkPojoFilePostProcessor {
         // TODO: try to resolve only those packages, that are really! needed in the DTO (unused-imports problem)
         // TODO: afterwards remove the SuppressWarnings Annotation, as we want to have Warnings when we copy the DTOs into our project.
         writer.write(EOL);
-        writer.write(BLOCK_IMPORT_DEFINITION.formatted(BookKeeper.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(Schema.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(SchemaType.class.getName()));
         writer.write(BLOCK_IMPORT_DEFINITION.formatted(JsonProperty.class.getName()));
@@ -303,8 +297,6 @@ public class FkPojoFilePostProcessor {
         for (String collectedLine : linesCollected) {
             String setterFieldName = configs.get(SETTER_FIELD_NAME);
             if (setterFieldName != null && collectedLine.contains("return ")) {
-                // add touch() call for book-keeping support.
-                writer.write(BLOCK_TOUCH.formatted(setterFieldName));
                 writer.write(collectedLine.replace("return ", "return (T) "));
                 configs.put(SETTER_FIELD_NAME, null);
             } else {

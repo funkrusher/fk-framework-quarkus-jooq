@@ -44,7 +44,6 @@ public class NestedAuthorDTO extends AuthorDto<NestedAuthorDTO> {
 
     public NestedAuthorDTO setBooks(List<BookDTO> books) {
         this.books = books;
-        this.keeper.touch("books");
         return this;
     }
 }

@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,7 +56,6 @@ public class UserDto<T extends UserDto> extends AbstractDTO implements IUser {
     @Override
     public T setUserId(Integer userId) {
         this.userId = userId;
-        this.keeper.touch("userId");
         return (T) this;
     }
 
@@ -76,7 +74,6 @@ public class UserDto<T extends UserDto> extends AbstractDTO implements IUser {
     @Override
     public T setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return (T) this;
     }
 
@@ -96,7 +93,6 @@ public class UserDto<T extends UserDto> extends AbstractDTO implements IUser {
     @Override
     public T setEmail(String email) {
         this.email = email;
-        this.keeper.touch("email");
         return (T) this;
     }
 
@@ -116,7 +112,6 @@ public class UserDto<T extends UserDto> extends AbstractDTO implements IUser {
     @Override
     public T setFirstname(String firstname) {
         this.firstname = firstname;
-        this.keeper.touch("firstname");
         return (T) this;
     }
 
@@ -136,7 +131,6 @@ public class UserDto<T extends UserDto> extends AbstractDTO implements IUser {
     @Override
     public T setLastname(String lastname) {
         this.lastname = lastname;
-        this.keeper.touch("lastname");
         return (T) this;
     }
 

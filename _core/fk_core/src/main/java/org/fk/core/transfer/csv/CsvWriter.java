@@ -49,9 +49,8 @@ public class CsvWriter<T extends AbstractDTO> implements AutoCloseable {
         }
     }
 
-    public void writeItem(T item) throws MappingException {
+    public void writeItem(Map<String, Object> map) throws MappingException {
         try {
-            Map<String, Object> map = item.getBookKeeper().touched();
             Map<String, String> csvMap = new LinkedHashMap<>();
             for (String fieldName : fieldNames) {
                 Object value = map.get(fieldName);

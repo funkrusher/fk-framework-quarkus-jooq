@@ -111,7 +111,7 @@ public class ProductManager extends AbstractManager {
         // we use jooq transactions, because they are more fine-tuneable.
         // see: https://blog.jooq.org/nested-transactions-in-jooq/
 
-        List<IProduct> inserts = new ArrayList<>();
+        List<ProductRecord> inserts = new ArrayList<>();
         for (int i= 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();
             insert1.setProductId(90000000L + i);
@@ -161,10 +161,18 @@ public class ProductManager extends AbstractManager {
             return database1.dsl(requestContext).transactionResult(tsx -> {
                 ProductDAO productDAO = new ProductDAO(tsx.dsl());
 
-                this.validateInsert(product);
-                productDAO.insert(product);
+                this.validate(product);
 
-                return new ProductDTO(productDAO.fetch(product.getProductId()));
+                ProductRecord insert = new ProductRecord();
+                insert.setClientId(product.getClientId());
+                insert.setPrice(product.getPrice());
+                insert.setTypeId(product.getTypeId());
+                insert.setDeleted(false);
+                insert.setCreatorId(product.getCreatorId());
+
+                productDAO.insert(insert);
+
+                return new ProductDTO(productDAO.fetch(insert.getProductId()));
             });
         } catch (Exception e) {
             if (e.getCause() instanceof ValidationException ve) {
@@ -183,10 +191,21 @@ public class ProductManager extends AbstractManager {
 
         ProductDAO productDAO = new ProductDAO(dsl);
 
-        this.validateUpdate(product);
-        productDAO.update(product);
+        this.validate(product);
 
-        return new ProductDTO(productDAO.fetch(product.getProductId()));
+        ProductRecord update = new ProductRecord();
+        update.setProductId(product.getProductId());
+        update.setClientId(product.getClientId());
+        update.setPrice(product.getPrice());
+        update.setTypeId(product.getTypeId());
+        if (product.getDeleted() != null) {
+            update.setDeleted(product.getDeleted());
+        }
+        update.setCreatorId(product.getCreatorId());
+
+        productDAO.update(update);
+
+        return new ProductDTO(productDAO.fetch(update.getProductId()));
     }
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
@@ -248,7 +267,10 @@ public class ProductManager extends AbstractManager {
             final Iterator<NestedProductDTO> it = productStream.iterator();
             while (it.hasNext()) {
                 NestedProductDTO product = it.next();
-                csvWriter.writeItem(product);
+                Map<String, Object> exportMap = new LinkedHashMap<>();
+                exportMap.put("productId", product.getProductId());
+                exportMap.put("price", product.getPrice());
+                csvWriter.writeItem(exportMap);
             }
         }
     }
@@ -267,7 +289,11 @@ public class ProductManager extends AbstractManager {
             while (it.hasNext()) {
                 NestedProductDTO product = it.next();
                 product.setTypeId(generateLorem());
-                xlsxWriter.writeItem(product);
+
+                Map<String, Object> exportMap = new LinkedHashMap<>();
+                exportMap.put("productId", product.getProductId());
+                exportMap.put("price", product.getPrice());
+                xlsxWriter.writeItem(exportMap);
             }
         }
     }

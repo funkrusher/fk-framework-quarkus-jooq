@@ -26,7 +26,6 @@ public class NestedProductLangDTO extends ProductLangDto<NestedProductLangDTO> {
 
     public void setLang(LangDTO lang) {
         this.lang = lang;
-        keeper.touch("lang");
     }
 
     public LangDTO getLang() {
@@ -36,7 +35,6 @@ public class NestedProductLangDTO extends ProductLangDto<NestedProductLangDTO> {
     @JsonProperty
     public void setInsertFlag(Boolean insertFlag) {
         this.insertFlag = insertFlag;
-        keeper.touch("insertFlag");
     }
 
     @JsonIgnore
@@ -47,7 +45,6 @@ public class NestedProductLangDTO extends ProductLangDto<NestedProductLangDTO> {
     @JsonProperty
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
-        keeper.touch("deleteFlag");
     }
 
     @JsonIgnore

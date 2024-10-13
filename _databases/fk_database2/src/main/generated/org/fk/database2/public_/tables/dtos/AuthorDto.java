@@ -1,6 +1,5 @@
 package org.fk.database2.public_.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -59,7 +58,6 @@ public class AuthorDto<T extends AuthorDto> extends AbstractDTO implements IAuth
     @Override
     public T setAuthor_id(Integer author_id) {
         this.author_id = author_id;
-        this.keeper.touch("author_id");
         return (T) this;
     }
 
@@ -79,7 +77,6 @@ public class AuthorDto<T extends AuthorDto> extends AbstractDTO implements IAuth
     @Override
     public T setName(String name) {
         this.name = name;
-        this.keeper.touch("name");
         return (T) this;
     }
 
@@ -98,7 +95,6 @@ public class AuthorDto<T extends AuthorDto> extends AbstractDTO implements IAuth
     @Override
     public T setNationality(String nationality) {
         this.nationality = nationality;
-        this.keeper.touch("nationality");
         return (T) this;
     }
 
@@ -116,7 +112,6 @@ public class AuthorDto<T extends AuthorDto> extends AbstractDTO implements IAuth
     @Override
     public T setBirth_date(LocalDate birth_date) {
         this.birth_date = birth_date;
-        this.keeper.touch("birth_date");
         return (T) this;
     }
 
@@ -134,7 +129,6 @@ public class AuthorDto<T extends AuthorDto> extends AbstractDTO implements IAuth
     @Override
     public T setBiography(String biography) {
         this.biography = biography;
-        this.keeper.touch("biography");
         return (T) this;
     }
 

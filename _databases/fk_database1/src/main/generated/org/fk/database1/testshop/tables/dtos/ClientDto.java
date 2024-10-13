@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -50,7 +49,6 @@ public class ClientDto<T extends ClientDto> extends AbstractDTO implements IClie
     @Override
     public T setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return (T) this;
     }
 

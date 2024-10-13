@@ -1,6 +1,5 @@
 package org.fk.database2.public_.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -60,7 +59,6 @@ public class DatabasechangeloglockDto<T extends DatabasechangeloglockDto> extend
     @Override
     public T setId(Integer id) {
         this.id = id;
-        this.keeper.touch("id");
         return (T) this;
     }
 
@@ -79,7 +77,6 @@ public class DatabasechangeloglockDto<T extends DatabasechangeloglockDto> extend
     @Override
     public T setLocked(Boolean locked) {
         this.locked = locked;
-        this.keeper.touch("locked");
         return (T) this;
     }
 
@@ -97,7 +94,6 @@ public class DatabasechangeloglockDto<T extends DatabasechangeloglockDto> extend
     @Override
     public T setLockgranted(LocalDateTime lockgranted) {
         this.lockgranted = lockgranted;
-        this.keeper.touch("lockgranted");
         return (T) this;
     }
 
@@ -116,7 +112,6 @@ public class DatabasechangeloglockDto<T extends DatabasechangeloglockDto> extend
     @Override
     public T setLockedby(String lockedby) {
         this.lockedby = lockedby;
-        this.keeper.touch("lockedby");
         return (T) this;
     }
 

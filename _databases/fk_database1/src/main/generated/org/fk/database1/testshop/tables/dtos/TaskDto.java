@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -55,7 +54,6 @@ public class TaskDto<T extends TaskDto> extends AbstractDTO implements ITask {
     @Override
     public T setTaskId(Long taskId) {
         this.taskId = taskId;
-        this.keeper.touch("taskId");
         return (T) this;
     }
 
@@ -73,7 +71,6 @@ public class TaskDto<T extends TaskDto> extends AbstractDTO implements ITask {
     @Override
     public T setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-        this.keeper.touch("createdAt");
         return (T) this;
     }
 

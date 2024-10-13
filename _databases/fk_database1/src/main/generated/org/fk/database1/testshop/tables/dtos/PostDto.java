@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,7 +56,6 @@ public class PostDto<T extends PostDto> extends AbstractDTO implements IPost {
     @Override
     public T setId(UUID id) {
         this.id = id;
-        this.keeper.touch("id");
         return (T) this;
     }
 
@@ -76,7 +74,6 @@ public class PostDto<T extends PostDto> extends AbstractDTO implements IPost {
     @Override
     public T setTitle(String title) {
         this.title = title;
-        this.keeper.touch("title");
         return (T) this;
     }
 

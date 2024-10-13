@@ -13,7 +13,6 @@ public class FiledItemActorDTO extends AbstractDTO {
 
     public FiledItemActorDTO setClientId(Integer clientId) {
         this.clientId = clientId;
-        this.keeper.touch("clientId");
         return this;
     }
 
@@ -21,7 +20,6 @@ public class FiledItemActorDTO extends AbstractDTO {
 
     public FiledItemActorDTO setName(String name) {
         this.name = name;
-        this.keeper.touch("name");
         return this;
     }
 }

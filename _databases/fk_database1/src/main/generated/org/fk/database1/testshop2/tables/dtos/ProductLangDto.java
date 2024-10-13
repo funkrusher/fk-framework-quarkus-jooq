@@ -1,6 +1,5 @@
 package org.fk.database1.testshop2.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,7 +56,6 @@ public class ProductLangDto<T extends ProductLangDto> extends AbstractDTO implem
     @Override
     public T setProductId(Long productId) {
         this.productId = productId;
-        this.keeper.touch("productId");
         return (T) this;
     }
 
@@ -76,7 +74,6 @@ public class ProductLangDto<T extends ProductLangDto> extends AbstractDTO implem
     @Override
     public T setLangId(Integer langId) {
         this.langId = langId;
-        this.keeper.touch("langId");
         return (T) this;
     }
 
@@ -96,7 +93,6 @@ public class ProductLangDto<T extends ProductLangDto> extends AbstractDTO implem
     @Override
     public T setName(String name) {
         this.name = name;
-        this.keeper.touch("name");
         return (T) this;
     }
 
@@ -116,7 +112,6 @@ public class ProductLangDto<T extends ProductLangDto> extends AbstractDTO implem
     @Override
     public T setDescription(String description) {
         this.description = description;
-        this.keeper.touch("description");
         return (T) this;
     }
 

@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,7 +57,6 @@ public class QrtzSchedulerStateDto<T extends QrtzSchedulerStateDto> extends Abst
     @Override
     public T setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return (T) this;
     }
 
@@ -78,7 +76,6 @@ public class QrtzSchedulerStateDto<T extends QrtzSchedulerStateDto> extends Abst
     @Override
     public T setINSTANCE_NAME(String INSTANCE_NAME) {
         this.INSTANCE_NAME = INSTANCE_NAME;
-        this.keeper.touch("INSTANCE_NAME");
         return (T) this;
     }
 
@@ -97,7 +94,6 @@ public class QrtzSchedulerStateDto<T extends QrtzSchedulerStateDto> extends Abst
     @Override
     public T setLAST_CHECKIN_TIME(Long LAST_CHECKIN_TIME) {
         this.LAST_CHECKIN_TIME = LAST_CHECKIN_TIME;
-        this.keeper.touch("LAST_CHECKIN_TIME");
         return (T) this;
     }
 
@@ -116,7 +112,6 @@ public class QrtzSchedulerStateDto<T extends QrtzSchedulerStateDto> extends Abst
     @Override
     public T setCHECKIN_INTERVAL(Long CHECKIN_INTERVAL) {
         this.CHECKIN_INTERVAL = CHECKIN_INTERVAL;
-        this.keeper.touch("CHECKIN_INTERVAL");
         return (T) this;
     }
 

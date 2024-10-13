@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * PostDAO
  */
-public class PostDAO extends AbstractDAO<PostRecord, IPost, UUID> {
+public class PostDAO extends AbstractDAO<PostRecord, UUID> {
 
     public PostDAO(DSLContext dsl) {
         super(dsl, Post.POST);

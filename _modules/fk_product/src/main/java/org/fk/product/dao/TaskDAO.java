@@ -9,7 +9,7 @@ import org.jooq.DSLContext;
 /**
  * TaskDAO
  */
-public class TaskDAO extends AbstractDAO<TaskRecord, ITask, Long> {
+public class TaskDAO extends AbstractDAO<TaskRecord, Long> {
 
     public TaskDAO(DSLContext dsl) {
         super(dsl, Task.TASK);

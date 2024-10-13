@@ -1,6 +1,5 @@
 package org.fk.database1.testshop.tables.dtos;
 
-import org.fk.core.dto.BookKeeper;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -71,7 +70,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setSCHED_NAME(String SCHED_NAME) {
         this.SCHED_NAME = SCHED_NAME;
-        this.keeper.touch("SCHED_NAME");
         return (T) this;
     }
 
@@ -91,7 +89,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setTRIGGER_NAME(String TRIGGER_NAME) {
         this.TRIGGER_NAME = TRIGGER_NAME;
-        this.keeper.touch("TRIGGER_NAME");
         return (T) this;
     }
 
@@ -111,7 +108,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setTRIGGER_GROUP(String TRIGGER_GROUP) {
         this.TRIGGER_GROUP = TRIGGER_GROUP;
-        this.keeper.touch("TRIGGER_GROUP");
         return (T) this;
     }
 
@@ -131,7 +127,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setJOB_NAME(String JOB_NAME) {
         this.JOB_NAME = JOB_NAME;
-        this.keeper.touch("JOB_NAME");
         return (T) this;
     }
 
@@ -151,7 +146,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setJOB_GROUP(String JOB_GROUP) {
         this.JOB_GROUP = JOB_GROUP;
-        this.keeper.touch("JOB_GROUP");
         return (T) this;
     }
 
@@ -170,7 +164,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
-        this.keeper.touch("DESCRIPTION");
         return (T) this;
     }
 
@@ -188,7 +181,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setNEXT_FIRE_TIME(Long NEXT_FIRE_TIME) {
         this.NEXT_FIRE_TIME = NEXT_FIRE_TIME;
-        this.keeper.touch("NEXT_FIRE_TIME");
         return (T) this;
     }
 
@@ -206,7 +198,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setPREV_FIRE_TIME(Long PREV_FIRE_TIME) {
         this.PREV_FIRE_TIME = PREV_FIRE_TIME;
-        this.keeper.touch("PREV_FIRE_TIME");
         return (T) this;
     }
 
@@ -224,7 +215,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setPRIORITY(Integer PRIORITY) {
         this.PRIORITY = PRIORITY;
-        this.keeper.touch("PRIORITY");
         return (T) this;
     }
 
@@ -244,7 +234,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setTRIGGER_STATE(String TRIGGER_STATE) {
         this.TRIGGER_STATE = TRIGGER_STATE;
-        this.keeper.touch("TRIGGER_STATE");
         return (T) this;
     }
 
@@ -264,7 +253,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setTRIGGER_TYPE(String TRIGGER_TYPE) {
         this.TRIGGER_TYPE = TRIGGER_TYPE;
-        this.keeper.touch("TRIGGER_TYPE");
         return (T) this;
     }
 
@@ -283,7 +271,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setSTART_TIME(Long START_TIME) {
         this.START_TIME = START_TIME;
-        this.keeper.touch("START_TIME");
         return (T) this;
     }
 
@@ -301,7 +288,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setEND_TIME(Long END_TIME) {
         this.END_TIME = END_TIME;
-        this.keeper.touch("END_TIME");
         return (T) this;
     }
 
@@ -320,7 +306,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setCALENDAR_NAME(String CALENDAR_NAME) {
         this.CALENDAR_NAME = CALENDAR_NAME;
-        this.keeper.touch("CALENDAR_NAME");
         return (T) this;
     }
 
@@ -338,7 +323,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setMISFIRE_INSTR(Short MISFIRE_INSTR) {
         this.MISFIRE_INSTR = MISFIRE_INSTR;
-        this.keeper.touch("MISFIRE_INSTR");
         return (T) this;
     }
 
@@ -357,7 +341,6 @@ public class QrtzTriggersDto<T extends QrtzTriggersDto> extends AbstractDTO impl
     @Override
     public T setJOB_DATA(byte[] JOB_DATA) {
         this.JOB_DATA = JOB_DATA;
-        this.keeper.touch("JOB_DATA");
         return (T) this;
     }
 
