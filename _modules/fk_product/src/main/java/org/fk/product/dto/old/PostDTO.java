@@ -1,13 +1,11 @@
-package org.fk.product.dto;
+package org.fk.product.dto.old;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.f4b6a3.ulid.Ulid;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.fk.database1.testshop.tables.dtos.PostDto;
-import org.fk.database1.testshop.tables.interfaces.IClient;
 import org.fk.database1.testshop.tables.interfaces.IPost;
-import org.fk.database1.testshop.tables.records.ClientRecord;
 import org.fk.database1.testshop.tables.records.PostRecord;
 import org.jooq.Record1;
 

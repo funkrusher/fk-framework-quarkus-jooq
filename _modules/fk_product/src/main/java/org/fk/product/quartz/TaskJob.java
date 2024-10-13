@@ -7,10 +7,7 @@ import org.fk.core.request.RequestContext;
 import org.fk.core.actor.ActorDispatcher;
 import org.fk.database1.Database1;
 import org.fk.database1.testshop.tables.records.TaskRecord;
-import org.fk.product.actor.FiledItemActor;
 import org.fk.product.dao.TaskDAO;
-import org.fk.product.dto.FiledItemActorDTO;
-import org.fk.product.dto.TaskDTO;
 import org.jooq.DSLContext;
 
 @ApplicationScoped

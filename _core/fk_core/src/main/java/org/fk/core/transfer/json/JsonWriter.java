@@ -11,7 +11,7 @@ import org.jboss.logging.Logger;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class JsonWriter<T extends AbstractDTO> implements AutoCloseable {
+public class JsonWriter<T> implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(JsonWriter.class);
 

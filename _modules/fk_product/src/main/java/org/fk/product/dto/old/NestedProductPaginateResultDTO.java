@@ -1,4 +1,4 @@
-package org.fk.product.dto;
+package org.fk.product.dto.old;
 
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;

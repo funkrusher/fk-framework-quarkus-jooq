@@ -1,4 +1,4 @@
-{@java.util.List<org.fk.product.dto.NestedProductDTO> products}
+{@java.util.List<org.fk.product.dto.ProductDTO> products}
 
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
 
 {#for product in products}
     {! Note: Code completion in Intellij only works directly after the Dot ".", not with CTRL+Space as usual !}
-    {product.getProductId()}: {product.getTypeId()} {name}<br/>
+    {product.productId()}: {product.typeId()} {name}<br/>
 {/for}
 
 </body>

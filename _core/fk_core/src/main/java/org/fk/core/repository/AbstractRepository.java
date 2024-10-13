@@ -27,7 +27,7 @@ import static org.jooq.impl.DSL.key;
  * and therefore the mapping to the DTO must take this into account.
  * </p>
  */
-public abstract class AbstractRepository<D extends AbstractDTO, T> {
+public abstract class AbstractRepository<D, T> {
     private final DSLContext dsl;
     private final Field<T> idField;
     private final RequestContext request;

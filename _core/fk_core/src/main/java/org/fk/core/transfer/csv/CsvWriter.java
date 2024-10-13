@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import org.jboss.logging.Logger;
 
-public class CsvWriter<T extends AbstractDTO> implements AutoCloseable {
+public class CsvWriter<T> implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(CsvWriter.class);
 

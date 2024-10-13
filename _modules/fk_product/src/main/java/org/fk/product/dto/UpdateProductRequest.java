@@ -4,13 +4,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-public record ProductLangDTO(
+public record UpdateProductRequest(
     @NotNull Long productId,
-    @NotNull Integer langId,
-    @NotNull String name,
-    @NotNull String description,
-    @NotNull LangDTO lang
+    @NotNull Integer clientId,
+    @NotNull BigDecimal price,
+    @NotNull @Size(max = 255) String typeId
 ) {
 }

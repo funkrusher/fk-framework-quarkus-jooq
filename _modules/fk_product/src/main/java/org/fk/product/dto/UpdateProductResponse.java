@@ -5,9 +5,8 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public record ProductDTO(
+public record UpdateProductResponse(
     @NotNull Long productId,
     @NotNull Integer clientId,
     @NotNull BigDecimal price,
@@ -15,8 +14,6 @@ public record ProductDTO(
     @NotNull LocalDateTime createdAt,
     @NotNull LocalDateTime updatedAt,
     @NotNull Boolean deleted,
-    Integer creatorId,
-    UserDTO creator,
-    @NotNull List<ProductLangDTO> langs
+    @NotNull Integer creatorId
 ) {
 }

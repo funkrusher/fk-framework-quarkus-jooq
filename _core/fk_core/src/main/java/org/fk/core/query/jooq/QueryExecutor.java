@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
-public class QueryExecutor<D extends AbstractDTO, T> {
+public class QueryExecutor<D, T> {
 
     private final Field<?> idField;
     private final QueryFunction<D> queryFunction;

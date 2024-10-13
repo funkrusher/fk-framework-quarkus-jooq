@@ -1,4 +1,4 @@
-package org.fk.product.dto;
+package org.fk.product.dto.old;
 
 import org.fk.database1.testshop.tables.dtos.ClientDto;
 import org.fk.database1.testshop.tables.interfaces.IClient;

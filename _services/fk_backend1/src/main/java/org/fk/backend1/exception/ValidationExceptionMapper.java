@@ -17,7 +17,7 @@ public class ValidationExceptionMapper implements ExceptionMapper<ValidationExce
     @Override
     public Response toResponse(ValidationException exception) {
         Map<String, String> violations = new HashMap<>();
-        for (ConstraintViolation<AbstractDTO> violation : exception.getViolations()) {
+        for (ConstraintViolation<Record> violation : exception.getViolations()) {
             String property = violation.getPropertyPath().toString();
             String message = violation.getMessage();
             violations.put(property, message);

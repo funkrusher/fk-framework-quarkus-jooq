@@ -1,10 +1,8 @@
-package org.fk.product.dto;
+package org.fk.product.dto.old;
 
 
 import org.fk.database1.testshop.tables.dtos.UserRoleDto;
-import org.fk.database1.testshop.tables.interfaces.IUser;
 import org.fk.database1.testshop.tables.interfaces.IUserRole;
-import org.fk.database1.testshop.tables.records.UserRecord;
 import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.jooq.Record1;
 

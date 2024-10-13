@@ -1,4 +1,4 @@
-package org.fk.product.dto;
+package org.fk.product.dto.old;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

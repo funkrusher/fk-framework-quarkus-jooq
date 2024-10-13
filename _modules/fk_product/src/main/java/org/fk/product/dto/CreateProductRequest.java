@@ -4,9 +4,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-public record RoleDTO(
-    @NotNull String roleId
+public record CreateProductRequest(
+    @NotNull Integer clientId,
+    @NotNull BigDecimal price,
+    @NotNull @Size(max = 255) String typeId
 ) {
 }

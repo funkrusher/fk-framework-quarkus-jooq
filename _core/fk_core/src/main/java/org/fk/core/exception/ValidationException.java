@@ -16,19 +16,19 @@ import java.util.Set;
  * </p>
  */
 public class ValidationException extends MappingException {
-    private final transient Set<ConstraintViolation<AbstractDTO>> violations;
+    private final transient Set<ConstraintViolation<Record>> violations;
 
     public ValidationException(String message) {
         super(message);
         this.violations = null;
     }
 
-    public <T> ValidationException(Set<ConstraintViolation<AbstractDTO>> violations) {
+    public <T> ValidationException(Set<ConstraintViolation<Record>> violations) {
         super("");
         this.violations = violations;
     }
 
-    public Set<ConstraintViolation<AbstractDTO>> getViolations() {
+    public Set<ConstraintViolation<Record>> getViolations() {
         return violations;
     }
 }

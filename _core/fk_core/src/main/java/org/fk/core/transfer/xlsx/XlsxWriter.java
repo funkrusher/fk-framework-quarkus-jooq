@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class XlsxWriter<T extends AbstractDTO> implements AutoCloseable {
+public class XlsxWriter<T> implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(XlsxWriter.class);
 

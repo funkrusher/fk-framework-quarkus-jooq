@@ -11,8 +11,6 @@ import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.fk.core.manager.AbstractManager;
 import org.fk.product.dao.UserDAO;
 import org.fk.product.dao.UserRoleDAO;
-import org.fk.product.dto.UserDTO;
-import org.fk.product.dto.UserRoleDTO;
 import org.fk.core.auth.FkClaim;
 import org.fk.core.request.RequestContext;
 import org.jooq.DSLContext;

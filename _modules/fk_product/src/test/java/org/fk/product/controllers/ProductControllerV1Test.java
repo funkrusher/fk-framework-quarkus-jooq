@@ -11,29 +11,23 @@ import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import jakarta.inject.Inject;
 import org.fk.core.auth.TenantCredential;
 import org.fk.core.jackson.ObjectMapperProducer;
-import org.fk.product.dto.*;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
+import org.fk.product.dto.old.ProductDTO;
 import org.fk.product.test.InjectProductTestUtil;
 import org.fk.product.test.ProductTestProfile;
 import org.fk.product.test.ProductTestLifecycleManager;
 import org.fk.product.test.ProductTestUtil;
-import org.fk.product.type.ProductTypeId;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
-import static java.time.ZoneOffset.UTC;
 import static org.fk.core.auth.FkSecurityIdentity.MASTER_TENANT_ID;
 import static org.fk.core.auth.FkRoles.ADMIN;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -78,7 +72,7 @@ class ProductControllerV1Test {
 
         String json = "{\n" +
             "  \"clientId\": 1,\n" +
-            "  \"typeId\": \"book\"," +
+            "  \"typeId\": \"book\",\n" +
             "  \"price\": 10.00\n" +
             "}";
 

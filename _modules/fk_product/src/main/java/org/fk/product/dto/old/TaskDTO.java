@@ -1,10 +1,8 @@
-package org.fk.product.dto;
+package org.fk.product.dto.old;
 
 
 import org.fk.database1.testshop.tables.dtos.TaskDto;
-import org.fk.database1.testshop.tables.interfaces.IRole;
 import org.fk.database1.testshop.tables.interfaces.ITask;
-import org.fk.database1.testshop.tables.records.RoleRecord;
 import org.fk.database1.testshop.tables.records.TaskRecord;
 import org.jooq.Record1;
 

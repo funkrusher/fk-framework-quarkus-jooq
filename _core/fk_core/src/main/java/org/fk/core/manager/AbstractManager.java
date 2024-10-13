@@ -31,8 +31,8 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException invalid dto
      */
-    protected void validate(AbstractDTO dto) throws ValidationException {
-        Set<ConstraintViolation<AbstractDTO>> violations = validator.validate(dto);
+    protected void validate(Record dto) throws ValidationException {
+        Set<ConstraintViolation<Record>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);
         }
