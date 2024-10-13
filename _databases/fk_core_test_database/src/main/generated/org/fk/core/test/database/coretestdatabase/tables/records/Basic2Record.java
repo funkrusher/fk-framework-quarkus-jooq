@@ -146,19 +146,4 @@ public class Basic2Record extends UpdatableRecordImpl<Basic2Record> implements I
         setClientId(clientId);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised Basic2Record
-     */
-    public Basic2Record(org.fk.core.test.database.coretestdatabase.tables.pojos.Basic2 value) {
-        super(Basic2.BASIC2);
-
-        if (value != null) {
-            setUuidId(value.getUuidId());
-            setString1(value.getString1());
-            setString2(value.getString2());
-            setClientId(value.getClientId());
-            resetChangedOnNotNull();
-        }
-    }
 }

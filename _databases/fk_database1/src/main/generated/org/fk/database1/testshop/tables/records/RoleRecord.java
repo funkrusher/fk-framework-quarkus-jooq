@@ -85,16 +85,4 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
         setRoleId(roleId);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised RoleRecord
-     */
-    public RoleRecord(org.fk.database1.testshop.tables.pojos.Role value) {
-        super(Role.ROLE);
-
-        if (value != null) {
-            setRoleId(value.getRoleId());
-            resetChangedOnNotNull();
-        }
-    }
 }

@@ -80,16 +80,4 @@ public class ClientRecord extends UpdatableRecordImpl<ClientRecord> implements I
         setClientId(clientId);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised ClientRecord
-     */
-    public ClientRecord(org.fk.database1.testshop.tables.pojos.Client value) {
-        super(Client.CLIENT);
-
-        if (value != null) {
-            setClientId(value.getClientId());
-            resetChangedOnNotNull();
-        }
-    }
 }

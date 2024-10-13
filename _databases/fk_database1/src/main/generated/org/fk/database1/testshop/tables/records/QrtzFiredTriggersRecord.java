@@ -330,28 +330,4 @@ public class QrtzFiredTriggersRecord extends UpdatableRecordImpl<QrtzFiredTrigge
         setREQUESTS_RECOVERY(REQUESTS_RECOVERY);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzFiredTriggersRecord
-     */
-    public QrtzFiredTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzFiredTriggers value) {
-        super(QrtzFiredTriggers.QRTZ_FIRED_TRIGGERS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setENTRY_ID(value.getENTRY_ID());
-            setTRIGGER_NAME(value.getTRIGGER_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            setINSTANCE_NAME(value.getINSTANCE_NAME());
-            setFIRED_TIME(value.getFIRED_TIME());
-            setSCHED_TIME(value.getSCHED_TIME());
-            setPRIORITY(value.getPRIORITY());
-            setSTATE(value.getSTATE());
-            setJOB_NAME(value.getJOB_NAME());
-            setJOB_GROUP(value.getJOB_GROUP());
-            setIS_NONCONCURRENT(value.getIS_NONCONCURRENT());
-            setREQUESTS_RECOVERY(value.getREQUESTS_RECOVERY());
-            resetChangedOnNotNull();
-        }
-    }
 }

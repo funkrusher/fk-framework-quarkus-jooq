@@ -164,20 +164,4 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements I
         setBiography(biography);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised AuthorRecord
-     */
-    public AuthorRecord(org.fk.database2.public_.tables.pojos.Author value) {
-        super(Author.AUTHOR);
-
-        if (value != null) {
-            setAuthor_id(value.getAuthor_id());
-            setName(value.getName());
-            setNationality(value.getNationality());
-            setBirth_date(value.getBirth_date());
-            setBiography(value.getBiography());
-            resetChangedOnNotNull();
-        }
-    }
 }

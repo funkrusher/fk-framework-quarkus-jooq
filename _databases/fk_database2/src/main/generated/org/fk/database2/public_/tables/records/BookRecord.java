@@ -185,21 +185,4 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements IBook
         setIsbn(isbn);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised BookRecord
-     */
-    public BookRecord(org.fk.database2.public_.tables.pojos.Book value) {
-        super(Book.BOOK);
-
-        if (value != null) {
-            setBook_id(value.getBook_id());
-            setTitle(value.getTitle());
-            setAuthor_id(value.getAuthor_id());
-            setGenre(value.getGenre());
-            setPublication_date(value.getPublication_date());
-            setIsbn(value.getIsbn());
-            resetChangedOnNotNull();
-        }
-    }
 }

@@ -106,17 +106,4 @@ public class PostRecord extends UpdatableRecordImpl<PostRecord> implements IPost
         setTitle(title);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised PostRecord
-     */
-    public PostRecord(org.fk.database1.testshop.tables.pojos.Post value) {
-        super(Post.POST);
-
-        if (value != null) {
-            setId(value.getId());
-            setTitle(value.getTitle());
-            resetChangedOnNotNull();
-        }
-    }
 }

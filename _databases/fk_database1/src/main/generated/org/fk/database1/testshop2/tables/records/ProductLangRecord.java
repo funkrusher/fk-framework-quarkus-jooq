@@ -146,19 +146,4 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
         setDescription(description);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised ProductLangRecord
-     */
-    public ProductLangRecord(org.fk.database1.testshop2.tables.pojos.ProductLang value) {
-        super(ProductLang.PRODUCT_LANG);
-
-        if (value != null) {
-            setProductId(value.getProductId());
-            setLangId(value.getLangId());
-            setName(value.getName());
-            setDescription(value.getDescription());
-            resetChangedOnNotNull();
-        }
-    }
 }

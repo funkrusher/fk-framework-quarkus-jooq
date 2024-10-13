@@ -147,19 +147,4 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
         setBLOB_DATA(BLOB_DATA);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzBlobTriggersRecord
-     */
-    public QrtzBlobTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzBlobTriggers value) {
-        super(QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setTRIGGER_NAME(value.getTRIGGER_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            setBLOB_DATA(value.getBLOB_DATA());
-            resetChangedOnNotNull();
-        }
-    }
 }

@@ -340,29 +340,4 @@ public class DatabasechangelogRecord extends TableRecordImpl<DatabasechangelogRe
         setDeployment_id(deployment_id);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised DatabasechangelogRecord
-     */
-    public DatabasechangelogRecord(org.fk.database2.public_.tables.pojos.Databasechangelog value) {
-        super(Databasechangelog.DATABASECHANGELOG);
-
-        if (value != null) {
-            setId(value.getId());
-            setAuthor(value.getAuthor());
-            setFilename(value.getFilename());
-            setDateexecuted(value.getDateexecuted());
-            setOrderexecuted(value.getOrderexecuted());
-            setExectype(value.getExectype());
-            setMd5sum(value.getMd5sum());
-            setDescription(value.getDescription());
-            setComments(value.getComments());
-            setTag(value.getTag());
-            setLiquibase(value.getLiquibase());
-            setContexts(value.getContexts());
-            setLabels(value.getLabels());
-            setDeployment_id(value.getDeployment_id());
-            resetChangedOnNotNull();
-        }
-    }
 }

@@ -1,6 +1,5 @@
 package org.fk.core.test.database;
 
-import org.fk.core.jooq.FkGeneratedFilesPostProcessor;
 import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
@@ -22,10 +21,8 @@ public class CoreTestDatabaseCodeGenerator {
                             .withGenerate(new Generate()
                                     .withInterfaces(true)
                                     .withSerializableInterfaces(true)
-                                    .withPojos(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                                    .withPojosEqualsAndHashCode(false)
                             )
                             .withStrategy(new Strategy()
                                 .withName(FkGeneratorStrategy.class.getName())
@@ -41,8 +38,6 @@ public class CoreTestDatabaseCodeGenerator {
                             .withTarget(new Target()
                                     .withPackageName("org.fk.core.test.database")
                                     .withDirectory("src/main/generated"))));
-
-            new FkGeneratedFilesPostProcessor().processFiles("src/main/generated");
         }
     }
 }

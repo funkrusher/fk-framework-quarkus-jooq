@@ -96,17 +96,4 @@ public class DatainitRecord extends TableRecordImpl<DatainitRecord> implements I
         setCreatedAt(createdAt);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised DatainitRecord
-     */
-    public DatainitRecord(org.fk.database1.testshop.tables.pojos.Datainit value) {
-        super(Datainit.DATAINIT);
-
-        if (value != null) {
-            setDataInitId(value.getDataInitId());
-            setCreatedAt(value.getCreatedAt());
-            resetChangedOnNotNull();
-        }
-    }
 }

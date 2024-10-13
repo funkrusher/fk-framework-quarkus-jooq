@@ -101,17 +101,4 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
         setCreatedAt(createdAt);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised TaskRecord
-     */
-    public TaskRecord(org.fk.database1.testshop.tables.pojos.Task value) {
-        super(Task.TASK);
-
-        if (value != null) {
-            setTaskId(value.getTaskId());
-            setCreatedAt(value.getCreatedAt());
-            resetChangedOnNotNull();
-        }
-    }
 }

@@ -127,18 +127,4 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
         setCALENDAR(CALENDAR);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzCalendarsRecord
-     */
-    public QrtzCalendarsRecord(org.fk.database1.testshop.tables.pojos.QrtzCalendars value) {
-        super(QrtzCalendars.QRTZ_CALENDARS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setCALENDAR_NAME(value.getCALENDAR_NAME());
-            setCALENDAR(value.getCALENDAR());
-            resetChangedOnNotNull();
-        }
-    }
 }

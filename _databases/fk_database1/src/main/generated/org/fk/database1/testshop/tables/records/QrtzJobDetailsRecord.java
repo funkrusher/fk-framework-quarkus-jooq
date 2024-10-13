@@ -272,25 +272,4 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
         setJOB_DATA(JOB_DATA);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzJobDetailsRecord
-     */
-    public QrtzJobDetailsRecord(org.fk.database1.testshop.tables.pojos.QrtzJobDetails value) {
-        super(QrtzJobDetails.QRTZ_JOB_DETAILS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setJOB_NAME(value.getJOB_NAME());
-            setJOB_GROUP(value.getJOB_GROUP());
-            setDESCRIPTION(value.getDESCRIPTION());
-            setJOB_CLASS_NAME(value.getJOB_CLASS_NAME());
-            setIS_DURABLE(value.getIS_DURABLE());
-            setIS_NONCONCURRENT(value.getIS_NONCONCURRENT());
-            setIS_UPDATE_DATA(value.getIS_UPDATE_DATA());
-            setREQUESTS_RECOVERY(value.getREQUESTS_RECOVERY());
-            setJOB_DATA(value.getJOB_DATA());
-            resetChangedOnNotNull();
-        }
-    }
 }

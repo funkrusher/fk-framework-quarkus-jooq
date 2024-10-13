@@ -343,29 +343,4 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
         setBOOL_PROP_2(BOOL_PROP_2);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzSimpropTriggersRecord
-     */
-    public QrtzSimpropTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzSimpropTriggers value) {
-        super(QrtzSimpropTriggers.QRTZ_SIMPROP_TRIGGERS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setTRIGGER_NAME(value.getTRIGGER_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            setSTR_PROP_1(value.getSTR_PROP_1());
-            setSTR_PROP_2(value.getSTR_PROP_2());
-            setSTR_PROP_3(value.getSTR_PROP_3());
-            setINT_PROP_1(value.getINT_PROP_1());
-            setINT_PROP_2(value.getINT_PROP_2());
-            setLONG_PROP_1(value.getLONG_PROP_1());
-            setLONG_PROP_2(value.getLONG_PROP_2());
-            setDEC_PROP_1(value.getDEC_PROP_1());
-            setDEC_PROP_2(value.getDEC_PROP_2());
-            setBOOL_PROP_1(value.getBOOL_PROP_1());
-            setBOOL_PROP_2(value.getBOOL_PROP_2());
-            resetChangedOnNotNull();
-        }
-    }
 }

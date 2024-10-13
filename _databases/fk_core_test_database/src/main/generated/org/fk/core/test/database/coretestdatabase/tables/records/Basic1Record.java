@@ -222,23 +222,4 @@ public class Basic1Record extends UpdatableRecordImpl<Basic1Record> implements I
         setClientId(clientId);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised Basic1Record
-     */
-    public Basic1Record(org.fk.core.test.database.coretestdatabase.tables.pojos.Basic1 value) {
-        super(Basic1.BASIC1);
-
-        if (value != null) {
-            setAutoIncId(value.getAutoIncId());
-            setString1(value.getString1());
-            setString2(value.getString2());
-            setInteger1(value.getInteger1());
-            setLong1(value.getLong1());
-            setDecimal1(value.getDecimal1());
-            setDateTime1(value.getDateTime1());
-            setClientId(value.getClientId());
-            resetChangedOnNotNull();
-        }
-    }
 }

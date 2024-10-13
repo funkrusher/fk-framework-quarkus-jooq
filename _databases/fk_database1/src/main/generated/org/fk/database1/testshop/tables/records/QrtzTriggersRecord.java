@@ -386,31 +386,4 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
         setJOB_DATA(JOB_DATA);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzTriggersRecord
-     */
-    public QrtzTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzTriggers value) {
-        super(QrtzTriggers.QRTZ_TRIGGERS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setTRIGGER_NAME(value.getTRIGGER_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            setJOB_NAME(value.getJOB_NAME());
-            setJOB_GROUP(value.getJOB_GROUP());
-            setDESCRIPTION(value.getDESCRIPTION());
-            setNEXT_FIRE_TIME(value.getNEXT_FIRE_TIME());
-            setPREV_FIRE_TIME(value.getPREV_FIRE_TIME());
-            setPRIORITY(value.getPRIORITY());
-            setTRIGGER_STATE(value.getTRIGGER_STATE());
-            setTRIGGER_TYPE(value.getTRIGGER_TYPE());
-            setSTART_TIME(value.getSTART_TIME());
-            setEND_TIME(value.getEND_TIME());
-            setCALENDAR_NAME(value.getCALENDAR_NAME());
-            setMISFIRE_INSTR(value.getMISFIRE_INSTR());
-            setJOB_DATA(value.getJOB_DATA());
-            resetChangedOnNotNull();
-        }
-    }
 }

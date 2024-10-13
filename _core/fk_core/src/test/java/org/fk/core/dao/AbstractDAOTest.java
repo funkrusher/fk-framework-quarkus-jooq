@@ -14,9 +14,6 @@ import org.fk.core.test.database.CoreTestDatabase;
 import org.fk.core.test.database.coretestdatabase.tables.Basic1;
 import org.fk.core.test.database.coretestdatabase.tables.Basic2;
 import org.fk.core.test.database.coretestdatabase.tables.Nested1;
-import org.fk.core.test.database.coretestdatabase.tables.dtos.Basic1Dto;
-import org.fk.core.test.database.coretestdatabase.tables.dtos.Basic2Dto;
-import org.fk.core.test.database.coretestdatabase.tables.dtos.Nested1Dto;
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic2;
 import org.fk.core.test.database.coretestdatabase.tables.interfaces.INested1;
@@ -602,26 +599,12 @@ class AbstractDAOTest {
         rec.setString1("test1");
         return rec;
     }
-    private Basic1DTO createBasic1DTO(Optional<Integer> maybeAutoIncId) {
-        Basic1DTO dto = new Basic1DTO();
-        maybeAutoIncId.ifPresent(dto::setAutoIncId);
-        dto.setClientId(1);
-        dto.setString1("test1");
-        return dto;
-    }
     private Basic2Record createBasic2Record(Optional<UUID> maybeUuidId) {
         Basic2Record rec = new Basic2Record();
         maybeUuidId.ifPresent(rec::setUuidId);
         rec.setClientId(1);
         rec.setString1("test1");
         return rec;
-    }
-    private Basic2DTO createBasic2DTO(Optional<UUID> maybeUuidId) {
-        Basic2DTO dto = new Basic2DTO();
-        maybeUuidId.ifPresent(dto::setUuidId);
-        dto.setClientId(1);
-        dto.setString1("test1");
-        return dto;
     }
     private Nested1Record createNested1Record(Optional<Integer> maybeAutoIncId, Optional<UUID> maybeUuidId) {
         Nested1Record rec = new Nested1Record();
@@ -630,14 +613,6 @@ class AbstractDAOTest {
         rec.setString1("test1");
         return rec;
     }
-    private Nested1DTO createNested1DTO(Optional<Integer> maybeAutoIncId, Optional<UUID> maybeUuidId) {
-        Nested1DTO dto = new Nested1DTO();
-        maybeAutoIncId.ifPresent(dto::setAutoIncId);
-        maybeUuidId.ifPresent(dto::setUuidId);
-        dto.setString1("test1");
-        return dto;
-    }
-
     private void validateBasic1Equal(List<Basic1Record> expecteds, List<Basic1Record> existings) {
         assertEquals(existings.size(), expecteds.size());
         for (Basic1Record expected : expecteds) {
@@ -722,24 +697,6 @@ class AbstractDAOTest {
     private void assertNested1Count(int expectedCount) {
         int count = dsl.fetchCount(dsl.selectFrom(Nested1.NESTED1));
         assertEquals(count, expectedCount);
-    }
-
-    /**
-     * Basic1DTO
-     */
-    public static class Basic1DTO extends Basic1Dto implements IBasic1 {
-    }
-
-    /**
-     * Basic2DTO
-     */
-    public static class Basic2DTO extends Basic2Dto implements IBasic2 {
-    }
-
-    /**
-     * Nested1DTO
-     */
-    public static class Nested1DTO extends Nested1Dto implements INested1 {
     }
 
     /**

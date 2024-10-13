@@ -166,20 +166,4 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
         setLastname(lastname);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised UserRecord
-     */
-    public UserRecord(org.fk.database1.testshop.tables.pojos.User value) {
-        super(User.USER);
-
-        if (value != null) {
-            setUserId(value.getUserId());
-            setClientId(value.getClientId());
-            setEmail(value.getEmail());
-            setFirstname(value.getFirstname());
-            setLastname(value.getLastname());
-            resetChangedOnNotNull();
-        }
-    }
 }
