@@ -3,8 +3,6 @@ package org.fk.product.qute;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.qute.CheckedTemplate;
 import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.old.NestedProductDTO;
-
 import java.util.List;
 
 @CheckedTemplate

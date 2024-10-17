@@ -12,6 +12,12 @@ dependencies {
     implementation project(':_databases:fk_database2')
     implementation project(':_modules:fk_root')
     implementation project(':_modules:fk_product')
+
+    // lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+    testImplementation libs.lombok
+    testAnnotationProcessor libs.lombok
 }
 
 task backend1Database1Liquibase(type: JavaExec) {
