@@ -1,25 +1,9 @@
 package org.fk.product.dto;
 
-import org.fk.core.dto.AbstractDTO;
+import lombok.Data;
 
-public class FiledItemActorDTO extends AbstractDTO {
-
+@Data
+public class FiledItemActorDTO  {
     private Integer clientId;
     private String name;
-
-    public Integer getClientId() {
-        return this.clientId;
-    }
-
-    public FiledItemActorDTO setClientId(Integer clientId) {
-        this.clientId = clientId;
-        return this;
-    }
-
-    public String getName() {return this.name;}
-
-    public FiledItemActorDTO setName(String name) {
-        this.name = name;
-        return this;
-    }
 }

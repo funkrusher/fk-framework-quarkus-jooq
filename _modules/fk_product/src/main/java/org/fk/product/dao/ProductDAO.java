@@ -59,41 +59,4 @@ public class ProductDAO extends AbstractDAO<ProductRecord, Long> {
             throw new MappingException("internal error");
         }
     }
-
-    public UpdateProductResponse update(UpdateProductRequest updateProductRequest) {
-
-        // project request to jooq-query.
-        dsl()
-            .update(PRODUCT)
-            .set(PRODUCT.CLIENTID, updateProductRequest.clientId())
-            .set(PRODUCT.PRICE, updateProductRequest.price())
-            .set(PRODUCT.TYPEID, updateProductRequest.typeId())
-            .where(PRODUCT.PRODUCTID.eq(updateProductRequest.productId()))
-            .execute();
-
-        // get db-content for id, and project to response...
-        Record1<UpdateProductResponse> result = dsl()
-            .select(
-                row(
-                    PRODUCT.PRODUCTID,
-                    PRODUCT.CLIENTID,
-                    PRODUCT.PRICE,
-                    PRODUCT.TYPEID,
-                    PRODUCT.CREATEDAT,
-                    PRODUCT.UPDATEDAT,
-                    PRODUCT.DELETED,
-                    PRODUCT.CREATORID
-                ).convertFrom(x -> x.into(UpdateProductResponse.class))
-            )
-            .from(PRODUCT)
-            .where(PRODUCT.PRODUCTID.eq(updateProductRequest.productId()))
-            .fetchOne();
-
-        if (result != null) {
-            return result.value1();
-        } else {
-            throw new MappingException("internal error");
-        }
-    }
-
 }

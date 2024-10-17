@@ -3,7 +3,6 @@ package org.fk.core.transfer.xlsx;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 import org.jboss.logging.Logger;
 

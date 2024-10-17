@@ -13,9 +13,8 @@ dependencies {
     api libs.bundles.testcontainers
     api libs.bundles.flyingsaucer
     api libs.bundles.apachePoi
+    api libs.bundles.jackson
     api libs.jsoup
-    api libs.jacksonCsv
-    api libs.jacksonJsr310
     api libs.ulid
     api libs.reflections
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 import org.jboss.logging.Logger;
 

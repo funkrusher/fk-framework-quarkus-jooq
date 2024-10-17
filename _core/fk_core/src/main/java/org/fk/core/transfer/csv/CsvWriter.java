@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 
 import java.io.IOException;

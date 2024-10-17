@@ -43,6 +43,9 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public QueryProductResponse queryNested(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+
+        CreateProductResponse test = new CreateProductResponse();
+
         return productManager.queryNested(new RequestContext(1, 1), fkQuery);
     }
 

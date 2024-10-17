@@ -112,6 +112,7 @@ dependencyResolutionManagement {
             bundle('aws', ['awssdk', 'awssdkCognitoIdentityProvider'])
             bundle('flyingsaucer', ['flyingSaucerCore', 'flyingSaucerPdf'])
             bundle('apachePoi', ['poiOoxml'])
+            bundle('jackson', ['jacksonCsv', 'jacksonJsr310'])
 
             // test-bundles
             bundle('test.quarkus', ['restAssured', 'quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])

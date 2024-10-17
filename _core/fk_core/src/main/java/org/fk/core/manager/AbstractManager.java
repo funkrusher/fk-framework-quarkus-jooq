@@ -3,7 +3,6 @@ package org.fk.core.manager;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.ValidationException;
 
 import java.util.*;
@@ -31,8 +30,8 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException invalid dto
      */
-    protected void validate(Record dto) throws ValidationException {
-        Set<ConstraintViolation<Record>> violations = validator.validate(dto);
+    protected void validate(Object dto) throws ValidationException {
+        Set<ConstraintViolation<Object>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);
         }

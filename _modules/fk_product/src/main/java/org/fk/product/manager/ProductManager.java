@@ -56,9 +56,9 @@ public class ProductManager extends AbstractManager {
         // note: for MULTISET to work, we need to activate allowMultiQueries=true in mariadb via jdbc-url.
         // see: https://blog.jooq.org/mysqls-allowmultiqueries-flag-with-jdbc-and-jooq/
         fields.add(multiset(
-                selectDistinct(asterisk())
-                        .from(ProductLang.PRODUCT_LANG)
-                        .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
+            selectDistinct(asterisk())
+                .from(ProductLang.PRODUCT_LANG)
+                .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
         ).as("langs"));
 
         return database1.dsl(requestContext).transactionResult(tsx -> {
@@ -102,7 +102,7 @@ public class ProductManager extends AbstractManager {
         // see: https://blog.jooq.org/nested-transactions-in-jooq/
 
         List<ProductRecord> inserts = new ArrayList<>();
-        for (int i= 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();
             insert1.setProductId(90000000L + i);
             insert1.setClientId(1);
@@ -158,7 +158,26 @@ public class ProductManager extends AbstractManager {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             this.validate(updateProductRequest);
-            return productDAO.update(updateProductRequest);
+
+            ProductRecord update = new ProductRecord();
+            update.setProductId(updateProductRequest.getProductId());
+            update.setClientId(updateProductRequest.getClientId());
+            updateProductRequest.getPrice().ifPresent(update::setPrice); // optional field in api
+            updateProductRequest.getTypeId().ifPresent(update::setTypeId); // optional field in api
+
+            productDAO.update(update);
+            ProductRecord result = productDAO.fetch(update.getProductId());
+
+            return UpdateProductResponse.builder()
+                .productId(result.getProductId())
+                .clientId(result.getClientId())
+                .price(result.getPrice())
+                .typeId(result.getTypeId())
+                .createdAt(result.getCreatedAt())
+                .updatedAt(result.getUpdatedAt())
+                .deleted(result.getDeleted())
+                .creatorId(result.getCreatorId())
+                .build();
         });
     }
 
@@ -179,6 +198,7 @@ public class ProductManager extends AbstractManager {
 
     /**
      * Trying out streaming
+     *
      * @return stream
      */
     public Stream<ProductDTO> streamAll(RequestContext requestContext) throws InvalidDataException {

@@ -1,6 +1,5 @@
 package org.fk.core.repository;
 
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.jooq.QueryFunction;
 import org.fk.core.query.jooq.QueryExecutor;
