@@ -1,9 +1,9 @@
 package org.fk.product.dto;
 
-import lombok.Data;
+import dev.mccue.magicbean.MagicBean;
 
-@Data
-public class FiledItemActorDTO  {
-    private Integer clientId;
-    private String name;
+@MagicBean
+public final class FiledItemActorDTO  {
+    Integer clientId;
+    String name;
 }

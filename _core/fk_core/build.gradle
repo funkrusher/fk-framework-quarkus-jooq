@@ -24,11 +24,11 @@ dependencies {
     testImplementation libs.awaitility
     testImplementation libs.restAssured
 
-    // lombok
-    implementation libs.lombok
-    annotationProcessor libs.lombok
-    testImplementation libs.lombok
-    testAnnotationProcessor libs.lombok
+    // magic-bean
+    compileOnly libs.magicBean
+    annotationProcessor libs.magicBean
+    testCompileOnly libs.magicBean
+    testAnnotationProcessor libs.magicBean
 }
 
 // publishing

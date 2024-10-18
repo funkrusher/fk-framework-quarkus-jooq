@@ -2,12 +2,10 @@ package org.fk.product.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
 public class CreateProductResponse {
     @NotNull
     private Long productId;

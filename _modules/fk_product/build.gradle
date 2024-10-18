@@ -19,11 +19,15 @@ dependencies {
     testImplementation libs.restAssured
     testImplementation project(':_databases:fk_database1')
 
-    // lombok
-    implementation libs.lombok
-    annotationProcessor libs.lombok
-    testImplementation libs.lombok
-    testAnnotationProcessor libs.lombok
+    // magic-bean
+    compileOnly libs.magicBean
+    annotationProcessor libs.magicBean
+    testCompileOnly libs.magicBean
+    testAnnotationProcessor libs.magicBean
+}
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
 }
 
 // publishing
