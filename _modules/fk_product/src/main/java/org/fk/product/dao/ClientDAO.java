@@ -2,7 +2,6 @@ package org.fk.product.dao;
 
 import org.fk.core.dao.AbstractDAO;
 import org.fk.database1.testshop.tables.Client;
-import org.fk.database1.testshop.tables.interfaces.IClient;
 import org.fk.database1.testshop.tables.records.ClientRecord;
 import org.jooq.DSLContext;
 

@@ -1,6 +1,5 @@
 package org.fk.database1;
 
-import org.fk.core.jooq.FkCustomJavaGenerator;
 import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
@@ -19,15 +18,9 @@ public class Database1CodeGenerator {
                             .withUser(fkMariaDb.getUsername())
                             .withPassword(fkMariaDb.getPassword()))
                     .withGenerator(new Generator()
-                            .withName(FkCustomJavaGenerator.class.getName())
                             .withGenerate(new Generate()
-                                    .withInterfaces(true)
-                                    .withSerializableInterfaces(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                            )
-                            .withStrategy(new Strategy()
-                                    .withName(FkGeneratorStrategy.class.getName())
                             )
                             .withDatabase(new Database()
                                     .withName(MariaDBDatabase.class.getName())

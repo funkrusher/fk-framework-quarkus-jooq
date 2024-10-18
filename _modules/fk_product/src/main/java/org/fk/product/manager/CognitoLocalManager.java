@@ -72,7 +72,7 @@ public class CognitoLocalManager extends AbstractManager {
         UserRoleDAO userRoleRecordDAO = new UserRoleDAO(dsl);
 
         UserRecord user = new UserRecord();
-        user.setClientId(clientId);
+        user.setClientid(clientId);
         user.setEmail(email);
         user.setFirstname(firstname);
         user.setLastname(lastname);
@@ -83,14 +83,14 @@ public class CognitoLocalManager extends AbstractManager {
             userRecordDAO.insert(user);
 
             userRole = new UserRoleRecord();
-            userRole.setUserId(user.getUserId());
-            userRole.setRoleId(roleId);
+            userRole.setUserid(user.getUserid());
+            userRole.setRoleid(roleId);
             userRoleRecordDAO.insert(userRole);
 
             List<String> roles = new ArrayList<>();
             roles.add(roleId);
 
-            FkClaim fkClaim = new FkClaim(clientId, user.getUserId(), roles);
+            FkClaim fkClaim = new FkClaim(clientId, user.getUserid(), roles);
             String fkClaimStr = objectMapper.writeValueAsString(fkClaim);
 
             SignUpRequest signUpRequest = SignUpRequest.builder()
@@ -116,8 +116,8 @@ public class CognitoLocalManager extends AbstractManager {
             if (userRole != null) {
                 userRoleRecordDAO.delete(userRole.into(new UserRoleRecord()));
             }
-            if (user.getUserId() != null) {
-                userRecordDAO.deleteById(user.getUserId());
+            if (user.getUserid() != null) {
+                userRecordDAO.deleteById(user.getUserid());
             }
         }
         return userSub;

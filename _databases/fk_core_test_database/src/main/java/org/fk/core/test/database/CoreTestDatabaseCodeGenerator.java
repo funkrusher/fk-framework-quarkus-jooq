@@ -1,6 +1,5 @@
 package org.fk.core.test.database;
 
-import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
@@ -19,13 +18,8 @@ public class CoreTestDatabaseCodeGenerator {
                             .withPassword(fkMariaDb.getPassword()))
                     .withGenerator(new Generator()
                             .withGenerate(new Generate()
-                                    .withInterfaces(true)
-                                    .withSerializableInterfaces(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                            )
-                            .withStrategy(new Strategy()
-                                .withName(FkGeneratorStrategy.class.getName())
                             )
                             .withDatabase(new Database()
                                     .withName(MariaDBDatabase.class.getName())

@@ -2,7 +2,6 @@ package org.fk.product.dao;
 
 import org.fk.core.dao.AbstractDAO;
 import org.fk.database1.testshop.tables.UserRole;
-import org.fk.database1.testshop.tables.interfaces.IUserRole;
 import org.fk.database1.testshop.tables.records.UserRoleRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record2;

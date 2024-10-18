@@ -26,14 +26,14 @@ public record ProductDTO(
     public static ProductDTO create(Record3<ProductRecord, UserDTO, List<ProductLangDTO>> rec) {
         ProductRecord product = rec.value1();
         return ProductDTO.builder()
-            .productId(product.getProductId())
-            .clientId(product.getClientId())
+            .productId(product.getProductid())
+            .clientId(product.getClientid())
             .price(product.getPrice())
-            .typeId(product.getTypeId())
-            .createdAt(product.getCreatedAt())
-            .updatedAt(product.getUpdatedAt())
+            .typeId(product.getTypeid())
+            .createdAt(product.getCreatedat())
+            .updatedAt(product.getUpdatedat())
             .deleted(product.getDeleted())
-            .creatorId(product.getCreatorId())
+            .creatorId(product.getCreatorid())
             .creator(rec.value2())
             .langs(rec.value3())
             .build();

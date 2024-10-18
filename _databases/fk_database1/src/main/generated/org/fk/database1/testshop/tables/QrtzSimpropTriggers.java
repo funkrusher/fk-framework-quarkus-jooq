@@ -205,17 +205,17 @@ public class QrtzSimpropTriggers extends TableImpl<QrtzSimpropTriggersRecord> {
         return Arrays.asList(Keys.QRTZ_SIMPROP_TRIGGERS_IBFK_1);
     }
 
-    private transient QrtzTriggersPath __1;
+    private transient QrtzTriggersPath _qrtzTriggers;
 
     /**
      * Get the implicit join path to the <code>testshop.QRTZ_TRIGGERS</code>
      * table.
      */
-    public QrtzTriggersPath _1() {
-        if (__1 == null)
-            __1 = new QrtzTriggersPath(this, Keys.QRTZ_SIMPROP_TRIGGERS_IBFK_1, null);
+    public QrtzTriggersPath qrtzTriggers() {
+        if (_qrtzTriggers == null)
+            _qrtzTriggers = new QrtzTriggersPath(this, Keys.QRTZ_SIMPROP_TRIGGERS_IBFK_1, null);
 
-        return __1;
+        return _qrtzTriggers;
     }
 
     @Override

@@ -176,30 +176,30 @@ public class Nested1 extends TableImpl<Nested1Record> {
         return Arrays.asList(Keys.FK_NESTED1_AUTOINCID, Keys.FK_NESTED1_UUIDID);
     }
 
-    private transient Basic1Path _autoInc;
+    private transient Basic1Path _basic1;
 
     /**
      * Get the implicit join path to the <code>coreTestDatabase.Basic1</code>
      * table.
      */
-    public Basic1Path autoInc() {
-        if (_autoInc == null)
-            _autoInc = new Basic1Path(this, Keys.FK_NESTED1_AUTOINCID, null);
+    public Basic1Path basic1() {
+        if (_basic1 == null)
+            _basic1 = new Basic1Path(this, Keys.FK_NESTED1_AUTOINCID, null);
 
-        return _autoInc;
+        return _basic1;
     }
 
-    private transient Basic2Path _uuid;
+    private transient Basic2Path _basic2;
 
     /**
      * Get the implicit join path to the <code>coreTestDatabase.Basic2</code>
      * table.
      */
-    public Basic2Path uuid() {
-        if (_uuid == null)
-            _uuid = new Basic2Path(this, Keys.FK_NESTED1_UUIDID, null);
+    public Basic2Path basic2() {
+        if (_basic2 == null)
+            _basic2 = new Basic2Path(this, Keys.FK_NESTED1_UUIDID, null);
 
-        return _uuid;
+        return _basic2;
     }
 
     @Override

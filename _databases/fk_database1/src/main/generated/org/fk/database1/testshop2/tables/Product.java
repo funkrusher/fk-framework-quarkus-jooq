@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.fk.database1.testshop.tables.Client.ClientPath;
+import org.fk.database1.testshop.tables.Lang.LangPath;
 import org.fk.database1.testshop.tables.User.UserPath;
 import org.fk.database1.testshop2.Keys;
 import org.fk.database1.testshop2.Testshop2;
@@ -197,29 +198,37 @@ public class Product extends TableImpl<ProductRecord> {
         return _client;
     }
 
-    private transient UserPath _creator;
+    private transient UserPath _user;
 
     /**
      * Get the implicit join path to the <code>testshop.user</code> table.
      */
-    public UserPath creator() {
-        if (_creator == null)
-            _creator = new UserPath(this, Keys.FK_PRODUCT_CREATORID, null);
+    public UserPath user() {
+        if (_user == null)
+            _user = new UserPath(this, Keys.FK_PRODUCT_CREATORID, null);
 
-        return _creator;
+        return _user;
     }
 
-    private transient ProductLangPath _product_lang;
+    private transient ProductLangPath _productLang;
 
     /**
      * Get the implicit to-many join path to the
      * <code>testshop2.product_lang</code> table
      */
-    public ProductLangPath product_lang() {
-        if (_product_lang == null)
-            _product_lang = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
+    public ProductLangPath productLang() {
+        if (_productLang == null)
+            _productLang = new ProductLangPath(this, null, Keys.FK_PRODUCT_LANG_PRODUCTID.getInverseKey());
 
-        return _product_lang;
+        return _productLang;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>testshop.lang</code>
+     * table
+     */
+    public LangPath lang() {
+        return productLang().lang();
     }
 
     @Override

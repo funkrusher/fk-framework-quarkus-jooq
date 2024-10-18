@@ -14,9 +14,6 @@ import org.fk.core.test.database.CoreTestDatabase;
 import org.fk.core.test.database.coretestdatabase.tables.Basic1;
 import org.fk.core.test.database.coretestdatabase.tables.Basic2;
 import org.fk.core.test.database.coretestdatabase.tables.Nested1;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic2;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.INested1;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic1Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic2Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Nested1Record;
@@ -75,10 +72,10 @@ class AbstractDAOTest {
         assertEquals(1, basic1DAO.insert(basic1Record1));
         assertEquals(1, basic1DAO.insert(basic1Record2));
 
-        assertEquals(2, basic1Record2.getAutoIncId());
+        assertEquals(2, basic1Record2.getAutoincid());
 
-        validateBasic1Equal(basic1Record1, resolveBasic1sFromDb(basic1Record1.getAutoIncId()).getFirst());
-        validateBasic1Equal(basic1Record2, resolveBasic1sFromDb(basic1Record2.getAutoIncId()).getFirst());
+        validateBasic1Equal(basic1Record1, resolveBasic1sFromDb(basic1Record1.getAutoincid()).getFirst());
+        validateBasic1Equal(basic1Record2, resolveBasic1sFromDb(basic1Record2.getAutoincid()).getFirst());
 
         // ------
         // basic2
@@ -89,22 +86,22 @@ class AbstractDAOTest {
         assertEquals(1, basic2DAO.insert(basic2Record1));
         assertEquals(1, basic2DAO.insert(basic2Record2));
 
-        validateBasic2Equal(basic2Record1, resolveBasic2sFromDb(basic2Record1.getUuidId()).getFirst());
-        validateBasic2Equal(basic2Record2, resolveBasic2sFromDb(basic2Record2.getUuidId()).getFirst());
+        validateBasic2Equal(basic2Record1, resolveBasic2sFromDb(basic2Record1.getUuidid()).getFirst());
+        validateBasic2Equal(basic2Record2, resolveBasic2sFromDb(basic2Record2.getUuidid()).getFirst());
 
         // -------
         // nested1
         // -------
         final Nested1Record nested1Record1 = createNested1Record(
-                Optional.of(basic1Record1.getAutoIncId()), Optional.of(basic2Record1.getUuidId()));
+            Optional.of(basic1Record1.getAutoincid()), Optional.of(basic2Record1.getUuidid()));
         final Nested1Record nested1Record2 = createNested1Record(
-                Optional.of(basic1Record2.getAutoIncId()), Optional.of(basic2Record2.getUuidId()));
+            Optional.of(basic1Record2.getAutoincid()), Optional.of(basic2Record2.getUuidid()));
 
         assertEquals(1, nested1DAO.insert(nested1Record1));
         assertEquals(1, nested1DAO.insert(nested1Record2));
 
-        validateNested1Equal(nested1Record1, resolveNested1sFromDb(basic1Record1.getAutoIncId()).getFirst());
-        validateNested1Equal(nested1Record2, resolveNested1sFromDb(basic1Record2.getAutoIncId()).getFirst());
+        validateNested1Equal(nested1Record1, resolveNested1sFromDb(basic1Record1.getAutoincid()).getFirst());
+        validateNested1Equal(nested1Record2, resolveNested1sFromDb(basic1Record2.getAutoincid()).getFirst());
 
         // ----------------
         // final validation
@@ -113,8 +110,8 @@ class AbstractDAOTest {
         assertBasic2Count(2);
         assertNested1Count(2);
 
-        insertedUuids.put(1, basic2Record1.getUuidId());
-        insertedUuids.put(2, basic2Record2.getUuidId());
+        insertedUuids.put(1, basic2Record1.getUuidid());
+        insertedUuids.put(2, basic2Record2.getUuidid());
     }
 
     @Test
@@ -130,9 +127,9 @@ class AbstractDAOTest {
 
         assertEquals(3, basic1DAO.insert(basic1Recs));
 
-        assertEquals(7, basic1Record3.getAutoIncId());
+        assertEquals(7, basic1Record3.getAutoincid());
 
-        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(IBasic1::getAutoIncId).toList()));
+        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(Basic1Record::getAutoincid).toList()));
 
         // ------
         // basic2
@@ -144,22 +141,22 @@ class AbstractDAOTest {
 
         assertEquals(3, basic2DAO.upsert(basic2Recs));
 
-        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(IBasic2::getUuidId).toList()));
+        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(Basic2Record::getUuidid).toList()));
 
         // -------
         // nested1
         // -------
         final Nested1Record nested1Record1 = createNested1Record(
-                Optional.of(basic1Record1.getAutoIncId()), Optional.of(basic2Record1.getUuidId()));
+            Optional.of(basic1Record1.getAutoincid()), Optional.of(basic2Record1.getUuidid()));
         final Nested1Record nested1Record2 = createNested1Record(
-                Optional.of(basic1Record2.getAutoIncId()), Optional.of(basic2Record2.getUuidId()));
+            Optional.of(basic1Record2.getAutoincid()), Optional.of(basic2Record2.getUuidid()));
         final Nested1Record nested1Record3 = createNested1Record(
-                Optional.of(basic1Record3.getAutoIncId()), Optional.of(basic2Record3.getUuidId()));
+            Optional.of(basic1Record3.getAutoincid()), Optional.of(basic2Record3.getUuidid()));
         final List<Nested1Record> nested1Recs = List.of(nested1Record1, nested1Record2, nested1Record3);
 
         assertEquals(3, nested1DAO.insert(nested1Recs));
 
-        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(INested1::getAutoIncId).toList()));
+        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(Nested1Record::getAutoincid).toList()));
 
         // -----
         // other
@@ -176,9 +173,9 @@ class AbstractDAOTest {
         assertBasic2Count(5);
         assertNested1Count(5);
 
-        insertedUuids.put(5, basic2Record1.getUuidId());
-        insertedUuids.put(6, basic2Record2.getUuidId());
-        insertedUuids.put(7, basic2Record3.getUuidId());
+        insertedUuids.put(5, basic2Record1.getUuidid());
+        insertedUuids.put(6, basic2Record2.getUuidid());
+        insertedUuids.put(7, basic2Record3.getUuidid());
     }
 
     @Test
@@ -195,9 +192,9 @@ class AbstractDAOTest {
 
         assertEquals(3, basic1DAO.upsert(basic1Recs));
 
-        assertEquals(13, basic1Record3.getAutoIncId());
+        assertEquals(13, basic1Record3.getAutoincid());
 
-        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(IBasic1::getAutoIncId).toList()));
+        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(Basic1Record::getAutoincid).toList()));
 
         // ------
         // basic2
@@ -210,23 +207,23 @@ class AbstractDAOTest {
 
         assertEquals(3, basic2DAO.upsert(basic2Recs));
 
-        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(IBasic2::getUuidId).toList()));
+        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(Basic2Record::getUuidid).toList()));
 
         // -------
         // nested1
         // -------
         final Nested1Record nested1Record1 = createNested1Record(
-                Optional.of(basic1Record1.getAutoIncId()), Optional.of(basic2Record1.getUuidId())); // update
+            Optional.of(basic1Record1.getAutoincid()), Optional.of(basic2Record1.getUuidid())); // update
         nested1Record1.setString2("mimimi");
         final Nested1Record nested1Record2 = createNested1Record(
-                Optional.of(basic1Record2.getAutoIncId()), Optional.of(basic2Record2.getUuidId())); // insert
+            Optional.of(basic1Record2.getAutoincid()), Optional.of(basic2Record2.getUuidid())); // insert
         final Nested1Record nested1Record3 = createNested1Record(
-                Optional.of(basic1Record3.getAutoIncId()), Optional.of(basic2Record3.getUuidId())); // insert
+            Optional.of(basic1Record3.getAutoincid()), Optional.of(basic2Record3.getUuidid())); // insert
         final List<Nested1Record> nested1Recs = List.of(nested1Record1, nested1Record2, nested1Record3);
 
         assertEquals(3, nested1DAO.upsert(nested1Recs));
 
-        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(INested1::getAutoIncId).toList()));
+        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(Nested1Record::getAutoincid).toList()));
 
         // -----
         // other
@@ -256,7 +253,7 @@ class AbstractDAOTest {
 
         basic1DAO.update(basic1Record1);
 
-        validateBasic1Equal(basic1Record1, resolveBasic1sFromDb(basic1Record1.getAutoIncId()).getFirst());
+        validateBasic1Equal(basic1Record1, resolveBasic1sFromDb(basic1Record1.getAutoincid()).getFirst());
 
         // ------
         // basic2
@@ -267,7 +264,7 @@ class AbstractDAOTest {
 
         basic2DAO.update(basic2Record1);
 
-        validateBasic2Equal(basic2Record1, resolveBasic2sFromDb(basic2Record1.getUuidId()).getFirst());
+        validateBasic2Equal(basic2Record1, resolveBasic2sFromDb(basic2Record1.getUuidid()).getFirst());
 
         // -------
         // nested1
@@ -278,7 +275,7 @@ class AbstractDAOTest {
 
         nested1DAO.update(nested1Record1);
 
-        validateNested1Equal(nested1Record1, resolveNested1sFromDb(nested1Record1.getAutoIncId()).getFirst());
+        validateNested1Equal(nested1Record1, resolveNested1sFromDb(nested1Record1.getAutoincid()).getFirst());
 
         // ----------------
         // final validation
@@ -302,7 +299,7 @@ class AbstractDAOTest {
 
         basic1DAO.update(basic1Recs);
 
-        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(IBasic1::getAutoIncId).toList()));
+        validateBasic1Equal(basic1Recs, resolveBasic1sFromDb(basic1Recs.stream().map(Basic1Record::getAutoincid).toList()));
 
         // ------
         // basic2
@@ -316,7 +313,7 @@ class AbstractDAOTest {
 
         basic2DAO.update(basic2Recs);
 
-        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(IBasic2::getUuidId).toList()));
+        validateBasic2Equal(basic2Recs, resolveBasic2sFromDb(basic2Recs.stream().map(Basic2Record::getUuidid).toList()));
 
         // -------
         // nested1
@@ -330,7 +327,7 @@ class AbstractDAOTest {
 
         nested1DAO.update(nested1Recs);
 
-        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(INested1::getAutoIncId).toList()));
+        validateNested1Equal(nested1Recs, resolveNested1sFromDb(nested1Recs.stream().map(Nested1Record::getAutoincid).toList()));
 
         // -----
         // other
@@ -439,7 +436,7 @@ class AbstractDAOTest {
 
         nested1DAO.delete(nested1Record1);
 
-        assertEquals(0, resolveNested1sFromDb(nested1Record1.getAutoIncId()).size());
+        assertEquals(0, resolveNested1sFromDb(nested1Record1.getAutoincid()).size());
 
         // ------
         // basic1
@@ -448,7 +445,7 @@ class AbstractDAOTest {
 
         basic1DAO.delete(basic1Record1);
 
-        assertEquals(0, resolveBasic1sFromDb(basic1Record1.getAutoIncId()).size());
+        assertEquals(0, resolveBasic1sFromDb(basic1Record1.getAutoincid()).size());
 
         // ------
         // basic2
@@ -458,7 +455,7 @@ class AbstractDAOTest {
 
         basic2DAO.delete(basic2Record1);
 
-        assertEquals(0, resolveBasic2sFromDb(basic2Record1.getUuidId()).size());
+        assertEquals(0, resolveBasic2sFromDb(basic2Record1.getUuidid()).size());
 
         // ----------------
         // final validation
@@ -481,7 +478,7 @@ class AbstractDAOTest {
 
         nested1DAO.delete(nested1Recs);
 
-        assertEquals(0, resolveNested1sFromDb(nested1Recs.stream().map(INested1::getAutoIncId).toList()).size());
+        assertEquals(0, resolveNested1sFromDb(nested1Recs.stream().map(Nested1Record::getAutoincid).toList()).size());
 
         // ------
         // basic1
@@ -492,7 +489,7 @@ class AbstractDAOTest {
 
         basic1DAO.delete(basic1Recs);
 
-        assertEquals(0, resolveBasic1sFromDb(basic1Recs.stream().map(IBasic1::getAutoIncId).toList()).size());
+        assertEquals(0, resolveBasic1sFromDb(basic1Recs.stream().map(Basic1Record::getAutoincid).toList()).size());
 
         // ------
         // basic2
@@ -504,7 +501,7 @@ class AbstractDAOTest {
 
         basic2DAO.delete(basic2Recs);
 
-        assertEquals(0, resolveBasic2sFromDb(basic2Recs.stream().map(IBasic2::getUuidId).toList()).size());
+        assertEquals(0, resolveBasic2sFromDb(basic2Recs.stream().map(Basic2Record::getUuidid).toList()).size());
 
         // -----
         // other
@@ -594,106 +591,121 @@ class AbstractDAOTest {
 
     private Basic1Record createBasic1Record(Optional<Integer> maybeAutoIncId) {
         Basic1Record rec = new Basic1Record();
-        maybeAutoIncId.ifPresent(rec::setAutoIncId);
-        rec.setClientId(1);
+        maybeAutoIncId.ifPresent(rec::setAutoincid);
+        rec.setClientid(1);
         rec.setString1("test1");
         return rec;
     }
+
     private Basic2Record createBasic2Record(Optional<UUID> maybeUuidId) {
         Basic2Record rec = new Basic2Record();
-        maybeUuidId.ifPresent(rec::setUuidId);
-        rec.setClientId(1);
+        maybeUuidId.ifPresent(rec::setUuidid);
+        rec.setClientid(1);
         rec.setString1("test1");
         return rec;
     }
+
     private Nested1Record createNested1Record(Optional<Integer> maybeAutoIncId, Optional<UUID> maybeUuidId) {
         Nested1Record rec = new Nested1Record();
-        maybeAutoIncId.ifPresent(rec::setAutoIncId);
-        maybeUuidId.ifPresent(rec::setUuidId);
+        maybeAutoIncId.ifPresent(rec::setAutoincid);
+        maybeUuidId.ifPresent(rec::setUuidid);
         rec.setString1("test1");
         return rec;
     }
+
     private void validateBasic1Equal(List<Basic1Record> expecteds, List<Basic1Record> existings) {
         assertEquals(existings.size(), expecteds.size());
         for (Basic1Record expected : expecteds) {
-            Basic1Record existing = existings.stream().filter(x -> x.getAutoIncId().equals(expected.getAutoIncId())).toList().getFirst();
+            Basic1Record existing = existings.stream().filter(x -> x.getAutoincid().equals(expected.getAutoincid())).toList().getFirst();
             validateBasic1Equal(expected, existing);
         }
     }
+
     private void validateBasic1Equal(Basic1Record expected, Basic1Record existing) {
         assertNotNull(expected);
         assertNotNull(existing);
-        assertEquals(expected.getAutoIncId(), existing.getAutoIncId());
-        assertEquals(expected.getClientId(), existing.getClientId());
+        assertEquals(expected.getAutoincid(), existing.getAutoincid());
+        assertEquals(expected.getClientid(), existing.getClientid());
         assertEquals(expected.getString1(), existing.getString1());
     }
+
     private void validateBasic2Equal(List<Basic2Record> expecteds, List<Basic2Record> existings) {
         assertEquals(existings.size(), expecteds.size());
         for (Basic2Record expected : expecteds) {
-            Basic2Record existing = existings.stream().filter(x -> x.getUuidId().equals(expected.getUuidId())).toList().getFirst();
+            Basic2Record existing = existings.stream().filter(x -> x.getUuidid().equals(expected.getUuidid())).toList().getFirst();
             validateBasic2Equal(expected, existing);
         }
     }
+
     private void validateBasic2Equal(Basic2Record expected, Basic2Record existing) {
         assertNotNull(expected);
         assertNotNull(existing);
-        assertEquals(expected.getUuidId(), existing.getUuidId());
-        assertEquals(expected.getClientId(), existing.getClientId());
+        assertEquals(expected.getUuidid(), existing.getUuidid());
+        assertEquals(expected.getClientid(), existing.getClientid());
         assertEquals(expected.getString1(), existing.getString1());
     }
+
     private void validateNested1Equal(List<Nested1Record> expecteds, List<Nested1Record> existings) {
         assertEquals(existings.size(), expecteds.size());
         for (Nested1Record expected : expecteds) {
             Nested1Record existing = existings.stream()
-                    .filter(x -> x.getUuidId().equals(expected.getUuidId())
-                            && x.getAutoIncId().equals(expected.getAutoIncId())).toList().getFirst();
+                .filter(x -> x.getUuidid().equals(expected.getUuidid())
+                    && x.getAutoincid().equals(expected.getAutoincid())).toList().getFirst();
             validateNested1Equal(expected, existing);
         }
     }
+
     private void validateNested1Equal(Nested1Record expected, Nested1Record existing) {
         assertNotNull(expected);
         assertNotNull(existing);
-        assertEquals(expected.getAutoIncId(), existing.getAutoIncId());
-        assertEquals(expected.getUuidId(), existing.getUuidId());
+        assertEquals(expected.getAutoincid(), existing.getAutoincid());
+        assertEquals(expected.getUuidid(), existing.getUuidid());
         assertEquals(expected.getString1(), existing.getString1());
     }
 
     private List<Basic1Record> resolveBasic1sFromDb(Integer... ids) {
         return resolveBasic1sFromDb(asList(ids));
     }
+
     private List<Basic1Record> resolveBasic1sFromDb(List<Integer> ids) {
         return dsl.select()
-                .from(Basic1.BASIC1)
-                .where(Basic1.BASIC1.AUTOINCID.in(ids))
-                .fetchInto(Basic1Record.class);
+            .from(Basic1.BASIC1)
+            .where(Basic1.BASIC1.AUTOINCID.in(ids))
+            .fetchInto(Basic1Record.class);
     }
+
     private List<Basic2Record> resolveBasic2sFromDb(UUID... ids) {
         return resolveBasic2sFromDb(asList(ids));
     }
+
     private List<Basic2Record> resolveBasic2sFromDb(List<UUID> ids) {
         return dsl.select()
-                .from(Basic2.BASIC2)
-                .where(Basic2.BASIC2.UUIDID.in(ids))
-                .fetchInto(Basic2Record.class);
+            .from(Basic2.BASIC2)
+            .where(Basic2.BASIC2.UUIDID.in(ids))
+            .fetchInto(Basic2Record.class);
     }
 
     private List<Nested1Record> resolveNested1sFromDb(Integer... ids) {
         return resolveNested1sFromDb(asList(ids));
     }
+
     private List<Nested1Record> resolveNested1sFromDb(List<Integer> ids) {
         return dsl.select()
-                .from(Nested1.NESTED1)
-                .where(Nested1.NESTED1.AUTOINCID.in(ids))
-                .fetchInto(Nested1Record.class);
+            .from(Nested1.NESTED1)
+            .where(Nested1.NESTED1.AUTOINCID.in(ids))
+            .fetchInto(Nested1Record.class);
     }
+
     private void assertBasic1Count(int expectedCount) {
         int count = dsl.fetchCount(dsl.selectFrom(Basic1.BASIC1));
         assertEquals(count, expectedCount);
     }
+
     private void assertBasic2Count(int expectedCount) {
         int count = dsl.fetchCount(dsl.selectFrom(Basic2.BASIC2));
         assertEquals(count, expectedCount);
     }
+
     private void assertNested1Count(int expectedCount) {
         int count = dsl.fetchCount(dsl.selectFrom(Nested1.NESTED1));
         assertEquals(count, expectedCount);

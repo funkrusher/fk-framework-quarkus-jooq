@@ -1,6 +1,5 @@
 package org.fk.database2;
 
-import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkPostgres;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
@@ -19,13 +18,8 @@ public class Database2CodeGenerator {
                             .withPassword(fkPostgres.getPassword()))
                     .withGenerator(new Generator()
                             .withGenerate(new Generate()
-                                    .withInterfaces(true)
-                                    .withSerializableInterfaces(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                            )
-                            .withStrategy(new Strategy()
-                                    .withName(FkGeneratorStrategy.class.getName())
                             )
                             .withDatabase(new Database()
                                     .withName(PostgresDatabase.class.getName())

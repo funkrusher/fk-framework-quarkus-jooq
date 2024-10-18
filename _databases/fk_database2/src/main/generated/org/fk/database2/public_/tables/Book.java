@@ -169,16 +169,16 @@ public class Book extends TableImpl<BookRecord> {
         return Arrays.asList(Keys.BOOK__BOOK_AUTHOR_ID_FKEY);
     }
 
-    private transient AuthorPath _fkey;
+    private transient AuthorPath _author;
 
     /**
      * Get the implicit join path to the <code>public.author</code> table.
      */
-    public AuthorPath fkey() {
-        if (_fkey == null)
-            _fkey = new AuthorPath(this, Keys.BOOK__BOOK_AUTHOR_ID_FKEY, null);
+    public AuthorPath author() {
+        if (_author == null)
+            _author = new AuthorPath(this, Keys.BOOK__BOOK_AUTHOR_ID_FKEY, null);
 
-        return _fkey;
+        return _author;
     }
 
     @Override

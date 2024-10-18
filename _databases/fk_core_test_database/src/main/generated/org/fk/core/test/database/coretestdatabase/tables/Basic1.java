@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import org.fk.core.test.database.coretestdatabase.Coretestdatabase;
 import org.fk.core.test.database.coretestdatabase.Keys;
+import org.fk.core.test.database.coretestdatabase.tables.Basic2.Basic2Path;
 import org.fk.core.test.database.coretestdatabase.tables.Nested1.Nested1Path;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic1Record;
 import org.jooq.Condition;
@@ -173,17 +174,25 @@ public class Basic1 extends TableImpl<Basic1Record> {
         return Keys.KEY_BASIC1_PRIMARY;
     }
 
-    private transient Nested1Path _Nested1;
+    private transient Nested1Path _nested1;
 
     /**
      * Get the implicit to-many join path to the
      * <code>coreTestDatabase.Nested1</code> table
      */
-    public Nested1Path Nested1() {
-        if (_Nested1 == null)
-            _Nested1 = new Nested1Path(this, null, Keys.FK_NESTED1_AUTOINCID.getInverseKey());
+    public Nested1Path nested1() {
+        if (_nested1 == null)
+            _nested1 = new Nested1Path(this, null, Keys.FK_NESTED1_AUTOINCID.getInverseKey());
 
-        return _Nested1;
+        return _nested1;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the
+     * <code>coreTestDatabase.Basic2</code> table
+     */
+    public Basic2Path basic2() {
+        return nested1().basic2();
     }
 
     @Override

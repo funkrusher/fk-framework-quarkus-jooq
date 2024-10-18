@@ -2,24 +2,19 @@ package org.fk.product.repository;
 
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.jooq.QueryJooqMapper;
-
-import static org.fk.core.jooq.JooqHelper.nullableMapping;
-import static org.fk.database1.testshop2.tables.Product.PRODUCT;
-import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
-import static org.fk.database1.testshop.tables.User.USER;
-import static org.fk.database1.testshop.tables.Lang.LANG;
-
 import org.fk.core.query.model.FkQuery;
 import org.fk.core.repository.AbstractRepository;
-import org.fk.product.dto.ProductDTO;
-import org.fk.product.dto.ProductLangDTO;
-import org.fk.product.dto.LangDTO;
-import org.fk.product.dto.RoleDTO;
-import org.fk.product.dto.UserDTO;
-import org.jooq.*;
+import org.fk.product.dto.*;
+import org.jooq.DSLContext;
+import org.jooq.Record1;
+import org.jooq.SelectFinalStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.fk.database1.testshop.tables.Lang.LANG;
+import static org.fk.database1.testshop.tables.User.USER;
+import static org.fk.database1.testshop2.tables.Product.PRODUCT;
+import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.jooq.impl.DSL.*;
 
 public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
@@ -40,30 +35,21 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                 row(
                     PRODUCT,
                     row(
-                        PRODUCT.creator().USERID,
-                        PRODUCT.creator().CLIENTID,
-                        PRODUCT.creator().EMAIL,
-                        PRODUCT.creator().FIRSTNAME,
-                        PRODUCT.creator().LASTNAME,
+                        PRODUCT.user(),
                         multiset(
                             select(
-                                PRODUCT.creator().user_role().role().ROLEID
-                            ).from(PRODUCT.creator().user_role().role())
-                        ).convertFrom(r -> r.map(Records.mapping(RoleDTO::new)))
-                    ).convertFrom(nullableMapping(UserDTO::new)),
+                                PRODUCT.user().userRole().role().ROLEID
+                            ).from(PRODUCT.user().userRole().role())
+                        ).convertFrom(r -> r.map(RoleDTO::create))
+                    ).convertFrom(UserDTO::createOrNull),
                     multiset(
                         select(
-                            PRODUCT.product_lang().PRODUCTID,
-                            PRODUCT.product_lang().LANGID,
-                            PRODUCT.product_lang().NAME,
-                            PRODUCT.product_lang().DESCRIPTION,
+                            PRODUCT.productLang(),
                             row(
-                                PRODUCT.product_lang().lang().LANGID,
-                                PRODUCT.product_lang().lang().CODE,
-                                PRODUCT.product_lang().lang().DESCRIPTION
-                            ).convertFrom(Records.mapping(LangDTO::new))
-                        ).from(PRODUCT.product_lang())
-                    ).convertFrom(r -> r.map(Records.mapping(ProductLangDTO::new)))
+                                PRODUCT.productLang().lang()
+                            ).convertFrom(LangDTO::create)
+                        ).from(PRODUCT.productLang())
+                    ).convertFrom(r -> r.map(ProductLangDTO::create))
                 ).convertFrom(ProductDTO::create)
             )
             .from(PRODUCT

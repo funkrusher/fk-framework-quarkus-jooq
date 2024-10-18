@@ -11,6 +11,7 @@ import java.util.List;
 import org.fk.database1.testshop.Keys;
 import org.fk.database1.testshop.Testshop;
 import org.fk.database1.testshop.tables.Client.ClientPath;
+import org.fk.database1.testshop.tables.Role.RolePath;
 import org.fk.database1.testshop.tables.UserRole.UserRolePath;
 import org.fk.database1.testshop.tables.records.UserRecord;
 import org.fk.database1.testshop2.tables.Product.ProductPath;
@@ -177,17 +178,17 @@ public class User extends TableImpl<UserRecord> {
         return _client;
     }
 
-    private transient UserRolePath _user_role;
+    private transient UserRolePath _userRole;
 
     /**
      * Get the implicit to-many join path to the <code>testshop.user_role</code>
      * table
      */
-    public UserRolePath user_role() {
-        if (_user_role == null)
-            _user_role = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
+    public UserRolePath userRole() {
+        if (_userRole == null)
+            _userRole = new UserRolePath(this, null, Keys.FK_USER_ROLE_USERID.getInverseKey());
 
-        return _user_role;
+        return _userRole;
     }
 
     private transient ProductPath _product;
@@ -201,6 +202,14 @@ public class User extends TableImpl<UserRecord> {
             _product = new ProductPath(this, null, org.fk.database1.testshop2.Keys.FK_PRODUCT_CREATORID.getInverseKey());
 
         return _product;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>testshop.role</code>
+     * table
+     */
+    public RolePath role() {
+        return userRole().role();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package org.fk.product.dao;
 
 import org.fk.database1.testshop.tables.Post;
-import org.fk.database1.testshop.tables.interfaces.IPost;
 import org.fk.database1.testshop.tables.records.PostRecord;
 import org.fk.core.dao.AbstractDAO;
 import org.jooq.DSLContext;

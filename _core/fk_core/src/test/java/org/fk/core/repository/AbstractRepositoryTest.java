@@ -16,9 +16,6 @@ import org.fk.core.test.database.CoreTestDatabase;
 import org.fk.core.test.database.coretestdatabase.tables.Basic1;
 import org.fk.core.test.database.coretestdatabase.tables.Basic2;
 import org.fk.core.test.database.coretestdatabase.tables.Nested1;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic1;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.IBasic2;
-import org.fk.core.test.database.coretestdatabase.tables.interfaces.INested1;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic1Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Basic2Record;
 import org.fk.core.test.database.coretestdatabase.tables.records.Nested1Record;
@@ -59,23 +56,23 @@ class AbstractRepositoryTest {
         for (int i = 1; i < 201; i++) {
             UUID insertId = UUID.randomUUID();
             basic1s.add(new Basic1Record()
-                .setClientId(1)
-                .setAutoIncId(i)
+                .setClientid(1)
+                .setAutoincid(i)
                 .setString1("test-" + i));
             basic2s.add(new Basic2Record()
-                .setClientId(1)
-                .setUuidId(insertId));
+                .setClientid(1)
+                .setUuidid(insertId));
 
             if (i > 180) {
                 nested1s.add(new Nested1Record()
-                    .setAutoIncId(i)
-                    .setUuidId(insertId)
+                    .setAutoincid(i)
+                    .setUuidid(insertId)
                     .setInteger1(i)
                     .setDecimal1(new BigDecimal(String.valueOf(i))));
             } else {
                 nested1s.add(new Nested1Record()
-                    .setAutoIncId(i)
-                    .setUuidId(insertId)
+                    .setAutoincid(i)
+                    .setUuidid(insertId)
                     .setDecimal1(new BigDecimal(String.valueOf(i))));
             }
         }
@@ -251,15 +248,15 @@ class AbstractRepositoryTest {
                         Basic1.BASIC1.CLIENTID,
                         multiset(
                             select(
-                                Basic1.BASIC1.Nested1().AUTOINCID,
-                                Basic1.BASIC1.Nested1().UUIDID,
-                                Basic1.BASIC1.Nested1().STRING1,
-                                Basic1.BASIC1.Nested1().STRING2,
-                                Basic1.BASIC1.Nested1().INTEGER1,
-                                Basic1.BASIC1.Nested1().LONG1,
-                                Basic1.BASIC1.Nested1().DECIMAL1,
-                                Basic1.BASIC1.Nested1().DATETIME1
-                            ).from(Basic1.BASIC1.Nested1())
+                                Basic1.BASIC1.nested1().AUTOINCID,
+                                Basic1.BASIC1.nested1().UUIDID,
+                                Basic1.BASIC1.nested1().STRING1,
+                                Basic1.BASIC1.nested1().STRING2,
+                                Basic1.BASIC1.nested1().INTEGER1,
+                                Basic1.BASIC1.nested1().LONG1,
+                                Basic1.BASIC1.nested1().DECIMAL1,
+                                Basic1.BASIC1.nested1().DATETIME1
+                            ).from(Basic1.BASIC1.nested1())
                         ).convertFrom(r -> r.map(Records.mapping(Nested1DTO::new)))
                     ).convertFrom(Records.mapping(Basic1DTO::new))
                 )

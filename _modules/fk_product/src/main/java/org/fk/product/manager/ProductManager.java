@@ -105,8 +105,8 @@ public class ProductManager extends AbstractManager {
         List<ProductRecord> inserts = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();
-            insert1.setProductId(90000000L + i);
-            insert1.setClientId(1);
+            insert1.setProductid(90000000L + i);
+            insert1.setClientid(1);
             insert1.setPrice(new BigDecimal("12.21"));
             inserts.add(insert1);
         }
@@ -161,23 +161,23 @@ public class ProductManager extends AbstractManager {
             this.validate(updateProductRequest);
 
             ProductRecord update = new ProductRecord()
-                .setProductId(updateProductRequest.productId())
-                .setClientId(updateProductRequest.clientId())
+                .setProductid(updateProductRequest.productId())
+                .setClientid(updateProductRequest.clientId())
                 .setPrice(updateProductRequest.price())
-                .setTypeId(updateProductRequest.typeId());
+                .setTypeid(updateProductRequest.typeId());
 
             productDAO.update(update);
-            ProductRecord result = productDAO.fetch(update.getProductId());
+            ProductRecord result = productDAO.fetch(update.getProductid());
 
             return UpdateProductResponse.builder()
-                .productId(result.getProductId())
-                .clientId(result.getClientId())
+                .productId(result.getProductid())
+                .clientId(result.getClientid())
                 .price(result.getPrice())
-                .typeId(result.getTypeId())
-                .createdAt(result.getCreatedAt())
-                .updatedAt(result.getUpdatedAt())
+                .typeId(result.getTypeid())
+                .createdAt(result.getCreatedat())
+                .updatedAt(result.getUpdatedat())
                 .deleted(result.getDeleted())
-                .creatorId(result.getCreatorId())
+                .creatorId(result.getCreatorid())
                 .build();
         });
     }
@@ -197,10 +197,10 @@ public class ProductManager extends AbstractManager {
 
             // Put the changed-fields into the DB-Record of Jooq so the DAO only saves the changed fields to the DB.
             ProductRecord update = new ProductRecord();
-            update.setProductId(updateProductRequest.productId());
+            update.setProductid(updateProductRequest.productId());
             if (map.containsKey("price")) update.setPrice(updateProductRequest.price());
-            if (map.containsKey("clientId")) update.setClientId(updateProductRequest.clientId());
-            if (map.containsKey("typeId")) update.setTypeId(updateProductRequest.typeId());
+            if (map.containsKey("clientId")) update.setClientid(updateProductRequest.clientId());
+            if (map.containsKey("typeId")) update.setTypeid(updateProductRequest.typeId());
 
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             productDAO.update(update);
