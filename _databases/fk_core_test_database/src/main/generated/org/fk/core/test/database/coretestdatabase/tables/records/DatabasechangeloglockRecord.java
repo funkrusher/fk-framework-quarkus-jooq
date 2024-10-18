@@ -147,19 +147,4 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
         setLOCKEDBY(LOCKEDBY);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised DatabasechangeloglockRecord
-     */
-    public DatabasechangeloglockRecord(org.fk.core.test.database.coretestdatabase.tables.pojos.Databasechangeloglock value) {
-        super(Databasechangeloglock.DATABASECHANGELOGLOCK);
-
-        if (value != null) {
-            setID(value.getID());
-            setLOCKED(value.getLOCKED());
-            setLOCKGRANTED(value.getLOCKGRANTED());
-            setLOCKEDBY(value.getLOCKEDBY());
-            resetChangedOnNotNull();
-        }
-    }
 }

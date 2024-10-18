@@ -342,6 +342,7 @@ Start the jOOQ Code-Generator from the Console with following command:
 ```code
 ./gradlew generateDatabase1JooqCode
 ./gradlew generateDatabase2JooqCode
+./gradlew generateCoreTestDatabaseJooqCode
 ...
 ```
 The generated code will reside in the folder `_databases/fk_databaseX/src/main/generated`. 

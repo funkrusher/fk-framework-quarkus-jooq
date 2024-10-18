@@ -168,20 +168,4 @@ public class QrtzCronTriggersRecord extends UpdatableRecordImpl<QrtzCronTriggers
         setTIME_ZONE_ID(TIME_ZONE_ID);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzCronTriggersRecord
-     */
-    public QrtzCronTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzCronTriggers value) {
-        super(QrtzCronTriggers.QRTZ_CRON_TRIGGERS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setTRIGGER_NAME(value.getTRIGGER_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            setCRON_EXPRESSION(value.getCRON_EXPRESSION());
-            setTIME_ZONE_ID(value.getTIME_ZONE_ID());
-            resetChangedOnNotNull();
-        }
-    }
 }

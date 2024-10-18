@@ -224,23 +224,4 @@ public class Nested1Record extends UpdatableRecordImpl<Nested1Record> implements
         setDateTime1(dateTime1);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised Nested1Record
-     */
-    public Nested1Record(org.fk.core.test.database.coretestdatabase.tables.pojos.Nested1 value) {
-        super(Nested1.NESTED1);
-
-        if (value != null) {
-            setAutoIncId(value.getAutoIncId());
-            setUuidId(value.getUuidId());
-            setString1(value.getString1());
-            setString2(value.getString2());
-            setInteger1(value.getInteger1());
-            setLong1(value.getLong1());
-            setDecimal1(value.getDecimal1());
-            setDateTime1(value.getDateTime1());
-            resetChangedOnNotNull();
-        }
-    }
 }

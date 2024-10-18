@@ -229,23 +229,4 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements
         setCreatorId(creatorId);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised ProductRecord
-     */
-    public ProductRecord(org.fk.database1.testshop2.tables.pojos.Product value) {
-        super(Product.PRODUCT);
-
-        if (value != null) {
-            setProductId(value.getProductId());
-            setClientId(value.getClientId());
-            setPrice(value.getPrice());
-            setTypeId(value.getTypeId());
-            setCreatedAt(value.getCreatedAt());
-            setUpdatedAt(value.getUpdatedAt());
-            setDeleted(value.getDeleted());
-            setCreatorId(value.getCreatorId());
-            resetChangedOnNotNull();
-        }
-    }
 }

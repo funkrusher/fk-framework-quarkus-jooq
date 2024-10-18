@@ -1,6 +1,5 @@
 package org.fk.core.query.jooq;
 
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.model.FkFilter;
 import org.fk.core.query.model.FkQuery;
@@ -15,7 +14,7 @@ import java.util.stream.Stream;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
-public class QueryExecutor<D extends AbstractDTO, T> {
+public class QueryExecutor<D, T> {
 
     private final Field<?> idField;
     private final QueryFunction<D> queryFunction;

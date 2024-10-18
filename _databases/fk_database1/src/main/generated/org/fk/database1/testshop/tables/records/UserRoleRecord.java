@@ -105,17 +105,4 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
         setRoleId(roleId);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised UserRoleRecord
-     */
-    public UserRoleRecord(org.fk.database1.testshop.tables.pojos.UserRole value) {
-        super(UserRole.USER_ROLE);
-
-        if (value != null) {
-            setUserId(value.getUserId());
-            setRoleId(value.getRoleId());
-            resetChangedOnNotNull();
-        }
-    }
 }

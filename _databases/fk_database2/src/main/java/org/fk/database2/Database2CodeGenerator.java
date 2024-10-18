@@ -1,6 +1,5 @@
 package org.fk.database2;
 
-import org.fk.core.jooq.FkGeneratedFilesPostProcessor;
 import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkPostgres;
 import org.jooq.codegen.GenerationTool;
@@ -22,10 +21,8 @@ public class Database2CodeGenerator {
                             .withGenerate(new Generate()
                                     .withInterfaces(true)
                                     .withSerializableInterfaces(true)
-                                    .withPojos(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                                    .withPojosEqualsAndHashCode(false)
                             )
                             .withStrategy(new Strategy()
                                     .withName(FkGeneratorStrategy.class.getName())
@@ -41,8 +38,6 @@ public class Database2CodeGenerator {
                             .withTarget(new Target()
                                     .withPackageName("org.fk.database2")
                                     .withDirectory("src/main/generated"))));
-
-            new FkGeneratedFilesPostProcessor().processFiles("src/main/generated");
         }
     }
 }

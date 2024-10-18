@@ -1,11 +1,13 @@
 package org.fk.core.testcontainers;
 
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
 import org.fk.core.exception.MappingException;
 import org.jboss.logging.Logger;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.shaded.org.awaitility.Awaitility;
 import org.testcontainers.utility.DockerImageName;
-
+import com.github.dockerjava.api.model.ExposedPort;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -49,19 +51,22 @@ public class FkMariaDb implements AutoCloseable {
         //noinspection resource
         @SuppressWarnings("java:S2095")
         MariaDBContainer<?> tempContainer = new MariaDBContainer<>(DockerImageName.parse("mariadb:10.7.8"))
-                //.withReuse(true) // need to delete database where reuse=true (could boost performance)
-                .withDatabaseName(databaseName)
-                .withUsername("root")
-                .withPassword("")
-                .withTmpFs(Map.of("/var/lib/mysql", "rw"));
+            //.withReuse(true) // need to delete database where reuse=true (could boost performance)
+            .withDatabaseName(databaseName)
+            .withUsername("root")
+            .withPassword("")
+            .withTmpFs(Map.of("/var/lib/mysql", "rw"))
+            .withExposedPorts(3306)
+            .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+                .withPortBindings(new PortBinding(Ports.Binding.bindPort(3307), new ExposedPort(3306))));
         return tempContainer;
     }
 
     private void waitUntilContainerStarted(MariaDBContainer<?> initContainer) {
         Awaitility.await()
-                .atMost(Duration.ofSeconds(30))
-                .pollInterval(Duration.ofSeconds(1))
-                .until(initContainer::isRunning);
+            .atMost(Duration.ofSeconds(30))
+            .pollInterval(Duration.ofSeconds(1))
+            .until(initContainer::isRunning);
     }
 
     @SuppressWarnings("java:S1452")

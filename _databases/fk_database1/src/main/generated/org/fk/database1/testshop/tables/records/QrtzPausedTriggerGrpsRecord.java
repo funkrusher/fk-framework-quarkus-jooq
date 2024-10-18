@@ -106,17 +106,4 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
         setTRIGGER_GROUP(TRIGGER_GROUP);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzPausedTriggerGrpsRecord
-     */
-    public QrtzPausedTriggerGrpsRecord(org.fk.database1.testshop.tables.pojos.QrtzPausedTriggerGrps value) {
-        super(QrtzPausedTriggerGrps.QRTZ_PAUSED_TRIGGER_GRPS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            resetChangedOnNotNull();
-        }
-    }
 }

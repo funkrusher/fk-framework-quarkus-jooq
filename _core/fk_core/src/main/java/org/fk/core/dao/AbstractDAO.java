@@ -1,6 +1,5 @@
 package org.fk.core.dao;
 
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 import org.fk.core.request.RequestContext;
 import org.fk.core.ulid.UlidGenerator;
@@ -21,12 +20,12 @@ import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
  * <p>
  * This type is implemented by DAO classes to provide a common context-scoped API for common actions
  * </p>
+ *
  * @param <R> The generic rec type. This must be a jOOQ generated Record.
- * @param <Y> The generic interface that R needs to implement. This must be a jOOQ generated Interface
  * @param <T> The generic primary key type. Either a regular type for single-column keys,
- *          or a {@link Record} subtype for composite keys.
+ *            or a {@link Record} subtype for composite keys.
  */
-public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
+public abstract class AbstractDAO<R extends UpdatableRecord<R>, T> {
     private final DSLContext dsl;
     private final Table<R> table;
     private final RequestContext request;
@@ -81,78 +80,43 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     private static boolean isGeneratingPk(TableField<?, ?> primaryKeyField) {
         return Objects.requireNonNull(primaryKeyField.getTable())
-                .getReferences().stream()
-                .noneMatch(fk -> fk.getFields().getFirst().getName().equals(primaryKeyField.getName()));
+            .getReferences().stream()
+            .noneMatch(fk -> fk.getFields().getFirst().getName().equals(primaryKeyField.getName()));
     }
 
     /**
      * Finds the Non-FK AutoInc Primary-Key in the given table (we only expect one or none)
      *
-     * @param pk pk
-     * @return autoinc pk field
+     * @param pk  pk
      * @param <Q> table-type
+     * @return autoinc pk field
      */
     private static <Q extends UpdatableRecord<Q>> @Nullable Field<Object> findAutoIncGeneratingField(final UniqueKey<Q> pk) {
         //noinspection unchecked
         return (Field<Object>) pk.getFields().stream()
-                .filter(field -> isGeneratingPk(field) && field.getDataType().identity())
-                .findFirst()
-                .orElse(null);
+            .filter(field -> isGeneratingPk(field) && field.getDataType().identity())
+            .findFirst()
+            .orElse(null);
     }
 
     /**
      * Finds the Non-FK UUID Primary-Key in the given table (we only expect one or none)
      *
-     * @param pk pk
-     * @return uuid pk field
+     * @param pk  pk
      * @param <Q> table-type
+     * @return uuid pk field
      */
     private static <Q extends UpdatableRecord<Q>> @Nullable Field<UUID> findUuidGeneratingField(final UniqueKey<Q> pk) {
         //noinspection unchecked
         return (Field<UUID>) pk.getFields().stream()
-                .filter(field -> isGeneratingPk(field) && field.getDataType().isUUID())
-                .findFirst()
-                .orElse(null);
-    }
-
-    /**
-     * The main-purpose of this function is, to convert the DTO-classes to the Record-Classes, because
-     * only Record-Classes can directly be used within the jooq-statements, and we must map the modified-fields
-     * of the DTO-classes to the Record-classes.
-     *
-     * @param items items (Records of DTOs)
-     * @return recs
-     */
-    private List<R> prepareRecords(final List<? extends Y> items) {
-        if (items.isEmpty()) {
-            return Collections.emptyList();
-        } else if (items.getFirst() instanceof UpdatableRecord<?>) {
-            //noinspection unchecked
-            return (List<R>) items;
-        } else if (items.getFirst() instanceof AbstractDTO) {
-            final List<R> recs = new ArrayList<>();
-            for (final Y item : items) {
-                // transform DTO to Record.
-                final AbstractDTO dto = (AbstractDTO) item;
-                final R rec= dsl().newRecord(table(), dto);
-                rec.changed(false);
-                for (Field<?> field : rec.fields()) {
-                    // we need to transfer the DTO-changed markers to the Record-changed markers.
-                    if (dto.getBookKeeper().touched().containsKey(field.getName())) {
-                        rec.changed(field.getName(), true);
-                    }
-                }
-                recs.add(rec);
-            }
-            return recs;
-        } else {
-            // should be unreachable
-            throw new MappingException("unexpected implementation of DAO-typed interface!");
-        }
+            .filter(field -> isGeneratingPk(field) && field.getDataType().isUUID())
+            .findFirst()
+            .orElse(null);
     }
 
     /**
      * Enforce the expected clientId into the given record.
+     *
      * @param rec rec
      */
     private void enforceExpectedClientId(R rec) {
@@ -163,7 +127,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
     /**
      * Enforces the expected change-status for the primary-key fields in the given record.
-     * @param rec rec
+     *
+     * @param rec     rec
      * @param changed change-status
      */
     private void enforcePrimaryKeysChangeStatus(R rec, boolean changed) {
@@ -174,6 +139,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
 
     /**
      * Enforces that the given record has a generating id, and if not generated id and set it.
+     *
      * @param rec rec
      */
     private void enforceGeneratingIdExists(R rec) {
@@ -200,7 +166,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return recs prepared for insert
      */
     private List<R> prepareInserts(final List<R> recs) {
-        for (final R rec: recs) {
+        for (final R rec : recs) {
             this.enforceExpectedClientId(rec);
             this.enforceGeneratingIdExists(rec);
 
@@ -220,7 +186,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @return recs prepared for update
      */
     private List<R> prepareUpdates(final List<R> recs) {
-        for (final R rec: recs) {
+        for (final R rec : recs) {
             this.enforceExpectedClientId(rec);
 
             // primary key values are never allowed to be changed for an update!
@@ -369,12 +335,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * Performs a <code>INSERT</code> statement for a given set of items.
      *
      * @param items The items to be inserted
-     * @throws DataAccessException if something went wrong executing the query
-     *
      * @return insert-count of successful inserts.
+     * @throws DataAccessException if something went wrong executing the query
      */
     @SafeVarargs
-    public final int insert(final Y... items) throws DataAccessException {
+    public final int insert(final R... items) throws DataAccessException {
         return insert(asList(items));
     }
 
@@ -382,11 +347,10 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * Performs a <code>INSERT</code> statement for a given set of items.
      *
      * @param items The items to be inserted
-     * @throws DataAccessException if something went wrong executing the query
-     *
      * @return insert-count of successful inserts.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    public int insert(final List<Y> items) throws DataAccessException {
+    public int insert(final List<R> items) throws DataAccessException {
         return this.insert(items, INSERT);
     }
 
@@ -396,12 +360,11 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * (with help of: SQL ON DUPLICATE KEY UPDATE)
      *
      * @param items The items to be upserted
-     * @throws DataAccessException if something went wrong executing the query
-     *
      * @return upsert-count of successful upserts.
+     * @throws DataAccessException if something went wrong executing the query
      */
     @SafeVarargs
-    public final int upsert(final Y... items) throws DataAccessException {
+    public final int upsert(final R... items) throws DataAccessException {
         return upsert(asList(items));
     }
 
@@ -411,11 +374,10 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * (with help of: SQL ON DUPLICATE KEY UPDATE)
      *
      * @param items The items to be upserted
-     * @throws DataAccessException if something went wrong executing the query
-     *
      * @return upsert-count of successful upserts.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    public int upsert(final List<Y> items) throws DataAccessException {
+    public int upsert(final List<R> items) throws DataAccessException {
         return this.insert(items, INSERT_ON_DUPLICATE_UPDATE);
     }
 
@@ -425,8 +387,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             return insert;
         } else if (insertType == INSERT_ON_DUPLICATE_UPDATE) {
             return insert
-                    .onDuplicateKeyUpdate()
-                    .setAllToExcluded();
+                .onDuplicateKeyUpdate()
+                .setAllToExcluded();
         } else if (insertType == INSERT_ON_DUPLICATE_IGNORE) {
             return insert.onDuplicateKeyIgnore();
         } else {
@@ -434,8 +396,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         }
     }
 
-    private int insert(final List<Y> items, InsertType insertType) throws DataAccessException {
-        final List<R> inserts = prepareInserts(prepareRecords(items));
+    private int insert(final List<R> items, InsertType insertType) throws DataAccessException {
+        final List<R> inserts = prepareInserts(items);
         if (inserts.isEmpty()) {
             return 0;
         }
@@ -447,8 +409,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             for (R insert : inserts) {
                 // execute each INSERT one-by-one to retrieve its autoinc id.
                 InsertReturningStep<R> insertQuery = setInsertQueryOptions(dsl()
-                        .insertInto(inserts.getFirst().getTable())
-                        .set(insert), insertType);
+                    .insertInto(inserts.getFirst().getTable())
+                    .set(insert), insertType);
                 Result<R> rec = insertQuery.returning(autoIncGeneratingField).fetch();
                 autoIncResults.add(rec.getFirst().getValue(autoIncGeneratingField));
             }
@@ -474,8 +436,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
                 int end = Math.min(inserts.size(), i + chunkSize);
                 List<R> chunk = inserts.subList(i, end);
                 Query insertQuery = setInsertQueryOptions(dsl()
-                        .insertInto(inserts.getFirst().getTable())
-                        .set(chunk), insertType);
+                    .insertInto(inserts.getFirst().getTable())
+                    .set(chunk), insertType);
 
                 multiValueInserts.add(insertQuery);
             }
@@ -513,7 +475,6 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     }
 
 
-
     /**
      * Performs a <code>UPDATE</code> statement for a given set of items.
      *
@@ -521,7 +482,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     @SafeVarargs
-    public final void update(final Y... items) throws DataAccessException {
+    public final void update(final R... items) throws DataAccessException {
         update(asList(items));
     }
 
@@ -531,8 +492,8 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @param items The items to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void update(final List<Y> items) throws DataAccessException {
-        final List<R> updates = prepareUpdates(prepareRecords(items));
+    public void update(final List<R> items) throws DataAccessException {
+        final List<R> updates = prepareUpdates(items);
         if (updates.isEmpty()) {
             return;
         }
@@ -541,17 +502,17 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
             final List<UpdateConditionStep<R>> conditions = new ArrayList<>();
             for (R rec : updates) {
                 conditions.add(dsl().update(table())
-                        .set(rec)
-                        .where(getRecordCondition(rec)));
+                    .set(rec)
+                    .where(getRecordCondition(rec)));
             }
             dsl().batch(conditions).execute();
         } else {
             // single update
             final R rec = updates.getFirst();
             dsl().update(table())
-                    .set(rec)
-                    .where(getRecordCondition(rec))
-                    .execute();
+                .set(rec)
+                .where(getRecordCondition(rec))
+                .execute();
         }
     }
 
@@ -562,18 +523,17 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      * @throws DataAccessException if something went wrong executing the query
      */
     @SafeVarargs
-    public final void delete(final Y... items) throws DataAccessException {
+    public final void delete(final R... items) throws DataAccessException {
         delete(asList(items));
     }
 
     /**
      * Performs a <code>DELETE</code> statement for a given set of items.
      *
-     * @param items The items to be deleted
+     * @param deletes The items to be deleted
      * @throws DataAccessException if something went wrong executing the query
      */
-    public void delete(final List<Y> items) throws DataAccessException {
-        final List<R> deletes = prepareRecords(items);
+    public void delete(final List<R> deletes) throws DataAccessException {
         if (deletes.isEmpty()) {
             return;
         }
@@ -593,7 +553,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
         }
     }
 
-   /**
+    /**
      * Performs a <code>DELETE</code> statement for a given set of IDs.
      *
      * @param ids The IDs to be deleted
@@ -613,9 +573,9 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
     public void deleteById(final Collection<T> ids) throws DataAccessException {
         if (pk != null)
             dsl()
-                    .delete(table())
-                    .where(getPrimaryKeyCondition(ids))
-                    .execute();
+                .delete(table())
+                .where(getPrimaryKeyCondition(ids))
+                .execute();
     }
 
     /**
@@ -650,7 +610,7 @@ public abstract class AbstractDAO<R extends UpdatableRecord<R>,Y, T> {
      */
     public @Nullable R fetch(final T id) throws DataAccessException {
         return dsl().selectFrom(table())
-                .where(getPrimaryKeyCondition(id))
-                .fetchOne();
+            .where(getPrimaryKeyCondition(id))
+            .fetchOne();
     }
 }

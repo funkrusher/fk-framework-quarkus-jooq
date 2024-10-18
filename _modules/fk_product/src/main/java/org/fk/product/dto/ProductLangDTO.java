@@ -1,32 +1,16 @@
 package org.fk.product.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.fk.database1.testshop2.tables.dtos.ProductLangDto;
-import org.fk.database1.testshop2.tables.interfaces.IProduct;
-import org.fk.database1.testshop2.tables.interfaces.IProductLang;
-import org.fk.database1.testshop2.tables.records.ProductLangRecord;
-import org.fk.database1.testshop2.tables.records.ProductRecord;
-import org.jooq.Record1;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-/**
- * ProductLangDTO
- */
-public class ProductLangDTO extends ProductLangDto<ProductLangDTO> {
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-    // -------------------------------------------------------------------------
-    // Constructor(s)
-    // -------------------------------------------------------------------------
-
-    public ProductLangDTO() {
-        super();
-    }
-
-    public ProductLangDTO(IProductLang value) {
-        super(value);
-    }
-
-    public static ProductLangDTO create(Record1<ProductLangRecord> r) {
-        return new ProductLangDTO(r.value1());
-    }
+public record ProductLangDTO(
+    @NotNull Long productId,
+    @NotNull Integer langId,
+    @NotNull String name,
+    @NotNull String description,
+    @NotNull LangDTO lang
+) {
 }

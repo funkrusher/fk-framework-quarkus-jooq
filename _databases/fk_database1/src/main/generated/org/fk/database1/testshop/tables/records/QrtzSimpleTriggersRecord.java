@@ -187,21 +187,4 @@ public class QrtzSimpleTriggersRecord extends UpdatableRecordImpl<QrtzSimpleTrig
         setTIMES_TRIGGERED(TIMES_TRIGGERED);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzSimpleTriggersRecord
-     */
-    public QrtzSimpleTriggersRecord(org.fk.database1.testshop.tables.pojos.QrtzSimpleTriggers value) {
-        super(QrtzSimpleTriggers.QRTZ_SIMPLE_TRIGGERS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setTRIGGER_NAME(value.getTRIGGER_NAME());
-            setTRIGGER_GROUP(value.getTRIGGER_GROUP());
-            setREPEAT_COUNT(value.getREPEAT_COUNT());
-            setREPEAT_INTERVAL(value.getREPEAT_INTERVAL());
-            setTIMES_TRIGGERED(value.getTIMES_TRIGGERED());
-            resetChangedOnNotNull();
-        }
-    }
 }

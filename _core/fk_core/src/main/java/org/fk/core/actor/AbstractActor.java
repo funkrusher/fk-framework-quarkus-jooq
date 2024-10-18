@@ -1,14 +1,13 @@
 package org.fk.core.actor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.jackson.ObjectMapperProducer;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public abstract class AbstractActor<T extends AbstractDTO> implements Job {
+public abstract class AbstractActor<T> implements Job {
 
     private final Class<T> dataClazz;
 

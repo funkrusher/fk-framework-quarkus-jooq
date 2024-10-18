@@ -9,9 +9,9 @@ import org.fk.core.request.RequestContext;
 import org.fk.database2.Database2;
 import org.fk.core.exception.InvalidDataException;
 import org.fk.core.query.model.FkQuery;
+import org.fk.library.dto.QueryAuthorResponse;
 import org.fk.library.manager.AuthorManager;
 import org.jooq.DSLContext;
-import org.fk.library.dto.NestedAuthorPaginateResultDTO;
 
 
 @Path("/api/v1/library/examples")
@@ -28,7 +28,7 @@ public class AuthorExamplesControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public NestedAuthorPaginateResultDTO queryNested(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+    public QueryAuthorResponse queryNested(@BeanParam FkQuery fkQuery) throws InvalidDataException {
         DSLContext dsl = database2.dsl(new RequestContext(1, 1));
         return authorManager.queryNested(dsl, fkQuery);
     }

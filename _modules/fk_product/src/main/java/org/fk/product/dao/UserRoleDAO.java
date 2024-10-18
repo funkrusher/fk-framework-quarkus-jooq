@@ -10,7 +10,7 @@ import org.jooq.Record2;
 /**
  * UserRoleDAO
  */
-public class UserRoleDAO extends AbstractDAO<UserRoleRecord, IUserRole, Record2<Integer, String>> {
+public class UserRoleDAO extends AbstractDAO<UserRoleRecord, Record2<Integer, String>> {
 
     public UserRoleDAO(DSLContext dsl) {
         super(dsl, UserRole.USER_ROLE);

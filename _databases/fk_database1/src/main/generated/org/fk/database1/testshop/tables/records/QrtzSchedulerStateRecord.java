@@ -146,19 +146,4 @@ public class QrtzSchedulerStateRecord extends UpdatableRecordImpl<QrtzSchedulerS
         setCHECKIN_INTERVAL(CHECKIN_INTERVAL);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzSchedulerStateRecord
-     */
-    public QrtzSchedulerStateRecord(org.fk.database1.testshop.tables.pojos.QrtzSchedulerState value) {
-        super(QrtzSchedulerState.QRTZ_SCHEDULER_STATE);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setINSTANCE_NAME(value.getINSTANCE_NAME());
-            setLAST_CHECKIN_TIME(value.getLAST_CHECKIN_TIME());
-            setCHECKIN_INTERVAL(value.getCHECKIN_INTERVAL());
-            resetChangedOnNotNull();
-        }
-    }
 }

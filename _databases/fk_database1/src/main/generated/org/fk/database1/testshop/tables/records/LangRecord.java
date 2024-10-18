@@ -126,18 +126,4 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
         setDescription(description);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised LangRecord
-     */
-    public LangRecord(org.fk.database1.testshop.tables.pojos.Lang value) {
-        super(Lang.LANG);
-
-        if (value != null) {
-            setLangId(value.getLangId());
-            setCode(value.getCode());
-            setDescription(value.getDescription());
-            resetChangedOnNotNull();
-        }
-    }
 }

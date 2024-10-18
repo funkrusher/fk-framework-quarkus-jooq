@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import org.jboss.logging.Logger;
 
-public class CsvWriter<T extends AbstractDTO> implements AutoCloseable {
+public class CsvWriter<T> implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(CsvWriter.class);
 
@@ -49,9 +48,8 @@ public class CsvWriter<T extends AbstractDTO> implements AutoCloseable {
         }
     }
 
-    public void writeItem(T item) throws MappingException {
+    public void writeItem(Map<String, Object> map) throws MappingException {
         try {
-            Map<String, Object> map = item.getBookKeeper().touched();
             Map<String, String> csvMap = new LinkedHashMap<>();
             for (String fieldName : fieldNames) {
                 Object value = map.get(fieldName);

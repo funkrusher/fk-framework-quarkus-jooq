@@ -1,5 +1,6 @@
 package org.fk.product.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.security.credential.Credential;
 import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.test.common.QuarkusTestResource;
@@ -10,32 +11,24 @@ import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import jakarta.inject.Inject;
 import org.fk.core.auth.TenantCredential;
-import org.fk.product.dto.*;
-import org.fk.core.dto.DTOMapper;
+import org.fk.core.jackson.ObjectMapperProducer;
 import org.fk.database1.testshop2.tables.Product;
-import org.fk.database1.testshop2.tables.ProductLang;
-import org.fk.database1.testshop2.tables.records.ProductLangRecord;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
+import org.fk.product.dto.CreateProductResponse;
+import org.fk.product.dto.UpdateProductResponse;
 import org.fk.product.test.InjectProductTestUtil;
 import org.fk.product.test.ProductTestProfile;
 import org.fk.product.test.ProductTestLifecycleManager;
 import org.fk.product.test.ProductTestUtil;
-import org.fk.product.type.ProductTypeId;
 import org.jooq.DSLContext;
-import org.jooq.Result;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
-import static java.time.ZoneOffset.UTC;
 import static org.fk.core.auth.FkSecurityIdentity.MASTER_TENANT_ID;
 import static org.fk.core.auth.FkRoles.ADMIN;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -55,8 +48,7 @@ class ProductControllerV1Test {
     @InjectMock
     SecurityIdentity identity;
 
-    @Inject
-    DTOMapper serializer;
+    private ObjectMapper jsonMapper = ObjectMapperProducer.create();
 
     @BeforeEach
     void setup() {
@@ -79,31 +71,31 @@ class ProductControllerV1Test {
     @Order(1)
     void testCreate() throws IOException {
 
-        InsertProductDTO productDTO = new InsertProductDTO();
-        productDTO.setClientId(1);
-        productDTO.setTypeId(ProductTypeId.BOOK.getValue());
-        productDTO.setPrice(new BigDecimal("10.00"));
-
-        String json = serializer.serializePojo(productDTO);
+        String json = "{\n" +
+            "  \"clientId\": 1,\n" +
+            "  \"typeId\": \"book\",\n" +
+            "  \"price\": 10.00\n" +
+            "}";
 
         ExtractableResponse<Response> er = given()
-                .contentType(ContentType.JSON)
-                .body(json)
-                .when()
-                .post("/api/v1/products")
-                .then()
-                .statusCode(201)
-                .extract();
-        ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
+            .contentType(ContentType.JSON)
+            .body(json)
+            .when()
+            .post("/api/v1/products")
+            .then()
+            .statusCode(201)
+            .extract();
+        CreateProductResponse responseDTO = jsonMapper.readValue(er.body().asString(), CreateProductResponse.class);
+
 
         // verify rest-result is as expected...
-        assertEquals(productDTO.getClientId(), responseDTO.getClientId());
+        assertEquals(1, responseDTO.clientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.getProductId());
+        assertEquals(record.getProductId(), responseDTO.productId());
 
         insertedId = record.getProductId();
     }
@@ -113,33 +105,32 @@ class ProductControllerV1Test {
     @Order(2)
     void testUpdate() throws IOException {
 
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setProductId(insertedId);
-        productDTO.setClientId(1);
-        productDTO.setTypeId(ProductTypeId.CLOTHING.getValue());
-        productDTO.setPrice(new BigDecimal("22.00"));
-
-        String json = serializer.serializePojo(productDTO);
+        String json = "{\n" +
+            "  \"clientId\": 1,\n" +
+            "  \"productId\": " + insertedId + ",\n" +
+            "  \"typeId\": \"clothing\"," +
+            "  \"price\": 22.00\n" +
+            "}";
 
         ExtractableResponse<Response> er = given()
-                .contentType(ContentType.JSON)
-                .body(json)
-                .when()
-                .put("/api/v1/products/" + insertedId)
-                .then()
-                .statusCode(200)
-                .extract();
-        ProductDTO responseDTO = serializer.deserializePojo(er.body().asString(), ProductDTO.class);
+            .contentType(ContentType.JSON)
+            .body(json)
+            .when()
+            .put("/api/v1/products/" + insertedId)
+            .then()
+            .statusCode(200)
+            .extract();
+        UpdateProductResponse responseDTO = jsonMapper.readValue(er.body().asString(), UpdateProductResponse.class);
 
         // verify rest-result is as expected...
-        assertEquals(productDTO.getClientId(), responseDTO.getClientId());
+        assertEquals(1, responseDTO.clientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.getProductId());
-        assertEquals(record.getPrice(), responseDTO.getPrice());
+        assertEquals(record.getProductId(), responseDTO.productId());
+        assertEquals(record.getPrice(), responseDTO.price());
     }
 
 
@@ -148,10 +139,10 @@ class ProductControllerV1Test {
     @Order(3)
     void testRead() {
         given()
-                .when().get("/api/v1/products/1")
-                .then()
-                .statusCode(200)
-                .body(startsWith("{\"productId\":1,\"clientId\":1,\"price\":10.20"));
+            .when().get("/api/v1/products/1")
+            .then()
+            .statusCode(200)
+            .body(startsWith("{\"productId\":1,\"clientId\":1,\"price\":10.20"));
 
         DSLContext dslContext = testDbUtil.createDSLContext();
         ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(1L)).fetchOneInto(ProductRecord.class);
@@ -163,18 +154,11 @@ class ProductControllerV1Test {
     @TestSecurity(authorizationEnabled = false)
     @Order(4)
     void testDelete() throws IOException {
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setProductId(1L);
-        productDTO.setClientId(1);
-
-        String json = serializer.serializePojo(productDTO);
-
         given()
-                .contentType(ContentType.JSON)
-                .body(json)
-                .when().delete("/api/v1/products")
-                .then()
-                .statusCode(204);
+            .contentType(ContentType.JSON)
+            .when().delete("/api/v1/products/" + 1L)
+            .then()
+            .statusCode(204);
 
         DSLContext dslContext = testDbUtil.createDSLContext();
         Optional<org.jooq.Record> rec = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(1L)).fetchOptional();

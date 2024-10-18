@@ -3,14 +3,12 @@ package org.fk.product.controller;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.request.RequestContext;
 import org.fk.core.exception.ValidationException;
-import org.fk.database1.testshop.tables.dtos.PostDto;
-import org.fk.product.dto.PostDTO;
+import org.fk.product.dto.CreatePostResponse;
 import org.fk.product.manager.PostManager;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
@@ -29,7 +27,7 @@ public class PostControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     @ResponseStatus(201)
-    public PostDTO create() throws ValidationException {
+    public CreatePostResponse create() throws ValidationException {
         return postManager.create(new RequestContext(1, 1));
     }
 }

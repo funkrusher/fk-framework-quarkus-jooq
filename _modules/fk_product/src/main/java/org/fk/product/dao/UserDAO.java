@@ -9,7 +9,7 @@ import org.fk.core.dao.AbstractDAO;
 /**
  * UserDAO
  */
-public class UserDAO extends AbstractDAO<UserRecord, IUser, Integer> {
+public class UserDAO extends AbstractDAO<UserRecord, Integer> {
 
     public UserDAO(DSLContext dsl) {
         super(dsl, User.USER);

@@ -9,7 +9,7 @@ import org.jooq.DSLContext;
 /**
  * AuthorDAO
  */
-public class AuthorDAO extends AbstractDAO<AuthorRecord, IAuthor, Integer> {
+public class AuthorDAO extends AbstractDAO<AuthorRecord, Integer> {
     public AuthorDAO(DSLContext dsl) {
         super(dsl, Author.AUTHOR);
     }

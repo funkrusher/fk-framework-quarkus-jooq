@@ -5,37 +5,33 @@ import io.quarkus.qute.i18n.MessageBundles;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.fk.core.exception.InvalidDataException;
+import org.fk.core.exception.ValidationException;
+import org.fk.core.manager.AbstractManager;
+import org.fk.core.query.model.FkFilter;
+import org.fk.core.query.model.FkFilterOperator;
+import org.fk.core.query.model.FkQuery;
 import org.fk.core.request.RequestContext;
 import org.fk.core.transfer.csv.CsvWriter;
 import org.fk.core.transfer.json.JsonWriter;
 import org.fk.core.transfer.pdf.PdfWriter;
 import org.fk.core.transfer.xlsx.XlsxWriter;
 import org.fk.database1.Database1;
-import org.fk.database1.testshop2.tables.ProductLang;
-import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.model.FkFilter;
-import org.fk.core.query.model.FkFilterOperator;
-import org.fk.core.query.model.FkQuery;
 import org.fk.database1.testshop2.tables.Product;
-import org.fk.database1.testshop2.tables.dtos.ProductDto;
-import org.fk.database1.testshop2.tables.interfaces.IProduct;
+import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
-import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dao.ProductDAO;
-import org.fk.product.dto.InsertProductDTO;
-import org.fk.product.dto.NestedProductDTO;
-import org.fk.product.dto.ProductDTO;
-import org.fk.core.exception.ValidationException;
-import org.fk.product.dto.NestedProductPaginateResultDTO;
+import org.fk.product.dao.ProductLangDAO;
+import org.fk.product.dto.*;
 import org.fk.product.qute.ProductMessages;
-import org.fk.product.repository.ProductRepository;
 import org.fk.product.qute.ProductTemplates;
+import org.fk.product.repository.ProductRepository;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.exception.DataAccessException;
-import org.fk.core.manager.AbstractManager;
 
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -61,9 +57,9 @@ public class ProductManager extends AbstractManager {
         // note: for MULTISET to work, we need to activate allowMultiQueries=true in mariadb via jdbc-url.
         // see: https://blog.jooq.org/mysqls-allowmultiqueries-flag-with-jdbc-and-jooq/
         fields.add(multiset(
-                selectDistinct(asterisk())
-                        .from(ProductLang.PRODUCT_LANG)
-                        .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
+            selectDistinct(asterisk())
+                .from(ProductLang.PRODUCT_LANG)
+                .where(ProductLang.PRODUCT_LANG.PRODUCTID.eq(Product.PRODUCT.PRODUCTID))
         ).as("langs"));
 
         return database1.dsl(requestContext).transactionResult(tsx -> {
@@ -74,31 +70,26 @@ public class ProductManager extends AbstractManager {
         });
     }
 
-    public NestedProductPaginateResultDTO queryNested(RequestContext requestContext, final FkQuery fkQuery) throws InvalidDataException {
+    public QueryProductResponse queryNested(RequestContext requestContext, final FkQuery fkQuery) throws InvalidDataException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
 
-            List<NestedProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+            List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
             int count = repo.count(repo::getFullQuery, fkQuery.getFilters());
-
-            NestedProductPaginateResultDTO paginate = new NestedProductPaginateResultDTO();
-            paginate.setProducts(products);
-            paginate.setCount(count);
 
             // test localization here.
             Locale locale = Locale.GERMANY;
             ProductMessages messages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
             String localizationTest = messages.product_paginate_localizationTest();
-            paginate.setLocalizationTest(localizationTest);
 
-            return paginate;
+            return new QueryProductResponse(products, count, localizationTest);
         });
     }
 
-    public Optional<NestedProductDTO> getOneNested(RequestContext requestContext, final Long productId) throws DataAccessException {
+    public Optional<ProductDTO> getOneNested(RequestContext requestContext, final Long productId) throws DataAccessException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            NestedProductDTO result = repo.fetch(repo::getFullQuery, productId);
+            ProductDTO result = repo.fetch(repo::getFullQuery, productId);
             if (result == null) {
                 return Optional.empty();
             } else {
@@ -111,8 +102,8 @@ public class ProductManager extends AbstractManager {
         // we use jooq transactions, because they are more fine-tuneable.
         // see: https://blog.jooq.org/nested-transactions-in-jooq/
 
-        List<IProduct> inserts = new ArrayList<>();
-        for (int i= 0; i < 1000; i++) {
+        List<ProductRecord> inserts = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();
             insert1.setProductId(90000000L + i);
             insert1.setClientId(1);
@@ -133,12 +124,12 @@ public class ProductManager extends AbstractManager {
                 fkQuery.getFilters().add(filter2);
 
                 final ProductRepository repo = new ProductRepository(tsx.dsl());
-                List<NestedProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+                List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
 
                 tsx.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tsx.dsl());
-                    aProductRecordDAO.deleteById(products.stream().map(NestedProductDTO::getProductId).toList());
+                    aProductRecordDAO.deleteById(products.stream().map(ProductDTO::productId).toList());
                 });
 
                 try {
@@ -156,67 +147,96 @@ public class ProductManager extends AbstractManager {
         }
     }
 
-    public ProductDTO create(RequestContext requestContext, final InsertProductDTO product) throws ValidationException {
-        try {
-            return database1.dsl(requestContext).transactionResult(tsx -> {
-                ProductDAO productDAO = new ProductDAO(tsx.dsl());
+    public CreateProductResponse create(RequestContext requestContext, final CreateProductRequest createProductRequest) throws ValidationException {
+        return database1.dsl(requestContext).transactionResult(tsx -> {
+            ProductDAO productDAO = new ProductDAO(tsx.dsl());
+            this.validate(createProductRequest);
+            return productDAO.create(createProductRequest);
+        });
+    }
 
-                this.validateInsert(product);
-                productDAO.insert(product);
+    public UpdateProductResponse update(RequestContext requestContext, final UpdateProductRequest updateProductRequest) throws ValidationException {
+        return database1.dsl(requestContext).transactionResult(tsx -> {
+            ProductDAO productDAO = new ProductDAO(tsx.dsl());
+            this.validate(updateProductRequest);
 
-                return new ProductDTO(productDAO.fetch(product.getProductId()));
-            });
-        } catch (Exception e) {
-            if (e.getCause() instanceof ValidationException ve) {
-                throw ve;
+            ProductRecord update = new ProductRecord()
+                .setProductId(updateProductRequest.productId())
+                .setClientId(updateProductRequest.clientId())
+                .setPrice(updateProductRequest.price())
+                .setTypeId(updateProductRequest.typeId());
+
+            productDAO.update(update);
+            ProductRecord result = productDAO.fetch(update.getProductId());
+
+            return UpdateProductResponse.builder()
+                .productId(result.getProductId())
+                .clientId(result.getClientId())
+                .price(result.getPrice())
+                .typeId(result.getTypeId())
+                .createdAt(result.getCreatedAt())
+                .updatedAt(result.getUpdatedAt())
+                .deleted(result.getDeleted())
+                .creatorId(result.getCreatorId())
+                .build();
+        });
+    }
+
+    public void patch(
+        RequestContext requestContext,
+        final Map<String, Object> map,
+        final UpdateProductRequest updateProductRequest) throws ValidationException {
+        database1.dsl(requestContext).transaction(tsx -> {
+            // Validate the API-Update-Model (but only for the fields present in the given hashmap)
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                Set<ConstraintViolation<Object>> violations = this.validator.validateProperty(updateProductRequest, entry.getKey());
+                if (!violations.isEmpty()) {
+                    throw new ValidationException(violations);
+                }
             }
-            throw e;
-        }
+
+            // Put the changed-fields into the DB-Record of Jooq so the DAO only saves the changed fields to the DB.
+            ProductRecord update = new ProductRecord();
+            update.setProductId(updateProductRequest.productId());
+            if (map.containsKey("price")) update.setPrice(updateProductRequest.price());
+            if (map.containsKey("clientId")) update.setClientId(updateProductRequest.clientId());
+            if (map.containsKey("typeId")) update.setTypeId(updateProductRequest.typeId());
+
+            ProductDAO productDAO = new ProductDAO(tsx.dsl());
+            productDAO.update(update);
+        });
     }
+
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
     // can we please not! use it?
     // see: https://github.com/quarkusio/quarkus/issues/34569
     @Transactional(rollbackOn = Exception.class)
-    public ProductDTO update(RequestContext requestContext, final ProductDTO product) throws ValidationException {
-        DSLContext dsl = database1.dsl(requestContext);
-
-        ProductDAO productDAO = new ProductDAO(dsl);
-
-        this.validateUpdate(product);
-        productDAO.update(product);
-
-        return new ProductDTO(productDAO.fetch(product.getProductId()));
-    }
-
-    // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
-    // can we please not! use it?
-    // see: https://github.com/quarkusio/quarkus/issues/34569
-    @Transactional(rollbackOn = Exception.class)
-    public void delete(RequestContext requestContext, final ProductDTO product) {
+    public void delete(RequestContext requestContext, final Long productId) {
         DSLContext dsl = database1.dsl(requestContext);
 
         ProductDAO productRecordDAO = new ProductDAO(dsl);
         ProductLangDAO productLangRecordDAO = new ProductLangDAO(dsl);
 
         // we do use the explicit delete-by-id methods here, because they are the most performant.
-        productLangRecordDAO.deleteByProductId(product.getProductId());
-        productRecordDAO.deleteById(product.getProductId());
+        productLangRecordDAO.deleteByProductId(productId);
+        productRecordDAO.deleteById(productId);
     }
 
     /**
      * Trying out streaming
+     *
      * @return stream
      */
-    public Stream<NestedProductDTO> streamAll(RequestContext requestContext) throws InvalidDataException {
+    public Stream<ProductDTO> streamAll(RequestContext requestContext) throws InvalidDataException {
         FkQuery fkQuery = new FkQuery();
         fkQuery.setPage(0);
         fkQuery.setPageSize(100000);
 
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            Stream<NestedProductDTO> stream1 = repo.stream(repo::getFullQuery, fkQuery);
-            Stream<List<NestedProductDTO>> chunkStream = chunk(stream1, 250);
+            Stream<ProductDTO> stream1 = repo.stream(repo::getFullQuery, fkQuery);
+            Stream<List<ProductDTO>> chunkStream = chunk(stream1, 250);
 
             // the "parallel" is important here, as it really pushes performance.
             return chunkStream.parallel().flatMap(List::stream);
@@ -226,10 +246,10 @@ public class ProductManager extends AbstractManager {
     public void exportJson(RequestContext requestContext, OutputStream os) {
         var productStream = streamAll(requestContext);
 
-        try (JsonWriter<NestedProductDTO> jsonWriter = new JsonWriter<>(os, NestedProductDTO.class)) {
-            final Iterator<NestedProductDTO> it = productStream.iterator();
+        try (JsonWriter<ProductDTO> jsonWriter = new JsonWriter<>(os, ProductDTO.class)) {
+            final Iterator<ProductDTO> it = productStream.iterator();
             while (it.hasNext()) {
-                NestedProductDTO product = it.next();
+                ProductDTO product = it.next();
                 jsonWriter.writeItem(product);
             }
         }
@@ -244,11 +264,14 @@ public class ProductManager extends AbstractManager {
         for (Field<?> field : pc.fields()) {
             fieldNames.add(field.getName());
         }
-        try (CsvWriter<NestedProductDTO> csvWriter = new CsvWriter<>(os, fieldNames)) {
-            final Iterator<NestedProductDTO> it = productStream.iterator();
+        try (CsvWriter<ProductDTO> csvWriter = new CsvWriter<>(os, fieldNames)) {
+            final Iterator<ProductDTO> it = productStream.iterator();
             while (it.hasNext()) {
-                NestedProductDTO product = it.next();
-                csvWriter.writeItem(product);
+                ProductDTO product = it.next();
+                Map<String, Object> exportMap = new LinkedHashMap<>();
+                exportMap.put("productId", product.productId());
+                exportMap.put("price", product.price());
+                csvWriter.writeItem(exportMap);
             }
         }
     }
@@ -262,12 +285,15 @@ public class ProductManager extends AbstractManager {
         for (Field<?> field : pc.fields()) {
             fieldNames.add(field.getName());
         }
-        try (XlsxWriter<NestedProductDTO> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
-            final Iterator<NestedProductDTO> it = productStream.iterator();
+        try (XlsxWriter<ProductDTO> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
+            final Iterator<ProductDTO> it = productStream.iterator();
             while (it.hasNext()) {
-                NestedProductDTO product = it.next();
-                product.setTypeId(generateLorem());
-                xlsxWriter.writeItem(product);
+                ProductDTO product = it.next();
+
+                Map<String, Object> exportMap = new LinkedHashMap<>();
+                exportMap.put("productId", product.productId());
+                exportMap.put("price", product.price());
+                xlsxWriter.writeItem(exportMap);
             }
         }
     }
@@ -280,7 +306,7 @@ public class ProductManager extends AbstractManager {
             locale = Locale.US;
         }
         var productStream = streamAll(requestContext);
-        Stream<List<NestedProductDTO>> chunkStream = chunk(productStream, chunkSize);
+        Stream<List<ProductDTO>> chunkStream = chunk(productStream, chunkSize);
 
         ProductMessages productMessages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
         String test = productMessages.product_paginate_localizationTest();
@@ -294,13 +320,11 @@ public class ProductManager extends AbstractManager {
             pdfWriter.writeItem(introductionPage);
 
             // each page after the first we add using layout() followed by writeNextDocument()
-            Iterator<List<NestedProductDTO>> it = chunkStream.iterator();
+            Iterator<List<ProductDTO>> it = chunkStream.iterator();
             while (it.hasNext()) {
-                List<NestedProductDTO> productsChunk = it.next();
+                List<ProductDTO> productsChunk = it.next();
 
-                List<NestedProductDTO> productsChunkWithData = productsChunk.stream().map(x -> x.setTypeId(generateLorem())).toList();
-
-                String html = ProductTemplates.productsTemplate(productsChunkWithData).setLocale(locale).render();
+                String html = ProductTemplates.productsTemplate(productsChunk).setLocale(locale).render();
                 pdfWriter.writeItem(html);
             }
         }

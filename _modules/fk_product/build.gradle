@@ -18,6 +18,16 @@ dependencies {
     testImplementation libs.bundles.test.quarkus
     testImplementation libs.restAssured
     testImplementation project(':_databases:fk_database1')
+
+    // lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+    testImplementation libs.lombok
+    testAnnotationProcessor libs.lombok
+}
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
 }
 
 // publishing

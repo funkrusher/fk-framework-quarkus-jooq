@@ -2,11 +2,10 @@ package org.fk.core.actor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.fk.core.dto.AbstractDTO;
 import org.fk.core.exception.MappingException;
 import org.quartz.*;
 
-public class ActorDispatchBuilder<T extends AbstractDTO> {
+public class ActorDispatchBuilder<T> {
 
     private final Class<? extends AbstractActor<T>> actorClazz;
 

@@ -1,7 +1,6 @@
 package org.fk.database1;
 
 import org.fk.core.jooq.FkCustomJavaGenerator;
-import org.fk.core.jooq.FkGeneratedFilesPostProcessor;
 import org.fk.core.jooq.FkGeneratorStrategy;
 import org.fk.core.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
@@ -24,10 +23,8 @@ public class Database1CodeGenerator {
                             .withGenerate(new Generate()
                                     .withInterfaces(true)
                                     .withSerializableInterfaces(true)
-                                    .withPojos(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
-                                    .withPojosEqualsAndHashCode(false)
                             )
                             .withStrategy(new Strategy()
                                     .withName(FkGeneratorStrategy.class.getName())
@@ -43,8 +40,6 @@ public class Database1CodeGenerator {
                             .withTarget(new Target()
                                     .withPackageName("org.fk.database1")
                                     .withDirectory("src/main/generated"))));
-
-            new FkGeneratedFilesPostProcessor().processFiles("src/main/generated");
         }
     }
 }

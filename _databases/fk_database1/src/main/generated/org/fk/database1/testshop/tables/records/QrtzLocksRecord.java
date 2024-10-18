@@ -106,17 +106,4 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
         setLOCK_NAME(LOCK_NAME);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised QrtzLocksRecord
-     */
-    public QrtzLocksRecord(org.fk.database1.testshop.tables.pojos.QrtzLocks value) {
-        super(QrtzLocks.QRTZ_LOCKS);
-
-        if (value != null) {
-            setSCHED_NAME(value.getSCHED_NAME());
-            setLOCK_NAME(value.getLOCK_NAME());
-            resetChangedOnNotNull();
-        }
-    }
 }

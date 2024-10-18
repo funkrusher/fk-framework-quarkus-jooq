@@ -9,7 +9,7 @@ import org.jooq.DSLContext;
 /**
  * LangRecordDAO
  */
-public class LangDAO extends AbstractDAO<LangRecord, ILang, Integer> {
+public class LangDAO extends AbstractDAO<LangRecord, Integer> {
 
     public LangDAO(DSLContext dsl) {
         super(dsl, Lang.LANG);
