@@ -38,14 +38,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
         return dsl()
             .select(
                 row(
-                    PRODUCT.PRODUCTID,
-                    PRODUCT.CLIENTID,
-                    PRODUCT.PRICE,
-                    PRODUCT.TYPEID,
-                    PRODUCT.CREATEDAT,
-                    PRODUCT.UPDATEDAT,
-                    PRODUCT.DELETED,
-                    PRODUCT.CREATORID,
+                    PRODUCT,
                     row(
                         PRODUCT.creator().USERID,
                         PRODUCT.creator().CLIENTID,
@@ -71,7 +64,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                             ).convertFrom(Records.mapping(LangDTO::new))
                         ).from(PRODUCT.product_lang())
                     ).convertFrom(r -> r.map(Records.mapping(ProductLangDTO::new)))
-                ).convertFrom(Records.mapping(ProductDTO::new))
+                ).convertFrom(ProductDTO::create)
             )
             .from(PRODUCT
                 .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))

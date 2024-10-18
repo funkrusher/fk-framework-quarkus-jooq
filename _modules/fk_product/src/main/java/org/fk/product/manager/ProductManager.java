@@ -160,24 +160,25 @@ public class ProductManager extends AbstractManager {
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             this.validate(updateProductRequest);
 
-            ProductRecord update = new ProductRecord();
-            update.setProductId(updateProductRequest.productId());
-            update.setClientId(updateProductRequest.clientId());
-            update.setPrice(updateProductRequest.price());
-            update.setTypeId(updateProductRequest.typeId());
+            ProductRecord update = new ProductRecord()
+                .setProductId(updateProductRequest.productId())
+                .setClientId(updateProductRequest.clientId())
+                .setPrice(updateProductRequest.price())
+                .setTypeId(updateProductRequest.typeId());
 
             productDAO.update(update);
             ProductRecord result = productDAO.fetch(update.getProductId());
 
-            return new UpdateProductResponse(
-                result.getProductId(),
-                result.getClientId(),
-                result.getPrice(),
-                result.getTypeId(),
-                result.getCreatedAt(),
-                result.getUpdatedAt(),
-                result.getDeleted(),
-                result.getCreatorId());
+            return UpdateProductResponse.builder()
+                .productId(result.getProductId())
+                .clientId(result.getClientId())
+                .price(result.getPrice())
+                .typeId(result.getTypeId())
+                .createdAt(result.getCreatedAt())
+                .updatedAt(result.getUpdatedAt())
+                .deleted(result.getDeleted())
+                .creatorId(result.getCreatorId())
+                .build();
         });
     }
 

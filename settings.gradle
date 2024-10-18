@@ -29,6 +29,10 @@ dependencyResolutionManagement {
             version('flyingsaucer', '9.8.0')
             version('jsoup', '1.18.1')
             version('apache-poi', '5.3.0')
+            version('lombok', '1.18.34')
+
+            // project lombok
+            library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
 
             // fk-framework self-dependencies (sticky versions)
             // this should mostly be stable core-libraries / shared modules that don't change often.

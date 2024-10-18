@@ -23,6 +23,12 @@ dependencies {
     testImplementation libs.bundles.test.testcontainers
     testImplementation libs.awaitility
     testImplementation libs.restAssured
+
+    // lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
+    testImplementation libs.lombok
+    testAnnotationProcessor libs.lombok
 }
 
 // publishing
