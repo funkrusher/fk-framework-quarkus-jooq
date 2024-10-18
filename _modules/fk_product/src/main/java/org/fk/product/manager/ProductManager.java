@@ -161,10 +161,10 @@ public class ProductManager extends AbstractManager {
             this.validate(updateProductRequest);
 
             ProductRecord update = new ProductRecord();
-            update.setProductId(updateProductRequest.getProductId());
-            update.setClientId(updateProductRequest.getClientId());
-            update.setPrice(updateProductRequest.getPrice());
-            update.setTypeId(updateProductRequest.getTypeId());
+            update.setProductId(updateProductRequest.productId());
+            update.setClientId(updateProductRequest.clientId());
+            update.setPrice(updateProductRequest.price());
+            update.setTypeId(updateProductRequest.typeId());
 
             productDAO.update(update);
             ProductRecord result = productDAO.fetch(update.getProductId());
@@ -181,15 +181,11 @@ public class ProductManager extends AbstractManager {
         });
     }
 
-    public void patch(RequestContext requestContext, final Map<String, Object> map) throws ValidationException {
+    public void patch(
+        RequestContext requestContext,
+        final Map<String, Object> map,
+        final UpdateProductRequest updateProductRequest) throws ValidationException {
         database1.dsl(requestContext).transaction(tsx -> {
-            // put given hashmap into API-Update-Model (Patch has the same fields as Update)
-            UpdateProductRequest updateProductRequest = new UpdateProductRequest();
-            updateProductRequest.setProductId((Long) map.computeIfPresent("productId", (x, y) -> ((Integer) y).longValue()));
-            updateProductRequest.setPrice((BigDecimal) map.computeIfPresent("price", (x, y) -> new BigDecimal(((Integer) y))));
-            updateProductRequest.setClientId((Integer) map.get("clientId"));
-            updateProductRequest.setTypeId((String) map.get("typeId"));
-
             // Validate the API-Update-Model (but only for the fields present in the given hashmap)
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 Set<ConstraintViolation<Object>> violations = this.validator.validateProperty(updateProductRequest, entry.getKey());
@@ -200,10 +196,10 @@ public class ProductManager extends AbstractManager {
 
             // Put the changed-fields into the DB-Record of Jooq so the DAO only saves the changed fields to the DB.
             ProductRecord update = new ProductRecord();
-            if (map.containsKey("productId")) update.setProductId(updateProductRequest.getProductId());
-            if (map.containsKey("price")) update.setPrice(updateProductRequest.getPrice());
-            if (map.containsKey("clientId")) update.setClientId(updateProductRequest.getClientId());
-            if (map.containsKey("typeId")) update.setTypeId(updateProductRequest.getTypeId());
+            update.setProductId(updateProductRequest.productId());
+            if (map.containsKey("price")) update.setPrice(updateProductRequest.price());
+            if (map.containsKey("clientId")) update.setClientId(updateProductRequest.clientId());
+            if (map.containsKey("typeId")) update.setTypeId(updateProductRequest.typeId());
 
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             productDAO.update(update);

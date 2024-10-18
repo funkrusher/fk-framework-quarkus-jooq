@@ -6,29 +6,31 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class CreateProductResponse {
+public record CreateProductResponse(
     @NotNull
-    private Long productId;
+    Long productId,
 
     @NotNull
-    private Integer clientId;
+    Integer clientId,
 
     @NotNull
-    private BigDecimal price;
+    BigDecimal price,
 
     @NotNull
     @Size(max = 255)
-    private String typeId;
+    String typeId,
 
     @NotNull
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt,
 
     @NotNull
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt,
 
     @NotNull
-    private Boolean deleted;
+    Boolean deleted,
 
     @NotNull
-    private Integer creatorId;
+    Integer creatorId
+) {
+
 }

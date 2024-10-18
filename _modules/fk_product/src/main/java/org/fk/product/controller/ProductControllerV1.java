@@ -1,5 +1,6 @@
 package org.fk.product.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -32,6 +33,9 @@ public class ProductControllerV1 {
     @Inject
     ProductManager productManager;
 
+    @Inject
+    ObjectMapper jsonMapper;
+
     @GET
     @Operation(summary = "returns the product with the specified id")
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
@@ -47,9 +51,6 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
     public QueryProductResponse queryNested(@BeanParam FkQuery fkQuery) throws InvalidDataException {
-
-        CreateProductResponse test = new CreateProductResponse();
-
         return productManager.queryNested(new RequestContext(1, 1), fkQuery);
     }
 
@@ -85,7 +86,8 @@ public class ProductControllerV1 {
                 schema = @Schema(implementation = UpdateProductRequest.class)))
         Map<String, Object> map
     ) throws ValidationException {
-        productManager.patch(new RequestContext(1, 1), map);
+        final UpdateProductRequest updateProductRequest = jsonMapper.convertValue(map, UpdateProductRequest.class);
+        productManager.patch(new RequestContext(1, 1), map, updateProductRequest);
     }
 
     @DELETE

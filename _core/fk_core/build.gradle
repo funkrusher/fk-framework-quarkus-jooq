@@ -23,12 +23,6 @@ dependencies {
     testImplementation libs.bundles.test.testcontainers
     testImplementation libs.awaitility
     testImplementation libs.restAssured
-
-    // magic-bean
-    compileOnly libs.magicBean
-    annotationProcessor libs.magicBean
-    testCompileOnly libs.magicBean
-    testAnnotationProcessor libs.magicBean
 }
 
 // publishing

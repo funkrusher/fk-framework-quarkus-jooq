@@ -18,12 +18,6 @@ dependencies {
     testImplementation libs.bundles.test.quarkus
     testImplementation libs.restAssured
     testImplementation project(':_databases:fk_database1')
-
-    // magic-bean
-    compileOnly libs.magicBean
-    annotationProcessor libs.magicBean
-    testCompileOnly libs.magicBean
-    testAnnotationProcessor libs.magicBean
 }
 
 compileJava {

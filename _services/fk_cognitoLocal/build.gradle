@@ -8,12 +8,6 @@ dependencies {
     // decide if you want to resolve fk_core from reposilite, or directly from gradle-module.
     api project(':_core:fk_core')
     // api libs.fkCore
-
-    // lombok
-    implementation libs.lombok
-    annotationProcessor libs.lombok
-    testImplementation libs.lombok
-    testAnnotationProcessor libs.lombok
 }
 
 // cognitoLocalSetup task

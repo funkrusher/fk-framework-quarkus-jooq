@@ -12,12 +12,6 @@ dependencies {
     api libs.bundles.jooq
     api libs.bundles.testcontainers
     api libs.mariadbJavaClient
-
-    // lombok
-    implementation libs.lombok
-    annotationProcessor libs.lombok
-    testImplementation libs.lombok
-    testAnnotationProcessor libs.lombok
 }
 
 // configure generated/src-directories, necessary for use in intellij-idea.

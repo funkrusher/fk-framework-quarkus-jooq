@@ -89,13 +89,13 @@ class ProductControllerV1Test {
 
 
         // verify rest-result is as expected...
-        assertEquals(1, responseDTO.getClientId());
+        assertEquals(1, responseDTO.clientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
         ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.getProductId());
+        assertEquals(record.getProductId(), responseDTO.productId());
 
         insertedId = record.getProductId();
     }
