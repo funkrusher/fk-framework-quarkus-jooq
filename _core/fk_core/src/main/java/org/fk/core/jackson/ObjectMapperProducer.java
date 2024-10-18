@@ -24,9 +24,6 @@ public class ObjectMapperProducer {
         // UTC milliseconds since 1970 Serialize/Deserialize
         objectMapper.registerModule(new JavaTimeModule());
 
-        // JDK8 module for Java-Optional support.
-        objectMapper.registerModule(new Jdk8Module());
-
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
 
