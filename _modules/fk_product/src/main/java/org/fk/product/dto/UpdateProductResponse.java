@@ -2,38 +2,35 @@ package org.fk.product.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-public class UpdateProductResponse {
+public record UpdateProductResponse(
 
     @NotNull
-    Long productId;
+    Long productId,
 
     @NotNull
-    Integer clientId;
+    Integer clientId,
 
     @NotNull
-    BigDecimal price;
+    BigDecimal price,
 
     @NotNull
     @Size(max = 255)
-    String typeId;
+    String typeId,
 
     @NotNull
-    LocalDateTime createdAt;
+    LocalDateTime createdAt,
 
     @NotNull
-    LocalDateTime updatedAt;
+    LocalDateTime updatedAt,
 
     @NotNull
-    Boolean deleted;
+    Boolean deleted,
 
     @NotNull
-    Integer creatorId;
+    Integer creatorId
+) {
 }

@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
 public abstract class AbstractManager {
 
     @Inject
-    Validator validator;
+    protected Validator validator;
 
     /**
      * validate the given DTO.

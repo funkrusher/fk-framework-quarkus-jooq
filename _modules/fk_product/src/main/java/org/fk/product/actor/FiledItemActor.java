@@ -26,7 +26,7 @@ public class FiledItemActor extends AbstractActor<FiledItemActorDTO> {
 
     @Override
     protected void execute(FiledItemActorDTO data, JobExecutionContext context) throws JobExecutionException {
-        LOGGER.info("filedItemActor executing now! " + data.getClientId() + " " + data.getName());
+        LOGGER.info("filedItemActor executing now! " + data.clientId() + " " + data.name());
         try {
             Thread.sleep(2500L);
         } catch (InterruptedException e) {

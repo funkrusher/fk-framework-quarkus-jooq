@@ -6,6 +6,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.core.request.RequestContext;
@@ -17,6 +20,7 @@ import org.fk.core.query.model.FkQuery;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Path("/api/v1/products")
@@ -66,6 +70,22 @@ public class ProductControllerV1 {
     @Path("/{productId}")
     public UpdateProductResponse update(UpdateProductRequest updateProductRequest) throws ValidationException {
         return productManager.update(new RequestContext(1, 1), updateProductRequest);
+    }
+
+    @PATCH
+    @Operation(summary = "patch an existing product")
+    @RequestBody
+    @APIResponse(responseCode = "200", description = "product update successful")
+    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @Path("/{productId}")
+    public void patch(
+        @RequestBody(description = "Patch Object (each field besides the productId is optional)!",
+            required = true,
+            content = @Content(mediaType = MediaType.APPLICATION_JSON,
+                schema = @Schema(implementation = UpdateProductRequest.class)))
+        Map<String, Object> map
+    ) throws ValidationException {
+        productManager.patch(new RequestContext(1, 1), map);
     }
 
     @DELETE

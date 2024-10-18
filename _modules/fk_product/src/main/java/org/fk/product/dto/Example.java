@@ -9,4 +9,5 @@ public final class Example extends ExampleBeanOps {
     int x;
     String name;
     List<String> strs;
+    String test;
 }

@@ -5,32 +5,33 @@ import io.quarkus.qute.i18n.MessageBundles;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.fk.core.exception.InvalidDataException;
+import org.fk.core.exception.ValidationException;
+import org.fk.core.manager.AbstractManager;
+import org.fk.core.query.model.FkFilter;
+import org.fk.core.query.model.FkFilterOperator;
+import org.fk.core.query.model.FkQuery;
 import org.fk.core.request.RequestContext;
 import org.fk.core.transfer.csv.CsvWriter;
 import org.fk.core.transfer.json.JsonWriter;
 import org.fk.core.transfer.pdf.PdfWriter;
 import org.fk.core.transfer.xlsx.XlsxWriter;
 import org.fk.database1.Database1;
-import org.fk.database1.testshop2.tables.ProductLang;
-import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.model.FkFilter;
-import org.fk.core.query.model.FkFilterOperator;
-import org.fk.core.query.model.FkQuery;
 import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.ProductLang;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
-import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dao.ProductDAO;
+import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dto.*;
-import org.fk.core.exception.ValidationException;
 import org.fk.product.qute.ProductMessages;
-import org.fk.product.repository.ProductRepository;
 import org.fk.product.qute.ProductTemplates;
+import org.fk.product.repository.ProductRepository;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.exception.DataAccessException;
-import org.fk.core.manager.AbstractManager;
 
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -162,24 +163,53 @@ public class ProductManager extends AbstractManager {
             ProductRecord update = new ProductRecord();
             update.setProductId(updateProductRequest.getProductId());
             update.setClientId(updateProductRequest.getClientId());
-            updateProductRequest.getPrice().ifPresent(update::setPrice); // optional field in api
-            updateProductRequest.getTypeId().ifPresent(update::setTypeId); // optional field in api
+            update.setPrice(updateProductRequest.getPrice());
+            update.setTypeId(updateProductRequest.getTypeId());
 
             productDAO.update(update);
             ProductRecord result = productDAO.fetch(update.getProductId());
 
-            return UpdateProductResponse.builder()
-                .productId(result.getProductId())
-                .clientId(result.getClientId())
-                .price(result.getPrice())
-                .typeId(result.getTypeId())
-                .createdAt(result.getCreatedAt())
-                .updatedAt(result.getUpdatedAt())
-                .deleted(result.getDeleted())
-                .creatorId(result.getCreatorId())
-                .build();
+            return new UpdateProductResponse(
+                result.getProductId(),
+                result.getClientId(),
+                result.getPrice(),
+                result.getTypeId(),
+                result.getCreatedAt(),
+                result.getUpdatedAt(),
+                result.getDeleted(),
+                result.getCreatorId());
         });
     }
+
+    public void patch(RequestContext requestContext, final Map<String, Object> map) throws ValidationException {
+        database1.dsl(requestContext).transaction(tsx -> {
+            // put given hashmap into API-Update-Model (Patch has the same fields as Update)
+            UpdateProductRequest updateProductRequest = new UpdateProductRequest();
+            updateProductRequest.setProductId((Long) map.computeIfPresent("productId", (x, y) -> ((Integer) y).longValue()));
+            updateProductRequest.setPrice((BigDecimal) map.computeIfPresent("price", (x, y) -> new BigDecimal(((Integer) y))));
+            updateProductRequest.setClientId((Integer) map.get("clientId"));
+            updateProductRequest.setTypeId((String) map.get("typeId"));
+
+            // Validate the API-Update-Model (but only for the fields present in the given hashmap)
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                Set<ConstraintViolation<Object>> violations = this.validator.validateProperty(updateProductRequest, entry.getKey());
+                if (!violations.isEmpty()) {
+                    throw new ValidationException(violations);
+                }
+            }
+
+            // Put the changed-fields into the DB-Record of Jooq so the DAO only saves the changed fields to the DB.
+            ProductRecord update = new ProductRecord();
+            if (map.containsKey("productId")) update.setProductId(updateProductRequest.getProductId());
+            if (map.containsKey("price")) update.setPrice(updateProductRequest.getPrice());
+            if (map.containsKey("clientId")) update.setClientId(updateProductRequest.getClientId());
+            if (map.containsKey("typeId")) update.setTypeId(updateProductRequest.getTypeId());
+
+            ProductDAO productDAO = new ProductDAO(tsx.dsl());
+            productDAO.update(update);
+        });
+    }
+
 
     // it almost made me laugh out of bitterness, that @Transactional does not catch checked-exceptions per default
     // can we please not! use it?

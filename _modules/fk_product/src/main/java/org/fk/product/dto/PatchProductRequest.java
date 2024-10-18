@@ -6,10 +6,8 @@ import jakarta.validation.constraints.Size;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
-@MagicBean
-public final class UpdateProductRequest extends UpdateProductRequestBeanOps {
+public final class PatchProductRequest {
 
     @NotNull
     Long productId;
@@ -20,8 +18,8 @@ public final class UpdateProductRequest extends UpdateProductRequestBeanOps {
     @Schema(required = false, nullable = false)
     BigDecimal price;
 
-    @Schema(required = false, nullable = false)
-    @NotNull
+    // @Schema(required = false, nullable = false)
+    // @NotNull
     @Size(max = 255)
     String typeId;
 }
