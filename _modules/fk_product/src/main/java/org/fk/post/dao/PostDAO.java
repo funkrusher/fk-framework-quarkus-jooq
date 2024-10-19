@@ -1,4 +1,4 @@
-package org.fk.product.dao;
+package org.fk.post.dao;
 
 import org.fk.database1.testshop.tables.Post;
 import org.fk.database1.testshop.tables.records.PostRecord;

@@ -5,12 +5,12 @@ import lombok.Builder;
 import org.jooq.Record1;
 
 @Builder
-public record RoleDTO(
+public record RoleResponse(
     @NotNull String roleId
 ) {
 
-    public static RoleDTO create(Record1<String> rec) {
-        return RoleDTO.builder()
+    public static RoleResponse create(Record1<String> rec) {
+        return RoleResponse.builder()
             .roleId(rec.value1())
             .build();
     }

@@ -8,21 +8,21 @@ import org.jooq.Record2;
 import java.util.List;
 
 @Builder
-public record UserDTO(
+public record UserResponse(
     @NotNull Integer userId,
     @NotNull Integer clientId,
     @NotNull String email,
     @NotNull String firstname,
     @NotNull String lastname,
-    @NotNull List<RoleDTO> roles
+    @NotNull List<RoleResponse> roles
 ) {
 
-    public static UserDTO createOrNull(Record2<UserRecord, List<RoleDTO>> rec) {
+    public static UserResponse createOrNull(Record2<UserRecord, List<RoleResponse>> rec) {
         UserRecord user = rec.value1();
         if (user.getUserid() == null) {
             return null;
         } else {
-            return UserDTO.builder()
+            return UserResponse.builder()
                 .userId(user.getUserid())
                 .clientId(user.getClientid())
                 .email(user.getEmail())

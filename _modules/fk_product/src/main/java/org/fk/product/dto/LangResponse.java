@@ -6,7 +6,7 @@ import org.fk.database1.testshop.tables.records.LangRecord;
 import org.jooq.Record1;
 
 @Builder
-public record LangDTO(
+public record LangResponse(
     @NotNull
     Integer langId,
     @NotNull
@@ -15,9 +15,9 @@ public record LangDTO(
     String description
 ) {
 
-    public static LangDTO create(Record1<LangRecord> rec) {
+    public static LangResponse create(Record1<LangRecord> rec) {
         LangRecord lang = rec.value1();
-        return LangDTO.builder()
+        return LangResponse.builder()
             .langId(lang.getLangid())
             .code(lang.getCode())
             .description(lang.getDescription())

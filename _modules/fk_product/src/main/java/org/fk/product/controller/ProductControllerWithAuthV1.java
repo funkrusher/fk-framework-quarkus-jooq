@@ -47,7 +47,7 @@ public class ProductControllerWithAuthV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO getOneNested(Long productId) throws NotFoundException {
+    public ProductResponse getOneNested(Long productId) throws NotFoundException {
         return productManager.getOneNested(new RequestContext(securityIdentity, 1), productId).orElseThrow(NotFoundException::new);
     }
 

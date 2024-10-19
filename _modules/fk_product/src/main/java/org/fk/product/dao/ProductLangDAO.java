@@ -6,7 +6,7 @@ import org.fk.database1.testshop2.tables.ProductLang;
 import org.jooq.*;
 
 /**
- * ProductLangRecordDAO
+ * ProductLangDAO
  */
 public class ProductLangDAO extends AbstractDAO<ProductLangRecord, Record2<Long, Integer>> {
 

@@ -17,7 +17,7 @@ import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.fk.database1.testshop2.tables.ProductLang.PRODUCT_LANG;
 import static org.jooq.impl.DSL.*;
 
-public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
+public class ProductRepository extends AbstractRepository<ProductResponse, Long> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
 
@@ -25,7 +25,7 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
         super(dsl, PRODUCT.PRODUCTID);
     }
 
-    public SelectFinalStep<Record1<ProductDTO>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
+    public SelectFinalStep<Record1<ProductResponse>> getFullQuery(FkQuery fkQuery) throws InvalidDataException {
         final QueryJooqMapper queryJooqMapper = new QueryJooqMapper(fkQuery, PRODUCT)
             .addMappableFields(PRODUCT)
             .addMappableFields(PRODUCT_LANG);
@@ -40,17 +40,17 @@ public class ProductRepository extends AbstractRepository<ProductDTO, Long> {
                             select(
                                 PRODUCT.user().userRole().role().ROLEID
                             ).from(PRODUCT.user().userRole().role())
-                        ).convertFrom(r -> r.map(RoleDTO::create))
-                    ).convertFrom(UserDTO::createOrNull),
+                        ).convertFrom(r -> r.map(RoleResponse::create))
+                    ).convertFrom(UserResponse::createOrNull),
                     multiset(
                         select(
                             PRODUCT.productLang(),
                             row(
                                 PRODUCT.productLang().lang()
-                            ).convertFrom(LangDTO::create)
+                            ).convertFrom(LangResponse::create)
                         ).from(PRODUCT.productLang())
-                    ).convertFrom(r -> r.map(ProductLangDTO::create))
-                ).convertFrom(ProductDTO::create)
+                    ).convertFrom(r -> r.map(ProductLangResponse::create))
+                ).convertFrom(ProductResponse::create)
             )
             .from(PRODUCT
                 .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))

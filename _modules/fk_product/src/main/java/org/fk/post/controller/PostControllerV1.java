@@ -1,4 +1,4 @@
-package org.fk.product.controller;
+package org.fk.post.controller;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -8,8 +8,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.fk.framework.request.RequestContext;
 import org.fk.framework.exception.ValidationException;
-import org.fk.product.dto.CreatePostResponse;
-import org.fk.product.manager.PostManager;
+import org.fk.post.dto.CreatePostResponse;
+import org.fk.post.manager.PostManager;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 @Path("/api/v1/posts")

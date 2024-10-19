@@ -8,16 +8,17 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.fk.framework.request.RequestContext;
-import org.fk.product.dto.*;
-import org.fk.product.manager.ProductManager;
 import org.fk.framework.exception.InvalidDataException;
 import org.fk.framework.exception.ValidationException;
 import org.fk.framework.query.model.FkQuery;
+import org.fk.framework.request.RequestContext;
+import org.fk.product.dto.*;
+import org.fk.product.manager.ProductManager;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Map;
 @Path("/api/v1/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Tag(name="Product Controller V1", description = "Product Operations, for testing many different use-cases")
+@Tag(name = "Product Controller V1", description = "Product Operations, for testing many different use-cases")
 public class ProductControllerV1 {
 
     @Inject
@@ -41,7 +42,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public ProductDTO getOneNested(Long productId) throws NotFoundException {
+    public ProductResponse getOneNested(Long productId) throws NotFoundException {
         return productManager.getOneNested(new RequestContext(1, 1), productId).orElseThrow(NotFoundException::new);
     }
 
@@ -50,7 +51,9 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
-    public QueryProductResponse queryNested(@BeanParam FkQuery fkQuery) throws InvalidDataException {
+    public QueryProductResponse queryNested(
+        @BeanParam QueryProductRequest queryProductRequest) throws InvalidDataException {
+        final FkQuery fkQuery = new FkQuery();
         return productManager.queryNested(new RequestContext(1, 1), fkQuery);
     }
 
@@ -59,6 +62,20 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "201", description = "product creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/")
+    @RequestBody(content = @Content(examples = {
+        @ExampleObject(
+            name = CreateProductRequest.EXAMPLE1_NAME,
+            description = CreateProductRequest.EXAMPLE1_DESCRIPTION,
+            value = CreateProductRequest.EXAMPLE1_VALUE
+        )
+    }))
+    @APIResponse(content = @Content(examples = {
+        @ExampleObject(
+            name = CreateProductResponse.EXAMPLE1_NAME,
+            description = CreateProductResponse.EXAMPLE1_DESCRIPTION,
+            value = CreateProductResponse.EXAMPLE1_VALUE
+        )
+    }))
     @ResponseStatus(201)
     public CreateProductResponse create(CreateProductRequest createProductRequest) throws ValidationException {
         return productManager.create(new RequestContext(1, 1), createProductRequest);
@@ -75,12 +92,12 @@ public class ProductControllerV1 {
 
     @PATCH
     @Operation(summary = "patch an existing product")
-    @RequestBody
     @APIResponse(responseCode = "200", description = "product update successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
     public void patch(
-        @RequestBody(description = "Patch Object (each field besides the productId is optional)!",
+        @RequestBody(
+            description = "Patch Object (each field besides the productId is optional)!",
             required = true,
             content = @Content(mediaType = MediaType.APPLICATION_JSON,
                 schema = @Schema(implementation = UpdateProductRequest.class)))
@@ -116,7 +133,7 @@ public class ProductControllerV1 {
     @APIResponse(responseCode = "200", description = "List of all products successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/multiset")
-    public List<ProductDTO> testMultiset() {
+    public List<ProductResponse> testMultiset() {
         return productManager.testMultiset(new RequestContext(1, 1));
     }
 

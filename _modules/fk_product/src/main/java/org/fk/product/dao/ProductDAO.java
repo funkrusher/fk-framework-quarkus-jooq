@@ -12,7 +12,7 @@ import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.jooq.impl.DSL.row;
 
 /**
- * ProductRecordDAO
+ * ProductDAO
  */
 public class ProductDAO extends AbstractDAO<ProductRecord, Long> {
 

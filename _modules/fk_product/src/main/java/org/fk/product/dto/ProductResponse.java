@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
-public record ProductDTO(
+public record ProductResponse(
     @NotNull Long productId,
     @NotNull Integer clientId,
     @NotNull BigDecimal price,
@@ -20,12 +20,12 @@ public record ProductDTO(
     @NotNull LocalDateTime updatedAt,
     @NotNull Boolean deleted,
     Integer creatorId,
-    UserDTO creator,
-    @NotNull List<ProductLangDTO> langs
+    UserResponse creator,
+    @NotNull List<ProductLangResponse> langs
 ) {
-    public static ProductDTO create(Record3<ProductRecord, UserDTO, List<ProductLangDTO>> rec) {
+    public static ProductResponse create(Record3<ProductRecord, UserResponse, List<ProductLangResponse>> rec) {
         ProductRecord product = rec.value1();
-        return ProductDTO.builder()
+        return ProductResponse.builder()
             .productId(product.getProductid())
             .clientId(product.getClientid())
             .price(product.getPrice())

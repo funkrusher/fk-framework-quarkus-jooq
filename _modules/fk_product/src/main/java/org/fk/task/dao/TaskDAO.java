@@ -1,4 +1,4 @@
-package org.fk.product.dao;
+package org.fk.task.dao;
 
 import org.fk.database1.testshop.tables.Task;
 import org.fk.database1.testshop.tables.records.TaskRecord;

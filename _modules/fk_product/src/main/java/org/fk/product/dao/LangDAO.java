@@ -6,7 +6,7 @@ import org.fk.database1.testshop.tables.records.LangRecord;
 import org.jooq.DSLContext;
 
 /**
- * LangRecordDAO
+ * LangDAO
  */
 public class LangDAO extends AbstractDAO<LangRecord, Integer> {
 

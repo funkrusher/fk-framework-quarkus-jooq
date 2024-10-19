@@ -1,4 +1,4 @@
-package org.fk.product.manager;
+package org.fk.post.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -7,8 +7,8 @@ import org.fk.framework.exception.ValidationException;
 import org.fk.framework.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.database1.testshop.tables.records.PostRecord;
-import org.fk.product.dao.PostDAO;
-import org.fk.product.dto.CreatePostResponse;
+import org.fk.post.dao.PostDAO;
+import org.fk.post.dto.CreatePostResponse;
 
 /**
  * PostManager

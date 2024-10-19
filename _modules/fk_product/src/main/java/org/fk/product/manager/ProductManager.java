@@ -51,7 +51,7 @@ public class ProductManager extends AbstractManager {
     @Inject
     Database1 database1;
 
-    public List<ProductDTO> testMultiset(RequestContext requestContext) {
+    public List<ProductResponse> testMultiset(RequestContext requestContext) {
         List<Field<?>> fields = new ArrayList<>(List.of(table().fields()));
 
         // note: for MULTISET to work, we need to activate allowMultiQueries=true in mariadb via jdbc-url.
@@ -66,7 +66,7 @@ public class ProductManager extends AbstractManager {
             return tsx.dsl().select(fields)
                 .from(Product.PRODUCT)
                 .limit(10)
-                .fetchInto(ProductDTO.class);
+                .fetchInto(ProductResponse.class);
         });
     }
 
@@ -74,7 +74,7 @@ public class ProductManager extends AbstractManager {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
 
-            List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+            List<ProductResponse> products = repo.query(repo::getFullQuery, fkQuery);
             int count = repo.count(repo::getFullQuery, fkQuery.getFilters());
 
             // test localization here.
@@ -86,10 +86,10 @@ public class ProductManager extends AbstractManager {
         });
     }
 
-    public Optional<ProductDTO> getOneNested(RequestContext requestContext, final Long productId) throws DataAccessException {
+    public Optional<ProductResponse> getOneNested(RequestContext requestContext, final Long productId) throws DataAccessException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            ProductDTO result = repo.fetch(repo::getFullQuery, productId);
+            ProductResponse result = repo.fetch(repo::getFullQuery, productId);
             if (result == null) {
                 return Optional.empty();
             } else {
@@ -124,12 +124,12 @@ public class ProductManager extends AbstractManager {
                 fkQuery.getFilters().add(filter2);
 
                 final ProductRepository repo = new ProductRepository(tsx.dsl());
-                List<ProductDTO> products = repo.query(repo::getFullQuery, fkQuery);
+                List<ProductResponse> products = repo.query(repo::getFullQuery, fkQuery);
 
                 tsx.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tsx.dsl());
-                    aProductRecordDAO.deleteById(products.stream().map(ProductDTO::productId).toList());
+                    aProductRecordDAO.deleteById(products.stream().map(ProductResponse::productId).toList());
                 });
 
                 try {
@@ -228,15 +228,15 @@ public class ProductManager extends AbstractManager {
      *
      * @return stream
      */
-    public Stream<ProductDTO> streamAll(RequestContext requestContext) throws InvalidDataException {
+    public Stream<ProductResponse> streamAll(RequestContext requestContext) throws InvalidDataException {
         FkQuery fkQuery = new FkQuery();
         fkQuery.setPage(0);
         fkQuery.setPageSize(100000);
 
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
-            Stream<ProductDTO> stream1 = repo.stream(repo::getFullQuery, fkQuery);
-            Stream<List<ProductDTO>> chunkStream = chunk(stream1, 250);
+            Stream<ProductResponse> stream1 = repo.stream(repo::getFullQuery, fkQuery);
+            Stream<List<ProductResponse>> chunkStream = chunk(stream1, 250);
 
             // the "parallel" is important here, as it really pushes performance.
             return chunkStream.parallel().flatMap(List::stream);
@@ -246,10 +246,10 @@ public class ProductManager extends AbstractManager {
     public void exportJson(RequestContext requestContext, OutputStream os) {
         var productStream = streamAll(requestContext);
 
-        try (JsonWriter<ProductDTO> jsonWriter = new JsonWriter<>(os, ProductDTO.class)) {
-            final Iterator<ProductDTO> it = productStream.iterator();
+        try (JsonWriter<ProductResponse> jsonWriter = new JsonWriter<>(os, ProductResponse.class)) {
+            final Iterator<ProductResponse> it = productStream.iterator();
             while (it.hasNext()) {
-                ProductDTO product = it.next();
+                ProductResponse product = it.next();
                 jsonWriter.writeItem(product);
             }
         }
@@ -264,10 +264,10 @@ public class ProductManager extends AbstractManager {
         for (Field<?> field : pc.fields()) {
             fieldNames.add(field.getName());
         }
-        try (CsvWriter<ProductDTO> csvWriter = new CsvWriter<>(os, fieldNames)) {
-            final Iterator<ProductDTO> it = productStream.iterator();
+        try (CsvWriter<ProductResponse> csvWriter = new CsvWriter<>(os, fieldNames)) {
+            final Iterator<ProductResponse> it = productStream.iterator();
             while (it.hasNext()) {
-                ProductDTO product = it.next();
+                ProductResponse product = it.next();
                 Map<String, Object> exportMap = new LinkedHashMap<>();
                 exportMap.put("productId", product.productId());
                 exportMap.put("price", product.price());
@@ -285,10 +285,10 @@ public class ProductManager extends AbstractManager {
         for (Field<?> field : pc.fields()) {
             fieldNames.add(field.getName());
         }
-        try (XlsxWriter<ProductDTO> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
-            final Iterator<ProductDTO> it = productStream.iterator();
+        try (XlsxWriter<ProductResponse> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
+            final Iterator<ProductResponse> it = productStream.iterator();
             while (it.hasNext()) {
-                ProductDTO product = it.next();
+                ProductResponse product = it.next();
 
                 Map<String, Object> exportMap = new LinkedHashMap<>();
                 exportMap.put("productId", product.productId());
@@ -306,7 +306,7 @@ public class ProductManager extends AbstractManager {
             locale = Locale.US;
         }
         var productStream = streamAll(requestContext);
-        Stream<List<ProductDTO>> chunkStream = chunk(productStream, chunkSize);
+        Stream<List<ProductResponse>> chunkStream = chunk(productStream, chunkSize);
 
         ProductMessages productMessages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
         String test = productMessages.product_paginate_localizationTest();
@@ -320,9 +320,9 @@ public class ProductManager extends AbstractManager {
             pdfWriter.writeItem(introductionPage);
 
             // each page after the first we add using layout() followed by writeNextDocument()
-            Iterator<List<ProductDTO>> it = chunkStream.iterator();
+            Iterator<List<ProductResponse>> it = chunkStream.iterator();
             while (it.hasNext()) {
-                List<ProductDTO> productsChunk = it.next();
+                List<ProductResponse> productsChunk = it.next();
 
                 String html = ProductTemplates.productsTemplate(productsChunk).setLocale(locale).render();
                 pdfWriter.writeItem(html);

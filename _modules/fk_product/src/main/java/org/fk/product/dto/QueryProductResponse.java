@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record QueryProductResponse(
-    @NotNull List<ProductDTO> products,
+    @NotNull List<ProductResponse> products,
     @NotNull Integer count,
     String localizationTest
 ) {

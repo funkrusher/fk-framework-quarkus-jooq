@@ -6,7 +6,7 @@ import org.fk.database1.testshop.tables.records.ClientRecord;
 import org.jooq.DSLContext;
 
 /**
- * ClientRecordDAO
+ * ClientDAO
  */
 public class ClientDAO extends AbstractDAO<ClientRecord, Integer> {
 
