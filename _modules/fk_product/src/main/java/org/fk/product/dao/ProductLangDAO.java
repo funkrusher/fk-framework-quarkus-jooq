@@ -1,7 +1,7 @@
 package org.fk.product.dao;
 
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
-import org.fk.core.dao.AbstractDAO;
+import org.fk.framework.dao.AbstractDAO;
 import org.fk.database1.testshop2.tables.ProductLang;
 import org.jooq.*;
 

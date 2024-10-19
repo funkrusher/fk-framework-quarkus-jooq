@@ -2,7 +2,7 @@ package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.manager.AbstractManager;
+import org.fk.framework.manager.AbstractManager;
 import org.fk.database1.Database1;
 
 /**

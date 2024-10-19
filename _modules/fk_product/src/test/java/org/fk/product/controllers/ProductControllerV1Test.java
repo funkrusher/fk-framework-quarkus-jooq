@@ -11,8 +11,8 @@ import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.fk.core.auth.TenantCredential;
-import org.fk.core.jackson.ObjectMapperProducer;
+import org.fk.framework.auth.TenantCredential;
+import org.fk.provider.jackson.ObjectMapperProducer;
 import org.fk.database1.testshop2.tables.Product;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.dto.CreateProductResponse;
@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
-import static org.fk.core.auth.FkSecurityIdentity.MASTER_TENANT_ID;
-import static org.fk.core.auth.FkRoles.ADMIN;
+import static org.fk.framework.auth.FkSecurityIdentity.MASTER_TENANT_ID;
+import static org.fk.framework.auth.FkRoles.ADMIN;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.jupiter.api.Assertions.*;
 

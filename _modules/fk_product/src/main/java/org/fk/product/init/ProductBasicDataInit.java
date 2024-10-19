@@ -1,12 +1,11 @@
 package org.fk.product.init;
 
-import org.fk.core.init.DataInit;
+import org.fk.framework.init.DataInit;
 import org.fk.product.type.ProductTypeId;
 import org.jooq.DSLContext;
 
 import java.math.BigDecimal;
 
-import static org.fk.database1.testshop.Tables.*;
 import static org.fk.database1.testshop2.Tables.PRODUCT;
 import static org.fk.database1.testshop2.Tables.PRODUCT_LANG;
 

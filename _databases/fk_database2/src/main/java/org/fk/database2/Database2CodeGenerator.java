@@ -1,6 +1,6 @@
 package org.fk.database2;
 
-import org.fk.core.testcontainers.FkPostgres;
+import org.fk.provider.testcontainers.FkPostgres;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
 import org.jooq.meta.postgres.PostgresDatabase;

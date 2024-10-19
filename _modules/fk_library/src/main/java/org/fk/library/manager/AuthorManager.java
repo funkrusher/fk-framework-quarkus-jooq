@@ -1,14 +1,14 @@
 package org.fk.library.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.model.FkQuery;
-import org.fk.core.query.jooq.QueryExecutor;
+import org.fk.framework.exception.InvalidDataException;
+import org.fk.framework.query.model.FkQuery;
+import org.fk.framework.query.jooq.QueryExecutor;
 import org.fk.library.dto.AuthorDTO;
 import org.fk.library.dto.QueryAuthorResponse;
 import org.fk.library.repository.AuthorRepository;
 import org.jooq.DSLContext;
-import org.fk.core.manager.AbstractManager;
+import org.fk.framework.manager.AbstractManager;
 
 import java.util.*;
 

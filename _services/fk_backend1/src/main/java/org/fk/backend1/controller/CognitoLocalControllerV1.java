@@ -13,9 +13,9 @@ import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.security.SecuritySchemes;
-import org.fk.core.auth.FkClaim;
-import org.fk.core.auth.FkSecurityIdentity;
-import org.fk.core.auth.MasterTenantOnly;
+import org.fk.framework.auth.FkClaim;
+import org.fk.framework.auth.FkSecurityIdentity;
+import org.fk.framework.auth.MasterTenantOnly;
 import org.fk.product.manager.CognitoLocalManager;
 import org.jboss.logging.Logger;
 import software.amazon.awssdk.services.cognitoidentityprovider.model.NotAuthorizedException;
@@ -24,7 +24,7 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.UserNotFoun
 import java.util.Map;
 import java.util.Set;
 
-import static org.fk.core.auth.FkRoles.ADMIN;
+import static org.fk.framework.auth.FkRoles.ADMIN;
 
 
 @SecuritySchemes(value = {

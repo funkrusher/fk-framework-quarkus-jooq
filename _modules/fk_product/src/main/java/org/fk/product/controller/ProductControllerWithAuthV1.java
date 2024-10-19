@@ -2,15 +2,15 @@ package org.fk.product.controller;
 
 import io.quarkus.security.Authenticated;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.fk.core.auth.FkSecurityIdentity;
-import org.fk.core.exception.InvalidDataException;
-import org.fk.core.exception.ValidationException;
+import org.fk.framework.auth.FkSecurityIdentity;
+import org.fk.framework.exception.InvalidDataException;
+import org.fk.framework.exception.ValidationException;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.fk.core.request.RequestContext;
+import org.fk.framework.request.RequestContext;
 import org.fk.product.dto.*;
 import org.fk.product.manager.ProductManager;
-import org.fk.core.query.model.FkQuery;
+import org.fk.framework.query.model.FkQuery;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;

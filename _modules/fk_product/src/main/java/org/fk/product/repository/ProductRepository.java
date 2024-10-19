@@ -1,9 +1,9 @@
 package org.fk.product.repository;
 
-import org.fk.core.exception.InvalidDataException;
-import org.fk.core.query.jooq.QueryJooqMapper;
-import org.fk.core.query.model.FkQuery;
-import org.fk.core.repository.AbstractRepository;
+import org.fk.framework.exception.InvalidDataException;
+import org.fk.framework.query.jooq.QueryJooqMapper;
+import org.fk.framework.query.model.FkQuery;
+import org.fk.framework.repository.AbstractRepository;
 import org.fk.product.dto.*;
 import org.jooq.DSLContext;
 import org.jooq.Record1;

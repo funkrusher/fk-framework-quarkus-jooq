@@ -2,8 +2,8 @@ package org.fk.product.actor;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.actor.AbstractActor;
-import org.fk.core.exception.MappingException;
+import org.fk.framework.actor.AbstractActor;
+import org.fk.framework.exception.MappingException;
 import org.fk.database1.Database1;
 import org.fk.product.dto.FiledItemActorDTO;
 import org.jboss.logging.Logger;

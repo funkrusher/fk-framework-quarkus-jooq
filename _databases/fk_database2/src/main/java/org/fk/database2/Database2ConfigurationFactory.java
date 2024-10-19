@@ -4,7 +4,7 @@ import io.agroal.api.AgroalDataSource;
 import io.quarkus.agroal.DataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.exception.MappingException;
+import org.fk.framework.exception.MappingException;
 import org.jboss.logging.Logger;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;

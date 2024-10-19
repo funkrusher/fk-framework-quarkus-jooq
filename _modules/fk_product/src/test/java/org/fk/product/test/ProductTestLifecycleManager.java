@@ -1,7 +1,7 @@
 package org.fk.product.test;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
-import org.fk.core.init.DataInitPlan;
+import org.fk.framework.init.DataInitPlan;
 import org.fk.database1.Database1Testcontainer;
 import org.fk.product.init.ProductBasicDataInit;
 import org.fk.product.init.ProductTestDataInit;

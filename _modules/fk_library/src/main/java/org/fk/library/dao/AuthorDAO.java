@@ -1,8 +1,7 @@
 package org.fk.library.dao;
 
-import org.fk.core.dao.AbstractDAO;
+import org.fk.framework.dao.AbstractDAO;
 import org.fk.database2.public_.tables.Author;
-import org.fk.database2.public_.tables.interfaces.IAuthor;
 import org.fk.database2.public_.tables.records.AuthorRecord;
 import org.jooq.DSLContext;
 

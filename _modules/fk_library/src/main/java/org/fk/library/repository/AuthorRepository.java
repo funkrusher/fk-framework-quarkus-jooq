@@ -1,10 +1,10 @@
 package org.fk.library.repository;
 
 
-import org.fk.core.query.jooq.QueryJooqMapper;
-import org.fk.core.query.model.FkQuery;
-import org.fk.core.repository.AbstractRepository;
-import org.fk.core.exception.InvalidDataException;
+import org.fk.framework.query.jooq.QueryJooqMapper;
+import org.fk.framework.query.model.FkQuery;
+import org.fk.framework.repository.AbstractRepository;
+import org.fk.framework.exception.InvalidDataException;
 import org.fk.library.dto.AuthorDTO;
 import org.fk.library.dto.BookDTO;
 import org.jooq.*;

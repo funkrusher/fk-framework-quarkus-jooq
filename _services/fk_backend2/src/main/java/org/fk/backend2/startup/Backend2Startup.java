@@ -6,7 +6,7 @@ import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.fk.core.init.DataInitPlan;
+import org.fk.framework.init.DataInitPlan;
 import org.fk.database2.Database2ConfigurationFactory;
 import org.fk.library.init.LibraryBasicDataInit;
 import org.jooq.DSLContext;

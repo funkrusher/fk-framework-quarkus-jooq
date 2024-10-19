@@ -6,7 +6,7 @@ import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.fk.core.init.DataInitPlan;
+import org.fk.framework.init.DataInitPlan;
 import org.fk.database1.Database1ConfigurationFactory;
 import org.fk.product.init.ProductBasicDataInit;
 import org.fk.root.init.RootBasicDataInit;

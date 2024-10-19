@@ -12,12 +12,12 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import org.fk.core.request.RequestContext;
+import org.fk.framework.request.RequestContext;
 import org.fk.product.dto.*;
 import org.fk.product.manager.ProductManager;
-import org.fk.core.exception.InvalidDataException;
-import org.fk.core.exception.ValidationException;
-import org.fk.core.query.model.FkQuery;
+import org.fk.framework.exception.InvalidDataException;
+import org.fk.framework.exception.ValidationException;
+import org.fk.framework.query.model.FkQuery;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.List;

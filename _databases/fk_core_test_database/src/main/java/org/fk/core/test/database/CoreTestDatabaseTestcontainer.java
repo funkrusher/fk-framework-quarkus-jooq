@@ -1,14 +1,14 @@
 package org.fk.core.test.database;
 
-import org.fk.core.liquibase.FkLiquibase;
-import org.fk.core.testcontainers.FkMariaDb;
+import org.fk.provider.liquibase.FkLiquibase;
+import org.fk.provider.testcontainers.FkMariaDb;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.fk.core.liquibase.FkLiquibase.FkLiquibaseChangesetContext.DDL_CONTEXT;
+import static org.fk.provider.liquibase.FkLiquibase.FkLiquibaseChangesetContext.DDL_CONTEXT;
 
 public class CoreTestDatabaseTestcontainer implements AutoCloseable {
 

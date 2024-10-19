@@ -5,7 +5,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import org.fk.core.exception.ValidationException;
+import org.fk.framework.exception.ValidationException;
 
 import java.util.HashMap;
 import java.util.Map;

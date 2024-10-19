@@ -1,7 +1,6 @@
 package org.fk.database1;
 
-import org.fk.core.jooq.FkGeneratorStrategy;
-import org.fk.core.testcontainers.FkMariaDb;
+import org.fk.provider.testcontainers.FkMariaDb;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
 import org.jooq.meta.mariadb.MariaDBDatabase;

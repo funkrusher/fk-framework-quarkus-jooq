@@ -7,7 +7,7 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import io.quarkus.test.security.TestSecurity;
-import org.fk.core.auth.TenantCredential;
+import org.fk.framework.auth.TenantCredential;
 import org.fk.database1.testshop.tables.Post;
 import org.fk.database1.testshop.tables.records.PostRecord;
 import org.fk.product.test.InjectProductTestUtil;
@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
-import static org.fk.core.auth.FkRoles.ADMIN;
-import static org.fk.core.auth.FkSecurityIdentity.MASTER_TENANT_ID;
+import static org.fk.framework.auth.FkRoles.ADMIN;
+import static org.fk.framework.auth.FkSecurityIdentity.MASTER_TENANT_ID;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

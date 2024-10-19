@@ -2,9 +2,9 @@ package org.fk.product.manager;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.manager.AbstractManager;
-import org.fk.core.exception.ValidationException;
-import org.fk.core.request.RequestContext;
+import org.fk.framework.manager.AbstractManager;
+import org.fk.framework.exception.ValidationException;
+import org.fk.framework.request.RequestContext;
 import org.fk.database1.Database1;
 import org.fk.database1.testshop.tables.records.PostRecord;
 import org.fk.product.dao.PostDAO;

@@ -2,13 +2,13 @@ package org.fk.core.test.database;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.fk.core.exception.MappingException;
-import org.fk.core.request.RequestContext;
+import org.fk.framework.exception.MappingException;
+import org.fk.framework.request.RequestContext;
 import org.jboss.logging.Logger;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-import static org.fk.core.request.RequestContext.DSL_DATA_KEY;
+import static org.fk.framework.request.RequestContext.DSL_DATA_KEY;
 
 /**
  * DSLFactory to create request-specific instances of jooq dsl-context.

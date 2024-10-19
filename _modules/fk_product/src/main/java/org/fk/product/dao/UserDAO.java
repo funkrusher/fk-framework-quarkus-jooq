@@ -3,7 +3,7 @@ package org.fk.product.dao;
 import org.fk.database1.testshop.tables.User;
 import org.fk.database1.testshop.tables.records.UserRecord;
 import org.jooq.DSLContext;
-import org.fk.core.dao.AbstractDAO;
+import org.fk.framework.dao.AbstractDAO;
 
 /**
  * UserDAO

@@ -1,6 +1,6 @@
 package org.fk.library.init;
 
-import org.fk.core.init.DataInit;
+import org.fk.framework.init.DataInit;
 import org.jooq.DSLContext;
 import static org.fk.database2.public_.Tables.BOOK;
 import static org.fk.database2.public_.tables.Author.AUTHOR;

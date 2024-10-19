@@ -1,6 +1,6 @@
 package org.fk.library.init;
 
-import org.fk.core.init.DataInit;
+import org.fk.framework.init.DataInit;
 import org.jooq.DSLContext;
 
 public class LibraryTestDataInit implements DataInit {

@@ -3,7 +3,7 @@ package org.fk.database1;
 import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.fk.core.exception.MappingException;
+import org.fk.framework.exception.MappingException;
 import org.jboss.logging.Logger;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
@@ -12,7 +12,6 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.DefaultExecuteListenerProvider;
 
 import java.sql.Connection;
 

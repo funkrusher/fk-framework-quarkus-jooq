@@ -1,15 +1,12 @@
 package org.fk.product.dao;
 
-import org.fk.core.exception.MappingException;
+import org.fk.framework.exception.MappingException;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
-import org.fk.core.dao.AbstractDAO;
+import org.fk.framework.dao.AbstractDAO;
 import org.fk.product.dto.CreateProductRequest;
 import org.fk.product.dto.CreateProductResponse;
-import org.fk.product.dto.UpdateProductRequest;
-import org.fk.product.dto.UpdateProductResponse;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
-import org.jooq.Result;
 
 import static org.fk.database1.testshop2.tables.Product.PRODUCT;
 import static org.jooq.impl.DSL.row;
