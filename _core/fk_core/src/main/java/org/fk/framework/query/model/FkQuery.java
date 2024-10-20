@@ -39,6 +39,9 @@ public class FkQuery {
     private FkSorter sorter;
     private List<FkFilter> filters = new ArrayList<>();
 
+    @QueryParam("seek")
+    private Long seek;
+
     @Context
     protected UriInfo uriInfo;
 
@@ -66,6 +69,10 @@ public class FkQuery {
         String filterStrings = queryParams.getFirst("filter");
         this.filters = FkFilter.parseFilterString(filterStrings);
 
+        String seekString = queryParams.getFirst("seek");
+        if (seekString != null && !seekString.equals("")) {
+            this.seek = Long.parseLong(seekString);
+        }
     }
 
     public FkQuery setPage(Integer page) {
@@ -102,5 +109,15 @@ public class FkQuery {
 
     public FkSorter getSorter() {
         return sorter;
+    }
+
+    public FkQuery setSeek(Long seek) {
+        this.seek = seek;
+        return this;
+    }
+
+
+    public Long getSeek() {
+        return seek;
     }
 }

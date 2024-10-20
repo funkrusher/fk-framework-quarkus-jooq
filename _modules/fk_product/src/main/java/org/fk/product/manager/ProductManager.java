@@ -73,15 +73,33 @@ public class ProductManager extends AbstractManager {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             final ProductRepository repo = new ProductRepository(tsx.dsl());
 
+            boolean isLastPage = false;
+            Long nextSeek = null;
+
             List<ProductResponse> products = repo.query(repo::getFullQuery, fkQuery);
-            int count = repo.count(repo::getFullQuery, fkQuery.getFilters());
+            if (products.size() == 0 || products.size() < fkQuery.getPageSize()){
+                isLastPage = true;
+            } else {
+                // see if there is at least 1 item on the next page.
+                Long seek = products.getLast().productId();
+                fkQuery.setSeek(seek);
+                fkQuery.setPageSize(1);
+                List<ProductResponse> nextPage = repo.query(repo::getFullQuery, fkQuery);
+                if (nextPage.size() == 0) {
+                    isLastPage = true;
+                } else {
+                    nextSeek = seek;
+                }
+            }
+
+            // int count = repo.count(repo::getFullQuery, fkQuery.getFilters());
 
             // test localization here.
             Locale locale = Locale.GERMANY;
             ProductMessages messages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
             String localizationTest = messages.product_paginate_localizationTest();
 
-            return new QueryProductResponse(products, count, localizationTest);
+            return new QueryProductResponse(products, 0, localizationTest, isLastPage, nextSeek);
         });
     }
 

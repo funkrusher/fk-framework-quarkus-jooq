@@ -1,6 +1,7 @@
 package org.fk.product.repository;
 
 import org.fk.framework.exception.InvalidDataException;
+import org.fk.framework.exception.MappingException;
 import org.fk.framework.query.jooq.QueryJooqMapper;
 import org.fk.framework.query.model.FkQuery;
 import org.fk.framework.repository.AbstractRepository;
@@ -30,7 +31,11 @@ public class ProductRepository extends AbstractRepository<ProductResponse, Long>
             .addMappableFields(PRODUCT)
             .addMappableFields(PRODUCT_LANG);
 
-        return dsl()
+        if (fkQuery.getSorter() != null) {
+            throw new MappingException("sorter must not be given for keyset-pagination to work!");
+        }
+
+        var stmt = dsl()
             .select(
                 row(
                     PRODUCT,
@@ -59,8 +64,13 @@ public class ProductRepository extends AbstractRepository<ProductResponse, Long>
             .where(queryJooqMapper.getFilters())
             .and(PRODUCT.CLIENTID.eq(request().getClientId()))
             .groupBy(PRODUCT.PRODUCTID)
-            .orderBy(queryJooqMapper.getSorter())
-            .offset(queryJooqMapper.getOffset())
+            .orderBy(PRODUCT.PRODUCTID.asc());
+
+        if (fkQuery.getSeek() != null) {
+            return stmt.seek(fkQuery.getSeek())
+                .limit(queryJooqMapper.getLimit());
+        }
+        return stmt
             .limit(queryJooqMapper.getLimit());
     }
 }

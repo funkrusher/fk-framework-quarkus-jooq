@@ -11,6 +11,8 @@ import java.util.List;
 public record QueryProductResponse(
     @NotNull List<ProductResponse> products,
     @NotNull Integer count,
-    String localizationTest
+    String localizationTest,
+    boolean isLastPage,
+    Long nextSeek
 ) {
 }
