@@ -92,19 +92,15 @@ public class ProductControllerV1 {
 
     @PATCH
     @Operation(summary = "patch an existing product")
-    @APIResponse(responseCode = "200", description = "product update successful")
+    @RequestBody(
+        required = true,
+        content = @Content(mediaType = MediaType.APPLICATION_JSON,
+            schema = @Schema(implementation = PatchProductRequest.class)))
+    @APIResponse(responseCode = "200", description = "product patch successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
-    public void patch(
-        @RequestBody(
-            description = "Patch Object (each field besides the productId is optional)!",
-            required = true,
-            content = @Content(mediaType = MediaType.APPLICATION_JSON,
-                schema = @Schema(implementation = UpdateProductRequest.class)))
-        Map<String, Object> map
-    ) throws ValidationException {
-        final UpdateProductRequest updateProductRequest = jsonMapper.convertValue(map, UpdateProductRequest.class);
-        productManager.patch(new RequestContext(1, 1), map, updateProductRequest);
+    public void patch(Map<String, Object> patch) throws ValidationException {
+        productManager.patch(new RequestContext(1, 1), patch);
     }
 
     @DELETE

@@ -5,8 +5,11 @@ import io.quarkus.qute.i18n.MessageBundles;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.validation.ConstraintViolation;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.fk.database1.Database1;
+import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.ProductLang;
+import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.framework.exception.InvalidDataException;
 import org.fk.framework.exception.ValidationException;
 import org.fk.framework.manager.AbstractManager;
@@ -18,10 +21,6 @@ import org.fk.framework.transfer.csv.CsvWriter;
 import org.fk.framework.transfer.json.JsonWriter;
 import org.fk.framework.transfer.pdf.PdfWriter;
 import org.fk.framework.transfer.xlsx.XlsxWriter;
-import org.fk.database1.Database1;
-import org.fk.database1.testshop2.tables.Product;
-import org.fk.database1.testshop2.tables.ProductLang;
-import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.product.dao.ProductDAO;
 import org.fk.product.dao.ProductLangDAO;
 import org.fk.product.dto.*;
@@ -182,25 +181,16 @@ public class ProductManager extends AbstractManager {
         });
     }
 
-    public void patch(
-        RequestContext requestContext,
-        final Map<String, Object> map,
-        final UpdateProductRequest updateProductRequest) throws ValidationException {
+    public void patch(RequestContext requestContext, final Map<String, Object> patch) throws ValidationException {
         database1.dsl(requestContext).transaction(tsx -> {
-            // Validate the API-Update-Model (but only for the fields present in the given hashmap)
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                Set<ConstraintViolation<Object>> violations = this.validator.validateProperty(updateProductRequest, entry.getKey());
-                if (!violations.isEmpty()) {
-                    throw new ValidationException(violations);
-                }
-            }
+            final PatchProductRequest dto = this.validatePatch(patch, PatchProductRequest.class);
 
-            // Put the changed-fields into the DB-Record of Jooq so the DAO only saves the changed fields to the DB.
-            ProductRecord update = new ProductRecord();
-            update.setProductid(updateProductRequest.productId());
-            if (map.containsKey("price")) update.setPrice(updateProductRequest.price());
-            if (map.containsKey("clientId")) update.setClientid(updateProductRequest.clientId());
-            if (map.containsKey("typeId")) update.setTypeid(updateProductRequest.typeId());
+            // For each field in patch, set according db-record field with correctly typed value.
+            final ProductRecord update = new ProductRecord();
+            update.setProductid(dto.productId());
+            if (patch.containsKey(PatchProductRequest.Fields.price)) update.setPrice(dto.price());
+            if (patch.containsKey(PatchProductRequest.Fields.clientId)) update.setClientid(dto.clientId());
+            if (patch.containsKey(PatchProductRequest.Fields.typeId)) update.setTypeid(dto.typeId());
 
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             productDAO.update(update);

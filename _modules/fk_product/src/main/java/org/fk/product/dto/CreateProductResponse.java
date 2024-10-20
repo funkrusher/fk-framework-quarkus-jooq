@@ -39,7 +39,7 @@ public record CreateProductResponse(
     public static final String EXAMPLE1_DESCRIPTION = "An example containing all required parameters";
     public static final String EXAMPLE1_VALUE = """
     {
-      "test" : "test123
+      "test" : "test123"
     }
    """;
 }

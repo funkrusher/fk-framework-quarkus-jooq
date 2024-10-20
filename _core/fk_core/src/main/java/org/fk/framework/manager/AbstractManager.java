@@ -1,5 +1,6 @@
 package org.fk.framework.manager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -21,6 +22,32 @@ public abstract class AbstractManager {
     @Inject
     protected Validator validator;
 
+    @Inject
+    protected ObjectMapper objectMapper;
+
+    /**
+     * validate the given Patch against the given dto-clazz.
+     * - only the fields in the patch are validated.
+     *
+     * @param patch    patch
+     * @param dtoClazz dtoClazz
+     * @throws ValidationException invalid dto
+     */
+    protected <T> T validatePatch(Map<String, Object> patch, Class<T> dtoClazz) throws ValidationException {
+        final T dto = objectMapper.convertValue(patch, dtoClazz);
+
+        // Validate the dto (but only for the fields present in the given patch)
+        Set<ConstraintViolation<Object>> allViolations = new HashSet<>();
+        for (Map.Entry<String, Object> entry : patch.entrySet()) {
+            Set<ConstraintViolation<Object>> violations = this.validator.validateProperty(dto, entry.getKey());
+            allViolations.addAll(violations);
+        }
+        if (!allViolations.isEmpty()) {
+            throw new ValidationException(allViolations);
+        }
+        return dto;
+    }
+
     /**
      * validate the given DTO.
      * - all fields are validated, even if they are not set.
@@ -30,18 +57,19 @@ public abstract class AbstractManager {
      * @param dto dto
      * @throws ValidationException invalid dto
      */
-    protected void validate(Object dto) throws ValidationException {
+    protected Object validate(Object dto) throws ValidationException {
         Set<ConstraintViolation<Object>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             throw new ValidationException(violations);
         }
+        return dto;
     }
 
     /**
      * Helper function to chunk a stream of items into a stream of List of items.
      *
      * @param stream stream
-     * @param size chunk-size of each chunk
+     * @param size   chunk-size of each chunk
      * @return stream of list of items.
      */
     protected <T> Stream<List<T>> chunk(Stream<T> stream, int size) {
