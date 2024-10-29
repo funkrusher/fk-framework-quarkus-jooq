@@ -1,11 +1,16 @@
 package org.fk.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import io.vertx.core.buffer.Buffer;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
@@ -20,9 +25,12 @@ import org.fk.framework.request.RequestContext;
 import org.fk.product.dto.*;
 import org.fk.product.manager.ProductManager;
 import org.jboss.resteasy.reactive.ResponseStatus;
+import org.jboss.resteasy.reactive.RestMulti;
 
+import java.io.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 
 @Path("/api/v1/products")
@@ -156,16 +164,81 @@ public class ProductControllerV1 {
             .build();
     }
 
+    public Multi<Byte> createMultiFromByteArrayOutputStream(ByteArrayOutputStream byteArrayOutputStream) {
+
+            // Create a Multi that emits bytes from the InputStream
+            return Multi.createFrom().emitter(emitter -> {
+                // Create an InputStream from the ByteArrayOutputStream
+                PipedInputStream in = new PipedInputStream();
+                try {
+                    final PipedOutputStream out = new PipedOutputStream(in);
+
+                    // in a background thread, write the given output stream to the
+                    // PipedOutputStream for consumption
+                    new Thread(() -> {
+                        try {
+                            byteArrayOutputStream.writeTo(out);
+
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } finally {
+                            try {
+                                out.close();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }).start();
+
+
+                    try {
+                        int byteRead;
+                        while ((byteRead = in.read()) != -1) {
+                            // Use Byte.valueOf to ensure proper boxing
+                            emitter.emit((byte) byteRead);
+                        }
+                        emitter.complete();
+                    } catch (Exception e) {
+                        emitter.fail(e);
+                    } finally {
+                        try {
+                            in.close();
+                        } catch (Exception ignored) {
+                            throw new RuntimeException("test");
+                        }
+                    }
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            });
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Path("/export/xlsx")
-    public Response streamXlsx() throws InvalidDataException {
-        final StreamingOutput streamingOutput =
-            os -> productManager.exportXlsx(new RequestContext(1, 1), os);
-        return Response
-            .ok(streamingOutput, MediaType.APPLICATION_OCTET_STREAM)
-            .header("Content-Disposition", "attachment; filename=product_export.xlsx")
-            .build();
+    public RestMulti<byte[]> streamXlsx() {
+        return RestMulti.fromUniResponse(
+            // Initialize export and set up the output stream as a Multi
+            Uni.createFrom().item(() -> {
+                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                try {
+                    productManager.exportXlsx(new RequestContext(1, 1), byteStream);
+                } catch (Exception e) {
+                    throw new WebApplicationException("Export failed", e, Response.Status.INTERNAL_SERVER_ERROR);
+                }
+                return byteStream;
+            }),
+            // Convert the ByteArrayOutputStream into a Multi<byte[]>
+            byteStream -> Multi.createFrom().items().items(byteStream.toByteArray()),
+
+            // Set headers dynamically based on successful export initialization
+            byteStream -> Map.of(
+                "Content-Disposition", List.of("attachment; filename=product_export.xlsx")
+            )
+        );
     }
 
     @GET
