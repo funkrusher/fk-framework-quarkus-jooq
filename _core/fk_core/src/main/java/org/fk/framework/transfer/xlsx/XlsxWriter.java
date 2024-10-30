@@ -17,6 +17,8 @@ public class XlsxWriter<T> implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(XlsxWriter.class);
 
+    private boolean rollback = true;
+
     private SXSSFWorkbook workbook;
     private Sheet sheet;
     private List<String> fieldNames;
@@ -50,6 +52,10 @@ public class XlsxWriter<T> implements AutoCloseable {
 
         // Apply auto-filter to the header row
         sheet.setAutoFilter(new CellRangeAddress(0, 0, 0, fieldNames.size() - 1));
+    }
+
+    public void success() {
+        rollback = false;
     }
 
     private void createHeaderCellStyle() {
@@ -119,23 +125,28 @@ public class XlsxWriter<T> implements AutoCloseable {
     @Override
     public void close() throws MappingException {
         // Set the column widths based on the cached max widths
-        for (int i = 0; i < fieldNames.size(); i++) {
-            // default: 256
-            sheet.setColumnWidth(i, maxColumnWidths[i] * 300); // Approximate calculation for width
-        }
+        if (!rollback) {
+            // we only finish gracefully when we have a success,
+            // when we have an error, we need to have a defect xlsx-file so it is shown.
 
-        // note: we must leave the original outputStream open.
-        // jax-rs needs the stream still open / expects it to be open because it closes it.
-        // see: https://stackoverflow.com/questions/39572872/closing-jax-rs-streamingoutputs-outputstream
-        try {
-            try {
-                this.workbook.write(os);
-            } finally {
-                this.workbook.close();
+            for (int i = 0; i < fieldNames.size(); i++) {
+                // default: 256
+                sheet.setColumnWidth(i, maxColumnWidths[i] * 300); // Approximate calculation for width
             }
-        } catch (Exception e) {
-            LOGGER.error("error in close xlsx-writer", e);
-            throw new MappingException(e);
+
+            // note: we must leave the original outputStream open.
+            // jax-rs needs the stream still open / expects it to be open because it closes it.
+            // see: https://stackoverflow.com/questions/39572872/closing-jax-rs-streamingoutputs-outputstream
+            try {
+                try {
+                    this.workbook.write(os);
+                } finally {
+                    this.workbook.close();
+                }
+            } catch (Exception e) {
+                LOGGER.error("error in close xlsx-writer", e);
+                throw new MappingException(e);
+            }
         }
     }
 }

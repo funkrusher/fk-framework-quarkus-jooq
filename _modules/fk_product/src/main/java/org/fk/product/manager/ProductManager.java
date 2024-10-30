@@ -285,25 +285,41 @@ public class ProductManager extends AbstractManager {
     }
 
     public void exportXlsx(RequestContext requestContext, OutputStream os) {
-        var productStream = streamAll(requestContext);
 
-        // Resolve fields that should be part of the export.
-        ProductRecord pc = new ProductRecord();
-        List<String> fieldNames = new ArrayList<>();
-        for (Field<?> field : pc.fields()) {
-            fieldNames.add(field.getName());
-        }
-        try (XlsxWriter<ProductResponse> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
-            final Iterator<ProductResponse> it = productStream.iterator();
-            while (it.hasNext()) {
-                ProductResponse product = it.next();
 
-                Map<String, Object> exportMap = new LinkedHashMap<>();
-                exportMap.put("productId", product.productId());
-                exportMap.put("price", product.price());
-                xlsxWriter.writeItem(exportMap);
+        FkQuery fkQuery = new FkQuery();
+        fkQuery.setPage(0);
+        fkQuery.setPageSize(100000);
+
+        database1.dsl(requestContext).transaction(tsx -> {
+            final ProductRepository repo = new ProductRepository(tsx.dsl());
+            Stream<ProductResponse> stream1 = repo.stream(repo::getFullQuery, fkQuery);
+            Stream<List<ProductResponse>> chunkStream = chunk(stream1, 250);
+
+            // the "parallel" is important here, as it really pushes performance.
+            var productStream = chunkStream.parallel().flatMap(List::stream);
+
+
+            // Resolve fields that should be part of the export.
+            ProductRecord pc = new ProductRecord();
+            List<String> fieldNames = new ArrayList<>();
+            for (Field<?> field : pc.fields()) {
+                fieldNames.add(field.getName());
             }
-        }
+            try (XlsxWriter<ProductResponse> xlsxWriter = new XlsxWriter<>(os, "Products", fieldNames)) {
+                final Iterator<ProductResponse> it = productStream.iterator();
+                while (it.hasNext()) {
+                    ProductResponse product = it.next();
+
+                    Map<String, Object> exportMap = new LinkedHashMap<>();
+                    exportMap.put("productId", product.productId());
+                    exportMap.put("price", product.price());
+                    xlsxWriter.writeItem(exportMap);
+                    throw new RuntimeException("test");
+                }
+                xlsxWriter.success();
+            }
+        });
     }
 
     public void exportPdf(RequestContext requestContext, OutputStream os, String language, Integer chunkSize) {

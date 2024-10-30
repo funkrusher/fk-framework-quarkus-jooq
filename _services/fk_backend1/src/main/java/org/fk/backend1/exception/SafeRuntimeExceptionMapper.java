@@ -8,6 +8,7 @@ import org.jboss.logging.Logger;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 @Provider
 @IfBuildProfile("dev")
@@ -17,9 +18,9 @@ public class SafeRuntimeExceptionMapper implements ExceptionMapper<Throwable> {
     @Override
     public Response toResponse(Throwable exception) {
         LOGGER.error(exception);
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(exception.getMessage() + "\n" + getStackTraceAsString(exception))
-                .build();
+
+        return Response.serverError()
+            .build();
     }
 
     private String getStackTraceAsString(Throwable throwable) {
