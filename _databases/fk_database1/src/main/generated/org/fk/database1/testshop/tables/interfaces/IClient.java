@@ -16,12 +16,12 @@ public interface IClient extends Serializable {
     /**
      * Setter for <code>testshop.client.clientId</code>.
      */
-    public IClient setClientid(Integer value);
+    public IClient setClientId(Integer value);
 
     /**
      * Getter for <code>testshop.client.clientId</code>.
      */
-    public Integer getClientid();
+    public Integer getClientId();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

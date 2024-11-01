@@ -25,7 +25,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
     @Override
-    public ProductLangRecord setProductid(Long value) {
+    public ProductLangRecord setProductId(Long value) {
         set(0, value);
         return this;
     }
@@ -35,7 +35,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      */
     @NotNull
     @Override
-    public Long getProductid() {
+    public Long getProductId() {
         return (Long) get(0);
     }
 
@@ -43,7 +43,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
     @Override
-    public ProductLangRecord setLangid(Integer value) {
+    public ProductLangRecord setLangId(Integer value) {
         set(1, value);
         return this;
     }
@@ -53,7 +53,7 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
      */
     @NotNull
     @Override
-    public Integer getLangid() {
+    public Integer getLangId() {
         return (Integer) get(1);
     }
 
@@ -110,8 +110,8 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
 
     @Override
     public void from(IProductLang from) {
-        setProductid(from.getProductid());
-        setLangid(from.getLangid());
+        setProductId(from.getProductId());
+        setLangId(from.getLangId());
         setName(from.getName());
         setDescription(from.getDescription());
         resetChangedOnNotNull();
@@ -137,11 +137,11 @@ public class ProductLangRecord extends UpdatableRecordImpl<ProductLangRecord> im
     /**
      * Create a detached, initialised ProductLangRecord
      */
-    public ProductLangRecord(Long productid, Integer langid, String name, String description) {
+    public ProductLangRecord(Long productId, Integer langId, String name, String description) {
         super(ProductLang.PRODUCT_LANG);
 
-        setProductid(productid);
-        setLangid(langid);
+        setProductId(productId);
+        setLangId(langId);
         setName(name);
         setDescription(description);
         resetChangedOnNotNull();

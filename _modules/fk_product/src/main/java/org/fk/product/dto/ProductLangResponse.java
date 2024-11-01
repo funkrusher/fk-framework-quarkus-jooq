@@ -17,8 +17,8 @@ public record ProductLangResponse(
     public static ProductLangResponse create(Record2<ProductLangRecord, LangResponse> rec) {
         ProductLangRecord lang = rec.value1();
         return ProductLangResponse.builder()
-            .productId(lang.getProductid())
-            .langId(lang.getLangid())
+            .productId(lang.getProductId())
+            .langId(lang.getLangId())
             .name(lang.getName())
             .description(lang.getDescription())
             .lang(rec.value2())

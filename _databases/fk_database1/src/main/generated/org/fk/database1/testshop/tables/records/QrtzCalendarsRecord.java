@@ -25,7 +25,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
      * Setter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzCalendarsRecord setSchedName(String value) {
+    public QrtzCalendarsRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
      */
     @Override
-    public QrtzCalendarsRecord setCalendarName(String value) {
+    public QrtzCalendarsRecord setCALENDAR_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
     @NotNull
     @Size(max = 190)
     @Override
-    public String getCalendarName() {
+    public String getCALENDAR_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.
      */
     @Override
-    public QrtzCalendarsRecord setCalendar(byte[] value) {
+    public QrtzCalendarsRecord setCALENDAR(byte[] value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
     @NotNull
     @Size(max = 65535)
     @Override
-    public byte[] getCalendar() {
+    public byte[] getCALENDAR() {
         return (byte[]) get(2);
     }
 
@@ -93,9 +93,9 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
 
     @Override
     public void from(IQrtzCalendars from) {
-        setSchedName(from.getSchedName());
-        setCalendarName(from.getCalendarName());
-        setCalendar(from.getCalendar());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setCALENDAR_NAME(from.getCALENDAR_NAME());
+        setCALENDAR(from.getCALENDAR());
         resetChangedOnNotNull();
     }
 
@@ -119,12 +119,12 @@ public class QrtzCalendarsRecord extends UpdatableRecordImpl<QrtzCalendarsRecord
     /**
      * Create a detached, initialised QrtzCalendarsRecord
      */
-    public QrtzCalendarsRecord(String schedName, String calendarName, byte[] calendar) {
+    public QrtzCalendarsRecord(String SCHED_NAME, String CALENDAR_NAME, byte[] CALENDAR) {
         super(QrtzCalendars.QRTZ_CALENDARS);
 
-        setSchedName(schedName);
-        setCalendarName(calendarName);
-        setCalendar(calendar);
+        setSCHED_NAME(SCHED_NAME);
+        setCALENDAR_NAME(CALENDAR_NAME);
+        setCALENDAR(CALENDAR);
         resetChangedOnNotNull();
     }
 }

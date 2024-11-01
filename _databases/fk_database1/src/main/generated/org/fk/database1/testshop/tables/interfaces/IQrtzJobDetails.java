@@ -19,120 +19,120 @@ public interface IQrtzJobDetails extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
-    public IQrtzJobDetails setSchedName(String value);
+    public IQrtzJobDetails setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSchedName();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
-    public IQrtzJobDetails setJobName(String value);
+    public IQrtzJobDetails setJOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getJobName();
+    public String getJOB_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
-    public IQrtzJobDetails setJobGroup(String value);
+    public IQrtzJobDetails setJOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getJobGroup();
+    public String getJOB_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
-    public IQrtzJobDetails setDescription(String value);
+    public IQrtzJobDetails setDESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
     @Size(max = 250)
-    public String getDescription();
+    public String getDESCRIPTION();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
-    public IQrtzJobDetails setJobClassName(String value);
+    public IQrtzJobDetails setJOB_CLASS_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
     @NotNull
     @Size(max = 250)
-    public String getJobClassName();
+    public String getJOB_CLASS_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
-    public IQrtzJobDetails setIsDurable(String value);
+    public IQrtzJobDetails setIS_DURABLE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getIsDurable();
+    public String getIS_DURABLE();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
-    public IQrtzJobDetails setIsNonconcurrent(String value);
+    public IQrtzJobDetails setIS_NONCONCURRENT(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getIsNonconcurrent();
+    public String getIS_NONCONCURRENT();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
-    public IQrtzJobDetails setIsUpdateData(String value);
+    public IQrtzJobDetails setIS_UPDATE_DATA(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getIsUpdateData();
+    public String getIS_UPDATE_DATA();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
-    public IQrtzJobDetails setRequestsRecovery(String value);
+    public IQrtzJobDetails setREQUESTS_RECOVERY(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
     @NotNull
     @Size(max = 1)
-    public String getRequestsRecovery();
+    public String getREQUESTS_RECOVERY();
 
     /**
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
-    public IQrtzJobDetails setJobData(byte[] value);
+    public IQrtzJobDetails setJOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
     @Size(max = 65535)
-    public byte[] getJobData();
+    public byte[] getJOB_DATA();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

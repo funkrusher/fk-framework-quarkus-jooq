@@ -16,31 +16,60 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class ProductDTO implements IProduct {
-    private @NotNull Long productId;
-    private @NotNull Integer clientId;
-    private @NotNull BigDecimal price;
-    private @NotNull
-    @Size(max = 255) String typeId;
-    private @NotNull LocalDateTime createdAt;
-    private @NotNull LocalDateTime updatedAt;
-    private @NotNull Boolean deleted;
+    @NotNull
+    private Long productId;
+
+    @NotNull
+    private Integer clientId;
+
+    @NotNull
+    private BigDecimal price;
+
+    @NotNull
+    @Size(max = 255)
+    private String typeId;
+
+    @NotNull
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private LocalDateTime updatedAt;
+
+    @NotNull
+    private Boolean deleted;
+
     private Integer creatorId;
+
     private UserResponse creator;
-    private @NotNull List<ProductLangResponse> langs;
+
+    @NotNull
+    private List<ProductLangResponse> langs;
+
+    public ProductDTO(IProduct from) {
+        this.from(from);
+    }
 
     public static ProductDTO create(Record3<ProductRecord, UserResponse, List<ProductLangResponse>> rec) {
-        ProductRecord product = rec.value1();
-        return new ProductDTO()
-            .setProductId(product.getProductid())
-            .setClientId(product.getClientid())
-            .setPrice(product.getPrice())
-            .setTypeId(product.getTypeid())
-            .setCreatedAt(product.getCreatedat())
-            .setUpdatedAt(product.getUpdatedat())
-            .setDeleted(product.getDeleted())
-            .setCreatorId(product.getCreatorid())
+        return new ProductDTO(rec.value1())
             .setCreator(rec.value2())
             .setLangs(rec.value3());
     }
 
+    @Override
+    public void from(IProduct from) {
+        setProductId(from.getProductId());
+        setClientId(from.getClientId());
+        setPrice(from.getPrice());
+        setTypeId(from.getTypeId());
+        setCreatedAt(from.getCreatedAt());
+        setUpdatedAt(from.getUpdatedAt());
+        setDeleted(from.getDeleted());
+        setCreatorId(from.getCreatorId());
+    }
+
+    @Override
+    public <E extends IProduct> E into(E into) {
+        into.from(this);
+        return into;
+    }
 }

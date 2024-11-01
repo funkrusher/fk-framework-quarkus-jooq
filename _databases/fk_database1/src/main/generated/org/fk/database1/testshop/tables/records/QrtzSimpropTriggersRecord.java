@@ -27,7 +27,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setSchedName(String value) {
+    public QrtzSimpropTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -38,7 +38,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -46,7 +46,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setTriggerName(String value) {
+    public QrtzSimpropTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -57,7 +57,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerName() {
+    public String getTRIGGER_NAME() {
         return (String) get(1);
     }
 
@@ -65,7 +65,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setTriggerGroup(String value) {
+    public QrtzSimpropTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
         return this;
     }
@@ -76,7 +76,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerGroup() {
+    public String getTRIGGER_GROUP() {
         return (String) get(2);
     }
 
@@ -84,7 +84,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setStrProp_1(String value) {
+    public QrtzSimpropTriggersRecord setSTR_PROP_1(String value) {
         set(3, value);
         return this;
     }
@@ -94,7 +94,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      */
     @Size(max = 512)
     @Override
-    public String getStrProp_1() {
+    public String getSTR_PROP_1() {
         return (String) get(3);
     }
 
@@ -102,7 +102,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setStrProp_2(String value) {
+    public QrtzSimpropTriggersRecord setSTR_PROP_2(String value) {
         set(4, value);
         return this;
     }
@@ -112,7 +112,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      */
     @Size(max = 512)
     @Override
-    public String getStrProp_2() {
+    public String getSTR_PROP_2() {
         return (String) get(4);
     }
 
@@ -120,7 +120,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.STR_PROP_3</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setStrProp_3(String value) {
+    public QrtzSimpropTriggersRecord setSTR_PROP_3(String value) {
         set(5, value);
         return this;
     }
@@ -130,7 +130,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      */
     @Size(max = 512)
     @Override
-    public String getStrProp_3() {
+    public String getSTR_PROP_3() {
         return (String) get(5);
     }
 
@@ -138,7 +138,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setIntProp_1(Integer value) {
+    public QrtzSimpropTriggersRecord setINT_PROP_1(Integer value) {
         set(6, value);
         return this;
     }
@@ -147,7 +147,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_1</code>.
      */
     @Override
-    public Integer getIntProp_1() {
+    public Integer getINT_PROP_1() {
         return (Integer) get(6);
     }
 
@@ -155,7 +155,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setIntProp_2(Integer value) {
+    public QrtzSimpropTriggersRecord setINT_PROP_2(Integer value) {
         set(7, value);
         return this;
     }
@@ -164,7 +164,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.INT_PROP_2</code>.
      */
     @Override
-    public Integer getIntProp_2() {
+    public Integer getINT_PROP_2() {
         return (Integer) get(7);
     }
 
@@ -172,7 +172,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setLongProp_1(Long value) {
+    public QrtzSimpropTriggersRecord setLONG_PROP_1(Long value) {
         set(8, value);
         return this;
     }
@@ -181,7 +181,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_1</code>.
      */
     @Override
-    public Long getLongProp_1() {
+    public Long getLONG_PROP_1() {
         return (Long) get(8);
     }
 
@@ -189,7 +189,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setLongProp_2(Long value) {
+    public QrtzSimpropTriggersRecord setLONG_PROP_2(Long value) {
         set(9, value);
         return this;
     }
@@ -198,7 +198,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.LONG_PROP_2</code>.
      */
     @Override
-    public Long getLongProp_2() {
+    public Long getLONG_PROP_2() {
         return (Long) get(9);
     }
 
@@ -206,7 +206,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setDecProp_1(BigDecimal value) {
+    public QrtzSimpropTriggersRecord setDEC_PROP_1(BigDecimal value) {
         set(10, value);
         return this;
     }
@@ -215,7 +215,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_1</code>.
      */
     @Override
-    public BigDecimal getDecProp_1() {
+    public BigDecimal getDEC_PROP_1() {
         return (BigDecimal) get(10);
     }
 
@@ -223,7 +223,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setDecProp_2(BigDecimal value) {
+    public QrtzSimpropTriggersRecord setDEC_PROP_2(BigDecimal value) {
         set(11, value);
         return this;
     }
@@ -232,7 +232,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Getter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.DEC_PROP_2</code>.
      */
     @Override
-    public BigDecimal getDecProp_2() {
+    public BigDecimal getDEC_PROP_2() {
         return (BigDecimal) get(11);
     }
 
@@ -240,7 +240,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_1</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setBoolProp_1(String value) {
+    public QrtzSimpropTriggersRecord setBOOL_PROP_1(String value) {
         set(12, value);
         return this;
     }
@@ -250,7 +250,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      */
     @Size(max = 1)
     @Override
-    public String getBoolProp_1() {
+    public String getBOOL_PROP_1() {
         return (String) get(12);
     }
 
@@ -258,7 +258,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      * Setter for <code>testshop.QRTZ_SIMPROP_TRIGGERS.BOOL_PROP_2</code>.
      */
     @Override
-    public QrtzSimpropTriggersRecord setBoolProp_2(String value) {
+    public QrtzSimpropTriggersRecord setBOOL_PROP_2(String value) {
         set(13, value);
         return this;
     }
@@ -268,7 +268,7 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
      */
     @Size(max = 1)
     @Override
-    public String getBoolProp_2() {
+    public String getBOOL_PROP_2() {
         return (String) get(13);
     }
 
@@ -287,20 +287,20 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
 
     @Override
     public void from(IQrtzSimpropTriggers from) {
-        setSchedName(from.getSchedName());
-        setTriggerName(from.getTriggerName());
-        setTriggerGroup(from.getTriggerGroup());
-        setStrProp_1(from.getStrProp_1());
-        setStrProp_2(from.getStrProp_2());
-        setStrProp_3(from.getStrProp_3());
-        setIntProp_1(from.getIntProp_1());
-        setIntProp_2(from.getIntProp_2());
-        setLongProp_1(from.getLongProp_1());
-        setLongProp_2(from.getLongProp_2());
-        setDecProp_1(from.getDecProp_1());
-        setDecProp_2(from.getDecProp_2());
-        setBoolProp_1(from.getBoolProp_1());
-        setBoolProp_2(from.getBoolProp_2());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setSTR_PROP_1(from.getSTR_PROP_1());
+        setSTR_PROP_2(from.getSTR_PROP_2());
+        setSTR_PROP_3(from.getSTR_PROP_3());
+        setINT_PROP_1(from.getINT_PROP_1());
+        setINT_PROP_2(from.getINT_PROP_2());
+        setLONG_PROP_1(from.getLONG_PROP_1());
+        setLONG_PROP_2(from.getLONG_PROP_2());
+        setDEC_PROP_1(from.getDEC_PROP_1());
+        setDEC_PROP_2(from.getDEC_PROP_2());
+        setBOOL_PROP_1(from.getBOOL_PROP_1());
+        setBOOL_PROP_2(from.getBOOL_PROP_2());
         resetChangedOnNotNull();
     }
 
@@ -324,23 +324,23 @@ public class QrtzSimpropTriggersRecord extends UpdatableRecordImpl<QrtzSimpropTr
     /**
      * Create a detached, initialised QrtzSimpropTriggersRecord
      */
-    public QrtzSimpropTriggersRecord(String schedName, String triggerName, String triggerGroup, String strProp_1, String strProp_2, String strProp_3, Integer intProp_1, Integer intProp_2, Long longProp_1, Long longProp_2, BigDecimal decProp_1, BigDecimal decProp_2, String boolProp_1, String boolProp_2) {
+    public QrtzSimpropTriggersRecord(String SCHED_NAME, String TRIGGER_NAME, String TRIGGER_GROUP, String STR_PROP_1, String STR_PROP_2, String STR_PROP_3, Integer INT_PROP_1, Integer INT_PROP_2, Long LONG_PROP_1, Long LONG_PROP_2, BigDecimal DEC_PROP_1, BigDecimal DEC_PROP_2, String BOOL_PROP_1, String BOOL_PROP_2) {
         super(QrtzSimpropTriggers.QRTZ_SIMPROP_TRIGGERS);
 
-        setSchedName(schedName);
-        setTriggerName(triggerName);
-        setTriggerGroup(triggerGroup);
-        setStrProp_1(strProp_1);
-        setStrProp_2(strProp_2);
-        setStrProp_3(strProp_3);
-        setIntProp_1(intProp_1);
-        setIntProp_2(intProp_2);
-        setLongProp_1(longProp_1);
-        setLongProp_2(longProp_2);
-        setDecProp_1(decProp_1);
-        setDecProp_2(decProp_2);
-        setBoolProp_1(boolProp_1);
-        setBoolProp_2(boolProp_2);
+        setSCHED_NAME(SCHED_NAME);
+        setTRIGGER_NAME(TRIGGER_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
+        setSTR_PROP_1(STR_PROP_1);
+        setSTR_PROP_2(STR_PROP_2);
+        setSTR_PROP_3(STR_PROP_3);
+        setINT_PROP_1(INT_PROP_1);
+        setINT_PROP_2(INT_PROP_2);
+        setLONG_PROP_1(LONG_PROP_1);
+        setLONG_PROP_2(LONG_PROP_2);
+        setDEC_PROP_1(DEC_PROP_1);
+        setDEC_PROP_2(DEC_PROP_2);
+        setBOOL_PROP_1(BOOL_PROP_1);
+        setBOOL_PROP_2(BOOL_PROP_2);
         resetChangedOnNotNull();
     }
 }

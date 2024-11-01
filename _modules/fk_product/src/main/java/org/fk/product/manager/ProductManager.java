@@ -122,8 +122,8 @@ public class ProductManager extends AbstractManager {
         List<ProductRecord> inserts = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             ProductRecord insert1 = new ProductRecord();
-            insert1.setProductid(90000000L + i);
-            insert1.setClientid(1);
+            insert1.setProductId(90000000L + i);
+            insert1.setClientId(1);
             insert1.setPrice(new BigDecimal("12.21"));
             inserts.add(insert1);
         }
@@ -178,23 +178,23 @@ public class ProductManager extends AbstractManager {
             this.validate(updateProductRequest);
 
             ProductRecord update = new ProductRecord()
-                .setProductid(updateProductRequest.productId())
-                .setClientid(updateProductRequest.clientId())
+                .setProductId(updateProductRequest.productId())
+                .setClientId(updateProductRequest.clientId())
                 .setPrice(updateProductRequest.price())
-                .setTypeid(updateProductRequest.typeId());
+                .setTypeId(updateProductRequest.typeId());
 
             productDAO.update(update);
-            ProductRecord result = productDAO.fetch(update.getProductid());
+            ProductRecord result = productDAO.fetch(update.getProductId());
 
             return UpdateProductResponse.builder()
-                .productId(result.getProductid())
-                .clientId(result.getClientid())
+                .productId(result.getProductId())
+                .clientId(result.getClientId())
                 .price(result.getPrice())
-                .typeId(result.getTypeid())
-                .createdAt(result.getCreatedat())
-                .updatedAt(result.getUpdatedat())
+                .typeId(result.getTypeId())
+                .createdAt(result.getCreatedAt())
+                .updatedAt(result.getUpdatedAt())
                 .deleted(result.getDeleted())
-                .creatorId(result.getCreatorid())
+                .creatorId(result.getCreatorId())
                 .build();
         });
     }
@@ -205,10 +205,10 @@ public class ProductManager extends AbstractManager {
 
             // For each field in patch, set according db-record field with correctly typed value.
             final ProductRecord update = new ProductRecord();
-            update.setProductid(dto.productId());
+            update.setProductId(dto.productId());
             if (patch.containsKey(PatchProductRequest.Fields.price)) update.setPrice(dto.price());
-            if (patch.containsKey(PatchProductRequest.Fields.clientId)) update.setClientid(dto.clientId());
-            if (patch.containsKey(PatchProductRequest.Fields.typeId)) update.setTypeid(dto.typeId());
+            if (patch.containsKey(PatchProductRequest.Fields.clientId)) update.setClientId(dto.clientId());
+            if (patch.containsKey(PatchProductRequest.Fields.typeId)) update.setTypeId(dto.typeId());
 
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             productDAO.update(update);

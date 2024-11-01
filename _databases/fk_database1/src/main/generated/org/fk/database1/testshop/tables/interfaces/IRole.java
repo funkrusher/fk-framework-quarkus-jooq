@@ -19,14 +19,14 @@ public interface IRole extends Serializable {
     /**
      * Setter for <code>testshop.role.roleId</code>.
      */
-    public IRole setRoleid(String value);
+    public IRole setRoleId(String value);
 
     /**
      * Getter for <code>testshop.role.roleId</code>.
      */
     @NotNull
     @Size(max = 50)
-    public String getRoleid();
+    public String getRoleId();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

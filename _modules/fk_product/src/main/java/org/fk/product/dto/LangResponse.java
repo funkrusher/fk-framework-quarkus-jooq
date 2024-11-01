@@ -18,7 +18,7 @@ public record LangResponse(
     public static LangResponse create(Record1<LangRecord> rec) {
         LangRecord lang = rec.value1();
         return LangResponse.builder()
-            .langId(lang.getLangid())
+            .langId(lang.getLangId())
             .code(lang.getCode())
             .description(lang.getDescription())
             .build();

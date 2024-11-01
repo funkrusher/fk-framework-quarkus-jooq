@@ -27,7 +27,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.ID</code>.
      */
     @Override
-    public DatabasechangeloglockRecord setId(Integer value) {
+    public DatabasechangeloglockRecord setID(Integer value) {
         set(0, value);
         return this;
     }
@@ -37,7 +37,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @NotNull
     @Override
-    public Integer getId() {
+    public Integer getID() {
         return (Integer) get(0);
     }
 
@@ -45,7 +45,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKED</code>.
      */
     @Override
-    public DatabasechangeloglockRecord setLocked(Boolean value) {
+    public DatabasechangeloglockRecord setLOCKED(Boolean value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @NotNull
     @Override
-    public Boolean getLocked() {
+    public Boolean getLOCKED() {
         return (Boolean) get(1);
     }
 
@@ -63,7 +63,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public DatabasechangeloglockRecord setLockgranted(LocalDateTime value) {
+    public DatabasechangeloglockRecord setLOCKGRANTED(LocalDateTime value) {
         set(2, value);
         return this;
     }
@@ -72,7 +72,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Getter for <code>testshop.DATABASECHANGELOGLOCK.LOCKGRANTED</code>.
      */
     @Override
-    public LocalDateTime getLockgranted() {
+    public LocalDateTime getLOCKGRANTED() {
         return (LocalDateTime) get(2);
     }
 
@@ -80,7 +80,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      * Setter for <code>testshop.DATABASECHANGELOGLOCK.LOCKEDBY</code>.
      */
     @Override
-    public DatabasechangeloglockRecord setLockedby(String value) {
+    public DatabasechangeloglockRecord setLOCKEDBY(String value) {
         set(3, value);
         return this;
     }
@@ -90,7 +90,7 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
      */
     @Size(max = 255)
     @Override
-    public String getLockedby() {
+    public String getLOCKEDBY() {
         return (String) get(3);
     }
 
@@ -109,10 +109,10 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
 
     @Override
     public void from(IDatabasechangeloglock from) {
-        setId(from.getId());
-        setLocked(from.getLocked());
-        setLockgranted(from.getLockgranted());
-        setLockedby(from.getLockedby());
+        setID(from.getID());
+        setLOCKED(from.getLOCKED());
+        setLOCKGRANTED(from.getLOCKGRANTED());
+        setLOCKEDBY(from.getLOCKEDBY());
         resetChangedOnNotNull();
     }
 
@@ -136,13 +136,13 @@ public class DatabasechangeloglockRecord extends UpdatableRecordImpl<Databasecha
     /**
      * Create a detached, initialised DatabasechangeloglockRecord
      */
-    public DatabasechangeloglockRecord(Integer id, Boolean locked, LocalDateTime lockgranted, String lockedby) {
+    public DatabasechangeloglockRecord(Integer ID, Boolean LOCKED, LocalDateTime LOCKGRANTED, String LOCKEDBY) {
         super(Databasechangeloglock.DATABASECHANGELOGLOCK);
 
-        setId(id);
-        setLocked(locked);
-        setLockgranted(lockgranted);
-        setLockedby(lockedby);
+        setID(ID);
+        setLOCKED(LOCKED);
+        setLOCKGRANTED(LOCKGRANTED);
+        setLOCKEDBY(LOCKEDBY);
         resetChangedOnNotNull();
     }
 }

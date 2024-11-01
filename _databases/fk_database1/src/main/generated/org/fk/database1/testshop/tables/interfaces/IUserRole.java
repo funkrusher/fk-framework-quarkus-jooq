@@ -19,25 +19,25 @@ public interface IUserRole extends Serializable {
     /**
      * Setter for <code>testshop.user_role.userId</code>.
      */
-    public IUserRole setUserid(Integer value);
+    public IUserRole setUserId(Integer value);
 
     /**
      * Getter for <code>testshop.user_role.userId</code>.
      */
     @NotNull
-    public Integer getUserid();
+    public Integer getUserId();
 
     /**
      * Setter for <code>testshop.user_role.roleId</code>.
      */
-    public IUserRole setRoleid(String value);
+    public IUserRole setRoleId(String value);
 
     /**
      * Getter for <code>testshop.user_role.roleId</code>.
      */
     @NotNull
     @Size(max = 50)
-    public String getRoleid();
+    public String getRoleId();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

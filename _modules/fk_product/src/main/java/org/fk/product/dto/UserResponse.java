@@ -19,12 +19,12 @@ public record UserResponse(
 
     public static UserResponse createOrNull(Record2<UserRecord, List<RoleResponse>> rec) {
         UserRecord user = rec.value1();
-        if (user.getUserid() == null) {
+        if (user.getUserId() == null) {
             return null;
         } else {
             return UserResponse.builder()
-                .userId(user.getUserid())
-                .clientId(user.getClientid())
+                .userId(user.getUserId())
+                .clientId(user.getClientId())
                 .email(user.getEmail())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())

@@ -19,38 +19,38 @@ public interface IQrtzCalendars extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
      */
-    public IQrtzCalendars setSchedName(String value);
+    public IQrtzCalendars setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CALENDARS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSchedName();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
      */
-    public IQrtzCalendars setCalendarName(String value);
+    public IQrtzCalendars setCALENDAR_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_CALENDARS.CALENDAR_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getCalendarName();
+    public String getCALENDAR_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.
      */
-    public IQrtzCalendars setCalendar(byte[] value);
+    public IQrtzCalendars setCALENDAR(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_CALENDARS.CALENDAR</code>.
      */
     @NotNull
     @Size(max = 65535)
-    public byte[] getCalendar();
+    public byte[] getCALENDAR();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

@@ -25,7 +25,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Setter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public LangRecord setLangid(Integer value) {
+    public LangRecord setLangId(Integer value) {
         set(0, value);
         return this;
     }
@@ -34,7 +34,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
      * Getter for <code>testshop.lang.langId</code>. langId
      */
     @Override
-    public Integer getLangid() {
+    public Integer getLangId() {
         return (Integer) get(0);
     }
 
@@ -92,7 +92,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
 
     @Override
     public void from(ILang from) {
-        setLangid(from.getLangid());
+        setLangId(from.getLangId());
         setCode(from.getCode());
         setDescription(from.getDescription());
         resetChangedOnNotNull();
@@ -118,10 +118,10 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang
     /**
      * Create a detached, initialised LangRecord
      */
-    public LangRecord(Integer langid, String code, String description) {
+    public LangRecord(Integer langId, String code, String description) {
         super(Lang.LANG);
 
-        setLangid(langid);
+        setLangId(langId);
         setCode(code);
         setDescription(description);
         resetChangedOnNotNull();

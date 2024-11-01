@@ -19,71 +19,71 @@ public interface IQrtzSimpleTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
      */
-    public IQrtzSimpleTriggers setSchedName(String value);
+    public IQrtzSimpleTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSchedName();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public IQrtzSimpleTriggers setTriggerName(String value);
+    public IQrtzSimpleTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTriggerName();
+    public String getTRIGGER_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public IQrtzSimpleTriggers setTriggerGroup(String value);
+    public IQrtzSimpleTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTriggerGroup();
+    public String getTRIGGER_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
      */
-    public IQrtzSimpleTriggers setRepeatCount(Long value);
+    public IQrtzSimpleTriggers setREPEAT_COUNT(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_COUNT</code>.
      */
     @NotNull
-    public Long getRepeatCount();
+    public Long getREPEAT_COUNT();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
      */
-    public IQrtzSimpleTriggers setRepeatInterval(Long value);
+    public IQrtzSimpleTriggers setREPEAT_INTERVAL(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL</code>.
      */
     @NotNull
-    public Long getRepeatInterval();
+    public Long getREPEAT_INTERVAL();
 
     /**
      * Setter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.
      */
-    public IQrtzSimpleTriggers setTimesTriggered(Long value);
+    public IQrtzSimpleTriggers setTIMES_TRIGGERED(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED</code>.
      */
     @NotNull
-    public Long getTimesTriggered();
+    public Long getTIMES_TRIGGERED();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

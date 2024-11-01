@@ -19,49 +19,49 @@ public interface IQrtzBlobTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.SCHED_NAME</code>.
      */
-    public IQrtzBlobTriggers setSchedName(String value);
+    public IQrtzBlobTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSchedName();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public IQrtzBlobTriggers setTriggerName(String value);
+    public IQrtzBlobTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTriggerName();
+    public String getTRIGGER_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public IQrtzBlobTriggers setTriggerGroup(String value);
+    public IQrtzBlobTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTriggerGroup();
+    public String getTRIGGER_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.BLOB_DATA</code>.
      */
-    public IQrtzBlobTriggers setBlobData(byte[] value);
+    public IQrtzBlobTriggers setBLOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_BLOB_TRIGGERS.BLOB_DATA</code>.
      */
     @Size(max = 65535)
-    public byte[] getBlobData();
+    public byte[] getBLOB_DATA();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

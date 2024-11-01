@@ -19,12 +19,12 @@ public interface ILang extends Serializable {
     /**
      * Setter for <code>testshop.lang.langId</code>. langId
      */
-    public ILang setLangid(Integer value);
+    public ILang setLangId(Integer value);
 
     /**
      * Getter for <code>testshop.lang.langId</code>. langId
      */
-    public Integer getLangid();
+    public Integer getLangId();
 
     /**
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code

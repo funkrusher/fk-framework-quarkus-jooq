@@ -19,24 +19,24 @@ public interface IProductLang extends Serializable {
     /**
      * Setter for <code>testshop2.product_lang.productId</code>.
      */
-    public IProductLang setProductid(Long value);
+    public IProductLang setProductId(Long value);
 
     /**
      * Getter for <code>testshop2.product_lang.productId</code>.
      */
     @NotNull
-    public Long getProductid();
+    public Long getProductId();
 
     /**
      * Setter for <code>testshop2.product_lang.langId</code>.
      */
-    public IProductLang setLangid(Integer value);
+    public IProductLang setLangId(Integer value);
 
     /**
      * Getter for <code>testshop2.product_lang.langId</code>.
      */
     @NotNull
-    public Integer getLangid();
+    public Integer getLangId();
 
     /**
      * Setter for <code>testshop2.product_lang.name</code>.

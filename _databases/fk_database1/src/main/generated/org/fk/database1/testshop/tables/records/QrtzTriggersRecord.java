@@ -25,7 +25,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzTriggersRecord setSchedName(String value) {
+    public QrtzTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzTriggersRecord setTriggerName(String value) {
+    public QrtzTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerName() {
+    public String getTRIGGER_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzTriggersRecord setTriggerGroup(String value) {
+    public QrtzTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerGroup() {
+    public String getTRIGGER_GROUP() {
         return (String) get(2);
     }
 
@@ -82,7 +82,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
      */
     @Override
-    public QrtzTriggersRecord setJobName(String value) {
+    public QrtzTriggersRecord setJOB_NAME(String value) {
         set(3, value);
         return this;
     }
@@ -93,7 +93,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 190)
     @Override
-    public String getJobName() {
+    public String getJOB_NAME() {
         return (String) get(3);
     }
 
@@ -101,7 +101,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzTriggersRecord setJobGroup(String value) {
+    public QrtzTriggersRecord setJOB_GROUP(String value) {
         set(4, value);
         return this;
     }
@@ -112,7 +112,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 190)
     @Override
-    public String getJobGroup() {
+    public String getJOB_GROUP() {
         return (String) get(4);
     }
 
@@ -120,7 +120,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
      */
     @Override
-    public QrtzTriggersRecord setDescription(String value) {
+    public QrtzTriggersRecord setDESCRIPTION(String value) {
         set(5, value);
         return this;
     }
@@ -130,7 +130,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      */
     @Size(max = 250)
     @Override
-    public String getDescription() {
+    public String getDESCRIPTION() {
         return (String) get(5);
     }
 
@@ -138,7 +138,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
     @Override
-    public QrtzTriggersRecord setNextFireTime(Long value) {
+    public QrtzTriggersRecord setNEXT_FIRE_TIME(Long value) {
         set(6, value);
         return this;
     }
@@ -147,7 +147,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Getter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
     @Override
-    public Long getNextFireTime() {
+    public Long getNEXT_FIRE_TIME() {
         return (Long) get(6);
     }
 
@@ -155,7 +155,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
     @Override
-    public QrtzTriggersRecord setPrevFireTime(Long value) {
+    public QrtzTriggersRecord setPREV_FIRE_TIME(Long value) {
         set(7, value);
         return this;
     }
@@ -164,7 +164,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Getter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
     @Override
-    public Long getPrevFireTime() {
+    public Long getPREV_FIRE_TIME() {
         return (Long) get(7);
     }
 
@@ -172,7 +172,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public QrtzTriggersRecord setPriority(Integer value) {
+    public QrtzTriggersRecord setPRIORITY(Integer value) {
         set(8, value);
         return this;
     }
@@ -181,7 +181,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Getter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
     @Override
-    public Integer getPriority() {
+    public Integer getPRIORITY() {
         return (Integer) get(8);
     }
 
@@ -189,7 +189,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
      */
     @Override
-    public QrtzTriggersRecord setTriggerState(String value) {
+    public QrtzTriggersRecord setTRIGGER_STATE(String value) {
         set(9, value);
         return this;
     }
@@ -200,7 +200,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 16)
     @Override
-    public String getTriggerState() {
+    public String getTRIGGER_STATE() {
         return (String) get(9);
     }
 
@@ -208,7 +208,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
      */
     @Override
-    public QrtzTriggersRecord setTriggerType(String value) {
+    public QrtzTriggersRecord setTRIGGER_TYPE(String value) {
         set(10, value);
         return this;
     }
@@ -219,7 +219,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     @NotNull
     @Size(max = 8)
     @Override
-    public String getTriggerType() {
+    public String getTRIGGER_TYPE() {
         return (String) get(10);
     }
 
@@ -227,7 +227,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
      */
     @Override
-    public QrtzTriggersRecord setStartTime(Long value) {
+    public QrtzTriggersRecord setSTART_TIME(Long value) {
         set(11, value);
         return this;
     }
@@ -237,7 +237,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      */
     @NotNull
     @Override
-    public Long getStartTime() {
+    public Long getSTART_TIME() {
         return (Long) get(11);
     }
 
@@ -245,7 +245,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
     @Override
-    public QrtzTriggersRecord setEndTime(Long value) {
+    public QrtzTriggersRecord setEND_TIME(Long value) {
         set(12, value);
         return this;
     }
@@ -254,7 +254,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Getter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
     @Override
-    public Long getEndTime() {
+    public Long getEND_TIME() {
         return (Long) get(12);
     }
 
@@ -262,7 +262,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
      */
     @Override
-    public QrtzTriggersRecord setCalendarName(String value) {
+    public QrtzTriggersRecord setCALENDAR_NAME(String value) {
         set(13, value);
         return this;
     }
@@ -272,7 +272,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      */
     @Size(max = 190)
     @Override
-    public String getCalendarName() {
+    public String getCALENDAR_NAME() {
         return (String) get(13);
     }
 
@@ -280,7 +280,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
     @Override
-    public QrtzTriggersRecord setMisfireInstr(Short value) {
+    public QrtzTriggersRecord setMISFIRE_INSTR(Short value) {
         set(14, value);
         return this;
     }
@@ -289,7 +289,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Getter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
     @Override
-    public Short getMisfireInstr() {
+    public Short getMISFIRE_INSTR() {
         return (Short) get(14);
     }
 
@@ -297,7 +297,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.
      */
     @Override
-    public QrtzTriggersRecord setJobData(byte[] value) {
+    public QrtzTriggersRecord setJOB_DATA(byte[] value) {
         set(15, value);
         return this;
     }
@@ -307,7 +307,7 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
      */
     @Size(max = 65535)
     @Override
-    public byte[] getJobData() {
+    public byte[] getJOB_DATA() {
         return (byte[]) get(15);
     }
 
@@ -326,22 +326,22 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
 
     @Override
     public void from(IQrtzTriggers from) {
-        setSchedName(from.getSchedName());
-        setTriggerName(from.getTriggerName());
-        setTriggerGroup(from.getTriggerGroup());
-        setJobName(from.getJobName());
-        setJobGroup(from.getJobGroup());
-        setDescription(from.getDescription());
-        setNextFireTime(from.getNextFireTime());
-        setPrevFireTime(from.getPrevFireTime());
-        setPriority(from.getPriority());
-        setTriggerState(from.getTriggerState());
-        setTriggerType(from.getTriggerType());
-        setStartTime(from.getStartTime());
-        setEndTime(from.getEndTime());
-        setCalendarName(from.getCalendarName());
-        setMisfireInstr(from.getMisfireInstr());
-        setJobData(from.getJobData());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setJOB_NAME(from.getJOB_NAME());
+        setJOB_GROUP(from.getJOB_GROUP());
+        setDESCRIPTION(from.getDESCRIPTION());
+        setNEXT_FIRE_TIME(from.getNEXT_FIRE_TIME());
+        setPREV_FIRE_TIME(from.getPREV_FIRE_TIME());
+        setPRIORITY(from.getPRIORITY());
+        setTRIGGER_STATE(from.getTRIGGER_STATE());
+        setTRIGGER_TYPE(from.getTRIGGER_TYPE());
+        setSTART_TIME(from.getSTART_TIME());
+        setEND_TIME(from.getEND_TIME());
+        setCALENDAR_NAME(from.getCALENDAR_NAME());
+        setMISFIRE_INSTR(from.getMISFIRE_INSTR());
+        setJOB_DATA(from.getJOB_DATA());
         resetChangedOnNotNull();
     }
 
@@ -365,25 +365,25 @@ public class QrtzTriggersRecord extends UpdatableRecordImpl<QrtzTriggersRecord> 
     /**
      * Create a detached, initialised QrtzTriggersRecord
      */
-    public QrtzTriggersRecord(String schedName, String triggerName, String triggerGroup, String jobName, String jobGroup, String description, Long nextFireTime, Long prevFireTime, Integer priority, String triggerState, String triggerType, Long startTime, Long endTime, String calendarName, Short misfireInstr, byte[] jobData) {
+    public QrtzTriggersRecord(String SCHED_NAME, String TRIGGER_NAME, String TRIGGER_GROUP, String JOB_NAME, String JOB_GROUP, String DESCRIPTION, Long NEXT_FIRE_TIME, Long PREV_FIRE_TIME, Integer PRIORITY, String TRIGGER_STATE, String TRIGGER_TYPE, Long START_TIME, Long END_TIME, String CALENDAR_NAME, Short MISFIRE_INSTR, byte[] JOB_DATA) {
         super(QrtzTriggers.QRTZ_TRIGGERS);
 
-        setSchedName(schedName);
-        setTriggerName(triggerName);
-        setTriggerGroup(triggerGroup);
-        setJobName(jobName);
-        setJobGroup(jobGroup);
-        setDescription(description);
-        setNextFireTime(nextFireTime);
-        setPrevFireTime(prevFireTime);
-        setPriority(priority);
-        setTriggerState(triggerState);
-        setTriggerType(triggerType);
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setCalendarName(calendarName);
-        setMisfireInstr(misfireInstr);
-        setJobData(jobData);
+        setSCHED_NAME(SCHED_NAME);
+        setTRIGGER_NAME(TRIGGER_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
+        setJOB_NAME(JOB_NAME);
+        setJOB_GROUP(JOB_GROUP);
+        setDESCRIPTION(DESCRIPTION);
+        setNEXT_FIRE_TIME(NEXT_FIRE_TIME);
+        setPREV_FIRE_TIME(PREV_FIRE_TIME);
+        setPRIORITY(PRIORITY);
+        setTRIGGER_STATE(TRIGGER_STATE);
+        setTRIGGER_TYPE(TRIGGER_TYPE);
+        setSTART_TIME(START_TIME);
+        setEND_TIME(END_TIME);
+        setCALENDAR_NAME(CALENDAR_NAME);
+        setMISFIRE_INSTR(MISFIRE_INSTR);
+        setJOB_DATA(JOB_DATA);
         resetChangedOnNotNull();
     }
 }

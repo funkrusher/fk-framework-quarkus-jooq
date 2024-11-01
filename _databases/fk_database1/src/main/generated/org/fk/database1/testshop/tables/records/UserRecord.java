@@ -25,7 +25,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.userId</code>.
      */
     @Override
-    public UserRecord setUserid(Integer value) {
+    public UserRecord setUserId(Integer value) {
         set(0, value);
         return this;
     }
@@ -34,7 +34,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Getter for <code>testshop.user.userId</code>.
      */
     @Override
-    public Integer getUserid() {
+    public Integer getUserId() {
         return (Integer) get(0);
     }
 
@@ -42,7 +42,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      * Setter for <code>testshop.user.clientId</code>.
      */
     @Override
-    public UserRecord setClientid(Integer value) {
+    public UserRecord setClientId(Integer value) {
         set(1, value);
         return this;
     }
@@ -52,7 +52,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
      */
     @NotNull
     @Override
-    public Integer getClientid() {
+    public Integer getClientId() {
         return (Integer) get(1);
     }
 
@@ -128,8 +128,8 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
 
     @Override
     public void from(IUser from) {
-        setUserid(from.getUserid());
-        setClientid(from.getClientid());
+        setUserId(from.getUserId());
+        setClientId(from.getClientId());
         setEmail(from.getEmail());
         setFirstname(from.getFirstname());
         setLastname(from.getLastname());
@@ -156,11 +156,11 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> implements IUser
     /**
      * Create a detached, initialised UserRecord
      */
-    public UserRecord(Integer userid, Integer clientid, String email, String firstname, String lastname) {
+    public UserRecord(Integer userId, Integer clientId, String email, String firstname, String lastname) {
         super(User.USER);
 
-        setUserid(userid);
-        setClientid(clientid);
+        setUserId(userId);
+        setClientId(clientId);
         setEmail(email);
         setFirstname(firstname);
         setLastname(lastname);

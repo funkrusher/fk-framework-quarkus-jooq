@@ -19,23 +19,23 @@ public interface IUser extends Serializable {
     /**
      * Setter for <code>testshop.user.userId</code>.
      */
-    public IUser setUserid(Integer value);
+    public IUser setUserId(Integer value);
 
     /**
      * Getter for <code>testshop.user.userId</code>.
      */
-    public Integer getUserid();
+    public Integer getUserId();
 
     /**
      * Setter for <code>testshop.user.clientId</code>.
      */
-    public IUser setClientid(Integer value);
+    public IUser setClientId(Integer value);
 
     /**
      * Getter for <code>testshop.user.clientId</code>.
      */
     @NotNull
-    public Integer getClientid();
+    public Integer getClientId();
 
     /**
      * Setter for <code>testshop.user.email</code>.

@@ -25,7 +25,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setSchedName(String value) {
+    public QrtzJobDetailsRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_NAME</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setJobName(String value) {
+    public QrtzJobDetailsRecord setJOB_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 190)
     @Override
-    public String getJobName() {
+    public String getJOB_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_GROUP</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setJobGroup(String value) {
+    public QrtzJobDetailsRecord setJOB_GROUP(String value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 190)
     @Override
-    public String getJobGroup() {
+    public String getJOB_GROUP() {
         return (String) get(2);
     }
 
@@ -82,7 +82,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.DESCRIPTION</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setDescription(String value) {
+    public QrtzJobDetailsRecord setDESCRIPTION(String value) {
         set(3, value);
         return this;
     }
@@ -92,7 +92,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      */
     @Size(max = 250)
     @Override
-    public String getDescription() {
+    public String getDESCRIPTION() {
         return (String) get(3);
     }
 
@@ -100,7 +100,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_CLASS_NAME</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setJobClassName(String value) {
+    public QrtzJobDetailsRecord setJOB_CLASS_NAME(String value) {
         set(4, value);
         return this;
     }
@@ -111,7 +111,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 250)
     @Override
-    public String getJobClassName() {
+    public String getJOB_CLASS_NAME() {
         return (String) get(4);
     }
 
@@ -119,7 +119,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_DURABLE</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setIsDurable(String value) {
+    public QrtzJobDetailsRecord setIS_DURABLE(String value) {
         set(5, value);
         return this;
     }
@@ -130,7 +130,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 1)
     @Override
-    public String getIsDurable() {
+    public String getIS_DURABLE() {
         return (String) get(5);
     }
 
@@ -138,7 +138,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_NONCONCURRENT</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setIsNonconcurrent(String value) {
+    public QrtzJobDetailsRecord setIS_NONCONCURRENT(String value) {
         set(6, value);
         return this;
     }
@@ -149,7 +149,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 1)
     @Override
-    public String getIsNonconcurrent() {
+    public String getIS_NONCONCURRENT() {
         return (String) get(6);
     }
 
@@ -157,7 +157,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.IS_UPDATE_DATA</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setIsUpdateData(String value) {
+    public QrtzJobDetailsRecord setIS_UPDATE_DATA(String value) {
         set(7, value);
         return this;
     }
@@ -168,7 +168,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 1)
     @Override
-    public String getIsUpdateData() {
+    public String getIS_UPDATE_DATA() {
         return (String) get(7);
     }
 
@@ -176,7 +176,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.REQUESTS_RECOVERY</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setRequestsRecovery(String value) {
+    public QrtzJobDetailsRecord setREQUESTS_RECOVERY(String value) {
         set(8, value);
         return this;
     }
@@ -187,7 +187,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     @NotNull
     @Size(max = 1)
     @Override
-    public String getRequestsRecovery() {
+    public String getREQUESTS_RECOVERY() {
         return (String) get(8);
     }
 
@@ -195,7 +195,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      * Setter for <code>testshop.QRTZ_JOB_DETAILS.JOB_DATA</code>.
      */
     @Override
-    public QrtzJobDetailsRecord setJobData(byte[] value) {
+    public QrtzJobDetailsRecord setJOB_DATA(byte[] value) {
         set(9, value);
         return this;
     }
@@ -205,7 +205,7 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
      */
     @Size(max = 65535)
     @Override
-    public byte[] getJobData() {
+    public byte[] getJOB_DATA() {
         return (byte[]) get(9);
     }
 
@@ -224,16 +224,16 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
 
     @Override
     public void from(IQrtzJobDetails from) {
-        setSchedName(from.getSchedName());
-        setJobName(from.getJobName());
-        setJobGroup(from.getJobGroup());
-        setDescription(from.getDescription());
-        setJobClassName(from.getJobClassName());
-        setIsDurable(from.getIsDurable());
-        setIsNonconcurrent(from.getIsNonconcurrent());
-        setIsUpdateData(from.getIsUpdateData());
-        setRequestsRecovery(from.getRequestsRecovery());
-        setJobData(from.getJobData());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setJOB_NAME(from.getJOB_NAME());
+        setJOB_GROUP(from.getJOB_GROUP());
+        setDESCRIPTION(from.getDESCRIPTION());
+        setJOB_CLASS_NAME(from.getJOB_CLASS_NAME());
+        setIS_DURABLE(from.getIS_DURABLE());
+        setIS_NONCONCURRENT(from.getIS_NONCONCURRENT());
+        setIS_UPDATE_DATA(from.getIS_UPDATE_DATA());
+        setREQUESTS_RECOVERY(from.getREQUESTS_RECOVERY());
+        setJOB_DATA(from.getJOB_DATA());
         resetChangedOnNotNull();
     }
 
@@ -257,19 +257,19 @@ public class QrtzJobDetailsRecord extends UpdatableRecordImpl<QrtzJobDetailsReco
     /**
      * Create a detached, initialised QrtzJobDetailsRecord
      */
-    public QrtzJobDetailsRecord(String schedName, String jobName, String jobGroup, String description, String jobClassName, String isDurable, String isNonconcurrent, String isUpdateData, String requestsRecovery, byte[] jobData) {
+    public QrtzJobDetailsRecord(String SCHED_NAME, String JOB_NAME, String JOB_GROUP, String DESCRIPTION, String JOB_CLASS_NAME, String IS_DURABLE, String IS_NONCONCURRENT, String IS_UPDATE_DATA, String REQUESTS_RECOVERY, byte[] JOB_DATA) {
         super(QrtzJobDetails.QRTZ_JOB_DETAILS);
 
-        setSchedName(schedName);
-        setJobName(jobName);
-        setJobGroup(jobGroup);
-        setDescription(description);
-        setJobClassName(jobClassName);
-        setIsDurable(isDurable);
-        setIsNonconcurrent(isNonconcurrent);
-        setIsUpdateData(isUpdateData);
-        setRequestsRecovery(requestsRecovery);
-        setJobData(jobData);
+        setSCHED_NAME(SCHED_NAME);
+        setJOB_NAME(JOB_NAME);
+        setJOB_GROUP(JOB_GROUP);
+        setDESCRIPTION(DESCRIPTION);
+        setJOB_CLASS_NAME(JOB_CLASS_NAME);
+        setIS_DURABLE(IS_DURABLE);
+        setIS_NONCONCURRENT(IS_NONCONCURRENT);
+        setIS_UPDATE_DATA(IS_UPDATE_DATA);
+        setREQUESTS_RECOVERY(REQUESTS_RECOVERY);
+        setJOB_DATA(JOB_DATA);
         resetChangedOnNotNull();
     }
 }

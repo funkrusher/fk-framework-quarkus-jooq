@@ -19,180 +19,180 @@ public interface IQrtzTriggers extends Serializable {
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
      */
-    public IQrtzTriggers setSchedName(String value);
+    public IQrtzTriggers setSCHED_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.SCHED_NAME</code>.
      */
     @NotNull
     @Size(max = 120)
-    public String getSchedName();
+    public String getSCHED_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
      */
-    public IQrtzTriggers setTriggerName(String value);
+    public IQrtzTriggers setTRIGGER_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTriggerName();
+    public String getTRIGGER_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
      */
-    public IQrtzTriggers setTriggerGroup(String value);
+    public IQrtzTriggers setTRIGGER_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getTriggerGroup();
+    public String getTRIGGER_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
      */
-    public IQrtzTriggers setJobName(String value);
+    public IQrtzTriggers setJOB_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.JOB_NAME</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getJobName();
+    public String getJOB_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
      */
-    public IQrtzTriggers setJobGroup(String value);
+    public IQrtzTriggers setJOB_GROUP(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.JOB_GROUP</code>.
      */
     @NotNull
     @Size(max = 190)
-    public String getJobGroup();
+    public String getJOB_GROUP();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
      */
-    public IQrtzTriggers setDescription(String value);
+    public IQrtzTriggers setDESCRIPTION(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.DESCRIPTION</code>.
      */
     @Size(max = 250)
-    public String getDescription();
+    public String getDESCRIPTION();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
-    public IQrtzTriggers setNextFireTime(Long value);
+    public IQrtzTriggers setNEXT_FIRE_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.NEXT_FIRE_TIME</code>.
      */
-    public Long getNextFireTime();
+    public Long getNEXT_FIRE_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
-    public IQrtzTriggers setPrevFireTime(Long value);
+    public IQrtzTriggers setPREV_FIRE_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.PREV_FIRE_TIME</code>.
      */
-    public Long getPrevFireTime();
+    public Long getPREV_FIRE_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
-    public IQrtzTriggers setPriority(Integer value);
+    public IQrtzTriggers setPRIORITY(Integer value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.PRIORITY</code>.
      */
-    public Integer getPriority();
+    public Integer getPRIORITY();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
      */
-    public IQrtzTriggers setTriggerState(String value);
+    public IQrtzTriggers setTRIGGER_STATE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_STATE</code>.
      */
     @NotNull
     @Size(max = 16)
-    public String getTriggerState();
+    public String getTRIGGER_STATE();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
      */
-    public IQrtzTriggers setTriggerType(String value);
+    public IQrtzTriggers setTRIGGER_TYPE(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.TRIGGER_TYPE</code>.
      */
     @NotNull
     @Size(max = 8)
-    public String getTriggerType();
+    public String getTRIGGER_TYPE();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
      */
-    public IQrtzTriggers setStartTime(Long value);
+    public IQrtzTriggers setSTART_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.START_TIME</code>.
      */
     @NotNull
-    public Long getStartTime();
+    public Long getSTART_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
-    public IQrtzTriggers setEndTime(Long value);
+    public IQrtzTriggers setEND_TIME(Long value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.END_TIME</code>.
      */
-    public Long getEndTime();
+    public Long getEND_TIME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
      */
-    public IQrtzTriggers setCalendarName(String value);
+    public IQrtzTriggers setCALENDAR_NAME(String value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.CALENDAR_NAME</code>.
      */
     @Size(max = 190)
-    public String getCalendarName();
+    public String getCALENDAR_NAME();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
-    public IQrtzTriggers setMisfireInstr(Short value);
+    public IQrtzTriggers setMISFIRE_INSTR(Short value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.MISFIRE_INSTR</code>.
      */
-    public Short getMisfireInstr();
+    public Short getMISFIRE_INSTR();
 
     /**
      * Setter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.
      */
-    public IQrtzTriggers setJobData(byte[] value);
+    public IQrtzTriggers setJOB_DATA(byte[] value);
 
     /**
      * Getter for <code>testshop.QRTZ_TRIGGERS.JOB_DATA</code>.
      */
     @Size(max = 65535)
-    public byte[] getJobData();
+    public byte[] getJOB_DATA();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

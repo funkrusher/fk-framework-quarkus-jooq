@@ -25,7 +25,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzBlobTriggersRecord setSchedName(String value) {
+    public QrtzBlobTriggersRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_NAME</code>.
      */
     @Override
-    public QrtzBlobTriggersRecord setTriggerName(String value) {
+    public QrtzBlobTriggersRecord setTRIGGER_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerName() {
+    public String getTRIGGER_NAME() {
         return (String) get(1);
     }
 
@@ -63,7 +63,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzBlobTriggersRecord setTriggerGroup(String value) {
+    public QrtzBlobTriggersRecord setTRIGGER_GROUP(String value) {
         set(2, value);
         return this;
     }
@@ -74,7 +74,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerGroup() {
+    public String getTRIGGER_GROUP() {
         return (String) get(2);
     }
 
@@ -82,7 +82,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
      * Setter for <code>testshop.QRTZ_BLOB_TRIGGERS.BLOB_DATA</code>.
      */
     @Override
-    public QrtzBlobTriggersRecord setBlobData(byte[] value) {
+    public QrtzBlobTriggersRecord setBLOB_DATA(byte[] value) {
         set(3, value);
         return this;
     }
@@ -92,7 +92,7 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
      */
     @Size(max = 65535)
     @Override
-    public byte[] getBlobData() {
+    public byte[] getBLOB_DATA() {
         return (byte[]) get(3);
     }
 
@@ -111,10 +111,10 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
 
     @Override
     public void from(IQrtzBlobTriggers from) {
-        setSchedName(from.getSchedName());
-        setTriggerName(from.getTriggerName());
-        setTriggerGroup(from.getTriggerGroup());
-        setBlobData(from.getBlobData());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_NAME(from.getTRIGGER_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
+        setBLOB_DATA(from.getBLOB_DATA());
         resetChangedOnNotNull();
     }
 
@@ -138,13 +138,13 @@ public class QrtzBlobTriggersRecord extends UpdatableRecordImpl<QrtzBlobTriggers
     /**
      * Create a detached, initialised QrtzBlobTriggersRecord
      */
-    public QrtzBlobTriggersRecord(String schedName, String triggerName, String triggerGroup, byte[] blobData) {
+    public QrtzBlobTriggersRecord(String SCHED_NAME, String TRIGGER_NAME, String TRIGGER_GROUP, byte[] BLOB_DATA) {
         super(QrtzBlobTriggers.QRTZ_BLOB_TRIGGERS);
 
-        setSchedName(schedName);
-        setTriggerName(triggerName);
-        setTriggerGroup(triggerGroup);
-        setBlobData(blobData);
+        setSCHED_NAME(SCHED_NAME);
+        setTRIGGER_NAME(TRIGGER_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
+        setBLOB_DATA(BLOB_DATA);
         resetChangedOnNotNull();
     }
 }

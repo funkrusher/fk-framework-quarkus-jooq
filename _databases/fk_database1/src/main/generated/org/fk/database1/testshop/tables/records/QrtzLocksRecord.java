@@ -25,7 +25,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
      * Setter for <code>testshop.QRTZ_LOCKS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzLocksRecord setSchedName(String value) {
+    public QrtzLocksRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
      * Setter for <code>testshop.QRTZ_LOCKS.LOCK_NAME</code>.
      */
     @Override
-    public QrtzLocksRecord setLockName(String value) {
+    public QrtzLocksRecord setLOCK_NAME(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     @NotNull
     @Size(max = 40)
     @Override
-    public String getLockName() {
+    public String getLOCK_NAME() {
         return (String) get(1);
     }
 
@@ -74,8 +74,8 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
 
     @Override
     public void from(IQrtzLocks from) {
-        setSchedName(from.getSchedName());
-        setLockName(from.getLockName());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setLOCK_NAME(from.getLOCK_NAME());
         resetChangedOnNotNull();
     }
 
@@ -99,11 +99,11 @@ public class QrtzLocksRecord extends UpdatableRecordImpl<QrtzLocksRecord> implem
     /**
      * Create a detached, initialised QrtzLocksRecord
      */
-    public QrtzLocksRecord(String schedName, String lockName) {
+    public QrtzLocksRecord(String SCHED_NAME, String LOCK_NAME) {
         super(QrtzLocks.QRTZ_LOCKS);
 
-        setSchedName(schedName);
-        setLockName(lockName);
+        setSCHED_NAME(SCHED_NAME);
+        setLOCK_NAME(LOCK_NAME);
         resetChangedOnNotNull();
     }
 }

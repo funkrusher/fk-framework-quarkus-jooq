@@ -25,7 +25,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      * Setter for <code>testshop.user_role.userId</code>.
      */
     @Override
-    public UserRoleRecord setUserid(Integer value) {
+    public UserRoleRecord setUserId(Integer value) {
         set(0, value);
         return this;
     }
@@ -35,7 +35,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      */
     @NotNull
     @Override
-    public Integer getUserid() {
+    public Integer getUserId() {
         return (Integer) get(0);
     }
 
@@ -43,7 +43,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
      * Setter for <code>testshop.user_role.roleId</code>.
      */
     @Override
-    public UserRoleRecord setRoleid(String value) {
+    public UserRoleRecord setRoleId(String value) {
         set(1, value);
         return this;
     }
@@ -54,7 +54,7 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     @NotNull
     @Size(max = 50)
     @Override
-    public String getRoleid() {
+    public String getRoleId() {
         return (String) get(1);
     }
 
@@ -73,8 +73,8 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
 
     @Override
     public void from(IUserRole from) {
-        setUserid(from.getUserid());
-        setRoleid(from.getRoleid());
+        setUserId(from.getUserId());
+        setRoleId(from.getRoleId());
         resetChangedOnNotNull();
     }
 
@@ -98,11 +98,11 @@ public class UserRoleRecord extends UpdatableRecordImpl<UserRoleRecord> implemen
     /**
      * Create a detached, initialised UserRoleRecord
      */
-    public UserRoleRecord(Integer userid, String roleid) {
+    public UserRoleRecord(Integer userId, String roleId) {
         super(UserRole.USER_ROLE);
 
-        setUserid(userid);
-        setRoleid(roleid);
+        setUserId(userId);
+        setRoleId(roleId);
         resetChangedOnNotNull();
     }
 }

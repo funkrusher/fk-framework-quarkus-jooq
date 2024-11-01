@@ -26,14 +26,14 @@ public record ProductResponse(
     public static ProductResponse create(Record3<ProductRecord, UserResponse, List<ProductLangResponse>> rec) {
         ProductRecord product = rec.value1();
         return ProductResponse.builder()
-            .productId(product.getProductid())
-            .clientId(product.getClientid())
+            .productId(product.getProductId())
+            .clientId(product.getClientId())
             .price(product.getPrice())
-            .typeId(product.getTypeid())
-            .createdAt(product.getCreatedat())
-            .updatedAt(product.getUpdatedat())
+            .typeId(product.getTypeId())
+            .createdAt(product.getCreatedAt())
+            .updatedAt(product.getUpdatedAt())
             .deleted(product.getDeleted())
-            .creatorId(product.getCreatorid())
+            .creatorId(product.getCreatorId())
             .creator(rec.value2())
             .langs(rec.value3())
             .build();

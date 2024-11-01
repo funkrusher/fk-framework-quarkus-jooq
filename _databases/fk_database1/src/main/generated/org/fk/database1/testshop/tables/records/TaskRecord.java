@@ -24,7 +24,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Setter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public TaskRecord setTaskid(Long value) {
+    public TaskRecord setTaskId(Long value) {
         set(0, value);
         return this;
     }
@@ -33,7 +33,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Getter for <code>testshop.task.taskId</code>.
      */
     @Override
-    public Long getTaskid() {
+    public Long getTaskId() {
         return (Long) get(0);
     }
 
@@ -41,7 +41,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Setter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public TaskRecord setCreatedat(LocalDateTime value) {
+    public TaskRecord setCreatedAt(LocalDateTime value) {
         set(1, value);
         return this;
     }
@@ -50,7 +50,7 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
      * Getter for <code>testshop.task.createdAt</code>.
      */
     @Override
-    public LocalDateTime getCreatedat() {
+    public LocalDateTime getCreatedAt() {
         return (LocalDateTime) get(1);
     }
 
@@ -69,8 +69,8 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
 
     @Override
     public void from(ITask from) {
-        setTaskid(from.getTaskid());
-        setCreatedat(from.getCreatedat());
+        setTaskId(from.getTaskId());
+        setCreatedAt(from.getCreatedAt());
         resetChangedOnNotNull();
     }
 
@@ -94,11 +94,11 @@ public class TaskRecord extends UpdatableRecordImpl<TaskRecord> implements ITask
     /**
      * Create a detached, initialised TaskRecord
      */
-    public TaskRecord(Long taskid, LocalDateTime createdat) {
+    public TaskRecord(Long taskId, LocalDateTime createdAt) {
         super(Task.TASK);
 
-        setTaskid(taskid);
-        setCreatedat(createdat);
+        setTaskId(taskId);
+        setCreatedAt(createdAt);
         resetChangedOnNotNull();
     }
 }

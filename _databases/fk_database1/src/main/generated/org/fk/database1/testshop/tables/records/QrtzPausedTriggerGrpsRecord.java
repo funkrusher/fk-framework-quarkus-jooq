@@ -25,7 +25,7 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.SCHED_NAME</code>.
      */
     @Override
-    public QrtzPausedTriggerGrpsRecord setSchedName(String value) {
+    public QrtzPausedTriggerGrpsRecord setSCHED_NAME(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
     @NotNull
     @Size(max = 120)
     @Override
-    public String getSchedName() {
+    public String getSCHED_NAME() {
         return (String) get(0);
     }
 
@@ -44,7 +44,7 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
      * Setter for <code>testshop.QRTZ_PAUSED_TRIGGER_GRPS.TRIGGER_GROUP</code>.
      */
     @Override
-    public QrtzPausedTriggerGrpsRecord setTriggerGroup(String value) {
+    public QrtzPausedTriggerGrpsRecord setTRIGGER_GROUP(String value) {
         set(1, value);
         return this;
     }
@@ -55,7 +55,7 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
     @NotNull
     @Size(max = 190)
     @Override
-    public String getTriggerGroup() {
+    public String getTRIGGER_GROUP() {
         return (String) get(1);
     }
 
@@ -74,8 +74,8 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
 
     @Override
     public void from(IQrtzPausedTriggerGrps from) {
-        setSchedName(from.getSchedName());
-        setTriggerGroup(from.getTriggerGroup());
+        setSCHED_NAME(from.getSCHED_NAME());
+        setTRIGGER_GROUP(from.getTRIGGER_GROUP());
         resetChangedOnNotNull();
     }
 
@@ -99,11 +99,11 @@ public class QrtzPausedTriggerGrpsRecord extends UpdatableRecordImpl<QrtzPausedT
     /**
      * Create a detached, initialised QrtzPausedTriggerGrpsRecord
      */
-    public QrtzPausedTriggerGrpsRecord(String schedName, String triggerGroup) {
+    public QrtzPausedTriggerGrpsRecord(String SCHED_NAME, String TRIGGER_GROUP) {
         super(QrtzPausedTriggerGrps.QRTZ_PAUSED_TRIGGER_GRPS);
 
-        setSchedName(schedName);
-        setTriggerGroup(triggerGroup);
+        setSCHED_NAME(SCHED_NAME);
+        setTRIGGER_GROUP(TRIGGER_GROUP);
         resetChangedOnNotNull();
     }
 }

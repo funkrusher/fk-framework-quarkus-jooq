@@ -25,7 +25,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
      * Setter for <code>testshop.role.roleId</code>.
      */
     @Override
-    public RoleRecord setRoleid(String value) {
+    public RoleRecord setRoleId(String value) {
         set(0, value);
         return this;
     }
@@ -36,7 +36,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
     @NotNull
     @Size(max = 50)
     @Override
-    public String getRoleid() {
+    public String getRoleId() {
         return (String) get(0);
     }
 
@@ -55,7 +55,7 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
 
     @Override
     public void from(IRole from) {
-        setRoleid(from.getRoleid());
+        setRoleId(from.getRoleId());
         resetChangedOnNotNull();
     }
 
@@ -79,10 +79,10 @@ public class RoleRecord extends UpdatableRecordImpl<RoleRecord> implements IRole
     /**
      * Create a detached, initialised RoleRecord
      */
-    public RoleRecord(String roleid) {
+    public RoleRecord(String roleId) {
         super(Role.ROLE);
 
-        setRoleid(roleid);
+        setRoleId(roleId);
         resetChangedOnNotNull();
     }
 }
