@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import org.fk.database1.testshop.tables.Lang;
+import org.fk.database1.testshop.tables.interfaces.ILang;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
 
@@ -16,13 +17,14 @@ import org.jooq.impl.UpdatableRecordImpl;
  * Lang contains available languages of the app
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-public class LangRecord extends UpdatableRecordImpl<LangRecord> {
+public class LangRecord extends UpdatableRecordImpl<LangRecord> implements ILang {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>testshop.lang.langId</code>. langId
      */
+    @Override
     public LangRecord setLangid(Integer value) {
         set(0, value);
         return this;
@@ -31,6 +33,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> {
     /**
      * Getter for <code>testshop.lang.langId</code>. langId
      */
+    @Override
     public Integer getLangid() {
         return (Integer) get(0);
     }
@@ -38,6 +41,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> {
     /**
      * Setter for <code>testshop.lang.code</code>. ISO-639 language code
      */
+    @Override
     public LangRecord setCode(String value) {
         set(1, value);
         return this;
@@ -48,6 +52,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> {
      */
     @NotNull
     @Size(max = 2)
+    @Override
     public String getCode() {
         return (String) get(1);
     }
@@ -56,6 +61,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> {
      * Setter for <code>testshop.lang.description</code>. internal description
      * of language
      */
+    @Override
     public LangRecord setDescription(String value) {
         set(2, value);
         return this;
@@ -66,6 +72,7 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> {
      * of language
      */
     @Size(max = 50)
+    @Override
     public String getDescription() {
         return (String) get(2);
     }
@@ -77,6 +84,24 @@ public class LangRecord extends UpdatableRecordImpl<LangRecord> {
     @Override
     public Record1<Integer> key() {
         return (Record1) super.key();
+    }
+
+    // -------------------------------------------------------------------------
+    // FROM and INTO
+    // -------------------------------------------------------------------------
+
+    @Override
+    public void from(ILang from) {
+        setLangid(from.getLangid());
+        setCode(from.getCode());
+        setDescription(from.getDescription());
+        resetChangedOnNotNull();
+    }
+
+    @Override
+    public <E extends ILang> E into(E into) {
+        into.from(this);
+        return into;
     }
 
     // -------------------------------------------------------------------------

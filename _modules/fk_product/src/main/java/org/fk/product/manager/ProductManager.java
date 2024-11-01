@@ -315,7 +315,6 @@ public class ProductManager extends AbstractManager {
                     exportMap.put("productId", product.productId());
                     exportMap.put("price", product.price());
                     xlsxWriter.writeItem(exportMap);
-                    throw new RuntimeException("test");
                 }
                 xlsxWriter.success();
             }

@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.fk.database1.testshop2.tables.Product;
+import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
 
@@ -19,13 +20,14 @@ import org.jooq.impl.UpdatableRecordImpl;
  * Client-specific Products
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
-public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
+public class ProductRecord extends UpdatableRecordImpl<ProductRecord> implements IProduct {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Setter for <code>testshop2.product.productId</code>. productId
      */
+    @Override
     public ProductRecord setProductid(Long value) {
         set(0, value);
         return this;
@@ -34,6 +36,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Getter for <code>testshop2.product.productId</code>. productId
      */
+    @Override
     public Long getProductid() {
         return (Long) get(0);
     }
@@ -41,6 +44,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Setter for <code>testshop2.product.clientId</code>. clientId
      */
+    @Override
     public ProductRecord setClientid(Integer value) {
         set(1, value);
         return this;
@@ -50,6 +54,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      * Getter for <code>testshop2.product.clientId</code>. clientId
      */
     @NotNull
+    @Override
     public Integer getClientid() {
         return (Integer) get(1);
     }
@@ -58,6 +63,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      * Setter for <code>testshop2.product.price</code>. price of the product in
      * Euro
      */
+    @Override
     public ProductRecord setPrice(BigDecimal value) {
         set(2, value);
         return this;
@@ -68,6 +74,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      * Euro
      */
     @NotNull
+    @Override
     public BigDecimal getPrice() {
         return (BigDecimal) get(2);
     }
@@ -76,6 +83,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      * Setter for <code>testshop2.product.typeId</code>. typeId, enumeration -
      * one of: books,...
      */
+    @Override
     public ProductRecord setTypeid(String value) {
         set(3, value);
         return this;
@@ -87,6 +95,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      */
     @NotNull
     @Size(max = 255)
+    @Override
     public String getTypeid() {
         return (String) get(3);
     }
@@ -94,6 +103,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Setter for <code>testshop2.product.createdAt</code>.
      */
+    @Override
     public ProductRecord setCreatedat(LocalDateTime value) {
         set(4, value);
         return this;
@@ -102,6 +112,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Getter for <code>testshop2.product.createdAt</code>.
      */
+    @Override
     public LocalDateTime getCreatedat() {
         return (LocalDateTime) get(4);
     }
@@ -109,6 +120,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Setter for <code>testshop2.product.updatedAt</code>.
      */
+    @Override
     public ProductRecord setUpdatedat(LocalDateTime value) {
         set(5, value);
         return this;
@@ -117,6 +129,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Getter for <code>testshop2.product.updatedAt</code>.
      */
+    @Override
     public LocalDateTime getUpdatedat() {
         return (LocalDateTime) get(5);
     }
@@ -125,6 +138,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      * Setter for <code>testshop2.product.deleted</code>. if this product is
      * marked as deleted
      */
+    @Override
     public ProductRecord setDeleted(Boolean value) {
         set(6, value);
         return this;
@@ -134,6 +148,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
      * Getter for <code>testshop2.product.deleted</code>. if this product is
      * marked as deleted
      */
+    @Override
     public Boolean getDeleted() {
         return (Boolean) get(6);
     }
@@ -141,6 +156,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Setter for <code>testshop2.product.creatorId</code>.
      */
+    @Override
     public ProductRecord setCreatorid(Integer value) {
         set(7, value);
         return this;
@@ -149,6 +165,7 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     /**
      * Getter for <code>testshop2.product.creatorId</code>.
      */
+    @Override
     public Integer getCreatorid() {
         return (Integer) get(7);
     }
@@ -160,6 +177,29 @@ public class ProductRecord extends UpdatableRecordImpl<ProductRecord> {
     @Override
     public Record1<Long> key() {
         return (Record1) super.key();
+    }
+
+    // -------------------------------------------------------------------------
+    // FROM and INTO
+    // -------------------------------------------------------------------------
+
+    @Override
+    public void from(IProduct from) {
+        setProductid(from.getProductid());
+        setClientid(from.getClientid());
+        setPrice(from.getPrice());
+        setTypeid(from.getTypeid());
+        setCreatedat(from.getCreatedat());
+        setUpdatedat(from.getUpdatedat());
+        setDeleted(from.getDeleted());
+        setCreatorid(from.getCreatorid());
+        resetChangedOnNotNull();
+    }
+
+    @Override
+    public <E extends IProduct> E into(E into) {
+        into.from(this);
+        return into;
     }
 
     // -------------------------------------------------------------------------

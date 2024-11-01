@@ -18,6 +18,7 @@ public class Database1CodeGenerator {
                             .withPassword(fkMariaDb.getPassword()))
                     .withGenerator(new Generator()
                             .withGenerate(new Generate()
+                                    .withInterfaces(true)
                                     .withFluentSetters(true)
                                     .withValidationAnnotations(true)
                             )
