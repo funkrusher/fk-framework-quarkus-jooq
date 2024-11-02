@@ -37,11 +37,4 @@ public record UserResponse(
                 .build();
         }
     }
-
-    public static SelectField<UserResponse> userSelector() {
-        return row(
-            PRODUCT.user(),
-            RoleResponse.rolesSelector()
-        ).convertFrom(UserResponse::createOrNull);
-    }
 }

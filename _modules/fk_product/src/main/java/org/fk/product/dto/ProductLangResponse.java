@@ -1,42 +1,44 @@
 package org.fk.product.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
-import org.jooq.Field;
 import org.jooq.Record2;
 
-import java.util.List;
+@Data
+@Accessors(chain = true)
+public class ProductLangResponse {
 
-import static org.fk.database1.testshop2.tables.Product.PRODUCT;
-import static org.jooq.impl.DSL.*;
+    @NotNull
+    Long productId;
 
-@Builder
-public record ProductLangResponse(
-    @NotNull Long productId,
-    @NotNull Integer langId,
-    @NotNull String name,
-    @NotNull String description,
-    @NotNull LangResponse lang
-) {
+    @NotNull
+    Integer langId;
 
-    public static ProductLangResponse create(Record2<ProductLangRecord, LangResponse> rec) {
-        ProductLangRecord lang = rec.value1();
-        return ProductLangResponse.builder()
-            .productId(lang.getProductId())
-            .langId(lang.getLangId())
-            .name(lang.getName())
-            .description(lang.getDescription())
-            .lang(rec.value2())
-            .build();
+    @NotNull
+    String name;
+
+    @NotNull
+    String description;
+
+    @NotNull
+    LangResponse lang;
+
+    // -------------------------------------------------------------------------
+    // jOOQ Converters
+    // -------------------------------------------------------------------------
+
+    public static ProductLangResponse from(ProductLangRecord from) {
+        return new ProductLangResponse()
+            .setProductId(from.getProductId())
+            .setLangId(from.getLangId())
+            .setName(from.getName())
+            .setDescription(from.getDescription());
     }
 
-    public static Field<List<ProductLangResponse>> productLangsSelector() {
-        return multiset(
-            select(
-                PRODUCT.productLang(),
-                LangResponse.langSelector()
-            ).from(PRODUCT.productLang())
-        ).convertFrom(r -> r.map(ProductLangResponse::create));
+    public static ProductLangResponse convertFrom(Record2<ProductLangRecord, LangResponse> rec) {
+        return ProductLangResponse.from(rec.value1())
+            .setLang(rec.value2());
     }
 }

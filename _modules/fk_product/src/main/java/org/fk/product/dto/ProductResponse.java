@@ -44,11 +44,4 @@ public record ProductResponse(
             .build();
     }
 
-    public static SelectField<ProductResponse> productSelector() {
-        return row(
-            PRODUCT,
-            UserResponse.userSelector(),
-            ProductLangResponse.productLangsSelector()
-        ).convertFrom(ProductResponse::create);
-    }
 }

@@ -27,12 +27,4 @@ public record LangResponse(
             .description(lang.getDescription())
             .build();
     }
-
-
-    public static SelectField<LangResponse> langSelector() {
-        return row(
-            PRODUCT.productLang().lang()
-        ).convertFrom(LangResponse::create);
-    }
-
 }

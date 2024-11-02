@@ -36,7 +36,27 @@ public class ProductRepository extends AbstractRepository<ProductResponse, Long>
         }
 
         var stmt = dsl()
-            .select(ProductResponse.productSelector())
+            .select(
+                row(
+                    PRODUCT,
+                    row(
+                        PRODUCT.user(),
+                        multiset(
+                            select(
+                                PRODUCT.user().userRole().role().ROLEID
+                            ).from(PRODUCT.user().userRole().role())
+                        ).convertFrom(r -> r.map(RoleResponse::create))
+                    ).convertFrom(UserResponse::createOrNull),
+                    multiset(
+                        select(
+                            PRODUCT.productLang(),
+                            row(
+                                PRODUCT.productLang().lang()
+                            ).convertFrom(LangResponse::create)
+                        ).from(PRODUCT.productLang())
+                    ).convertFrom(r -> r.map(ProductLangResponse::fromJooq))
+                ).convertFrom(ProductResponse::create)
+            )
             .from(PRODUCT
                 .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))
                 .leftJoin(LANG).on(LANG.LANGID.eq(PRODUCT_LANG.LANGID))
