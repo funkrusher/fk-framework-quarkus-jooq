@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.fk.database1.testshop2.tables.records.ProductRecord;
 
 import java.math.BigDecimal;
 
@@ -23,17 +22,6 @@ public class CreateProductRequest {
     @NotNull
     @Size(max = 255)
     private String typeId;
-
-    // -------------------------------------------------------------------------
-    // jOOQ Converters
-    // -------------------------------------------------------------------------
-
-    public ProductRecord jooq() {
-        return new ProductRecord()
-            .setClientId(getClientId())
-            .setPrice(getPrice())
-            .setTypeId(getTypeId());
-    }
 
     // -------------------------------------------------------------------------
     // API Examples

@@ -30,9 +30,14 @@ dependencyResolutionManagement {
             version('jsoup', '1.18.1')
             version('apache-poi', '5.3.0')
             version('lombok', '1.18.34')
+            version('mapstruct', '1.6.2')
 
             // project lombok
             library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
+
+            // mapStruct
+            library('mapstruct', 'org.mapstruct', 'mapstruct').versionRef('mapstruct')
+            library('mapstructProcessor', 'org.mapstruct', 'mapstruct-processor').versionRef('mapstruct')
 
             // fk-framework self-dependencies (sticky versions)
             // this should mostly be stable core-libraries / shared modules that don't change often.
@@ -113,6 +118,7 @@ dependencyResolutionManagement {
             bundle('flyingsaucer', ['flyingSaucerCore', 'flyingSaucerPdf'])
             bundle('apachePoi', ['poiOoxml'])
             bundle('jackson', ['jacksonCsv', 'jacksonJsr310'])
+            bundle('annotationProcessors', ['lombok', 'mapstruct', 'mapstructProcessor'])
 
             // test-bundles
             bundle('test.quarkus', ['restAssured', 'quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusRestJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])

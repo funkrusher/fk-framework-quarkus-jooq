@@ -25,9 +25,9 @@ public class ProductDAO extends AbstractDAO<ProductRecord, Long> {
         // project request to jooq-query.
         Long productId = dsl()
             .insertInto(PRODUCT)
-            .set(PRODUCT.CLIENTID, createProductRequest.clientId())
-            .set(PRODUCT.PRICE, createProductRequest.price())
-            .set(PRODUCT.TYPEID, createProductRequest.typeId())
+            .set(PRODUCT.CLIENTID, createProductRequest.getClientId())
+            .set(PRODUCT.PRICE, createProductRequest.getPrice())
+            .set(PRODUCT.TYPEID, createProductRequest.getTypeId())
             .set(PRODUCT.DELETED, false)
             .returning(PRODUCT.PRODUCTID)
             .fetchOne(PRODUCT.PRODUCTID);

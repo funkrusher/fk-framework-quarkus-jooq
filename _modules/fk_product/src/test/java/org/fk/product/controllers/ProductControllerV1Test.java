@@ -95,9 +95,9 @@ class ProductControllerV1Test {
         DSLContext dslContext = testDbUtil.createDSLContext();
         ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductid(), responseDTO.productId());
+        assertEquals(record.getProductId(), responseDTO.productId());
 
-        insertedId = record.getProductid();
+        insertedId = record.getProductId();
     }
 
     @Test
@@ -129,7 +129,7 @@ class ProductControllerV1Test {
         DSLContext dslContext = testDbUtil.createDSLContext();
         ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductid(), responseDTO.productId());
+        assertEquals(record.getProductId(), responseDTO.productId());
         assertEquals(record.getPrice(), responseDTO.price());
     }
 
@@ -147,7 +147,7 @@ class ProductControllerV1Test {
         DSLContext dslContext = testDbUtil.createDSLContext();
         ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(1L)).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(1L, record.getProductid());
+        assertEquals(1L, record.getProductId());
     }
 
     @Test

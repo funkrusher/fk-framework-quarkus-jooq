@@ -37,6 +37,8 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Stream;
 
+import org.fk.product.mapper.ProductMapper;
+
 import static org.jooq.impl.DSL.*;
 
 /**

@@ -18,13 +18,4 @@ public record LangResponse(
     @NotNull
     String description
 ) {
-
-    public static LangResponse create(Record1<LangRecord> rec) {
-        LangRecord lang = rec.value1();
-        return LangResponse.builder()
-            .langId(lang.getLangId())
-            .code(lang.getCode())
-            .description(lang.getDescription())
-            .build();
-    }
 }

@@ -24,11 +24,11 @@ dependencies {
     testImplementation libs.awaitility
     testImplementation libs.restAssured
 
-    // lombok
-    implementation libs.lombok
-    annotationProcessor libs.lombok
-    testImplementation libs.lombok
-    testAnnotationProcessor libs.lombok
+    // lombok, mapStruct
+    implementation libs.bundles.annotationProcessors
+    annotationProcessor libs.bundles.annotationProcessors
+    testImplementation libs.bundles.annotationProcessors
+    testAnnotationProcessor libs.bundles.annotationProcessors
 }
 
 // publishing

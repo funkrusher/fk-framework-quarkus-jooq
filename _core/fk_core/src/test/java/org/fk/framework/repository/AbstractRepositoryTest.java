@@ -56,23 +56,23 @@ class AbstractRepositoryTest {
         for (int i = 1; i < 201; i++) {
             UUID insertId = UUID.randomUUID();
             basic1s.add(new Basic1Record()
-                .setClientid(1)
-                .setAutoincid(i)
+                .setClientId(1)
+                .setAutoIncId(i)
                 .setString1("test-" + i));
             basic2s.add(new Basic2Record()
-                .setClientid(1)
-                .setUuidid(insertId));
+                .setClientId(1)
+                .setUuidId(insertId));
 
             if (i > 180) {
                 nested1s.add(new Nested1Record()
-                    .setAutoincid(i)
-                    .setUuidid(insertId)
+                    .setAutoIncId(i)
+                    .setUuidId(insertId)
                     .setInteger1(i)
                     .setDecimal1(new BigDecimal(String.valueOf(i))));
             } else {
                 nested1s.add(new Nested1Record()
-                    .setAutoincid(i)
-                    .setUuidid(insertId)
+                    .setAutoIncId(i)
+                    .setUuidId(insertId)
                     .setDecimal1(new BigDecimal(String.valueOf(i))));
             }
         }

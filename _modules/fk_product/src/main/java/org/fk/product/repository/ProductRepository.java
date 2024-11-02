@@ -6,6 +6,7 @@ import org.fk.framework.query.jooq.QueryJooqMapper;
 import org.fk.framework.query.model.FkQuery;
 import org.fk.framework.repository.AbstractRepository;
 import org.fk.product.dto.*;
+import org.fk.product.mapper.ProductMapper;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.SelectFinalStep;
@@ -21,6 +22,8 @@ import static org.jooq.impl.DSL.*;
 public class ProductRepository extends AbstractRepository<ProductResponse, Long> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepository.class);
+
+    private static final ProductMapper PRODUCT_MAPPER = ProductMapper.INSTANCE;
 
     public ProductRepository(DSLContext dsl) {
         super(dsl, PRODUCT.PRODUCTID);
@@ -52,9 +55,9 @@ public class ProductRepository extends AbstractRepository<ProductResponse, Long>
                             PRODUCT.productLang(),
                             row(
                                 PRODUCT.productLang().lang()
-                            ).convertFrom(LangResponse::create)
+                            ).convertFrom(PRODUCT_MAPPER::convertFrom)
                         ).from(PRODUCT.productLang())
-                    ).convertFrom(r -> r.map(ProductLangResponse::fromJooq))
+                    ).convertFrom(r -> r.map(PRODUCT_MAPPER::convertFrom))
                 ).convertFrom(ProductResponse::create)
             )
             .from(PRODUCT
