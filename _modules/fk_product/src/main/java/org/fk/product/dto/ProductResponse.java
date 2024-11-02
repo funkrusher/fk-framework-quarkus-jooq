@@ -4,11 +4,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
+import org.jooq.Field;
 import org.jooq.Record3;
+import org.jooq.SelectField;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.fk.database1.testshop2.tables.Product.PRODUCT;
+import static org.jooq.impl.DSL.*;
 
 @Builder
 public record ProductResponse(
@@ -37,5 +42,13 @@ public record ProductResponse(
             .creator(rec.value2())
             .langs(rec.value3())
             .build();
+    }
+
+    public static SelectField<ProductResponse> productSelector() {
+        return row(
+            PRODUCT,
+            UserResponse.userSelector(),
+            ProductLangResponse.productLangsSelector()
+        ).convertFrom(ProductResponse::create);
     }
 }

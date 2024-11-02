@@ -3,7 +3,13 @@ package org.fk.product.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.fk.database1.testshop2.tables.records.ProductLangRecord;
+import org.jooq.Field;
 import org.jooq.Record2;
+
+import java.util.List;
+
+import static org.fk.database1.testshop2.tables.Product.PRODUCT;
+import static org.jooq.impl.DSL.*;
 
 @Builder
 public record ProductLangResponse(
@@ -25,4 +31,12 @@ public record ProductLangResponse(
             .build();
     }
 
+    public static Field<List<ProductLangResponse>> productLangsSelector() {
+        return multiset(
+            select(
+                PRODUCT.productLang(),
+                LangResponse.langSelector()
+            ).from(PRODUCT.productLang())
+        ).convertFrom(r -> r.map(ProductLangResponse::create));
+    }
 }

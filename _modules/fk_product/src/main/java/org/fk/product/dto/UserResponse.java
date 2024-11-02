@@ -4,8 +4,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.fk.database1.testshop.tables.records.UserRecord;
 import org.jooq.Record2;
+import org.jooq.Row2;
+import org.jooq.SelectField;
 
 import java.util.List;
+
+import static org.fk.database1.testshop2.tables.Product.PRODUCT;
+import static org.jooq.impl.DSL.*;
 
 @Builder
 public record UserResponse(
@@ -31,5 +36,12 @@ public record UserResponse(
                 .roles(rec.value2())
                 .build();
         }
+    }
+
+    public static SelectField<UserResponse> userSelector() {
+        return row(
+            PRODUCT.user(),
+            RoleResponse.rolesSelector()
+        ).convertFrom(UserResponse::createOrNull);
     }
 }
