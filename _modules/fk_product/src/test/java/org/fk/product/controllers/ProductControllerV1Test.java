@@ -89,13 +89,13 @@ class ProductControllerV1Test {
 
 
         // verify rest-result is as expected...
-        assertEquals(1, responseDTO.clientId());
+        assertEquals(1, responseDTO.getClientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.productId());
+        assertEquals(record.getProductId(), responseDTO.getProductId());
 
         insertedId = record.getProductId();
     }
@@ -123,14 +123,14 @@ class ProductControllerV1Test {
         UpdateProductResponse responseDTO = jsonMapper.readValue(er.body().asString(), UpdateProductResponse.class);
 
         // verify rest-result is as expected...
-        assertEquals(1, responseDTO.clientId());
+        assertEquals(1, responseDTO.getClientId());
 
         // verify database-content is as expected...
         DSLContext dslContext = testDbUtil.createDSLContext();
-        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.productId())).fetchOneInto(ProductRecord.class);
+        ProductRecord record = dslContext.select().from(Product.PRODUCT).where(Product.PRODUCT.PRODUCTID.eq(responseDTO.getProductId())).fetchOneInto(ProductRecord.class);
         assertNotNull(record);
-        assertEquals(record.getProductId(), responseDTO.productId());
-        assertEquals(record.getPrice(), responseDTO.price());
+        assertEquals(record.getProductId(), responseDTO.getProductId());
+        assertEquals(record.getPrice(), responseDTO.getPrice());
     }
 
 

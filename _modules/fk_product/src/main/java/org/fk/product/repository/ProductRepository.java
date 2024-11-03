@@ -46,19 +46,19 @@ public class ProductRepository extends AbstractRepository<ProductResponse, Long>
                         PRODUCT.user(),
                         multiset(
                             select(
-                                PRODUCT.user().userRole().role().ROLEID
+                                PRODUCT.user().userRole().role()
                             ).from(PRODUCT.user().userRole().role())
-                        ).convertFrom(r -> r.map(RoleResponse::create))
-                    ).convertFrom(UserResponse::createOrNull),
+                        ).convertFrom(r -> r.map(PRODUCT_MAPPER::toRoleResponse))
+                    ).convertFrom(PRODUCT_MAPPER::toUserResponseOrNull),
                     multiset(
                         select(
                             PRODUCT.productLang(),
                             row(
                                 PRODUCT.productLang().lang()
-                            ).convertFrom(PRODUCT_MAPPER::convertFrom)
+                            ).convertFrom(PRODUCT_MAPPER::toLangResponse)
                         ).from(PRODUCT.productLang())
-                    ).convertFrom(r -> r.map(PRODUCT_MAPPER::convertFrom))
-                ).convertFrom(ProductResponse::create)
+                    ).convertFrom(r -> r.map(PRODUCT_MAPPER::toProductLangResponse))
+                ).convertFrom(PRODUCT_MAPPER::toProductResponse)
             )
             .from(PRODUCT
                 .leftJoin(PRODUCT_LANG).on(PRODUCT_LANG.PRODUCTID.eq(PRODUCT.PRODUCTID))

@@ -1,24 +1,21 @@
 package org.fk.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.HttpClientRequest;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
-import lombok.SneakyThrows;
-import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.ParameterIn;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -27,17 +24,16 @@ import org.fk.framework.exception.InvalidDataException;
 import org.fk.framework.exception.ValidationException;
 import org.fk.framework.query.model.FkQuery;
 import org.fk.framework.request.RequestContext;
+import org.fk.product.api.GetApiResponses;
 import org.fk.product.dto.*;
 import org.fk.product.manager.ProductManager;
 import org.jboss.resteasy.reactive.ResponseStatus;
-import org.jboss.resteasy.reactive.RestMulti;
 
-import java.io.*;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 
+@ApplicationScoped
 @Path("/api/v1/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -51,18 +47,16 @@ public class ProductControllerV1 {
     ObjectMapper jsonMapper;
 
     @GET
-    @Operation(summary = "returns the product with the specified id")
-    @APIResponse(responseCode = "200", description = "Getting the product with the specified id successful")
-    @APIResponse(responseCode = "500", description = "Server unavailable")
     @Path("/{productId}")
+    @Operation(summary = "returns the product with the specified id")
+    @GetApiResponses
     public ProductResponse getOneNested(Long productId) throws NotFoundException {
         return productManager.getOneNested(new RequestContext(1, 1), productId).orElseThrow(NotFoundException::new);
     }
 
     @GET
     @Operation(summary = "returns a list of all products")
-    @APIResponse(responseCode = "200", description = "List of all products successful")
-    @APIResponse(responseCode = "500", description = "Server unavailable")
+    @GetApiResponses
     @Path("/")
     public QueryProductResponse queryNested(
         @BeanParam FkQuery fkQuery) throws InvalidDataException {
@@ -70,17 +64,10 @@ public class ProductControllerV1 {
     }
 
     @POST
+    @Path("/")
     @Operation(summary = "creates a new product")
     @APIResponse(responseCode = "201", description = "product creation successful")
     @APIResponse(responseCode = "500", description = "Server unavailable")
-    @Path("/")
-    @RequestBody(content = @Content(examples = {
-        @ExampleObject(
-            name = CreateProductRequest.EXAMPLE1_NAME,
-            description = CreateProductRequest.EXAMPLE1_DESCRIPTION,
-            value = CreateProductRequest.EXAMPLE1_VALUE
-        )
-    }))
     @APIResponse(content = @Content(examples = {
         @ExampleObject(
             name = CreateProductResponse.EXAMPLE1_NAME,

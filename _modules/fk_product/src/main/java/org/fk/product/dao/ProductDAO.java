@@ -5,6 +5,7 @@ import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.fk.framework.dao.AbstractDAO;
 import org.fk.product.dto.CreateProductRequest;
 import org.fk.product.dto.CreateProductResponse;
+import org.fk.product.mapper.ProductMapper;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 
@@ -15,6 +16,8 @@ import static org.jooq.impl.DSL.row;
  * ProductDAO
  */
 public class ProductDAO extends AbstractDAO<ProductRecord, Long> {
+
+    private static final ProductMapper MAPPER = ProductMapper.INSTANCE;
 
     public ProductDAO(DSLContext dsl) {
         super(dsl, PRODUCT);
@@ -36,15 +39,8 @@ public class ProductDAO extends AbstractDAO<ProductRecord, Long> {
         Record1<CreateProductResponse> result = dsl()
             .select(
                 row(
-                    PRODUCT.PRODUCTID,
-                    PRODUCT.CLIENTID,
-                    PRODUCT.PRICE,
-                    PRODUCT.TYPEID,
-                    PRODUCT.CREATEDAT,
-                    PRODUCT.UPDATEDAT,
-                    PRODUCT.DELETED,
-                    PRODUCT.CREATORID
-                ).convertFrom(x -> x.into(CreateProductResponse.class))
+                    PRODUCT
+                ).convertFrom(MAPPER::toCreateProductResponse)
             )
             .from(PRODUCT)
             .where(PRODUCT.PRODUCTID.eq(productId))

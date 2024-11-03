@@ -2,9 +2,11 @@ package org.fk.product.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 import org.fk.database1.testshop2.tables.interfaces.IProduct;
 import org.fk.database1.testshop2.tables.records.ProductRecord;
 import org.jooq.Record3;
@@ -15,35 +17,18 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDTO implements IProduct {
-    @NotNull
-    private Long productId;
-
-    @NotNull
-    private Integer clientId;
-
-    @NotNull
-    private BigDecimal price;
-
-    @NotNull
-    @Size(max = 255)
-    private String typeId;
-
-    @NotNull
-    private LocalDateTime createdAt;
-
-    @NotNull
-    private LocalDateTime updatedAt;
-
-    @NotNull
-    private Boolean deleted;
-
-    private Integer creatorId;
-
-    private UserResponse creator;
-
-    @NotNull
-    private List<ProductLangResponse> langs;
+    @NotNull Long productId;
+    @NotNull Integer clientId;
+    @NotNull BigDecimal price;
+    @NotNull @Size(max = 255) String typeId;
+    @NotNull LocalDateTime createdAt;
+    @NotNull LocalDateTime updatedAt;
+    @NotNull Boolean deleted;
+    Integer creatorId;
+    UserResponse creator;
+    List<ProductLangResponse> langs;
 
     public ProductDTO(IProduct from) {
         this.from(from);

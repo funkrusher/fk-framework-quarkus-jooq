@@ -49,6 +49,8 @@ public class ProductManager extends AbstractManager {
 
     private static final Logger LOGGER = Logger.getLogger(ProductManager.class);
 
+    private static final ProductMapper MAPPER = ProductMapper.INSTANCE;
+
     @Inject
     Database1 database1;
 
@@ -79,11 +81,11 @@ public class ProductManager extends AbstractManager {
             Long nextSeek = null;
 
             List<ProductResponse> products = repo.query(repo::getFullQuery, fkQuery);
-            if (products.size() == 0 || products.size() < fkQuery.getPageSize()){
+            if (products.size() == 0 || products.size() < fkQuery.getPageSize()) {
                 isLastPage = true;
             } else {
                 // see if there is at least 1 item on the next page.
-                Long seek = products.getLast().productId();
+                Long seek = products.getLast().getProductId();
                 fkQuery.setSeek(seek);
                 fkQuery.setPageSize(1);
                 List<ProductResponse> nextPage = repo.query(repo::getFullQuery, fkQuery);
@@ -101,7 +103,12 @@ public class ProductManager extends AbstractManager {
             ProductMessages messages = MessageBundles.get(ProductMessages.class, Localized.Literal.of(locale.toLanguageTag()));
             String localizationTest = messages.product_paginate_localizationTest();
 
-            return new QueryProductResponse(products, 0, localizationTest, isLastPage, nextSeek);
+            return new QueryProductResponse()
+                .setProducts(products)
+                .setCount(0)
+                .setLocalizationTest(localizationTest)
+                .setLastPage(isLastPage)
+                .setNextSeek(nextSeek);
         });
     }
 
@@ -148,7 +155,7 @@ public class ProductManager extends AbstractManager {
                 tsx.dsl().transaction(tx2 -> {
                     // transaction2
                     ProductDAO aProductRecordDAO = new ProductDAO(tsx.dsl());
-                    aProductRecordDAO.deleteById(products.stream().map(ProductResponse::productId).toList());
+                    aProductRecordDAO.deleteById(products.stream().map(ProductResponse::getProductId).toList());
                 });
 
                 try {
@@ -177,27 +184,14 @@ public class ProductManager extends AbstractManager {
     public UpdateProductResponse update(RequestContext requestContext, final UpdateProductRequest updateProductRequest) throws ValidationException {
         return database1.dsl(requestContext).transactionResult(tsx -> {
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
-            this.validate(updateProductRequest);
 
-            ProductRecord update = new ProductRecord()
-                .setProductId(updateProductRequest.productId())
-                .setClientId(updateProductRequest.clientId())
-                .setPrice(updateProductRequest.price())
-                .setTypeId(updateProductRequest.typeId());
+            this.validate(updateProductRequest);
+            ProductRecord update = MAPPER.fromUpdateProductRequest(updateProductRequest);
 
             productDAO.update(update);
             ProductRecord result = productDAO.fetch(update.getProductId());
 
-            return UpdateProductResponse.builder()
-                .productId(result.getProductId())
-                .clientId(result.getClientId())
-                .price(result.getPrice())
-                .typeId(result.getTypeId())
-                .createdAt(result.getCreatedAt())
-                .updatedAt(result.getUpdatedAt())
-                .deleted(result.getDeleted())
-                .creatorId(result.getCreatorId())
-                .build();
+            return MAPPER.toUpdateProductResponse(result);
         });
     }
 
@@ -205,13 +199,7 @@ public class ProductManager extends AbstractManager {
         database1.dsl(requestContext).transaction(tsx -> {
             final PatchProductRequest dto = this.validatePatch(patch, PatchProductRequest.class);
 
-            // For each field in patch, set according db-record field with correctly typed value.
-            final ProductRecord update = new ProductRecord();
-            update.setProductId(dto.productId());
-            if (patch.containsKey(PatchProductRequest.Fields.price)) update.setPrice(dto.price());
-            if (patch.containsKey(PatchProductRequest.Fields.clientId)) update.setClientId(dto.clientId());
-            if (patch.containsKey(PatchProductRequest.Fields.typeId)) update.setTypeId(dto.typeId());
-
+            final ProductRecord update = MAPPER.fromPatchProductRequest(dto, patch);
             ProductDAO productDAO = new ProductDAO(tsx.dsl());
             productDAO.update(update);
         });
@@ -279,8 +267,8 @@ public class ProductManager extends AbstractManager {
             while (it.hasNext()) {
                 ProductResponse product = it.next();
                 Map<String, Object> exportMap = new LinkedHashMap<>();
-                exportMap.put("productId", product.productId());
-                exportMap.put("price", product.price());
+                exportMap.put("productId", product.getProductId());
+                exportMap.put("price", product.getPrice());
                 csvWriter.writeItem(exportMap);
             }
         }
@@ -314,8 +302,8 @@ public class ProductManager extends AbstractManager {
                     ProductResponse product = it.next();
 
                     Map<String, Object> exportMap = new LinkedHashMap<>();
-                    exportMap.put("productId", product.productId());
-                    exportMap.put("price", product.price());
+                    exportMap.put("productId", product.getProductId());
+                    exportMap.put("price", product.getPrice());
                     xlsxWriter.writeItem(exportMap);
                 }
                 xlsxWriter.success();

@@ -1,17 +1,16 @@
 package org.fk.product.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 import org.jooq.Record1;
 
-@Builder
-public record RoleResponse(
-    @NotNull String roleId
-) {
-
-    public static RoleResponse create(Record1<String> rec) {
-        return RoleResponse.builder()
-            .roleId(rec.value1())
-            .build();
-    }
+@Data
+@Accessors(chain = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class RoleResponse {
+    @NotNull String roleId;
 }
