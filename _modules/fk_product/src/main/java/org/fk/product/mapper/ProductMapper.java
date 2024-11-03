@@ -34,6 +34,7 @@ public interface ProductMapper {
     ProductRecord fromUpdateProductRequest(UpdateProductRequest createProductRequest);
 
     default ProductRecord fromPatchProductRequest(PatchProductRequest patchProductRequest, Map<String, Object> patch) {
+        // seehttps://github.com/mapstruct/mapstruct/issues/2504
         // For each field in patch, set according db-record field with correctly typed value.
         final ProductRecord update = new ProductRecord();
         update.setProductId(patchProductRequest.getProductId());
